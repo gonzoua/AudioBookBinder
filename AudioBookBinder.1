@@ -1,0 +1,50 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 08/08/09               \" DATE 
+.Dt AudioBookBinder 1      \" Program name and manual section number 
+.Os Darwin
+.Sh NAME                 \" Section Header - required - don't modify 
+.Nm AudioBookBinder
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line. 
+.\"Nm Other_name_for_same_program(),
+.\"Nm Yet another name for the same program.
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd Converts several audio files to iPod audiobook format
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl hsv              \" [-abcd]
+.Op Fl a Ar author       \" [-a path] 
+.Op Fl i Ar filelist       \" [-a path] 
+.Op Fl t Ar title       \" [-a path] 
+.Ar outfile              \" [file]
+.Op Ar                   \" [file ...]
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+.Nm
+is simple utility that converts audiobooks that come as a set of files into one .m4b file that is ready for adding to iTunes. Besides conversion
+.Nm 
+is able to write metadata like author and title to newly created audiofile.
+.Pp
+.Sh OPTIONS
+.Bl -tag -width -indent  \" Differs from above in tag removed 
+.It Fl a Ar author                \"-a flag as a list item
+Set book author
+.It Fl h
+Show help screen
+.It Fl i Ar listfile
+Read list of input files from listfile. Use - for stdin
+.It Fl s
+Skip errors and continue conversion
+.It Fl t Ar title
+Set book title
+.It Fl v
+Print some additional information on files being converted
+.El                      \" Ends the list
+.Pp
+.Sh EXAMPLES
+find ./book -name '*mp3' | AudioBookBinder -a "Philip J. Fry" -t "Fry Defeats The Brain" -v -i- ~/audiobooks/book.m4b
+.\" .Sh BUGS              \" Document known, unremedied bugs 
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner
