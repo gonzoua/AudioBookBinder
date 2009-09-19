@@ -223,17 +223,17 @@ stringForOSStatus(OSStatus err)
                                (const UInt8 *)[inFileName fileSystemRepresentation], 
                                &ref, &isDirectory);
         if (status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"Failed to make reference for file %@: %@", 
                 inFileName, stringForOSStatus(status)];
         
         if (isDirectory)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"Error: %@ is directory", inFileName];
         
         status = ExtAudioFileOpen(&ref, &inAudioFile);
         if (status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"ExtAudioFileWrapAudioFileID failed: %@", 
                 stringForOSStatus(status)];
         
@@ -243,7 +243,7 @@ stringForOSStatus(OSStatus err)
                                          kExtAudioFileProperty_FileDataFormat,
                                          &size, &format);
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"AudioFileGetProperty failed: %@", 
              stringForOSStatus(status)];
         
@@ -252,7 +252,7 @@ stringForOSStatus(OSStatus err)
                                          kExtAudioFileProperty_FileLengthFrames,
                                          &size, &framesTotal);
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                         format:@"failed to get input file length: %@", 
                         stringForOSStatus(status)];        
   
@@ -263,7 +263,7 @@ stringForOSStatus(OSStatus err)
                                         size, &format, &specSize, &fileFormat);
         
         if(status != noErr) 
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"AudioFormatGetProperty failed: %@", 
                 stringForOSStatus(status)];        
         
@@ -273,7 +273,7 @@ stringForOSStatus(OSStatus err)
                                          &size, &framesTotal);
         
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"ExtAudioFileGetProperty failed: %@", 
                 stringForOSStatus(status)];
 
@@ -303,7 +303,7 @@ stringForOSStatus(OSStatus err)
                                          kExtAudioFileProperty_ClientDataFormat, 
                                          sizeof(pcmFormat), &pcmFormat);
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"ExtAudioFileSetProperty(ClientDataFormat) failed: %@", 
                 stringForOSStatus(status)];
 
@@ -314,7 +314,7 @@ stringForOSStatus(OSStatus err)
                                          kExtAudioFileProperty_AudioConverter, 
                                          &size, &conv);
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                         format:@"failed to get AudioConverter: %@", 
                         stringForOSStatus(status)]; 
         
@@ -329,13 +329,13 @@ stringForOSStatus(OSStatus err)
                                                    2*sizeof(SInt32), 
                                                    channelMap);
                 if(status != noErr)
-                    [NSException raise:@"ConvertExcetion" 
+                    [NSException raise:@"ConvertException" 
                                 format:@"failed to set ChannelMap: %@", 
                                 stringForOSStatus(status)];             
             }
             else
             {
-                [NSException raise:@"ConvertExcetion" 
+                [NSException raise:@"ConvertException" 
                             format:@"Failed to get AudioConverter ref"];             
                 
             }
@@ -345,7 +345,7 @@ stringForOSStatus(OSStatus err)
                                          kExtAudioFileProperty_ClientDataFormat, 
                                          sizeof(pcmFormat), &pcmFormat);
         if(status != noErr)
-            [NSException raise:@"ConvertExcetion" 
+            [NSException raise:@"ConvertException" 
                 format:@"failed to set ClientDataFormat: %@", 
                 stringForOSStatus(status)];
         
@@ -364,7 +364,7 @@ stringForOSStatus(OSStatus err)
                 bufferList.mBuffers[0].mDataByteSize / pcmFormat.mBytesPerFrame;
             status = ExtAudioFileRead(inAudioFile, &framesToRead, &bufferList);
             if(status != noErr)
-                [NSException raise:@"ConvertExcetion" 
+                [NSException raise:@"ConvertException" 
                             format:@"ExtAudioFileRead failed: %@", 
                             stringForOSStatus(status)];
             
@@ -373,7 +373,7 @@ stringForOSStatus(OSStatus err)
                 status = ExtAudioFileWrite(_outAudioFile, 
                                            framesToRead, &bufferList);
                 if(status != noErr)
-                    [NSException raise:@"ConvertExcetion" 
+                    [NSException raise:@"ConvertException" 
                         format:@"ExtAudioFileWrite failed: %@", 
                         stringForOSStatus(status)];
             }
