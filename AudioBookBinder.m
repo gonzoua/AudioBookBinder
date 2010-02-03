@@ -68,13 +68,13 @@ int main (int argc, char * argv[]) {
                 usage(argv[0]);
                 exit(0);
             case 'a':
-                bookAuthor = [NSString stringWithCString:optarg];
+                bookAuthor = [NSString stringWithUTF8String:optarg];
                 break;
             case 't':
-                bookTitle = [NSString stringWithCString:optarg];
+                bookTitle = [NSString stringWithUTF8String:optarg];
                 break;
             case 'i':
-                inputFileList = [NSString stringWithCString:optarg];
+                inputFileList = [NSString stringWithUTF8String:optarg];
                 break;
             case 'v':
                 verbose = YES;
@@ -91,7 +91,7 @@ int main (int argc, char * argv[]) {
     // Do we have output file et al?
     if (optind < argc) 
     {
-            outFile = [NSString stringWithCString:argv[optind]];
+            outFile = [NSString stringWithUTF8String:argv[optind]];
             optind++;
     }
     else
@@ -139,7 +139,7 @@ int main (int argc, char * argv[]) {
     // Now get input files from the remain of arguments
     while (optind < argc) 
     {
-        [inputFiles addObject:[NSString stringWithCString:argv[optind]]];
+        [inputFiles addObject:[NSString stringWithUTF8String:argv[optind]]];
         optind++;
     }
 
