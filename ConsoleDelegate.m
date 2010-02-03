@@ -51,7 +51,7 @@
 
 -(void)updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
-    UInt32 percent = handledFrames * 100 / totalFrames;
+    unsigned int percent = handledFrames * 100 / totalFrames;
     // got to the beginning of the line
     printf("\r");
     printf("%s: [%3d%%] %lld/%lld", 
@@ -103,13 +103,14 @@
 
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
 {
-    UInt32 h = seconds / 3600;
-    UInt32 m = (seconds % 3600) / 60;
-    UInt32 s = (seconds % 60);
+    unsigned int h = seconds / 3600;
+    unsigned int m = (seconds % 3600) / 60;
+    unsigned int s = (seconds % 60);
     printf("Finished: %s (", 
            [filename cStringUsingEncoding:NSUTF8StringEncoding]);
     if (h)
         printf("%dh ", h);
+
     printf("%dm %ds)\n", m, s);
 }
 
