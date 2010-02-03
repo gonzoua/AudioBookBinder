@@ -38,7 +38,7 @@
 		08FB7796FE84155DC02AAC07 /* AudioBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinder.m; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookBinder_Prefix.pch; sourceTree = "<group>"; };
-		8DD76FA10486AA7600D96B5E /* AudioBookBinder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AudioBookBinder; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DD76FA10486AA7600D96B5E /* abbinder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = abbinder; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F02CE10101EA8B100AE315D /* AudioBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinder.h; sourceTree = "<group>"; };
 		9F02CE11101EA8B100AE315D /* AudioBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinder.m; sourceTree = "<group>"; };
 		9F02CE18101EABCD00AE315D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -117,7 +117,7 @@
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8DD76FA10486AA7600D96B5E /* AudioBookBinder */,
+				8DD76FA10486AA7600D96B5E /* abbinder */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,9 +133,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8DD76F960486AA7600D96B5E /* AudioBookBinder */ = {
+		8DD76F960486AA7600D96B5E /* abbinder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "AudioBookBinder" */;
+			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "abbinder" */;
 			buildPhases = (
 				8DD76F990486AA7600D96B5E /* Sources */,
 				8DD76F9B0486AA7600D96B5E /* Frameworks */,
@@ -145,10 +145,10 @@
 			);
 			dependencies = (
 			);
-			name = AudioBookBinder;
+			name = abbinder;
 			productInstallPath = "$(HOME)/bin";
 			productName = AudioBookBinder;
-			productReference = 8DD76FA10486AA7600D96B5E /* AudioBookBinder */;
+			productReference = 8DD76FA10486AA7600D96B5E /* abbinder */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -163,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DD76F960486AA7600D96B5E /* AudioBookBinder */,
+				8DD76F960486AA7600D96B5E /* abbinder */,
 			);
 		};
 /* End PBXProject section */
@@ -197,7 +197,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = AudioBookBinder;
+				PRODUCT_NAME = abbinder;
 			};
 			name = Debug;
 		};
@@ -221,6 +221,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -245,7 +246,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "AudioBookBinder" */ = {
+		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "abbinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB927508733DD40010E9CD /* Debug */,
