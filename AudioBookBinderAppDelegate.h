@@ -7,13 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AudioFileList.h"
 
-// #if (MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5)
 @interface AudioBookBinderAppDelegate : NSObject {
-// #else
-// @interface AudioBookBinderAppDelegate : NSObject <NSApplicationDelegate> {
-// #endif
-    NSWindow *window;
+    IBOutlet NSWindow *window;
+	IBOutlet NSOutlineView *fileListView;
+	AudioFileList *fileList;
 };
 
 - (IBAction) addFile: (id)sender;
