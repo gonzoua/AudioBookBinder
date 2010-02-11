@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="556"/>
+			<integer value="372"/>
 			<integer value="57"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -1488,7 +1488,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 									<reference key="NSSuperview" ref="1003056706"/>
-									<bool key="NSEnabled">YES</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="1003056706"/>
 									<string key="NSAction">_doScroller:</string>
@@ -1498,7 +1497,7 @@
 							<string key="NSFrame">{{20, 48}, {260, 322}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSNextKeyView" ref="1057619754"/>
-							<int key="NSsFlags">688</int>
+							<int key="NSsFlags">560</int>
 							<reference key="NSVScroller" ref="484526105"/>
 							<reference key="NSHScroller" ref="50783237"/>
 							<reference key="NSContentView" ref="1057619754"/>
@@ -1515,29 +1514,29 @@
 							<object class="NSMutableArray" key="NSCells">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSFormCell" id="25751797">
-									<int key="NSCellFlags">343014977</int>
+									<int key="NSCellFlags">-1804468671</int>
 									<int key="NSCellFlags2">205521920</int>
 									<string key="NSContents"/>
-									<object class="NSFont" key="NSSupport" id="217545718">
-										<string key="NSName">LucidaGrande</string>
-										<double key="NSSize">13</double>
-										<int key="NSfFlags">1044</int>
-									</object>
+									<reference key="NSSupport" ref="184962985"/>
 									<reference key="NSControlView" ref="338053813"/>
 									<double key="NSTitleWidth">47.27197265625</double>
 									<object class="NSCell" key="NSTitleCell">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">67108864</int>
 										<string key="NSContents">Author</string>
-										<reference key="NSSupport" ref="217545718"/>
+										<object class="NSFont" key="NSSupport" id="217545718">
+											<string key="NSName">LucidaGrande</string>
+											<double key="NSSize">13</double>
+											<int key="NSfFlags">1044</int>
+										</object>
 										<reference key="NSControlView" ref="338053813"/>
 									</object>
 								</object>
 								<object class="NSFormCell" id="424633407">
-									<int key="NSCellFlags">343014977</int>
+									<int key="NSCellFlags">-1804468671</int>
 									<int key="NSCellFlags2">205521920</int>
 									<string key="NSContents"/>
-									<reference key="NSSupport" ref="217545718"/>
+									<reference key="NSSupport" ref="184962985"/>
 									<reference key="NSControlView" ref="338053813"/>
 									<int key="NSTag">1</int>
 									<double key="NSTitleWidth">47.27197265625</double>
@@ -1567,8 +1566,8 @@
 									<reference key="NSSupport" ref="217545718"/>
 								</object>
 							</object>
-							<int key="NSSelectedRow">-1</int>
-							<int key="NSSelectedCol">-1</int>
+							<int key="NSSelectedRow">1</int>
+							<reference key="NSSelectedCell" ref="424633407"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -1659,6 +1658,9 @@
 			</object>
 			<object class="NSCustomObject" id="755631768">
 				<string key="NSClassName">NSFontManager</string>
+			</object>
+			<object class="NSUserDefaultsController" id="661846977">
+				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -2375,6 +2377,14 @@
 						<reference key="destination" ref="453424226"/>
 					</object>
 					<int key="connectionID">590</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">form</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="338053813"/>
+					</object>
+					<int key="connectionID">594</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3553,6 +3563,11 @@
 						<reference key="object" ref="579359332"/>
 						<reference key="parent" ref="950548835"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">591</int>
+						<reference key="object" ref="661846977"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4120,7 +4135,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">590</int>
+			<int key="maxID">594</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4148,11 +4163,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>fileListView</string>
+							<string>form</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSOutlineView</string>
+							<string>NSForm</string>
 							<string>NSWindow</string>
 						</object>
 					</object>

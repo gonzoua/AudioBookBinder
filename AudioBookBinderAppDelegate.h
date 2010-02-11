@@ -8,10 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AudioFileList.h"
+#import "AudioBinder.h"
 
 @interface AudioBookBinderAppDelegate : NSObject {
     IBOutlet NSWindow *window;
 	IBOutlet NSOutlineView *fileListView;
+	IBOutlet NSForm *form;
 	AudioFileList *fileList;
 };
 
