@@ -80,6 +80,12 @@
 		[file release];
 }
 
+- (NSArray*) files
+{
+	NSArray *result = [[NSArray arrayWithArray:_files] retain];
+	return result;
+}
+
 - (void) addFilesInDirectory:(NSString*)dirName
 {
 	NSString *currentFile;
@@ -113,7 +119,6 @@
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-	NSLog(@"isExpandable?");
 	return FALSE;
 }
 
@@ -130,13 +135,12 @@
 {
 	id objectValue = nil;
 
-	NSLog(@"objectValue %@/%@/%@", item, tableColumn, [tableColumn identifier]);
 	if (item != nil)
 	{
 		AudioFile *file = item;
 
 		if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
-			objectValue = file.filePath;
+			objectValue = file.name;
 		else {
 			int hours = file.duration / 3600;
 			int minutes = (file.duration - (hours * 3600)) / 60;

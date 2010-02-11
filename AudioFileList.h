@@ -21,7 +21,7 @@
 - (void) addFile:(NSString*)fileName;
 - (void) addFilesInDirectory:(NSString*)dirName;
 - (void) deleteSelected;
-
+- (NSArray*) files;
 // NSOutlineView data source methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item;
