@@ -151,17 +151,7 @@ stringForOSStatus(OSStatus err)
     OSStatus status;
     AudioStreamBasicDescription outputFormat;
     
-    // open out file
-    status = FSPathMakeRef((UInt8 *)
-        [[_outFileName stringByDeletingLastPathComponent] UTF8String], 
-                           &dirFSRef, NULL);
-    if (status != noErr)
-    {
-        ABLog(@"FSPathMakeRef failed for %@: %@", 
-              _outFileName, stringForOSStatus(status));        
-        return NO;
-    }
-    
+	// delete file if exists
     if([[NSFileManager defaultManager] fileExistsAtPath:_outFileName]) 
     {
         if (![[NSFileManager defaultManager] removeFileAtPath:_outFileName 
@@ -171,7 +161,27 @@ stringForOSStatus(OSStatus err)
             return NO;
         }
     }    
-    
+ 	
+	// open out file
+	NSString *dir = [[_outFileName stringByDeletingLastPathComponent] retain];
+	// if its only path name - make reference to current directory
+	if ([dir isEqualToString:@""])
+	{
+		[dir release];
+		dir = [[NSString stringWithString:@"."] retain];
+	}
+	
+    status = FSPathMakeRef((UInt8 *)
+						   [dir UTF8String], 
+                           &dirFSRef, NULL);
+	[dir release];
+    if (status != noErr)
+    {
+        ABLog(@"FSPathMakeRef failed for %@: %@", 
+              _outFileName, stringForOSStatus(status));        
+        return NO;
+    }	
+	
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
     outputFormat.mSampleRate = DEFAULT_SAMPLE_RATE;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
