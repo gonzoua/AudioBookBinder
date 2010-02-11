@@ -84,7 +84,7 @@ int main (int argc, char * argv[]) {
                 break;
             default:
                 usage(argv[0]);
-                break;
+                exit(1);
         }
     }
 
