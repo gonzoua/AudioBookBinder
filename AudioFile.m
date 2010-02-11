@@ -17,7 +17,7 @@
 	if (self = [super init])
 	{
 		self.filePath = path;
-		self.name = path;
+		self.name = [path lastPathComponent];
 		self.duration = -1;
 		[self updateDuration];
 	}
