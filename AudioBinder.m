@@ -42,7 +42,7 @@ stringForOSStatus(OSStatus err)
     NSString * descString;
     BOOL isOSType = YES;
     char osTypeRepr[5];
-    
+
     // Check if err is OSType and convert it to 4 chars representation
     osTypeRepr[4] = 0;
     for (int i = 0; i < 4; i++)
@@ -69,12 +69,14 @@ stringForOSStatus(OSStatus err)
 
 -(id)init
 {
-    [super init];
+    self = [super init];
     
     _inFiles = [[NSMutableArray alloc] init];
     _outFileName = nil;
     _outAudioFile = nil;
     _outFileLength = 0;
+    _delegate = nil;
+	
     return self;
 }
 
