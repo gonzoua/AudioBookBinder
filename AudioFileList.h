@@ -12,6 +12,7 @@
 @interface AudioFileList : NSObject {
 	NSMutableArray *_files;
 	NSString *_topDir;
+	NSArray *_draggedNodes;
 }
 
 // class methods

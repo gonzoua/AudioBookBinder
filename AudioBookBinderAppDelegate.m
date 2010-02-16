@@ -22,9 +22,14 @@ enum abb_form_fields {
 	[fileListView setDataSource:fileList];
 	[fileListView setDelegate:fileList];
 	[fileListView setAllowsMultipleSelection:YES];
+	
+	[fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
+    [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+    // [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
+    [fileListView setAutoresizesOutlineColumn:NO];
 }
 
-- (IBAction) addFile: (id)sender
+- (IBAction) addFiles: (id)sender
 {
 	int i; // Loop counter.
 	
@@ -58,9 +63,9 @@ enum abb_form_fields {
 	}	
 }
 
-- (IBAction) delFile: (id)sender
+- (IBAction) delFiles: (id)sender
 {
-	NSLog(@"delFile");
+	[fileList deleteSelected];
 }
 
 - (IBAction) bind: (id)sender
@@ -74,37 +79,94 @@ enum abb_form_fields {
 	
 	choice = [savePanel runModalForDirectory: NSHomeDirectory()
 										  file: @"book.m4b"];
-	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-	
 	/* if successful, save file under designated name */
 	if (choice == NSOKButton)
 	{
-		AudioBinder *binder = [[[AudioBinder alloc] init] retain];
-		NSString *outFile = [savePanel filename];
+		[bindButton setEnabled:FALSE];
+		outFile = [[savePanel filename] retain];
+
 		
-		[binder setOutputFile:outFile];
-		
-		NSArray *files = [fileList files];
-		for (AudioFile *file in files) 
-			[binder addInputFile:file.filePath];
-		
-		if (![binder convert])
-		{
-			NSLog(@"Conversion failed");
-		}		
-		
-		else if (![author isEqualToString:@""] || (![title isEqualToString:@""]))
-		{
-			NSLog(@"Adding metadata, it may take a while...");
-			MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
-			[mp4 setArtist:author]; 
-			[mp4 setTitle:title]; 
-			[mp4 updateFile];
-		}
-		
-		[binder release];
+		[NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
 	}
+}
+
+- (void) bindingThreadIsDone:(id)sender
+{
+	[bindButton setEnabled:TRUE];
+}
+
+- (void)bindToFileThread:(id)object
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+
+	AudioBinder *binder = [[[AudioBinder alloc] init] retain];
+	[binder setDelegate:self];
+	[binder setOutputFile:outFile];
+	
+	NSArray *files = [fileList files];
+	for (AudioFile *file in files) 
+		[binder addInputFile:file.filePath];
+	
+	[NSApp beginSheet:progressPanel modalForWindow:window
+        modalDelegate:self didEndSelector:NULL contextInfo:nil];	
+	
+	[fileProgress setMaxValue:100.];
+	[fileProgress setDoubleValue:0.]; 
+	[fileProgress displayIfNeeded];
+	if (![binder convert])
+	{
+		NSLog(@"Conversion failed");
+	}		
+	
+	else if (![author isEqualToString:@""] || (![title isEqualToString:@""]))
+	{
+		NSLog(@"Adding metadata, it may take a while...");
+		MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
+		[mp4 setArtist:author]; 
+		[mp4 setTitle:title]; 
+		[mp4 updateFile];
+	}
+	
+	[binder release];
+	[NSApp endSheet:progressPanel];
+	[progressPanel orderOut:nil];
+	[self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
+	[pool release];
+}
+
+//
+// AudioBinderDelegate methods
+// 
+-(void) conversionStart: (NSString*)filename 
+				 format: (AudioStreamBasicDescription*)asbd 
+	  formatDescription: (NSString*)description 
+				 length: (UInt64)frames
+
+{
+	[currentFile setStringValue:[NSString stringWithFormat:@"Converting %@", filename]];
+	[fileProgress setMaxValue:(double)frames];
+	[fileProgress setDoubleValue:0];
+}
+
+-(void) updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
+{
+	[fileProgress setDoubleValue:(double)handledFrames];
+}
+
+-(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason
+{
+	return NO;
+}
+
+-(void) conversionFinished: (NSString*)filename
+{
+	[fileProgress setDoubleValue:[fileProgress doubleValue]];
+}
+
+-(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
+{
 }
 
 @end
