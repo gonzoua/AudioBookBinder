@@ -13,12 +13,14 @@
 - (NSArray *) selectedItems {
     NSMutableArray *items = [NSMutableArray array];
     NSIndexSet *selectedRows = [self selectedRowIndexes];
+
     if (selectedRows != nil) {
         for (NSInteger row = [selectedRows firstIndex]; 
 			 row != NSNotFound; row = [selectedRows indexGreaterThanIndex:row]) {
             [items addObject:[self itemAtRow:row]];
         }
     }
+
     return items;
 }
 
