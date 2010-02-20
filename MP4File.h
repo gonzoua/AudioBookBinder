@@ -27,6 +27,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MP4Atom;
+
 @interface MP4File : NSObject {
     NSFileHandle *_fh;
     NSString *_artist;
@@ -42,5 +44,6 @@
 -(NSData*) encodeHDLRAtom;
 -(void) reserveSpace:(UInt64)size at:(UInt64)offset;
 -(void) fixSTCOAtomBy:(UInt64)shift;
+-(void) fixupAtom: (MP4Atom*)atom;
 
 @end

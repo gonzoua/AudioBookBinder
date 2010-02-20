@@ -41,6 +41,7 @@
 -(UInt64) offset;
 -(UInt32) length;
 -(void) setLength: (UInt32)length;
+-(void) setOffset: (UInt64)offset;
 -(NSString*) name;
 -(NSData*) encode;
 

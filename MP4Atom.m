@@ -95,4 +95,9 @@
     return _offset;
 }
 
+-(void) setOffset: (UInt64)offset
+{
+    _offset = offset;
+}
+
 @end

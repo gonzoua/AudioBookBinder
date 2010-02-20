@@ -122,88 +122,130 @@
  */
 -(BOOL) updateFile
 {
-    UInt32 metaSize, udtaSize, ilstSize;
+	NSMutableData *hdlrContent = [NSMutableData dataWithData:[self encodeHDLRAtom]];
     MP4Atom *freeAtom = [self findAtom:@"free"];
-
-    NSAssert([self findAtom:@"moov.udta"] == nil, 
-            @"File contains moov.udta atom");
-
+	BOOL haveIlstAtom, haveMetaAtom, haveUdtaAtom;
     MP4Atom *moovAtom = [self findAtom:@"moov"];
+    MP4Atom *udtaAtom = [self findAtom:@"moov.udta"];
+	MP4Atom *metaAtom = [self findAtom:@"moov.udta.meta"];
+	MP4Atom *ilstAtom = [self findAtom:@"moov.udta.meta.ilst"];
+	
     NSAssert(moovAtom != nil, 
             @"File contains no moov atom");
+    NSAssert(freeAtom != nil, 
+			 @"File contains no free atom");
 
-    NSMutableData *ilstContent = [[NSMutableData alloc] init];
+	haveUdtaAtom = (udtaAtom != nil);
+	haveMetaAtom = (metaAtom != nil);
+	haveIlstAtom = (ilstAtom != nil);
+	
+    NSMutableData *newAtomsData = [[NSMutableData alloc] init];
     if (_title != nil)
     {
-        [ilstContent appendData:[self encodeMetaDataAtom:@"©nam" 
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"©nam" 
                                                 value:_title 
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
-        [ilstContent appendData:[self encodeMetaDataAtom:@"©alb" 
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"©alb" 
                                                 value:_title 
-                                                 type:ITUNES_METADATA_STRING_CLASS]];
-        
+                                                 type:ITUNES_METADATA_STRING_CLASS]];        
     }   
     
     if (_artist != nil)
-        [ilstContent appendData:[self encodeMetaDataAtom:@"©ART" 
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"©ART" 
                                                 value:_artist 
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
-    [ilstContent appendData:[self encodeMetaDataAtom:@"©gen" 
+    [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
                                             value:@"Audiobooks" 
                                              type:ITUNES_METADATA_STRING_CLASS]];
-    ilstSize = [ilstContent length] + 4 + 4; // length and name
-    MP4Atom *ilstAtom = [[MP4Atom alloc] initWithName:@"ilst" 
-                                            andLength:ilstSize];
-    NSMutableData *hdlrContent = [NSMutableData dataWithData:[self encodeHDLRAtom]];
-    // length, name and misterious junk
-    metaSize = [ilstAtom length] + [hdlrContent length] + 4 + 4 + 4;
-    MP4Atom *metaAtom = [[MP4Atom alloc] initWithName:@"meta" andLength:metaSize];
-    udtaSize = [metaAtom length] + 4 + 4; // length and name
-    MP4Atom *udtaAtom = [[MP4Atom alloc] initWithName:@"udta" andLength:udtaSize];
-    NSMutableData *atomData = [NSMutableData dataWithData:[udtaAtom encode]];
-    [atomData appendData:[metaAtom encode]];
-    UInt32 flags = 0;
-    // append 
-    [atomData appendBytes:&flags length:4];
-    [atomData appendData:hdlrContent];
-    [atomData appendData:[ilstAtom encode]];
-    [atomData appendData:ilstContent];
+	
+	UInt32 additionalLength = [newAtomsData length];
+ 
+	if (ilstAtom)
+	{
+		[ilstAtom setLength:[ilstAtom length] + additionalLength];
+		[self fixupAtom:ilstAtom];
+	}
+	else
+	{
+		additionalLength += 4 + 4; // length and name
+		ilstAtom = [[MP4Atom alloc] initWithName:@"ilst" andLength:additionalLength];
+	}
+	
+	if (metaAtom)
+	{
+		[metaAtom setLength:[metaAtom length] + additionalLength];
+		[self fixupAtom:metaAtom];
+	}
+	else 
+	{
+		// length, name and misterious junk
+		additionalLength += [hdlrContent length] + 4 + 4 + 4;
+		metaAtom = [[MP4Atom alloc] initWithName:@"meta" andLength:additionalLength];
+	}
+	if (udtaAtom)
+	{
+		[udtaAtom setLength:[udtaAtom length] + additionalLength];
+		[self fixupAtom:udtaAtom];
+	}
+	else {
+		additionalLength += 4 + 4; // length and name
+		udtaAtom = [[MP4Atom alloc] initWithName:@"udta" andLength:additionalLength];		
+	}
 
-    // reserve space  at the end of moov by copying data to new position
-    UInt64 startOffset = [moovAtom offset] + [moovAtom length];
+	NSMutableData *atomData = [NSMutableData data];
+	if (!haveUdtaAtom)
+		[atomData appendData:[udtaAtom encode]];
+    
+	if (!haveMetaAtom)
+	{
+		[atomData appendData:[metaAtom encode]];
+		UInt32 flags = 0;
+		// append 
+		[atomData appendBytes:&flags length:4];
+		[atomData appendData:hdlrContent];
+	}
+	
+	if (!haveIlstAtom)
+		[atomData appendData:[ilstAtom encode]];
+    
+	[atomData appendData:newAtomsData];
+
+	UInt64 newAtomsOffset = [moovAtom offset] + [moovAtom length];
 
     // is there enough free space for udta tag?
-    if ((freeAtom == nil) || ([freeAtom length] < udtaSize))
+    if ((freeAtom == nil) || ([freeAtom length] < additionalLength))
     {
         MP4Atom *mdatAtom = [self findAtom:@"mdat"];
         NSAssert(mdatAtom != nil, @"Failed to find mdat atom");
-        [self reserveSpace:udtaSize at:startOffset];
+        [self reserveSpace:additionalLength at:newAtomsOffset];
         // Make sure mdat atom comes after moov atom
         if ([mdatAtom offset] > [moovAtom offset])
-                [self fixSTCOAtomBy:udtaSize];
+                [self fixSTCOAtomBy:additionalLength];
     }
     else
     {
-        [_fh seekToFileOffset:startOffset + udtaSize];
-
         // update free atom
-        [freeAtom setLength:[freeAtom length] - udtaSize];
-        [_fh writeData:[freeAtom encode]];
+        [freeAtom setLength:[freeAtom length] - additionalLength];
+		[freeAtom setOffset:[freeAtom offset] + additionalLength];
+        [self fixupAtom:freeAtom];
     }
             
-    // write udta adn children
-    [_fh seekToFileOffset:startOffset];
+    // write newly created atoms
+    [_fh seekToFileOffset:newAtomsOffset];
     [_fh writeData:atomData];
 
-    
     // update moov atom
-    [moovAtom setLength:[moovAtom length] + udtaSize];    
-    [_fh seekToFileOffset:[moovAtom offset]];
-    [_fh writeData:[moovAtom encode]];
-
+	[moovAtom setLength:[moovAtom length] + additionalLength];    
+	[self fixupAtom:moovAtom];
     return TRUE;
+}
+
+-(void) fixupAtom: (MP4Atom*)atom
+{
+    [_fh seekToFileOffset:[atom offset]];
+    [_fh writeData:[atom encode]];	
 }
 
 /*
