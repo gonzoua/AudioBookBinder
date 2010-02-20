@@ -8,6 +8,7 @@
 
 #import "AudioFileList.h"
 #import "AudioFile.h"
+#include "NSOutlineView_Extension.h"
 
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
@@ -270,4 +271,20 @@
 	
 	return YES;
 }
+
+- (BOOL)deleteSelected:(NSOutlineView *)outlineView
+{
+    // Go ahead and move things. 
+    for (AudioFile *file in [outlineView selectedItems]) {
+        // Remove the node from its old location
+        NSInteger oldIndex = [_files indexOfObject:file];
+        if (oldIndex != NSNotFound) {
+            [_files removeObjectAtIndex:oldIndex];
+        }
+    }
+	
+    [outlineView reloadData];	
+	return YES;
+}
+
 @end

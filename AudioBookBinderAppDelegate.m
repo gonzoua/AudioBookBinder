@@ -65,7 +65,7 @@ enum abb_form_fields {
 
 - (IBAction) delFiles: (id)sender
 {
-	[fileList deleteSelected];
+	[fileList deleteSelected:fileListView];
 }
 
 - (IBAction) bind: (id)sender
