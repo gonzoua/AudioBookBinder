@@ -20,13 +20,13 @@
 	IBOutlet NSTextField *currentFile;
 	AudioFileList *fileList;
 	NSString *outFile;
-	
+	AudioBinder *_binder;
 };
 
 - (IBAction) addFiles: (id)sender;
 - (IBAction) delFiles: (id)sender;
 - (IBAction) bind: (id)sender;
-// - (IBAction) cancel: (id)sender;
+- (IBAction) cancel: (id)sender;
 - (void) bindingThreadIsDone: (id) sender;
 
 // AudioBinderDelegate methods
@@ -35,5 +35,6 @@
 -(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason;
 -(void) conversionFinished: (NSString*)filename;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
+
 
 @end

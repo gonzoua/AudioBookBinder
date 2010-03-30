@@ -9,6 +9,8 @@
 #import "AudioBookBinderAppDelegate.h"
 #import "AudioFile.h"
 #import "MP4File.h"
+#import "ExpandedPathToPathTransformer.h"
+#import "ExpandedPathToIconTransformer.h"
 
 enum abb_form_fields {
 	ABBAuthor = 0,
@@ -24,9 +26,30 @@ enum abb_form_fields {
 	[fileListView setAllowsMultipleSelection:YES];
 	
 	[fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
-    [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    // [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
-    [fileListView setAutoresizesOutlineColumn:NO];
+	[fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+	// [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
+	[fileListView setAutoresizesOutlineColumn:NO];
+	
+	_binder = [[[AudioBinder alloc] init] retain];
+	[_binder setDelegate:self];
+	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSMutableDictionary *appDefaults = [NSMutableDictionary
+								 dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"Channels"];
+	[appDefaults setObject:@"YES" forKey:@"AddToiTunes"];
+	[appDefaults setObject:@"44100" forKey:@"SampleRateIndex"];
+	NSString *homePath = NSHomeDirectory();
+	[appDefaults setObject:homePath forKey:@"DestinationFolder"];
+	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
+	
+	[defaults registerDefaults:appDefaults];
+	
+	//set custom value transformers	
+	ExpandedPathToPathTransformer * pathTransformer = [[[ExpandedPathToPathTransformer alloc] init] autorelease];
+	[NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
+	ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
+	[NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
+
 }
 
 - (IBAction) addFiles: (id)sender
@@ -101,21 +124,19 @@ enum abb_form_fields {
 	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
 	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
 
-	AudioBinder *binder = [[[AudioBinder alloc] init] retain];
-	[binder setDelegate:self];
-	[binder setOutputFile:outFile];
+	[_binder setOutputFile:outFile];
 	
 	NSArray *files = [fileList files];
 	for (AudioFile *file in files) 
-		[binder addInputFile:file.filePath];
+		[_binder addInputFile:file.filePath];
 	
 	[NSApp beginSheet:progressPanel modalForWindow:window
-        modalDelegate:self didEndSelector:NULL contextInfo:nil];	
+		modalDelegate:self didEndSelector:NULL contextInfo:nil];	
 	
 	[fileProgress setMaxValue:100.];
 	[fileProgress setDoubleValue:0.]; 
 	[fileProgress displayIfNeeded];
-	if (![binder convert])
+	if (![_binder convert])
 	{
 		NSLog(@"Conversion failed");
 	}		
@@ -123,13 +144,18 @@ enum abb_form_fields {
 	else if (![author isEqualToString:@""] || (![title isEqualToString:@""]))
 	{
 		NSLog(@"Adding metadata, it may take a while...");
-		MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
-		[mp4 setArtist:author]; 
-		[mp4 setTitle:title]; 
-		[mp4 updateFile];
+		@try {
+			MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
+			[mp4 setArtist:author]; 
+			[mp4 setTitle:title]; 
+			[mp4 updateFile];
+		}
+		@catch (NSException *e) {
+			NSLog(@"Something went wrong");
+		}
 	}
 	
-	[binder release];
+	[_binder release];
 	[NSApp endSheet:progressPanel];
 	[progressPanel orderOut:nil];
 	[self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
@@ -168,5 +194,11 @@ enum abb_form_fields {
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
 {
 }
+
+- (IBAction) cancel: (id)sender
+{
+	[_binder cancel];
+}
+
 
 @end
