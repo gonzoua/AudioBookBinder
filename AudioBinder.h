@@ -30,6 +30,8 @@
 #include <AudioToolbox/AudioFormat.h>
 #include <AudioToolbox/ExtendedAudioFile.h>
 
+#define DEFAULT_SAMPLE_RATE 44100.f
+
 @protocol AudioBinderDelegate
 
 -(void) updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames;
@@ -50,7 +52,14 @@
     ExtAudioFileRef _outAudioFile;
     UInt32 _outFileLength;
     id _delegate;
+	BOOL _canceled;
+	float _sampleRate;
+	int _channels;
 }
+
+
+@property (assign) int channels;
+@property (assign) float sampleRate;
 
 -(id) init;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
@@ -60,6 +69,5 @@
 -(BOOL) openOutFile;
 -(void) closeOutFile;
 -(BOOL) convertOneFile: (NSString*)inFileName reason: (NSString**)reason;
-
+- (void) cancel;
 @end
-

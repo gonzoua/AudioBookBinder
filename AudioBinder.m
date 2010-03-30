@@ -32,7 +32,7 @@
 
 // 1M seems to be sane buffer size nowadays
 #define AUDIO_BUFFER_SIZE 1*1024*1024
-#define DEFAULT_SAMPLE_RATE 44100.f
+
 
 // Helper function
 static NSString * 
@@ -67,6 +67,9 @@ stringForOSStatus(OSStatus err)
 
 @implementation AudioBinder
 
+@synthesize channels = _channels;
+@synthesize sampleRate = _sampleRate;
+
 -(id)init
 {
     self = [super init];
@@ -76,8 +79,10 @@ stringForOSStatus(OSStatus err)
     _outAudioFile = nil;
     _outFileLength = 0;
     _delegate = nil;
-	
-    return self;
+	_canceled = NO;
+	_sampleRate = DEFAULT_SAMPLE_RATE;
+	_channels = 2;
+	return self;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -128,23 +133,30 @@ stringForOSStatus(OSStatus err)
         }
         else
             filesConverted++;
+		
+		if (_canceled)
+			break;
     }
     
     [self closeOutFile];
-    if (failed)
+    if (failed || _canceled)
     {
         fm = [NSFileManager defaultManager];
         [fm removeFileAtPath:_outFileName handler:nil];
     }
-        
+       
+	BOOL result = YES;
     // Did we fail? Were there any files successfully converted? 
-    if (failed || (filesConverted == 0))
-        return NO;
+    if (failed || (filesConverted == 0) || _canceled)
+        result = NO;
+	else
+		[_delegate audiobookReady:_outFileName 
+						 duration:(UInt32)(_outFileLength/_sampleRate)];
     
-    
-    [_delegate audiobookReady:_outFileName 
-                     duration:(UInt32)(_outFileLength/DEFAULT_SAMPLE_RATE)];
-    return YES;
+	// Back to non-cacneled state
+	_canceled = NO;
+	
+	return result;
 }
 
 -(BOOL)openOutFile
@@ -185,7 +197,7 @@ stringForOSStatus(OSStatus err)
     }	
 	
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
-    outputFormat.mSampleRate = DEFAULT_SAMPLE_RATE;
+    outputFormat.mSampleRate = _sampleRate;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
     outputFormat.mChannelsPerFrame = 2;
    
@@ -396,11 +408,13 @@ stringForOSStatus(OSStatus err)
                             handled:framesConverted 
                               total:framesTotal];
 
+			if (_canceled)
+				break;
 
         } while(framesToRead > 0);
 
         [_delegate conversionFinished:inFileName];
-    }  
+	}  
     @catch (NSException *e) {
         *reason = [e reason];
         if (inAudioFile != nil)
@@ -409,7 +423,7 @@ stringForOSStatus(OSStatus err)
             free(audioBuffer);
         return NO;
     }
-
+	
     if (inAudioFile != nil)
         ExtAudioFileDispose(inAudioFile);
     if (audioBuffer)
@@ -418,4 +432,8 @@ stringForOSStatus(OSStatus err)
     return YES;
 }
 
+- (void) cancel
+{
+	_canceled = YES;
+}
 @end
