@@ -40,5 +40,27 @@
     
     [newSelection release];
 }
+- (void)keyDown:(NSEvent*)event_ {
+	BOOL isDeleteKey = FALSE;
+	
+	NSString *eventCharacters = [event_ characters];        
+	if ([eventCharacters length]) {
+		switch ([eventCharacters characterAtIndex:0]) {
+			case NSDeleteFunctionKey:
+			case NSDeleteCharFunctionKey:
+			case NSDeleteCharacter:                                
+				isDeleteKey = YES;
+				break;
+			default:
+				break;
+		}
+	}
+	
+	if (isDeleteKey) {
+		[self.delegate delKeyDown:self];
+	} else {
+		[super keyDown:event_];
+	}
+}
 
 @end
