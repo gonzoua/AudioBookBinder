@@ -272,6 +272,11 @@
 	return YES;
 }
 
+- (void)delKeyDown:(NSOutlineView *)outlineView
+{
+	[self deleteSelected:outlineView];
+}
+
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView
 {
     // Go ahead and move things. 
