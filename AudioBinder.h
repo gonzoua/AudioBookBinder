@@ -50,7 +50,7 @@
     NSMutableArray *_inFiles;
     NSString *_outFileName;
     ExtAudioFileRef _outAudioFile;
-    UInt32 _outFileLength;
+    SInt64 _outFileLength;
     id _delegate;
 	BOOL _canceled;
 	float _sampleRate;
@@ -62,6 +62,7 @@
 @property (assign) float sampleRate;
 
 -(id) init;
+- (void) reset;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
 -(void) addInputFile: (NSString*)fileName;
 -(void) setOutputFile: (NSString*)outFileName;

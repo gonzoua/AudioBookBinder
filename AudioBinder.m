@@ -72,9 +72,17 @@ stringForOSStatus(OSStatus err)
 
 -(id)init
 {
-    self = [super init];
-    
-    _inFiles = [[NSMutableArray alloc] init];
+    if (self = [super init]) {
+		_inFiles = [[NSMutableArray alloc] init];
+		[self reset];
+	}
+ 
+	return self;
+}
+
+- (void) reset
+{
+	[_inFiles removeAllObjects];
     _outFileName = nil;
     _outAudioFile = nil;
     _outFileLength = 0;
@@ -82,7 +90,6 @@ stringForOSStatus(OSStatus err)
 	_canceled = NO;
 	_sampleRate = DEFAULT_SAMPLE_RATE;
 	_channels = 2;
-	return self;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -199,7 +206,7 @@ stringForOSStatus(OSStatus err)
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
     outputFormat.mSampleRate = _sampleRate;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
-    outputFormat.mChannelsPerFrame = 2;
+    outputFormat.mChannelsPerFrame = _channels;
    
     status = ExtAudioFileCreateNew(&dirFSRef, 
                                    (CFStringRef)[_outFileName lastPathComponent], 
@@ -343,7 +350,7 @@ stringForOSStatus(OSStatus err)
                         stringForOSStatus(status)]; 
         
         // Convert mono files to stereo by duplicating channel
-        if (format.mChannelsPerFrame == 1)
+        if ((format.mChannelsPerFrame == 1) && (_channels == 2))
         {
             if (conv)
             {
@@ -377,8 +384,7 @@ stringForOSStatus(OSStatus err)
         NSAssert(audioBuffer != NULL, @"malloc failed");
         audioBuffer = malloc(AUDIO_BUFFER_SIZE);
         bufferList.mNumberBuffers = 1;
-        bufferList.mBuffers[0].mNumberChannels = 
-        pcmFormat.mChannelsPerFrame;
+        bufferList.mBuffers[0].mNumberChannels = pcmFormat.mChannelsPerFrame;
         bufferList.mBuffers[0].mData = audioBuffer;
         bufferList.mBuffers[0].mDataByteSize = AUDIO_BUFFER_SIZE;
                 
@@ -386,7 +392,7 @@ stringForOSStatus(OSStatus err)
             
             framesToRead = 
                 bufferList.mBuffers[0].mDataByteSize / pcmFormat.mBytesPerFrame;
-            status = ExtAudioFileRead(inAudioFile, &framesToRead, &bufferList);
+			status = ExtAudioFileRead(inAudioFile, &framesToRead, &bufferList);
             if(status != noErr)
                 [NSException raise:@"ConvertException" 
                             format:@"ExtAudioFileRead failed: %@", 
@@ -403,11 +409,17 @@ stringForOSStatus(OSStatus err)
             }
 
             framesConverted += framesToRead;
-            _outFileLength += framesToRead;
+
             [_delegate updateStatus:inFileName 
                             handled:framesConverted 
                               total:framesTotal];
 
+			status = ExtAudioFileTell(_outAudioFile, &_outFileLength);
+			if(status != noErr)
+				[NSException raise:@"ConvertException" 
+							format:@"ExtAudioFileTell failed: %@", 
+				 stringForOSStatus(status)];
+			
 			if (_canceled)
 				break;
 
