@@ -23,6 +23,8 @@
 	AudioBinder *_binder;
 };
 
++ (void) initialize;
+
 - (IBAction) addFiles: (id)sender;
 - (IBAction) delFiles: (id)sender;
 - (IBAction) bind: (id)sender;
@@ -35,6 +37,5 @@
 -(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason;
 -(void) conversionFinished: (NSString*)filename;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
-
-
+- (void) addFileToiTunes:(NSString *)path;
 @end

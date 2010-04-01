@@ -19,6 +19,29 @@ enum abb_form_fields {
 
 @implementation AudioBookBinderAppDelegate
 
++ (void) initialize
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSMutableDictionary *appDefaults = [NSMutableDictionary
+										dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"Channels"];
+	// for checkbox "add to itunes"
+	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
+	[appDefaults setObject:@"44100" forKey:@"SampleRate"];
+	// for pop-up button Destination Folder
+	NSString *homePath = NSHomeDirectory();
+	[appDefaults setObject:homePath forKey:@"DestinationFolder"];
+#ifdef notyet
+	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
+#endif	
+	[defaults registerDefaults:appDefaults];
+	
+	//set custom value transformers	
+	ExpandedPathToPathTransformer * pathTransformer = [[[ExpandedPathToPathTransformer alloc] init] autorelease];
+	[NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
+	ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
+	[NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	fileList = [[[AudioFileList alloc] init] retain];
 	[fileListView setDataSource:fileList];
@@ -31,24 +54,7 @@ enum abb_form_fields {
 	[fileListView setAutoresizesOutlineColumn:NO];
 	
 	_binder = [[[AudioBinder alloc] init] retain];
-	[_binder setDelegate:self];
 	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSMutableDictionary *appDefaults = [NSMutableDictionary
-								 dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"Channels"];
-	[appDefaults setObject:@"YES" forKey:@"AddToiTunes"];
-	[appDefaults setObject:@"44100" forKey:@"SampleRateIndex"];
-	NSString *homePath = NSHomeDirectory();
-	[appDefaults setObject:homePath forKey:@"DestinationFolder"];
-	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
-	
-	[defaults registerDefaults:appDefaults];
-	
-	//set custom value transformers	
-	ExpandedPathToPathTransformer * pathTransformer = [[[ExpandedPathToPathTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
-	ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
 
 }
 
@@ -93,15 +99,39 @@ enum abb_form_fields {
 
 - (IBAction) bind: (id)sender
 {
+	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
 	NSSavePanel *savePanel;
 	int choice;
+	NSMutableString *filename = [[NSMutableString string] retain];
+	
+	if (![author isEqualToString:@""])
+		[filename appendString:author];
+	
+	if (![title isEqualToString:@""]) {
+		if (![filename isEqualToString:@""])
+			[filename appendString:@" - "];
+		
+		[filename appendString:title];
+	}
+
+	if ([filename isEqualToString:@""])
+		[filename setString:@"audiobook"];
+	[filename appendString:@".m4b"];
 	
 	savePanel = [NSSavePanel savePanel];
 	[savePanel setAccessoryView: nil];
 	// [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"m4a", @"m4b", nil]];
+	NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:@"DestinationFolder"];
+
+#ifdef notyet	
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"DestinationiTunes"]) {
+	    dir = [self _getiTunesMediaFolder];
+	}
+#endif
 	
-	choice = [savePanel runModalForDirectory: NSHomeDirectory()
-										  file: @"book.m4b"];
+	choice = [savePanel runModalForDirectory:dir file:filename];
+	[filename release];
 	/* if successful, save file under designated name */
 	if (choice == NSOKButton)
 	{
@@ -124,12 +154,19 @@ enum abb_form_fields {
 	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
 	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
 
+	[_binder reset];
+	[_binder setDelegate:self];
 	[_binder setOutputFile:outFile];
 	
 	NSArray *files = [fileList files];
 	for (AudioFile *file in files) 
 		[_binder addInputFile:file.filePath];
 	
+	
+	// setup channels/samplerate
+	_binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channels"];
+	_binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:@"SampleRate"];
+
 	[NSApp beginSheet:progressPanel modalForWindow:window
 		modalDelegate:self didEndSelector:NULL contextInfo:nil];	
 	
@@ -145,17 +182,22 @@ enum abb_form_fields {
 	{
 		NSLog(@"Adding metadata, it may take a while...");
 		@try {
+			[currentFile setStringValue:@"Adding artist/title tags"];
 			MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
 			[mp4 setArtist:author]; 
 			[mp4 setTitle:title]; 
 			[mp4 updateFile];
+			[currentFile setStringValue:@"Adding file to iTunes"];
+			if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"])
+				[self addFileToiTunes:outFile];
+			[currentFile setStringValue:@"Done"];
+			
 		}
 		@catch (NSException *e) {
 			NSLog(@"Something went wrong");
 		}
 	}
 	
-	[_binder release];
 	[NSApp endSheet:progressPanel];
 	[progressPanel orderOut:nil];
 	[self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
@@ -183,6 +225,13 @@ enum abb_form_fields {
 
 -(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason
 {
+
+	NSAlert *alert = [[[NSAlert alloc] init] retain];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setMessageText:@"Audiofile(s) conversion failed"];
+	[alert setInformativeText:reason];
+	[alert setAlertStyle:NSWarningAlertStyle];
+	[alert runModal];
 	return NO;
 }
 
@@ -200,5 +249,21 @@ enum abb_form_fields {
 	[_binder cancel];
 }
 
+- (void) addFileToiTunes: (NSString*)path
+{
+	NSDictionary* errorDict;
+    NSAppleEventDescriptor* returnDescriptor = NULL;
+	
+	NSString *source = [NSString stringWithFormat:
+						@"\
+						tell application \"iTunes\"\n\
+						    add POSIX file \"%@\"\n\
+						end tell", path, nil];
+	
+	NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:source];
+	
+    returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
+    [scriptObject release];
+}
 
 @end
