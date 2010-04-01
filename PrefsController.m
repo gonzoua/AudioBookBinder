@@ -15,15 +15,11 @@
 
 - (void) awakeFromNib
 {
+	[_folderPopUp selectItemAtIndex:0];
+#ifdef notyet	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[_folderPopUp selectItemAtIndex: 
-	    [defaults boolForKey: @"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];
-
-	if ([defaults boolForKey: @"DestinationiTunes"])
-		NSLog(@"Awake - true!!!");
-	else
-		NSLog(@"Awake - false!!!");
-
+	[_folderPopUp selectItemAtIndex: [defaults boolForKey: @"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];
+#endif
 }	
 
 - (void) folderSheetShow: (id) sender
@@ -50,13 +46,17 @@
         
         NSString * folder = [[openPanel filenames] objectAtIndex:0];
         [defaults setObject:folder forKey: @"DestinationFolder"];
+#ifdef notyet
         [defaults setBool:NO forKey: @"DestinationiTunes"];
+#endif
     }
     else
     {
         //reset if cancelled
-		[_folderPopUp selectItemAtIndex: 
+		[_folderPopUp selectItemAtIndex:1];
+#ifdef notyet		
 		 [defaults boolForKey:@"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];    
+#endif
 	}
 }
 
