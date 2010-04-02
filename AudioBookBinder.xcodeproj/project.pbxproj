@@ -30,6 +30,7 @@
 		9F6FA4A9111E56090047728F /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
 		9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
+		9F95914211658710001C2433 /* iAudiobook256.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9F95914111658710001C2433 /* iAudiobook256.icns */; };
 		9FAB146D11619F9F00A2F36A /* ExpandedPathToIconTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */; };
 		9FAB146E11619F9F00A2F36A /* ExpandedPathToPathTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */; };
 		9FAB14821161A51400A2F36A /* PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB14811161A51400A2F36A /* PrefsController.m */; };
@@ -76,6 +77,7 @@
 		9F86C0CE1023D99300E65B00 /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4Atom.m; sourceTree = "<group>"; };
 		9F86C0D01023DAC000E65B00 /* MP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4File.h; sourceTree = "<group>"; };
 		9F86C0D11023DAC000E65B00 /* MP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4File.m; sourceTree = "<group>"; };
+		9F95914111658710001C2433 /* iAudiobook256.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iAudiobook256.icns; sourceTree = "<group>"; };
 		9FAB146911619F9F00A2F36A /* ExpandedPathToIconTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToIconTransformer.h; sourceTree = "<group>"; };
 		9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedPathToIconTransformer.m; sourceTree = "<group>"; };
 		9FAB146B11619F9F00A2F36A /* ExpandedPathToPathTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToPathTransformer.h; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		08FB7794FE84155DC02AAC07 /* AudioBookBinder */ = {
 			isa = PBXGroup;
 			children = (
+				9F95911E11658523001C2433 /* Resources */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				C6859EA2029092E104C91782 /* Documentation */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
@@ -186,6 +189,14 @@
 			isa = PBXGroup;
 			children = (
 				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9F95911E11658523001C2433 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9F95914111658710001C2433 /* iAudiobook256.icns */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -263,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */,
+				9F95914211658710001C2433 /* iAudiobook256.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
