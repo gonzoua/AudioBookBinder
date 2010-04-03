@@ -28,6 +28,9 @@
 		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
 		9F6FA411111D161A0047728F /* AudioFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA410111D161A0047728F /* AudioFileList.m */; };
 		9F6FA4A9111E56090047728F /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
+		9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
+		9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
+		9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */; };
 		9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
 		9F95914211658710001C2433 /* iAudiobook256.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9F95914111658710001C2433 /* iAudiobook256.icns */; };
@@ -48,6 +51,17 @@
 				8DD76F9F0486AA7600D96B5E /* AudioBookBinder.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		9F8238C71166B6F800F6D1D8 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -73,6 +87,8 @@
 		9F6FA410111D161A0047728F /* AudioFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileList.m; sourceTree = "<group>"; };
 		9F6FA4A7111E56090047728F /* AudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFile.h; sourceTree = "<group>"; };
 		9F6FA4A8111E56090047728F /* AudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFile.m; sourceTree = "<group>"; };
+		9F8238B61166B68F00F6D1D8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
 		9F86C0CE1023D99300E65B00 /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4Atom.m; sourceTree = "<group>"; };
 		9F86C0D01023DAC000E65B00 /* MP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4File.h; sourceTree = "<group>"; };
@@ -111,6 +127,7 @@
 				9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */,
 				9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */,
 				9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */,
+				9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +188,7 @@
 				9F02CE4B101EBB9600AE315D /* CoreServices.framework */,
 				9F02CE18101EABCD00AE315D /* AudioToolbox.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
+				9F8238B61166B68F00F6D1D8 /* Sparkle.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -196,6 +214,7 @@
 		9F95911E11658523001C2433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */,
 				9F95914111658710001C2433 /* iAudiobook256.icns */,
 			);
 			name = Resources;
@@ -237,6 +256,7 @@
 				9F6FA202111918F10047728F /* Resources */,
 				9F6FA203111918F10047728F /* Sources */,
 				9F6FA204111918F10047728F /* Frameworks */,
+				9F8238C71166B6F800F6D1D8 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,6 +295,7 @@
 			files = (
 				9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */,
 				9F95914211658710001C2433 /* iAudiobook256.icns in Resources */,
+				9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +411,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -415,6 +440,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
