@@ -34,5 +34,7 @@
 	<true/>
 	<key>SUScheduledCheckInterval</key>
 	<integer>604800</integer>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010 Oleksandr Tymoshenko. All rights reserved.</string>
 </dict>
 </plist>
