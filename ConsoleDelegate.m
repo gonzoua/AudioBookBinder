@@ -114,4 +114,8 @@
     printf("%dm %ds)\n", m, s);
 }
 
+-(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason
+{
+}
+
 @end
