@@ -15,6 +15,7 @@
 		9F02CE4C101EBB9600AE315D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
 		9F02CE66101FF8D900AE315D /* ABLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABLog.m */; };
 		9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
+		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
 		9F6FA21611191A020047728F /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
 		9F6FA21711191A020047728F /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F6FA21811191A020047728F /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
@@ -77,6 +78,7 @@
 		9F02CE64101FF8D900AE315D /* ABLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLog.h; sourceTree = "<group>"; };
 		9F02CE65101FF8D900AE315D /* ABLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABLog.m; sourceTree = "<group>"; };
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
 		9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuidoBookBinder.m; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		9F95911E11658523001C2433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F455944116AF4FB00BA501C /* Credits.rtf */,
 				9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */,
 				9F95914111658710001C2433 /* iAudiobook256.icns */,
 			);
@@ -296,6 +299,7 @@
 				9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */,
 				9F95914211658710001C2433 /* iAudiobook256.icns in Resources */,
 				9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */,
+				9F455945116AF4FB00BA501C /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,7 +377,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = AudioBookBinder;
+				PRODUCT_NAME = abbinder;
 			};
 			name = Release;
 		};
@@ -396,7 +400,7 @@
 		1DEB927A08733DD40010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
