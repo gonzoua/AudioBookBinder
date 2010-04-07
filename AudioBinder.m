@@ -42,7 +42,8 @@ stringForOSStatus(OSStatus err)
     NSString * descString;
     BOOL isOSType = YES;
     char osTypeRepr[5];
-
+	char *errStr = NULL;
+	
     // Check if err is OSType and convert it to 4 chars representation
     osTypeRepr[4] = 0;
     for (int i = 0; i < 4; i++)
@@ -56,10 +57,46 @@ stringForOSStatus(OSStatus err)
             break;
         }
     }
-
+	
+	switch (err) {
+		case 0x7479703f:
+			errStr = "Unsupported file type";
+			break;
+		case 0x666d743f:
+			errStr = "Unsupported data format";
+			break;
+		case 0x7074793f:
+			errStr = "Unsupported property";
+			break;
+		case 0x2173697a:
+			errStr = "Bad property size";
+			break;
+		case 0x70726d3f:
+			errStr = "Permission denied";
+			break;
+		case 0x6f70746d:
+			errStr = "Not optimized";
+			break;
+		case 0x63686b3f:
+			errStr = "Invalid chunk";
+			break;
+		case 0x6f66663f:
+			errStr = "Does not allow 64bit data size";
+			break;
+		case 0x70636b3f:
+			errStr = "Invalid packet offset";
+			break;
+		case 0x6474613f:
+			errStr = "Invalid file";
+			break;
+		default:
+			errStr = nil;
+			break;
+	}
+	
     descString = [[NSString alloc] 
         initWithFormat:@"err#%08x (%s)", err, 
-                  isOSType ? osTypeRepr : GetMacOSStatusCommentString(err)];
+                  isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusCommentString(err)];
     [descString autorelease];
     
     return descString;
@@ -117,12 +154,14 @@ stringForOSStatus(OSStatus err)
     if ([_inFiles count] == 0)
     {
         ABLog(@"No input file");
+		[_delegate audiobookFailed:_outFileName reason:@"No input files"];
         return NO;
     }
     
     if ([self openOutFile] == NO)
     {
         ABLog(@"Failed to open output file");
+		[_delegate audiobookFailed:_outFileName reason:@"Failed to create output file"];
         return NO;
     }
     

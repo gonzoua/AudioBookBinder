@@ -42,6 +42,7 @@
 -(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason;
 -(void) conversionFinished: (NSString*)filename;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
+-(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
 
 @end
 
@@ -71,4 +72,5 @@
 -(void) closeOutFile;
 -(BOOL) convertOneFile: (NSString*)inFileName reason: (NSString**)reason;
 - (void) cancel;
+
 @end
