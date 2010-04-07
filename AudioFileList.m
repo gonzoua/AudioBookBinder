@@ -37,7 +37,8 @@
 - (void) addFile:(NSString*)fileName
 {
 	AudioFile *file = [[AudioFile alloc] initWithPath:fileName];
-	
+
+	[self willChangeValueForKey:@"hasFiles"];
 	if ([file isValid]) {
 		[_files addObject:file];
 		// kee track of most common directory for file list
@@ -80,12 +81,22 @@
 	}
 	else
 		[file release];
+	[self didChangeValueForKey:@"hasFiles"];
+
 }
 
 - (NSArray*) files
 {
 	NSArray *result = [[NSArray arrayWithArray:_files] retain];
 	return result;
+}
+
+- (BOOL) hasFiles
+{
+	if ([_files count] > 0)
+		return YES;
+	
+	return NO;
 }
 
 - (void) addFilesInDirectory:(NSString*)dirName
@@ -99,9 +110,6 @@
 	}
 }
 
-- (void) deleteSelected
-{
-}
 
 // The NSOutlineView uses 'nil' to indicate the root item. We return our root tree node for that case.
 - (NSArray *)childrenForItem:(id)item {
@@ -280,6 +288,7 @@
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView
 {
     // Go ahead and move things. 
+	[self willChangeValueForKey:@"hasFiles"];
     for (AudioFile *file in [outlineView selectedItems]) {
         // Remove the node from its old location
         NSInteger oldIndex = [_files indexOfObject:file];
@@ -287,7 +296,8 @@
             [_files removeObjectAtIndex:oldIndex];
         }
     }
-	
+	[self didChangeValueForKey:@"hasFiles"];
+	[outlineView deselectAll:self];
     [outlineView reloadData];	
 	return YES;
 }
