@@ -43,7 +43,6 @@ enum abb_form_fields {
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	fileList = [[[AudioFileList alloc] init] retain];
 	[fileListView setDataSource:fileList];
 	[fileListView setDelegate:fileList];
 	[fileListView setAllowsMultipleSelection:YES];
@@ -84,7 +83,6 @@ enum abb_form_fields {
 					[fileList addFilesInDirectory:fileName];
 				else 
 					[fileList addFile:fileName];
-
 			}
 		}
 		
@@ -94,11 +92,13 @@ enum abb_form_fields {
 
 - (IBAction) delFiles: (id)sender
 {
+
 	[fileList deleteSelected:fileListView];
 }
 
 - (IBAction) bind: (id)sender
 {
+
 	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
 	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
 	NSSavePanel *savePanel;
@@ -106,13 +106,13 @@ enum abb_form_fields {
 	NSMutableString *filename = [[NSMutableString string] retain];
 	
 	if (![author isEqualToString:@""])
-		[filename appendString:author];
+		[filename appendString:[author stringByReplacingOccurrencesOfString:@"/" withString:@" "]];
 	
 	if (![title isEqualToString:@""]) {
 		if (![filename isEqualToString:@""])
 			[filename appendString:@" - "];
 		
-		[filename appendString:title];
+		[filename appendString:[title stringByReplacingOccurrencesOfString:@"/" withString:@" "]];
 	}
 
 	if ([filename isEqualToString:@""])
@@ -138,7 +138,6 @@ enum abb_form_fields {
 		[bindButton setEnabled:FALSE];
 		outFile = [[savePanel filename] retain];
 
-		
 		[NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
 	}
 }
@@ -228,12 +227,24 @@ enum abb_form_fields {
 
 	NSAlert *alert = [[[NSAlert alloc] init] retain];
 	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:@"Audiofile(s) conversion failed"];
+	[alert setMessageText:@"Audiofile conversion failed"];
 	[alert setInformativeText:reason];
 	[alert setAlertStyle:NSWarningAlertStyle];
 	[alert runModal];
 	return NO;
 }
+
+-(void) audiobookFailed:(NSString*)filename reason:(NSString*)reason
+{
+	
+	NSAlert *alert = [[[NSAlert alloc] init] retain];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setMessageText:@"Audiobook binding failed"];
+	[alert setInformativeText:reason];
+	[alert setAlertStyle:NSWarningAlertStyle];
+	[alert runModal];
+}
+
 
 -(void) conversionFinished: (NSString*)filename
 {

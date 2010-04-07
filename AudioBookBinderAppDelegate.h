@@ -18,7 +18,7 @@
 	IBOutlet NSProgressIndicator *fileProgress;
 	IBOutlet NSPanel *progressPanel;
 	IBOutlet NSTextField *currentFile;
-	AudioFileList *fileList;
+	IBOutlet AudioFileList *fileList;
 	NSString *outFile;
 	AudioBinder *_binder;
 };
@@ -37,5 +37,7 @@
 -(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason;
 -(void) conversionFinished: (NSString*)filename;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
+-(void) audiobookFailed:(NSString*)filename reason:(NSString*)reason;
+
 - (void) addFileToiTunes:(NSString *)path;
 @end
