@@ -216,7 +216,7 @@ int main (int argc, char * argv[]) {
         MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
         [mp4 setArtist:bookAuthor]; 
         [mp4 setTitle:bookTitle]; 
-        [mp4 setCover:coverFile];
+        [mp4 setCoverFile:coverFile];
         [mp4 updateFile];
         printf("done\n");
     }

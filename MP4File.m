@@ -34,14 +34,18 @@
 
 @implementation MP4File
 
+@synthesize artist;
+@synthesize title;
+@synthesize coverFile;
+
 -(id) initWithFileName: (NSString*)fileName
 {
     [super init];
     
     _fh = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
-    _artist = nil;
-    _title = nil;
-    _coverFile = nil;
+    self.artist = nil;
+    self.title = nil;
+    self.coverFile = nil;
 
     UInt64 pos = 0;
     NSData *buffer;
@@ -60,27 +64,13 @@
     return self;
 }
 
--(void) setArtist:(NSString*)artist
+-(void) dealloc
 {
-    [_artist release];
-    _artist = [[NSString alloc] initWithString:artist];
+	self.artist = nil;
+	self.title = nil;
+	self.coverFile = nil;
+	[super dealloc];
 }
-
--(void) setTitle:(NSString*)title
-{
-    [_title release];
-    _title = [[NSString alloc] initWithString:title];
-}
-
--(void) setCover:(NSString*)cover
-{
-    [_coverFile release];
-	if (cover)
-		_coverFile = [[NSString alloc] initWithString:cover];
-	else 
-		cover = nil;
-}
-
 
 -(id) findAtom: (NSString*)atomName
 {
@@ -151,35 +141,33 @@
 	haveIlstAtom = (ilstAtom != nil);
 	
     NSMutableData *newAtomsData = [[NSMutableData alloc] init];
-    if (_title != nil)
+    if (title != nil)
     {
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©nam" 
-                                                value:[_title dataUsingEncoding:NSUTF8StringEncoding]
+                                                value:[title dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©alb" 
-                                                value:[_title dataUsingEncoding:NSUTF8StringEncoding] 
+                                                value:[title dataUsingEncoding:NSUTF8StringEncoding] 
                                                  type:ITUNES_METADATA_STRING_CLASS]];        
     }   
     
-    if (_artist != nil)
+    if (artist != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©ART" 
-                                                value:[_artist dataUsingEncoding:NSUTF8StringEncoding] 
+                                                value:[artist dataUsingEncoding:NSUTF8StringEncoding] 
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
     [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
                                             value:[@"Audiobooks" dataUsingEncoding:NSUTF8StringEncoding] 
                                              type:ITUNES_METADATA_STRING_CLASS]];
 	
-	if (_coverFile != nil)
+	if (coverFile != nil)
 	{
-		NSData *fileData = [NSData dataWithContentsOfFile:_coverFile];
+		NSData *fileData = [NSData dataWithContentsOfFile:coverFile];
 		if (fileData)
 			[newAtomsData appendData:[self encodeMetaDataAtom:@"covr" 
 	                                            value:fileData 
 	                                             type:ITUNES_METADATA_IMAGE_CLASS]];
-		[fileData release];
-		
 	}
 	
 	UInt32 additionalLength = [newAtomsData length];

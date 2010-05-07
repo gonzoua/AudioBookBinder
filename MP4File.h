@@ -31,16 +31,18 @@
 
 @interface MP4File : NSObject {
     NSFileHandle *_fh;
-    NSString *_artist;
-    NSString *_title;
-    NSString *_coverFile;
+    NSString *artist;
+    NSString *title;
+    NSString *coverFile;
 }
 
+@property (readwrite, copy) NSString *artist;
+@property (readwrite, copy) NSString *title;
+@property (readwrite, copy) NSString *coverFile;
+
+-(void) dealloc;
 -(id) initWithFileName: (NSString*)fileName;
 -(id) findAtom: (NSString*)atomName;
--(void) setArtist: (NSString*)artist;
--(void) setTitle: (NSString*)title;
--(void) setCover: (NSString*)cover;
 -(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value type:(UInt32)type;
 -(BOOL) updateFile;
 -(NSData*) encodeHDLRAtom;

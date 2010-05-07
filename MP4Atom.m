@@ -30,34 +30,48 @@
 
 @implementation MP4Atom
 
--(id) initWithName: (NSString*)atom andLength:(UInt32)length;
+@synthesize length;
+@synthesize offset;
+@synthesize name;
+
+-(id) initWithName: (NSString*)atom andLength:(UInt32)len;
 {
     [super init];
 
-    _offset = 0;
-    _name = [[NSString alloc] initWithString:atom];
-    _length = length;
+    self.offset = 0;
+    self.name = atom;
+    self.length = len;
 
     return self;
 }
 
--(id) initWithHeaderData: (NSData*)data andOffset: (UInt64)offset
+-(id) initWithHeaderData: (NSData*)data andOffset: (UInt64)off
 {
+	UInt32 lLength;
     [super init];
 
-    _offset = offset;
+    self.offset = off;
     NSRange range;
     range.length = 4;
     range.location = 0;
-    [data getBytes:&_length range:range];
+    [data getBytes:&lLength range:range];
     
     // convert from BE byte order
-    _length = ntohl(_length);
+    self.length = ntohl(lLength);
     
     range.location = 4;
-    _name = [[NSString alloc] initWithData:[data subdataWithRange:range]
-                                  encoding:NSMacOSRomanStringEncoding]; 
+	NSString *lName = [[NSString alloc] initWithData:[data subdataWithRange:range]
+											encoding:NSMacOSRomanStringEncoding];
+    self.name = lName;
+	[lName release];
+	
     return self;
+}
+
+-(void) dealloc
+{
+	self.name = nil;
+	[super dealloc];
 }
 
 -(NSData*)encode
@@ -67,37 +81,11 @@
         char name[5];
     } hdr;
 
-    hdr.beLength = htonl(_length);
-    NSAssert([_name getCString:hdr.name maxLength:5 encoding:NSMacOSRomanStringEncoding],
+    hdr.beLength = htonl(self.length);
+    NSAssert([name getCString:hdr.name maxLength:5 encoding:NSMacOSRomanStringEncoding],
             @"Failed to convert tag name");
     NSData *data = [NSData dataWithBytes:&hdr length:8];
     return data;
-}
-
--(UInt32) length
-{
-    return _length;
-}
-
--(void) setLength: (UInt32)length
-{
-    _length = length;
-}
-
--(NSString*) name
-{
-    NSString *s = [[NSString alloc] initWithString:_name];
-    return [s autorelease];
-}
-
--(UInt64) offset
-{
-    return _offset;
-}
-
--(void) setOffset: (UInt64)offset
-{
-    _offset = offset;
 }
 
 @end

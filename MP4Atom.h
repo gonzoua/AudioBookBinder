@@ -31,19 +31,18 @@
 #define ITUNES_METADATA_IMAGE_CLASS		0x0e
 
 @interface MP4Atom : NSObject {
-    NSString *_name;
-    UInt32 _length;
-    NSArray *_children;
-    UInt64 _offset;
+    NSString *name;
+    UInt32 length;
+    NSArray *children;
+    UInt64 offset;
 }
 
+@property(readwrite, copy) NSString *name;
+@property(readwrite, assign) UInt32 length;
+@property(readwrite, assign) UInt64 offset;
+-(void) dealloc;
 -(id) initWithName:(NSString*)atom andLength:(UInt32)length;
 -(id) initWithHeaderData:(NSData*)data andOffset: (UInt64)offset;
--(UInt64) offset;
--(UInt32) length;
--(void) setLength: (UInt32)length;
--(void) setOffset: (UInt64)offset;
--(NSString*) name;
 -(NSData*) encode;
 
 @end
