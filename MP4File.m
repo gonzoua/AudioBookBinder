@@ -41,6 +41,7 @@
     _fh = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
     _artist = nil;
     _title = nil;
+    _coverFile = nil;
 
     UInt64 pos = 0;
     NSData *buffer;
@@ -70,6 +71,16 @@
     [_title release];
     _title = [[NSString alloc] initWithString:title];
 }
+
+-(void) setCover:(NSString*)cover
+{
+    [_coverFile release];
+	if (cover)
+		_coverFile = [[NSString alloc] initWithString:cover];
+	else 
+		cover = nil;
+}
+
 
 -(id) findAtom: (NSString*)atomName
 {
@@ -143,22 +154,33 @@
     if (_title != nil)
     {
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©nam" 
-                                                value:_title 
+                                                value:[_title dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©alb" 
-                                                value:_title 
+                                                value:[_title dataUsingEncoding:NSUTF8StringEncoding] 
                                                  type:ITUNES_METADATA_STRING_CLASS]];        
     }   
     
     if (_artist != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©ART" 
-                                                value:_artist 
+                                                value:[_artist dataUsingEncoding:NSUTF8StringEncoding] 
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
     [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
-                                            value:@"Audiobooks" 
+                                            value:[@"Audiobooks" dataUsingEncoding:NSUTF8StringEncoding] 
                                              type:ITUNES_METADATA_STRING_CLASS]];
+	
+	if (_coverFile != nil)
+	{
+		NSData *fileData = [NSData dataWithContentsOfFile:_coverFile];
+		if (fileData)
+			[newAtomsData appendData:[self encodeMetaDataAtom:@"covr" 
+	                                            value:fileData 
+	                                             type:ITUNES_METADATA_IMAGE_CLASS]];
+		[fileData release];
+		
+	}
 	
 	UInt32 additionalLength = [newAtomsData length];
  
@@ -251,11 +273,11 @@
 /*
  * Encode iTunes metadata atoms
  */
--(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSString*)value 
+-(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value 
     type:(UInt32) type;
 {
     UInt32 dataAtomSize = 
-            [value lengthOfBytesUsingEncoding:NSUTF8StringEncoding] + 
+            [value length] + 
             4 + 4 + 4 + 4;
     UInt32 atomSize = dataAtomSize + 4 + 4;
     MP4Atom *atom = [[MP4Atom alloc] initWithName:name andLength:atomSize];
@@ -269,8 +291,8 @@
     // null data
     UInt32 zeroData = 0;
     [data appendBytes:&zeroData length:4];
-    [data appendBytes:[value UTF8String] 
-               length:[value lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    [data appendData:value]; 
+
     return [NSData dataWithData: data];
 }
 
@@ -305,8 +327,10 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     UInt64 end = [_fh seekToEndOfFile];
 
+#if 0
     NSLog(@"size: %lld, start offset: %lld, file size: %lld", 
             size, offset, end);
+#endif
     do {
         UInt64 bufferSize = MIN(end - offset, TMP_BUFFER_SIZE);
         [_fh seekToFileOffset:(end - bufferSize)];
@@ -314,9 +338,12 @@
         if ([buffer length] == 0)
             break;
         [_fh seekToFileOffset:(end - [buffer length]) + size];
+#if 0
+		NSLog(@"from: %lld, to: %lld, %lld bytes", (end - bufferSize),
+			  (end - [buffer length]) + size, [buffer length]);
+#endif
         [_fh writeData:buffer];
         end -= [buffer length];
-        [pool drain];
     } while(end > offset);
 
     [pool release];
@@ -344,7 +371,7 @@
     entries = ntohl(entries);
     r.location = 4;
     r.length = 4;
-    NSLog(@"stco has %d entrie", entries);
+    NSLog(@"stco has %d entries", entries);
     for (i = 0 ; i < entries; i++)
     {
         [fixedTable getBytes:&offset range:r];

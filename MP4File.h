@@ -33,13 +33,15 @@
     NSFileHandle *_fh;
     NSString *_artist;
     NSString *_title;
+    NSString *_coverFile;
 }
 
 -(id) initWithFileName: (NSString*)fileName;
 -(id) findAtom: (NSString*)atomName;
 -(void) setArtist: (NSString*)artist;
 -(void) setTitle: (NSString*)title;
--(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSString*)value type:(UInt32)type;
+-(void) setCover: (NSString*)cover;
+-(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value type:(UInt32)type;
 -(BOOL) updateFile;
 -(NSData*) encodeHDLRAtom;
 -(void) reserveSpace:(UInt64)size at:(UInt64)offset;
