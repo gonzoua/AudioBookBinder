@@ -44,6 +44,7 @@ void usage(char *cmd)
     printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] outfile [infile ...]\n", cmd);
     printf("\t-a author\tset book author\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
+    printf("\t-C file.png\t\tcover image\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
 	printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
@@ -61,6 +62,7 @@ int main (int argc, char * argv[]) {
     NSString *bookTitle = nil;
     NSString *outFile = nil;
     NSString *inputFileList = nil;
+    NSString *coverFile = nil;
     NSMutableArray *inputFiles;
     NSError *error;
     ConsoleDelegate *delegate;
@@ -70,7 +72,7 @@ int main (int argc, char * argv[]) {
 	float samplerate = 44100.;
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:c:hi:r:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:c:C:hi:r:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -96,6 +98,9 @@ int main (int argc, char * argv[]) {
 			case 'r':
 				samplerate = atof(optarg);
 				break;
+            case 'C':
+                coverFile = [NSString stringWithUTF8String:optarg];
+                break;
             default:
                 usage(argv[0]);
                 exit(1);
@@ -204,12 +209,14 @@ int main (int argc, char * argv[]) {
         exit(255);
     }
     
-    if ((bookAuthor != nil) || (bookTitle != nil))
+    if ((bookAuthor != nil) || (bookTitle != nil) || (coverFile != nil))
     {
         printf("Adding metadata, it may take a while...");
+		fflush(stdout);
         MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
         [mp4 setArtist:bookAuthor]; 
         [mp4 setTitle:bookTitle]; 
+        [mp4 setCover:coverFile];
         [mp4 updateFile];
         printf("done\n");
     }
