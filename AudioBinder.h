@@ -63,7 +63,7 @@
 @property (assign) float sampleRate;
 
 -(id) init;
-- (void) reset;
+-(void) reset;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
 -(void) addInputFile: (NSString*)fileName;
 -(void) setOutputFile: (NSString*)outFileName;
