@@ -25,8 +25,6 @@
 }
 
 - (void)setSelectedItems:(NSArray *)items {
-    // If we are extending the selection, we start with the existing selection; 
-	// otherwise, we create a new blank set of the indexes.
     NSMutableIndexSet *newSelection = [[NSMutableIndexSet alloc] init];
     
     for (NSInteger i = 0; i < [items count]; i++) {
@@ -40,6 +38,7 @@
     
     [newSelection release];
 }
+
 - (void)keyDown:(NSEvent*)event_ {
 	BOOL isDeleteKey = FALSE;
 	
