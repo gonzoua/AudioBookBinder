@@ -1,6 +1,5 @@
 //
 //  NSImage+MGCropExtensions.m
-//  ImageCropDemo
 //
 //  Created by Matt Gemmell on 16/03/2006.
 //
