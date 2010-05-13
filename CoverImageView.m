@@ -7,7 +7,6 @@
 //
 
 #import "CoverImageView.h"
-#import "NSImage+MGCropExtensions.h"
 
 @implementation CoverImageView
 
@@ -233,20 +232,34 @@
             return NO;
         }
         
-        NSSize imgSize = [newImage size];
-        if ((imgSize.width > 300) || (imgSize.height > 300)) {
-            NSSize size;
-            size.height = 300;
-            size.width = 300;
-            self.coverImage = [newImage imageScaledToFitSize:size];
-        }
-        else {
-            self.coverImage = [newImage copy];
-        }
-        
-        
-        [newImage release];
+        NSSize origSize = [newImage size];
+        if ((origSize.width > 300) || (origSize.height > 300)) {
+            NSSize scaledSize;
+            if (origSize.width > origSize.height) {
+                scaledSize.width = 300;
+                scaledSize.height = origSize.height * 300/origSize.width;
+            }
+            else {
+                scaledSize.height = 300;
+                scaledSize.width = origSize.width * 300/origSize.height;                
+            }
 
+            NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
+            
+            // Composite image appropriately
+            [scaledImage lockFocus];
+            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+            [newImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
+                        fromRect:NSMakeRect(0, 0, origSize.width, origSize.height)
+                       operation:NSCompositeSourceOver 
+                        fraction:1.0];
+            [scaledImage unlockFocus];
+            self.coverImage = scaledImage;
+        }
+        else
+            self.coverImage = [newImage copy];
+
+        [newImage release];
     }
     
     [self setNeedsDisplay:YES];     
