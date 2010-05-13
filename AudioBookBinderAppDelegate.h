@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AudioFileList.h"
 #import "AudioBinder.h"
+#import "CoverImageView.h"
 
 @interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate> {
     IBOutlet NSWindow *window;
@@ -19,6 +20,7 @@
 	IBOutlet NSPanel *progressPanel;
 	IBOutlet NSTextField *currentFile;
 	IBOutlet AudioFileList *fileList;
+    IBOutlet CoverImageView *coverImageView;
 	NSString *outFile;
 	AudioBinder *_binder;
 };
