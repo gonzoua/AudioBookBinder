@@ -257,25 +257,60 @@
 		 acceptDrop:(id <NSDraggingInfo>)info 
 			   item:(id)item childIndex:(NSInteger)childIndex 
 {
-    // Go ahead and move things. 
-    for (AudioFile *file in _draggedNodes) {
-        // Remove the node from its old location
-        NSInteger oldIndex = [_files indexOfObject:file];
-        NSInteger newIndex = childIndex;
-        if (oldIndex != NSNotFound) {
-            [_files removeObjectAtIndex:oldIndex];
-            if (childIndex > oldIndex) {
-                newIndex--; // account for the remove
+    NSMutableArray *newSelectedItems = [NSMutableArray array];
+    if ([info draggingSource] == outlineView)
+    {
+        // Go ahead and move things. 
+        for (AudioFile *file in _draggedNodes) {
+            // Remove the node from its old location
+            NSInteger oldIndex = [_files indexOfObject:file];
+            NSInteger newIndex = childIndex;
+            if (oldIndex != NSNotFound) {
+                [_files removeObjectAtIndex:oldIndex];
+                if (childIndex > oldIndex) {
+                    newIndex--; // account for the remove
+                }
+            }
+            [_files insertObject:file atIndex:newIndex];
+            NSLog(@"%@ %d -> %d", file, oldIndex, newIndex);
+            newIndex++;
+            [newSelectedItems addObject:file];
+        }
+	}
+    else {
+        // drop from external source
+        NSPasteboard *paste = [info draggingPasteboard];    //gets the dragging-specific pasteboard from the sender
+        NSArray *types = [NSArray arrayWithObjects: NSFilenamesPboardType, nil];
+        //a list of types that we can accept
+        NSString *desiredType = [paste availableTypeFromArray:types];
+        NSData *carriedData = [paste dataForType:desiredType];
+        
+        if (nil == carriedData)
+            return NSDragOperationNone;
+        
+        if ([desiredType isEqualToString:NSFilenamesPboardType])
+        {
+            //we have a list of file names in an NSData object
+            NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
+            for (NSString *s in fileArray) {
+                BOOL isDir;
+
+                if ([[NSFileManager defaultManager] fileExistsAtPath:s isDirectory:&isDir])
+                {
+                    if (isDir)
+                        // add file recursively
+                        [self addFilesInDirectory:s];
+                    else 
+                        [self addFile:s];
+                }
             }
         }
-        [_files insertObject:file atIndex:newIndex];
-        NSLog(@"%@ %d -> %d", file, oldIndex, newIndex);
-		newIndex++;
+        
     }
-	
+
     [outlineView reloadData];
 	// Reselect old items.
-    // [outlineView setSelectedItems:oldSelectedNodes];
+    [outlineView setSelectedItems:newSelectedItems];
 	
 	return YES;
 }

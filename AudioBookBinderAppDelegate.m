@@ -49,12 +49,11 @@ enum abb_form_fields {
 	
 	[fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
 	[fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-	// [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:NO];
+	[fileListView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 	[fileListView setAutoresizesOutlineColumn:NO];
+    
 	
 	_binder = [[[AudioBinder alloc] init] retain];
-	
-
 }
 
 - (IBAction) addFiles: (id)sender
