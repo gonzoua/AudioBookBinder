@@ -152,6 +152,7 @@ enum abb_form_fields {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
 	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSImage *coverImage = coverImageView.coverImage;
 
 	[_binder reset];
 	[_binder setDelegate:self];
@@ -177,15 +178,45 @@ enum abb_form_fields {
 		NSLog(@"Conversion failed");
 	}		
 	
-	else if (![author isEqualToString:@""] || (![title isEqualToString:@""]))
+	else if (![author isEqualToString:@""] || 
+             ![title isEqualToString:@""] || (coverImage != nil))
 	{
 		NSLog(@"Adding metadata, it may take a while...");
 		@try {
 			[currentFile setStringValue:@"Adding artist/title tags"];
+            
 			MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
 			[mp4 setArtist:author]; 
-			[mp4 setTitle:title]; 
+			[mp4 setTitle:title];
+            NSString *imgFileName = nil;
+            if (coverImage) 
+            {
+                NSString *tempFileTemplate =
+                [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
+                const char *tempFileTemplateCString =
+                    [tempFileTemplate fileSystemRepresentation];
+                char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
+                strcpy(tempFileNameCString, tempFileTemplateCString);
+                if (mktemp(tempFileNameCString)) {
+                    imgFileName = [NSString stringWithCString:tempFileNameCString encoding:NSUTF8StringEncoding];                
+                    NSData *imgData = [coverImage TIFFRepresentation];
+                    NSDictionary *dict = [[NSDictionary alloc] init];
+                    [[[NSBitmapImageRep imageRepWithData:imgData] 
+                      representationUsingType:NSPNGFileType properties:dict]
+                        writeToFile:imgFileName atomically:YES];
+                    [dict release];
+                    [mp4 setCoverFile:imgFileName];
+                }
+                else {
+                    NSLog(@"Failed to generate tmp filename");
+                }
+            }
 			[mp4 updateFile];
+            if (imgFileName) {
+                NSLog(@"Unlink %@", imgFileName);
+                [[NSFileManager defaultManager] removeFileAtPath:imgFileName 
+                                                         handler:nil];
+            }
 			[currentFile setStringValue:@"Adding file to iTunes"];
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"])
 				[self addFileToiTunes:outFile];
