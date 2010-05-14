@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define ITUNES_COVER_SIZE 300
 
 @interface CoverImageView : NSView {
     NSImage *coverImage;
@@ -17,9 +18,10 @@
     BOOL highlighted;
 }
 
-@property (readwrite, copy) NSImage *coverImage;
+@property (readwrite, retain) NSImage *coverImage;
 
 - (void) dealloc;
 - (void) drawStringCenteredIn: (NSRect) bounds;
 - (void) prepareAttributes;
+
 @end

@@ -10,8 +10,6 @@
 
 @implementation CoverImageView
 
-@synthesize coverImage;
-
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -49,8 +47,53 @@
     [centeredStyle release];
     
 }
+
+- (NSImage *) coverImage
+{
+    return [coverImage retain];
+}
+
+- (void) setCoverImage:(NSImage *)image
+{
+    [coverImage release];
     
-- (void)drawStringCenteredIn: (NSRect)r {
+    if (image == nil)
+    {
+        coverImage = nil;
+        return;
+    }
+    
+    NSSize origSize = [image size];
+    if ((origSize.width > ITUNES_COVER_SIZE) || (origSize.height > ITUNES_COVER_SIZE)) {
+        NSSize scaledSize;
+        if (origSize.width > origSize.height) {
+            scaledSize.width = ITUNES_COVER_SIZE;
+            scaledSize.height = origSize.height * ITUNES_COVER_SIZE/origSize.width;
+        }
+        else {
+            scaledSize.height = ITUNES_COVER_SIZE;
+            scaledSize.width = origSize.width * ITUNES_COVER_SIZE/origSize.height;                
+        }
+        
+        NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
+        
+        // Composite image appropriately
+        [scaledImage lockFocus];
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+        [image drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
+                    fromRect:NSMakeRect(0, 0, origSize.width, origSize.height)
+                   operation:NSCompositeSourceOver 
+                    fraction:1.0];
+        [scaledImage unlockFocus];
+        coverImage = scaledImage;
+    }
+    else
+        coverImage = [image copy];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)drawStringCenteredIn: (NSRect)r 
+{
     NSSize strSize = [string sizeWithAttributes:attributes];
     NSRect strRect;
     strRect.origin.x = r.origin.x + (r.size.width - strSize.width)/2;
@@ -59,7 +102,8 @@
     [string drawInRect:strRect withAttributes:attributes];
 }
 
-- (void)drawRect: (NSRect)dirtyRect {
+- (void)drawRect: (NSRect)dirtyRect 
+{
     if (coverImage == nil) {
         NSColor *bgColor;
         if(highlighted) {
@@ -231,38 +275,12 @@
             NSAssert(NO, @"This can't happen");
             return NO;
         }
-        
-        NSSize origSize = [newImage size];
-        if ((origSize.width > 300) || (origSize.height > 300)) {
-            NSSize scaledSize;
-            if (origSize.width > origSize.height) {
-                scaledSize.width = 300;
-                scaledSize.height = origSize.height * 300/origSize.width;
-            }
-            else {
-                scaledSize.height = 300;
-                scaledSize.width = origSize.width * 300/origSize.height;                
-            }
 
-            NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
-            
-            // Composite image appropriately
-            [scaledImage lockFocus];
-            [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-            [newImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
-                        fromRect:NSMakeRect(0, 0, origSize.width, origSize.height)
-                       operation:NSCompositeSourceOver 
-                        fraction:1.0];
-            [scaledImage unlockFocus];
-            self.coverImage = scaledImage;
-        }
-        else
-            self.coverImage = [newImage copy];
+        self.coverImage = newImage;
 
         [newImage release];
     }
     
-    [self setNeedsDisplay:YES];     
     return YES;
 }
 
@@ -297,6 +315,9 @@
     }
 }
 
-
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
 
 @end
