@@ -19,6 +19,7 @@
 	IBOutlet NSProgressIndicator *fileProgress;
 	IBOutlet NSPanel *progressPanel;
 	IBOutlet NSTextField *currentFile;
+    IBOutlet NSTabView *tabs;
 	IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
 	NSString *outFile;
@@ -29,6 +30,7 @@
 
 - (IBAction) addFiles: (id)sender;
 - (IBAction) delFiles: (id)sender;
+- (IBAction) setCover: (id)sender;
 - (IBAction) bind: (id)sender;
 - (IBAction) cancel: (id)sender;
 - (void) bindingThreadIsDone: (id) sender;

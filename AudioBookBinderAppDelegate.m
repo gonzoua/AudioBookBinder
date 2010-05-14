@@ -141,6 +141,37 @@ enum abb_form_fields {
 	}
 }
 
+- (IBAction) setCover: (id)sender
+{	
+	// Create the File Open Dialog class.
+	NSOpenPanel *openDlg = [NSOpenPanel openPanel];
+	
+	[openDlg setCanChooseFiles:YES];
+	[openDlg setCanChooseDirectories:NO];
+	[openDlg setAllowsMultipleSelection:NO];
+	
+	if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
+	{
+		NSArray *files = [openDlg filenames];
+
+        NSString* fileName = [files objectAtIndex:0];
+        BOOL isDir;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileName isDirectory:&isDir])
+        {
+            if (!isDir) // just sanity check
+            {
+                NSImage *img = [[NSImage alloc] initWithContentsOfFile:fileName]; 
+                coverImageView.coverImage = img;
+                [img release];
+                [tabs selectTabViewItemAtIndex:1];
+            }
+        }
+		
+		[fileListView reloadData];
+	}	
+}
+
+
 - (void) bindingThreadIsDone:(id)sender
 {
 	[bindButton setEnabled:TRUE];
