@@ -359,7 +359,6 @@
     entries = ntohl(entries);
     r.location = 4;
     r.length = 4;
-    NSLog(@"stco has %d entries", entries);
     for (i = 0 ; i < entries; i++)
     {
         [fixedTable getBytes:&offset range:r];
