@@ -28,7 +28,7 @@
 #import <Cocoa/Cocoa.h>
 
 #define ITUNES_METADATA_STRING_CLASS    0x01
-#define ITUNES_METADATA_IMAGE_CLASS		0x0e
+#define ITUNES_METADATA_IMAGE_CLASS     0x0e
 
 @interface MP4Atom : NSObject {
     NSString *name;

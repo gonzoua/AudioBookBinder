@@ -42,8 +42,8 @@ stringForOSStatus(OSStatus err)
     NSString * descString;
     BOOL isOSType = YES;
     char osTypeRepr[5];
-	char *errStr = NULL;
-	
+    char *errStr = NULL;
+    
     // Check if err is OSType and convert it to 4 chars representation
     osTypeRepr[4] = 0;
     for (int i = 0; i < 4; i++)
@@ -57,43 +57,43 @@ stringForOSStatus(OSStatus err)
             break;
         }
     }
-	
-	switch (err) {
-		case 0x7479703f:
-			errStr = "Unsupported file type";
-			break;
-		case 0x666d743f:
-			errStr = "Unsupported data format";
-			break;
-		case 0x7074793f:
-			errStr = "Unsupported property";
-			break;
-		case 0x2173697a:
-			errStr = "Bad property size";
-			break;
-		case 0x70726d3f:
-			errStr = "Permission denied";
-			break;
-		case 0x6f70746d:
-			errStr = "Not optimized";
-			break;
-		case 0x63686b3f:
-			errStr = "Invalid chunk";
-			break;
-		case 0x6f66663f:
-			errStr = "Does not allow 64bit data size";
-			break;
-		case 0x70636b3f:
-			errStr = "Invalid packet offset";
-			break;
-		case 0x6474613f:
-			errStr = "Invalid file";
-			break;
-		default:
-			errStr = nil;
-			break;
-	}
-	
+    
+    switch (err) {
+        case 0x7479703f:
+            errStr = "Unsupported file type";
+            break;
+        case 0x666d743f:
+            errStr = "Unsupported data format";
+            break;
+        case 0x7074793f:
+            errStr = "Unsupported property";
+            break;
+        case 0x2173697a:
+            errStr = "Bad property size";
+            break;
+        case 0x70726d3f:
+            errStr = "Permission denied";
+            break;
+        case 0x6f70746d:
+            errStr = "Not optimized";
+            break;
+        case 0x63686b3f:
+            errStr = "Invalid chunk";
+            break;
+        case 0x6f66663f:
+            errStr = "Does not allow 64bit data size";
+            break;
+        case 0x70636b3f:
+            errStr = "Invalid packet offset";
+            break;
+        case 0x6474613f:
+            errStr = "Invalid file";
+            break;
+        default:
+            errStr = nil;
+            break;
+    }
+    
     descString = [[NSString alloc] 
         initWithFormat:@"err#%08x (%s)", err, 
                   isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusCommentString(err)];
@@ -110,23 +110,23 @@ stringForOSStatus(OSStatus err)
 -(id)init
 {
     if (self = [super init]) {
-		_inFiles = [[NSMutableArray alloc] init];
-		[self reset];
-	}
+        _inFiles = [[NSMutableArray alloc] init];
+        [self reset];
+    }
  
-	return self;
+    return self;
 }
 
 - (void) reset
 {
-	[_inFiles removeAllObjects];
+    [_inFiles removeAllObjects];
     _outFileName = nil;
     _outAudioFile = nil;
     _outFileLength = 0;
     _delegate = nil;
-	_canceled = NO;
-	_sampleRate = DEFAULT_SAMPLE_RATE;
-	_channels = 2;
+    _canceled = NO;
+    _sampleRate = DEFAULT_SAMPLE_RATE;
+    _channels = 2;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -154,14 +154,14 @@ stringForOSStatus(OSStatus err)
     if ([_inFiles count] == 0)
     {
         ABLog(@"No input file");
-		[_delegate audiobookFailed:_outFileName reason:@"No input files"];
+        [_delegate audiobookFailed:_outFileName reason:@"No input files"];
         return NO;
     }
     
     if ([self openOutFile] == NO)
     {
         ABLog(@"Failed to open output file");
-		[_delegate audiobookFailed:_outFileName reason:@"Failed to create output file"];
+        [_delegate audiobookFailed:_outFileName reason:@"Failed to create output file"];
         return NO;
     }
     
@@ -179,9 +179,9 @@ stringForOSStatus(OSStatus err)
         }
         else
             filesConverted++;
-		
-		if (_canceled)
-			break;
+        
+        if (_canceled)
+            break;
     }
     
     [self closeOutFile];
@@ -191,18 +191,18 @@ stringForOSStatus(OSStatus err)
         [fm removeFileAtPath:_outFileName handler:nil];
     }
        
-	BOOL result = YES;
+    BOOL result = YES;
     // Did we fail? Were there any files successfully converted? 
     if (failed || (filesConverted == 0) || _canceled)
         result = NO;
-	else
-		[_delegate audiobookReady:_outFileName 
-						 duration:(UInt32)(_outFileLength/_sampleRate)];
+    else
+        [_delegate audiobookReady:_outFileName 
+                         duration:(UInt32)(_outFileLength/_sampleRate)];
     
-	// Back to non-cacneled state
-	_canceled = NO;
-	
-	return result;
+    // Back to non-cacneled state
+    _canceled = NO;
+    
+    return result;
 }
 
 -(BOOL)openOutFile
@@ -211,7 +211,7 @@ stringForOSStatus(OSStatus err)
     OSStatus status;
     AudioStreamBasicDescription outputFormat;
     
-	// delete file if exists
+    // delete file if exists
     if([[NSFileManager defaultManager] fileExistsAtPath:_outFileName]) 
     {
         if (![[NSFileManager defaultManager] removeFileAtPath:_outFileName 
@@ -221,27 +221,27 @@ stringForOSStatus(OSStatus err)
             return NO;
         }
     }    
- 	
-	// open out file
-	NSString *dir = [[_outFileName stringByDeletingLastPathComponent] retain];
-	// if its only path name - make reference to current directory
-	if ([dir isEqualToString:@""])
-	{
-		[dir release];
-		dir = [[NSString stringWithString:@"."] retain];
-	}
-	
+     
+    // open out file
+    NSString *dir = [[_outFileName stringByDeletingLastPathComponent] retain];
+    // if its only path name - make reference to current directory
+    if ([dir isEqualToString:@""])
+    {
+        [dir release];
+        dir = [[NSString stringWithString:@"."] retain];
+    }
+    
     status = FSPathMakeRef((UInt8 *)
-						   [dir UTF8String], 
+                           [dir UTF8String], 
                            &dirFSRef, NULL);
-	[dir release];
+    [dir release];
     if (status != noErr)
     {
         ABLog(@"FSPathMakeRef failed for %@: %@", 
               _outFileName, stringForOSStatus(status));        
         return NO;
-    }	
-	
+    }    
+    
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
     outputFormat.mSampleRate = _sampleRate;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
@@ -431,7 +431,7 @@ stringForOSStatus(OSStatus err)
             
             framesToRead = 
                 bufferList.mBuffers[0].mDataByteSize / pcmFormat.mBytesPerFrame;
-			status = ExtAudioFileRead(inAudioFile, &framesToRead, &bufferList);
+            status = ExtAudioFileRead(inAudioFile, &framesToRead, &bufferList);
             if(status != noErr)
                 [NSException raise:@"ConvertException" 
                             format:@"ExtAudioFileRead failed: %@", 
@@ -453,19 +453,19 @@ stringForOSStatus(OSStatus err)
                             handled:framesConverted 
                               total:framesTotal];
 
-			status = ExtAudioFileTell(_outAudioFile, &_outFileLength);
-			if(status != noErr)
-				[NSException raise:@"ConvertException" 
-							format:@"ExtAudioFileTell failed: %@", 
-				 stringForOSStatus(status)];
-			
-			if (_canceled)
-				break;
+            status = ExtAudioFileTell(_outAudioFile, &_outFileLength);
+            if(status != noErr)
+                [NSException raise:@"ConvertException" 
+                            format:@"ExtAudioFileTell failed: %@", 
+                 stringForOSStatus(status)];
+            
+            if (_canceled)
+                break;
 
         } while(framesToRead > 0);
 
         [_delegate conversionFinished:inFileName];
-	}  
+    }  
     @catch (NSException *e) {
         *reason = [e reason];
         if (inAudioFile != nil)
@@ -474,7 +474,7 @@ stringForOSStatus(OSStatus err)
             free(audioBuffer);
         return NO;
     }
-	
+    
     if (inAudioFile != nil)
         ExtAudioFileDispose(inAudioFile);
     if (audioBuffer)
@@ -485,6 +485,6 @@ stringForOSStatus(OSStatus err)
 
 - (void) cancel
 {
-	_canceled = YES;
+    _canceled = YES;
 }
 @end

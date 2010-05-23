@@ -16,7 +16,7 @@
 
     if (selectedRows != nil) {
         for (NSInteger row = [selectedRows firstIndex]; 
-			 row != NSNotFound; row = [selectedRows indexGreaterThanIndex:row]) {
+             row != NSNotFound; row = [selectedRows indexGreaterThanIndex:row]) {
             [items addObject:[self itemAtRow:row]];
         }
     }
@@ -40,26 +40,26 @@
 }
 
 - (void)keyDown:(NSEvent*)event_ {
-	BOOL isDeleteKey = FALSE;
-	
-	NSString *eventCharacters = [event_ characters];        
-	if ([eventCharacters length]) {
-		switch ([eventCharacters characterAtIndex:0]) {
-			case NSDeleteFunctionKey:
-			case NSDeleteCharFunctionKey:
-			case NSDeleteCharacter:                                
-				isDeleteKey = YES;
-				break;
-			default:
-				break;
-		}
-	}
-	
-	if (isDeleteKey) {
-		[self.delegate delKeyDown:self];
-	} else {
-		[super keyDown:event_];
-	}
+    BOOL isDeleteKey = FALSE;
+    
+    NSString *eventCharacters = [event_ characters];        
+    if ([eventCharacters length]) {
+        switch ([eventCharacters characterAtIndex:0]) {
+            case NSDeleteFunctionKey:
+            case NSDeleteCharFunctionKey:
+            case NSDeleteCharacter:                                
+                isDeleteKey = YES;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (isDeleteKey) {
+        [self.delegate delKeyDown:self];
+    } else {
+        [super keyDown:event_];
+    }
 }
 
 @end

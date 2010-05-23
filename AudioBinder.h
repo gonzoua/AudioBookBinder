@@ -53,9 +53,9 @@
     ExtAudioFileRef _outAudioFile;
     SInt64 _outFileLength;
     id _delegate;
-	BOOL _canceled;
-	float _sampleRate;
-	int _channels;
+    BOOL _canceled;
+    float _sampleRate;
+    int _channels;
 }
 
 

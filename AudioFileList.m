@@ -13,167 +13,167 @@
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
 #define COLUMNID_NAME               @"NameColumn"
-#define COLUMNID_DURATION			@"DurationColumn"
+#define COLUMNID_DURATION            @"DurationColumn"
 
 @implementation AudioFileList
 
 - (id) init
 {
-	if (self = [super init]) 
-	{
-		_files = [[[NSMutableArray alloc] init] retain];
-		_topDir = nil;
-	}
-	return self;
+    if (self = [super init]) 
+    {
+        _files = [[[NSMutableArray alloc] init] retain];
+        _topDir = nil;
+    }
+    return self;
 }
 
 - (void) dealloc
 {
-	[_files release];
-	[_topDir release];
-	[super dealloc];
+    [_files release];
+    [_topDir release];
+    [super dealloc];
 }
 
 - (void) addFile:(NSString*)fileName
 {
-	AudioFile *file = [[AudioFile alloc] initWithPath:fileName];
+    AudioFile *file = [[AudioFile alloc] initWithPath:fileName];
 
-	[self willChangeValueForKey:@"hasFiles"];
-	if ([file isValid]) {
-		[_files addObject:file];
-		// kee track of most common directory for file list
-#if 0		
-		NSString *fileDirectory = [fileName stringByDeletingLastPathComponent];
+    [self willChangeValueForKey:@"hasFiles"];
+    if ([file isValid]) {
+        [_files addObject:file];
+        // kee track of most common directory for file list
+#if 0        
+        NSString *fileDirectory = [fileName stringByDeletingLastPathComponent];
 
-		if (_topDir == nil)
-		{
-			_topDir = [[NSString stringWithString:fileDirectory] retain];
-		}
-		else
-		{
-			NSArray *a1 = [_topDir pathComponents];
-			NSArray *a2 = [fileDirectory pathComponents];
-			NSMutableArray *result = [[[NSMutableArray alloc] init] retain];
-			int i, common = 0;
-			
-			for (i = 0; i < MIN([a1 count], [a2 count]); i++)
-			{
-				if ([[a1 objectAtIndex:i] isEqualToString:[a2 objectAtIndex:i]])
-					common++;
-			}
-			
-			if ((common > 0) && (common != [a1 count]))
-			{
-				NSRange newRange;
-				newRange.location = 0;
-				newRange.length = common;
+        if (_topDir == nil)
+        {
+            _topDir = [[NSString stringWithString:fileDirectory] retain];
+        }
+        else
+        {
+            NSArray *a1 = [_topDir pathComponents];
+            NSArray *a2 = [fileDirectory pathComponents];
+            NSMutableArray *result = [[[NSMutableArray alloc] init] retain];
+            int i, common = 0;
+            
+            for (i = 0; i < MIN([a1 count], [a2 count]); i++)
+            {
+                if ([[a1 objectAtIndex:i] isEqualToString:[a2 objectAtIndex:i]])
+                    common++;
+            }
+            
+            if ((common > 0) && (common != [a1 count]))
+            {
+                NSRange newRange;
+                newRange.location = 0;
+                newRange.length = common;
 
-				[_topDir release];
-				_topDir = [[[a1 subarrayWithRange:newRange] componentsJoinedByString:@"/"] retain];
-			}
-			else if (common == 0)
-			
-			[a1 release];
-			[a2 release];
-		}
+                [_topDir release];
+                _topDir = [[[a1 subarrayWithRange:newRange] componentsJoinedByString:@"/"] retain];
+            }
+            else if (common == 0)
+            
+            [a1 release];
+            [a2 release];
+        }
 #endif
-		
-	}
-	else
-		[file release];
-	[self didChangeValueForKey:@"hasFiles"];
+        
+    }
+    else
+        [file release];
+    [self didChangeValueForKey:@"hasFiles"];
 
 }
 
 - (NSArray*) files
 {
-	NSArray *result = [[NSArray arrayWithArray:_files] retain];
-	return result;
+    NSArray *result = [[NSArray arrayWithArray:_files] retain];
+    return result;
 }
 
 - (BOOL) hasFiles
 {
-	if ([_files count] > 0)
-		return YES;
-	
-	return NO;
+    if ([_files count] > 0)
+        return YES;
+    
+    return NO;
 }
 
 - (void) addFilesInDirectory:(NSString*)dirName
 {
-	NSString *currentFile;
-	NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:dirName];
-	while ((currentFile = [dirEnum nextObject]))
-	{
-		NSString *currentPath = [dirName stringByAppendingPathComponent:currentFile];
-		[self addFile:currentPath];
-	}
+    NSString *currentFile;
+    NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:dirName];
+    while ((currentFile = [dirEnum nextObject]))
+    {
+        NSString *currentPath = [dirName stringByAppendingPathComponent:currentFile];
+        [self addFile:currentPath];
+    }
 }
 
 
 // The NSOutlineView uses 'nil' to indicate the root item. We return our root tree node for that case.
 - (NSArray *)childrenForItem:(id)item {
     if (item == nil) {
-		return _files;
+        return _files;
     }
-	
-	return nil;
+    
+    return nil;
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 
-	return [_files count];
+    return [_files count];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-	return FALSE;
+    return FALSE;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 
-	if (item == nil)
-		return [_files objectAtIndex:index];
-	
-	return nil;
+    if (item == nil)
+        return [_files objectAtIndex:index];
+    
+    return nil;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	id objectValue = nil;
+    id objectValue = nil;
 
-	if (item != nil)
-	{
-		AudioFile *file = item;
+    if (item != nil)
+    {
+        AudioFile *file = item;
 
-		if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
-			objectValue = file.name;
-		else {
-			int hours = file.duration / 3600;
-			int minutes = (file.duration - (hours * 3600)) / 60;
-			int seconds = file.duration % 60;
-			
-			if (hours > 3600)
-				objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
-								hours, minutes, seconds] retain];
-			else
-				objectValue = [[NSString stringWithFormat:@"%d:%02d",
-								minutes, seconds] retain];
-		}
-	}
-	
-	return objectValue;
+        if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+            objectValue = file.name;
+        else {
+            int hours = file.duration / 3600;
+            int minutes = (file.duration - (hours * 3600)) / 60;
+            int seconds = file.duration % 60;
+            
+            if (hours > 3600)
+                objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
+                                hours, minutes, seconds] retain];
+            else
+                objectValue = [[NSString stringWithFormat:@"%d:%02d",
+                                minutes, seconds] retain];
+        }
+    }
+    
+    return objectValue;
 }
 
 // We can return a different cell for each row, if we want
 - (NSCell *)outlineView:(NSOutlineView *)outlineView
  dataCellForTableColumn:(NSTableColumn *)tableColumn 
-				   item:(id)item 
+                   item:(id)item 
 {
     // If we return a cell for the 'nil' tableColumn, it will be used 
-	// as a "full width" cell and span all the columns
+    // as a "full width" cell and span all the columns
     return [tableColumn dataCell];
 }
 
@@ -183,9 +183,9 @@
 //
 
 - (void)outlineView:(NSOutlineView *)outlineView 
-	 setObjectValue:(id)object 
-	 forTableColumn:(NSTableColumn *)tableColumn 
-			 byItem:(id)item  
+     setObjectValue:(id)object 
+     forTableColumn:(NSTableColumn *)tableColumn 
+             byItem:(id)item  
 {
 
     NSLog(@"setObjectValue");
@@ -195,35 +195,35 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item 
 {
 
-	return NO;
+    return NO;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item 
 {
 
-	return NO;
+    return NO;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item 
 {
-	NSLog(@"shouldSelectItem");
-	return YES;
-}		
+    NSLog(@"shouldSelectItem");
+    return YES;
+}        
 
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView 
-		 writeItems:(NSArray *)items 
-	   toPasteboard:(NSPasteboard *)pboard 
+         writeItems:(NSArray *)items 
+       toPasteboard:(NSPasteboard *)pboard 
 {    
 
-	_draggedNodes = items; 
-	// Don't retain since this is just holding temporaral drag information, 
-	// and it is only used during a drag!  We could put this in the pboard actually.
+    _draggedNodes = items; 
+    // Don't retain since this is just holding temporaral drag information, 
+    // and it is only used during a drag!  We could put this in the pboard actually.
     
     // Provide data for our custom type, and simple NSStrings.    
-	[pboard declareTypes:[NSArray arrayWithObjects:SIMPLE_BPOARD_TYPE, NSStringPboardType, NSFilesPromisePboardType, nil] 
-				   owner:self];
-	
+    [pboard declareTypes:[NSArray arrayWithObjects:SIMPLE_BPOARD_TYPE, NSStringPboardType, NSFilesPromisePboardType, nil] 
+                   owner:self];
+    
     // the actual data doesn't matter since SIMPLE_BPOARD_TYPE drags aren't recognized by anyone but us!.
     [pboard setData:[NSData data] forType:SIMPLE_BPOARD_TYPE]; 
     
@@ -238,24 +238,24 @@
 
 
 - (NSDragOperation) outlineView:(NSOutlineView *)outlineView 
-				   validateDrop:(id <NSDraggingInfo>)info 
-				   proposedItem:(id)item 
-			 proposedChildIndex:(NSInteger)childIndex 
+                   validateDrop:(id <NSDraggingInfo>)info 
+                   proposedItem:(id)item 
+             proposedChildIndex:(NSInteger)childIndex 
 {
-	NSDragOperation result = NSDragOperationGeneric;
+    NSDragOperation result = NSDragOperationGeneric;
 
-	//
-	// check if we drop 'on' or 'between' something 
-	//
-	if (childIndex == NSOutlineViewDropOnItemIndex)
-			result = NSDragOperationNone;
-	
-	return result;
+    //
+    // check if we drop 'on' or 'between' something 
+    //
+    if (childIndex == NSOutlineViewDropOnItemIndex)
+            result = NSDragOperationNone;
+    
+    return result;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView 
-		 acceptDrop:(id <NSDraggingInfo>)info 
-			   item:(id)item childIndex:(NSInteger)childIndex 
+         acceptDrop:(id <NSDraggingInfo>)info 
+               item:(id)item childIndex:(NSInteger)childIndex 
 {
     NSMutableArray *newSelectedItems = [NSMutableArray array];
     if ([info draggingSource] == outlineView)
@@ -276,7 +276,7 @@
             newIndex++;
             [newSelectedItems addObject:file];
         }
-	}
+    }
     else {
         // drop from external source
         NSPasteboard *paste = [info draggingPasteboard];    //gets the dragging-specific pasteboard from the sender
@@ -309,21 +309,21 @@
     }
 
     [outlineView reloadData];
-	// Reselect old items.
+    // Reselect old items.
     [outlineView setSelectedItems:newSelectedItems];
-	
-	return YES;
+    
+    return YES;
 }
 
 - (void)delKeyDown:(NSOutlineView *)outlineView
 {
-	[self deleteSelected:outlineView];
+    [self deleteSelected:outlineView];
 }
 
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView
 {
     // Go ahead and move things. 
-	[self willChangeValueForKey:@"hasFiles"];
+    [self willChangeValueForKey:@"hasFiles"];
     for (AudioFile *file in [outlineView selectedItems]) {
         // Remove the node from its old location
         NSInteger oldIndex = [_files indexOfObject:file];
@@ -331,10 +331,10 @@
             [_files removeObjectAtIndex:oldIndex];
         }
     }
-	[self didChangeValueForKey:@"hasFiles"];
-	[outlineView deselectAll:self];
-    [outlineView reloadData];	
-	return YES;
+    [self didChangeValueForKey:@"hasFiles"];
+    [outlineView deselectAll:self];
+    [outlineView reloadData];    
+    return YES;
 }
 
 @end

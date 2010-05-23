@@ -37,7 +37,7 @@
 
 #define NUM_VALID_RATES 9
 int validRates[NUM_VALID_RATES] = { 8000, 11025, 12000, 16000, 22050,
-	24000, 32000, 44100, 48000};
+    24000, 32000, 44100, 48000};
 
 void usage(char *cmd)
 {
@@ -47,7 +47,7 @@ void usage(char *cmd)
     printf("\t-C file.png\t\tcover image\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
-	printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
+    printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
     printf("\t-s\t\tskip errors and go on with conversion\n");
     printf("\t-t title\tset book title\n");
     printf("\t-v\t\tprint some info on files being converted\n");
@@ -68,8 +68,8 @@ int main (int argc, char * argv[]) {
     ConsoleDelegate *delegate;
     BOOL verbose = NO;
     BOOL skipErrors = NO;
-	int channels = 2;
-	float samplerate = 44100.;
+    int channels = 2;
+    float samplerate = 44100.;
     
     NSZombieEnabled = YES;
     while ((c = getopt(argc, argv, "a:c:C:hi:r:st:v")) != -1) {
@@ -92,12 +92,12 @@ int main (int argc, char * argv[]) {
             case 's':
                 skipErrors = YES;
                 break;
-			case 'c':
-				channels = atoi(optarg);
-				break;
-			case 'r':
-				samplerate = atof(optarg);
-				break;
+            case 'c':
+                channels = atoi(optarg);
+                break;
+            case 'r':
+                samplerate = atof(optarg);
+                break;
             case 'C':
                 coverFile = [NSString stringWithUTF8String:optarg];
                 break;
@@ -106,7 +106,7 @@ int main (int argc, char * argv[]) {
                 exit(1);
         }
     }
-	
+    
     // Do we have output file et al?
     if (optind < argc) 
     {
@@ -120,26 +120,26 @@ int main (int argc, char * argv[]) {
         exit(1);
     }
 
-	if (channels != 1 && channels != 2) {
-		fprintf(stderr, "only 1 and 2 are valid as -c argument");
-		exit(1);
-	}
-	
-	for (i = 0; i < NUM_VALID_RATES; i++) {
-		if (validRates[i] == samplerate)
-			break;
-	}
-	
-	if (i == NUM_VALID_RATES) {
-	    fprintf(stderr, "Invalid sample rate. Valid rates: ");
-		for (i = 0; i < NUM_VALID_RATES; i++) {
-			if (i)
-				fprintf(stderr, ", ");
-			fprintf(stderr, "%d", validRates[i]);
-		}
-		fprintf(stderr, "\n");
-		exit(1);
-	}
+    if (channels != 1 && channels != 2) {
+        fprintf(stderr, "only 1 and 2 are valid as -c argument");
+        exit(1);
+    }
+    
+    for (i = 0; i < NUM_VALID_RATES; i++) {
+        if (validRates[i] == samplerate)
+            break;
+    }
+    
+    if (i == NUM_VALID_RATES) {
+        fprintf(stderr, "Invalid sample rate. Valid rates: ");
+        for (i = 0; i < NUM_VALID_RATES; i++) {
+            if (i)
+                fprintf(stderr, ", ");
+            fprintf(stderr, "%d", validRates[i]);
+        }
+        fprintf(stderr, "\n");
+        exit(1);
+    }
 
     // Get input files from all possible sources:
     // 
@@ -193,9 +193,9 @@ int main (int argc, char * argv[]) {
     [binder setOutputFile:outFile];
     for (NSString *file in inputFiles) 
         [binder addInputFile:file];
-	
-	binder.channels = channels;
-	binder.sampleRate = samplerate;
+    
+    binder.channels = channels;
+    binder.sampleRate = samplerate;
 
     // Setup delegate, it will print progress messages on console
     delegate = [[ConsoleDelegate alloc] init];
@@ -212,7 +212,7 @@ int main (int argc, char * argv[]) {
     if ((bookAuthor != nil) || (bookTitle != nil) || (coverFile != nil))
     {
         printf("Adding metadata, it may take a while...");
-		fflush(stdout);
+        fflush(stdout);
         MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
         [mp4 setArtist:bookAuthor]; 
         [mp4 setTitle:bookTitle]; 

@@ -13,17 +13,17 @@
 
 @interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate> {
     IBOutlet NSWindow *window;
-	IBOutlet NSOutlineView *fileListView;
-	IBOutlet NSForm *form;
-	IBOutlet NSButton *bindButton;
-	IBOutlet NSProgressIndicator *fileProgress;
-	IBOutlet NSPanel *progressPanel;
-	IBOutlet NSTextField *currentFile;
+    IBOutlet NSOutlineView *fileListView;
+    IBOutlet NSForm *form;
+    IBOutlet NSButton *bindButton;
+    IBOutlet NSProgressIndicator *fileProgress;
+    IBOutlet NSPanel *progressPanel;
+    IBOutlet NSTextField *currentFile;
     IBOutlet NSTabView *tabs;
-	IBOutlet AudioFileList *fileList;
+    IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
-	NSString *outFile;
-	AudioBinder *_binder;
+    NSString *outFile;
+    AudioBinder *_binder;
 };
 
 + (void) initialize;

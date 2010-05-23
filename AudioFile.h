@@ -10,9 +10,9 @@
 
 
 @interface AudioFile : NSObject {
-	NSString *filePath;
-	NSString *name;
-	NSInteger duration;
+    NSString *filePath;
+    NSString *name;
+    NSInteger duration;
 }
 
 @property(readwrite, copy) NSString *filePath;

@@ -10,9 +10,9 @@
 
 
 @interface AudioFileList : NSObject {
-	NSMutableArray *_files;
-	NSString *_topDir;
-	NSArray *_draggedNodes;
+    NSMutableArray *_files;
+    NSString *_topDir;
+    NSArray *_draggedNodes;
 }
 
 @property (readonly) BOOL hasFiles;

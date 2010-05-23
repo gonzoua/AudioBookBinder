@@ -15,31 +15,31 @@
 
 - (void) awakeFromNib
 {
-	[_folderPopUp selectItemAtIndex:0];
-#ifdef notyet	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[_folderPopUp selectItemAtIndex: [defaults boolForKey: @"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];
+    [_folderPopUp selectItemAtIndex:0];
+#ifdef notyet    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [_folderPopUp selectItemAtIndex: [defaults boolForKey: @"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];
 #endif
-}	
+}    
 
 - (void) folderSheetShow: (id) sender
 {
     NSOpenPanel * panel = [NSOpenPanel openPanel];
-	
+    
     [panel setPrompt: NSLocalizedString(@"Select", "Preferences -> Open panel prompt")];
     [panel setAllowsMultipleSelection: NO];
     [panel setCanChooseFiles: NO];
     [panel setCanChooseDirectories: YES];
     [panel setCanCreateDirectories: YES];
-	
+    
     [panel beginSheetForDirectory: nil file: nil types: nil
-				   modalForWindow: [self window] modalDelegate: self didEndSelector:
-	 @selector(folderSheetClosed:returnCode:contextInfo:) contextInfo: nil];
+                   modalForWindow: [self window] modalDelegate: self didEndSelector:
+     @selector(folderSheetClosed:returnCode:contextInfo:) contextInfo: nil];
 }
 
 - (void) folderSheetClosed: (NSOpenPanel *) openPanel returnCode: (int) code contextInfo: (void *) info
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (code == NSOKButton)
     {
         [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
@@ -53,18 +53,18 @@
     else
     {
         //reset if cancelled
-		[_folderPopUp selectItemAtIndex:1];
-#ifdef notyet		
-		 [defaults boolForKey:@"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];    
+        [_folderPopUp selectItemAtIndex:1];
+#ifdef notyet        
+         [defaults boolForKey:@"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];    
 #endif
-	}
+    }
 }
 
 - (void) destinationiTunes: (id) sender
 {
-	[[NSUserDefaults standardUserDefaults] 
-	 setBool:([_folderPopUp indexOfSelectedItem] == DESTINATION_ITUNES ? YES : NO)
-	      forKey: @"DestinationiTunes"];
+    [[NSUserDefaults standardUserDefaults] 
+     setBool:([_folderPopUp indexOfSelectedItem] == DESTINATION_ITUNES ? YES : NO)
+          forKey: @"DestinationiTunes"];
 }
 
 

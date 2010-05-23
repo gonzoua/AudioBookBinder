@@ -47,7 +47,7 @@
 
 -(id) initWithHeaderData: (NSData*)data andOffset: (UInt64)off
 {
-	UInt32 lLength;
+    UInt32 lLength;
     [super init];
 
     self.offset = off;
@@ -60,18 +60,18 @@
     self.length = ntohl(lLength);
     
     range.location = 4;
-	NSString *lName = [[NSString alloc] initWithData:[data subdataWithRange:range]
-											encoding:NSMacOSRomanStringEncoding];
+    NSString *lName = [[NSString alloc] initWithData:[data subdataWithRange:range]
+                                            encoding:NSMacOSRomanStringEncoding];
     self.name = lName;
-	[lName release];
-	
+    [lName release];
+    
     return self;
 }
 
 -(void) dealloc
 {
-	self.name = nil;
-	[super dealloc];
+    self.name = nil;
+    [super dealloc];
 }
 
 -(NSData*)encode

@@ -115,7 +115,7 @@
         else {
             bgColor = normalColor;
             [attributes setObject:normalColor
-                           forKey:NSForegroundColorAttributeName];	
+                           forKey:NSForegroundColorAttributeName];    
         }
         float     borderWidth = 4.0;
         NSRect boxRect = [self bounds];
@@ -177,7 +177,7 @@
         NSPoint orig;
         orig.x = (viewSize.size.width - imageSize.width) / 2;
         orig.y = (viewSize.size.height - imageSize.height) / 2;
-		
+        
         [coverImage compositeToPoint:orig operation:NSCompositeSourceOver];
     }
     
