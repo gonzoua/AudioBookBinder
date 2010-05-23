@@ -30,6 +30,7 @@
 		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
 		9F6FA411111D161A0047728F /* AudioFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA410111D161A0047728F /* AudioFileList.m */; };
 		9F6FA4A9111E56090047728F /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
+		9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F78673B11A88F660054ADF0 /* Localizable.strings */; };
 		9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
 		9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
 		9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */; };
@@ -92,6 +93,8 @@
 		9F6FA410111D161A0047728F /* AudioFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileList.m; sourceTree = "<group>"; };
 		9F6FA4A7111E56090047728F /* AudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFile.h; sourceTree = "<group>"; };
 		9F6FA4A8111E56090047728F /* AudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFile.m; sourceTree = "<group>"; };
+		9F78673911A88F470054ADF0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F78673D11A891940054ADF0 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F8238B61166B68F00F6D1D8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 		9F86C0D01023DAC000E65B00 /* MP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4File.h; sourceTree = "<group>"; };
 		9F86C0D11023DAC000E65B00 /* MP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4File.m; sourceTree = "<group>"; };
 		9F95914111658710001C2433 /* iAudiobook256.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iAudiobook256.icns; sourceTree = "<group>"; };
+		9F9C32D711A750A600F3FBC4 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Russian; path = Russian.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9FAB146911619F9F00A2F36A /* ExpandedPathToIconTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToIconTransformer.h; sourceTree = "<group>"; };
 		9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedPathToIconTransformer.m; sourceTree = "<group>"; };
 		9FAB146B11619F9F00A2F36A /* ExpandedPathToPathTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToPathTransformer.h; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				9F455944116AF4FB00BA501C /* Credits.rtf */,
 				9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */,
 				9F95914111658710001C2433 /* iAudiobook256.icns */,
+				9F78673B11A88F660054ADF0 /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -286,6 +291,13 @@
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "AudioBookBinder" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Russian,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* AudioBookBinder */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -305,6 +317,7 @@
 				9F95914211658710001C2433 /* iAudiobook256.icns in Resources */,
 				9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */,
 				9F455945116AF4FB00BA501C /* Credits.rtf in Resources */,
+				9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,8 +364,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F6FA3D7111BBBC20047728F /* English */,
+				9F9C32D711A750A600F3FBC4 /* Russian */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		9F78673B11A88F660054ADF0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F78673911A88F470054ADF0 /* English */,
+				9F78673D11A891940054ADF0 /* Russian */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
