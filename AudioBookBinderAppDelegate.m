@@ -12,6 +12,18 @@
 #import "ExpandedPathToPathTransformer.h"
 #import "ExpandedPathToIconTransformer.h"
 
+// localized strings
+#define TEXT_CONVERSION_FAILED  \
+    NSLocalizedString(@"Audiofile conversion failed", nil)
+#define TEXT_BINDING_FAILED     \
+    NSLocalizedString(@"Audiobook binding failed", nil)
+#define TEXT_ADDING_TAGS        \
+    NSLocalizedString(@"Adding artist/title tags", nil)
+#define TEXT_ADDING_TO_ITUNES   \
+    NSLocalizedString(@"Adding file to iTunes", nil)
+#define TEXT_CONVERTING         \
+    NSLocalizedString(@"Converting %@", nil)
+
 enum abb_form_fields {
 	ABBAuthor = 0,
 	ABBTitle,
@@ -213,7 +225,7 @@ enum abb_form_fields {
 	{
 		NSLog(@"Adding metadata, it may take a while...");
 		@try {
-			[currentFile setStringValue:@"Adding artist/title tags"];
+			[currentFile setStringValue:TEXT_ADDING_TAGS];
             
 			MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
 			[mp4 setArtist:author]; 
@@ -247,7 +259,7 @@ enum abb_form_fields {
                 [[NSFileManager defaultManager] removeFileAtPath:imgFileName 
                                                          handler:nil];
             }
-			[currentFile setStringValue:@"Adding file to iTunes"];
+			[currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
 			if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"])
 				[self addFileToiTunes:outFile];
 			[currentFile setStringValue:@"Done"];
@@ -273,7 +285,7 @@ enum abb_form_fields {
 				 length: (UInt64)frames
 
 {
-	[currentFile setStringValue:[NSString stringWithFormat:@"Converting %@", filename]];
+	[currentFile setStringValue:[NSString stringWithFormat:TEXT_CONVERTING, filename]];
 	[fileProgress setMaxValue:(double)frames];
 	[fileProgress setDoubleValue:0];
 }
@@ -288,7 +300,7 @@ enum abb_form_fields {
 
 	NSAlert *alert = [[[NSAlert alloc] init] retain];
 	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:@"Audiofile conversion failed"];
+	[alert setMessageText:TEXT_CONVERSION_FAILED];
 	[alert setInformativeText:reason];
 	[alert setAlertStyle:NSWarningAlertStyle];
 	[alert runModal];
@@ -300,7 +312,7 @@ enum abb_form_fields {
 	
 	NSAlert *alert = [[[NSAlert alloc] init] retain];
 	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:@"Audiobook binding failed"];
+	[alert setMessageText:TEXT_BINDING_FAILED];
 	[alert setInformativeText:reason];
 	[alert setAlertStyle:NSWarningAlertStyle];
 	[alert runModal];

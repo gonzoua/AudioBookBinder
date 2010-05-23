@@ -18,7 +18,7 @@
         highlightedColor = [[NSColor blackColor] retain];
         normalColor = [[NSColor colorWithCalibratedWhite:0.4 alpha:1] retain];
         [self prepareAttributes];
-        string = @"⌘ + I\nor\nDrag Image Here";
+        string = NSLocalizedString(@"⌘ + I\nor\nDrag Image Here", nil);
         [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, 
                                        NSFilenamesPboardType, nil]];
 
