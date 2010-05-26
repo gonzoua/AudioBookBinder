@@ -93,10 +93,12 @@ stringForOSStatus(OSStatus err)
             errStr = nil;
             break;
     }
-    
-    descString = [[NSString alloc] 
-        initWithFormat:@"err#%08x (%s)", err, 
-                  isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusCommentString(err)];
+    const char *errDescr = isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusErrorString(err);
+    if ((errDescr != nil) && (strlen(errDescr) > 0))
+        descString = [[NSString alloc] initWithFormat:@"err#%08x (%s)", err, errDescr];
+    else
+        descString = [[NSString alloc] initWithFormat:@"err#%08x ", err];
+
     [descString autorelease];
     
     return descString;
@@ -317,16 +319,6 @@ stringForOSStatus(OSStatus err)
                 format:@"AudioFileGetProperty failed: %@", 
              stringForOSStatus(status)];
         
-        size = sizeof(framesTotal);
-        status = ExtAudioFileGetProperty(inAudioFile, 
-                                         kExtAudioFileProperty_FileLengthFrames,
-                                         &size, &framesTotal);
-        if(status != noErr)
-            [NSException raise:@"ConvertException" 
-                        format:@"failed to get input file length: %@", 
-                        stringForOSStatus(status)];        
-  
-        
         specSize = sizeof(fileFormat);
         size = sizeof(AudioStreamBasicDescription);
         status = AudioFormatGetProperty(kAudioFormatProperty_FormatName, 
@@ -336,7 +328,7 @@ stringForOSStatus(OSStatus err)
             [NSException raise:@"ConvertException" 
                 format:@"AudioFormatGetProperty failed: %@", 
                 stringForOSStatus(status)];        
-        
+
         size = sizeof(framesTotal);
         status = ExtAudioFileGetProperty(inAudioFile, 
                                          kExtAudioFileProperty_FileLengthFrames,
@@ -344,25 +336,28 @@ stringForOSStatus(OSStatus err)
         
         if(status != noErr)
             [NSException raise:@"ConvertException" 
-                format:@"ExtAudioFileGetProperty failed: %@", 
-                stringForOSStatus(status)];
-
+                        format:@"failed to get input file length: %@", 
+             stringForOSStatus(status)];
         
         [_delegate conversionStart: inFileName 
                             format: &format
                  formatDescription: fileFormat
-                            length: framesTotal];
-        
+                            length: framesTotal];        
+        // framesTotal was calculated with respect to original format
+        // in order to get proper progress dialog we need convert to to client
+        // format
+        framesTotal = (framesTotal * _sampleRate) / format.mSampleRate;
+
         // Setup input format descriptor, preserve mSampleRate
         bzero(&pcmFormat, sizeof(pcmFormat));
-        pcmFormat.mSampleRate = format.mSampleRate;
+        pcmFormat.mSampleRate = _sampleRate;
         pcmFormat.mFormatID = kAudioFormatLinearPCM;
         pcmFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger 
             | kAudioFormatFlagIsBigEndian 
             | kAudioFormatFlagIsPacked;
 
         pcmFormat.mBitsPerChannel = 16;
-        pcmFormat.mChannelsPerFrame = 2;
+        pcmFormat.mChannelsPerFrame = _channels;
         pcmFormat.mFramesPerPacket = 1;
         pcmFormat.mBytesPerPacket = 
             (pcmFormat.mBitsPerChannel / 8) * pcmFormat.mChannelsPerFrame;
