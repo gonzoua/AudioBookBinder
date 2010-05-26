@@ -53,7 +53,7 @@
     else
     {
         //reset if cancelled
-        [_folderPopUp selectItemAtIndex:1];
+        [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
 #ifdef notyet        
          [defaults boolForKey:@"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];    
 #endif
