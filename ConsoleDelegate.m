@@ -96,7 +96,7 @@
 {
     // got to the beginning of the line
     printf("\r");
-    printf("%s: [100%%]                  \n",
+    printf("%s: [100%%]                              \n",
            [filename cStringUsingEncoding:NSUTF8StringEncoding]);
  
 }
