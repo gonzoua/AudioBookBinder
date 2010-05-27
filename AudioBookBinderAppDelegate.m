@@ -292,6 +292,7 @@ enum abb_form_fields {
 
 -(void) updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
+    [fileProgress setMaxValue:(double)totalFrames];
     [fileProgress setDoubleValue:(double)handledFrames];
 }
 
