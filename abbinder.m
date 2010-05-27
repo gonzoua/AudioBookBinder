@@ -44,7 +44,7 @@ void usage(char *cmd)
     printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] outfile [infile ...]\n", cmd);
     printf("\t-a author\tset book author\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
-    printf("\t-C file.png\t\tcover image\n");
+    printf("\t-C file.png\tcover image\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
     printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
