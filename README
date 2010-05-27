@@ -1,0 +1,33 @@
+= Command line utility: abbinder 
+
+== Usage
+
+abbinder [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] 
+  [-i filelist] outfile [infile ...]
+    -a author   set book author
+    -c 1|2      number of channels in audiobook. Default: 2
+    -C file.png cover image
+    -h          show this message
+    -i file     get input files list from file, "-" for standard input
+    -r rate     sample rate of audiobook. Default: 44100
+    -s          skip errors and go on with conversion
+    -t title    set book title
+    -v          print some info on files being converted
+
+Attributes for -a and -t arguments (author and title) should be in UTF8.
+Only jpeg and png are supported as cover page format. 
+Valid sample rate values:
+    8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000
+
+
+== Examples
+
+Convert one file to m4b
+  bash$ abbinder book.m4b myfile.mp3
+
+Convert several files to mono m4b with sample rate 8000
+  bash$ abbinder -r 8000 -c 1 book.m4b myfile.mp3 myfile2.mp3
+
+Convert all mp3 files in directory and set author, title and cover image
+  bash$ find ./dir -name '*mp3' > list
+  bash$ abbinder -i list -a Author -t Title -C ~/cover.png out.m4b
