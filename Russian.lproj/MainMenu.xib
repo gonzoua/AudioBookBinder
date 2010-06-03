@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="612"/>
 			<integer value="573"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -901,7 +902,7 @@
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="212817051">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1254,13 +1255,13 @@
 						<object class="NSTextField" id="85409118">
 							<reference key="NSNextResponder" ref="212817051"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 146}, {192, 17}}</string>
+							<string key="NSFrame">{{9, 146}, {200, 17}}</string>
 							<reference key="NSSuperview" ref="212817051"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="510399767">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">71304192</int>
-								<string key="NSContents">Добавить в библиотеку iTunes:</string>
+								<string key="NSContents">Добавить в iTunes:</string>
 								<reference key="NSSupport" ref="217545718"/>
 								<reference key="NSControlView" ref="85409118"/>
 								<reference key="NSBackgroundColor" ref="490285552"/>
@@ -1361,6 +1362,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{429, 210}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
