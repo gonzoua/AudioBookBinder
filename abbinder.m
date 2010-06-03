@@ -47,6 +47,7 @@ void usage(char *cmd)
     printf("\t-C file.png\tcover image\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
+    printf("\t-q\t\tquiet mode (no output)\n");
     printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
     printf("\t-s\t\tskip errors and go on with conversion\n");
     printf("\t-t title\tset book title\n");
@@ -67,12 +68,13 @@ int main (int argc, char * argv[]) {
     NSError *error;
     ConsoleDelegate *delegate;
     BOOL verbose = NO;
+    BOOL quiet = NO;
     BOOL skipErrors = NO;
     int channels = 2;
     float samplerate = 44100.;
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:c:C:hi:r:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:c:C:hi:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -100,6 +102,9 @@ int main (int argc, char * argv[]) {
                 break;
             case 'C':
                 coverFile = [NSString stringWithUTF8String:optarg];
+                break;
+            case 'q':
+                quiet = YES;
                 break;
             default:
                 usage(argv[0]);
@@ -199,6 +204,7 @@ int main (int argc, char * argv[]) {
 
     // Setup delegate, it will print progress messages on console
     delegate = [[ConsoleDelegate alloc] init];
+    [delegate setQuiet:quiet];
     [delegate setVerbose:verbose];
     [delegate setSkipErrors:skipErrors];
     [binder setDelegate:delegate];   
