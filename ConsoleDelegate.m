@@ -35,6 +35,8 @@
     [super init];
 
     _verbose = NO;
+    _quiet = NO;
+    _istty = isatty(fileno(stdout));
     _skipErrors = NO;
     return self;
 }
@@ -44,6 +46,12 @@
     _verbose = verbose;
 }
 
+
+-(void) setQuiet: (BOOL)quiet
+{
+    _quiet = quiet;
+}
+
 -(void) setSkipErrors: (BOOL)skip
 {
     _skipErrors = skip;
@@ -51,13 +59,15 @@
 
 -(void)updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
-    unsigned int percent = handledFrames * 100 / totalFrames;
-    // got to the beginning of the line
-    printf("\r");
-    printf("%s: [%3d%%] %lld/%lld", 
-           [filename cStringUsingEncoding:NSUTF8StringEncoding], percent,
-           handledFrames, totalFrames);
-    fflush(stdout);
+    if (!_quiet && _istty) {
+        unsigned int percent = handledFrames * 100 / totalFrames;
+        // got to the beginning of the line
+        printf("\r");
+        printf("%s: [%3d%%] %lld/%lld", 
+               [filename cStringUsingEncoding:NSUTF8StringEncoding], percent,
+               handledFrames, totalFrames);
+        fflush(stdout);
+    }
 }
 
 -(void) conversionStart: (NSString*)filename 
@@ -65,40 +75,53 @@
       formatDescription: (NSString*)description
                  length: (UInt64)frames;
 {
-    if (_verbose)
-    {
-        printf("Stream info for %s:\n",
-           [filename cStringUsingEncoding:NSUTF8StringEncoding]);
-        printf("\tFormatID: %s, FormatFlags: %08x\n", (char*)&asbd->mFormatID, asbd->mFormatFlags);
-        printf("\tBytesPerPacket: %d, FramesPerPacker: %d, BytesPerFrame: %d\n",
-              asbd->mBytesPerPacket, asbd->mFramesPerPacket, asbd->mBytesPerFrame);
-        printf("\tChannerlsPerFrame: %d, BitsPerChannel: %d\n", asbd->mChannelsPerFrame, asbd->mBitsPerChannel);
-        
-        printf("\tFormat description: %s\n", 
-              [description cStringUsingEncoding:NSUTF8StringEncoding]);
-        printf("\tTotal frames: %lld\n", frames);
+    if (!_quiet) {
+        if (_verbose)
+        {
+            printf("Stream info for %s:\n",
+               [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+            printf("\tFormatID: %s, FormatFlags: %08x\n", (char*)&asbd->mFormatID, asbd->mFormatFlags);
+            printf("\tBytesPerPacket: %d, FramesPerPacker: %d, BytesPerFrame: %d\n",
+                  asbd->mBytesPerPacket, asbd->mFramesPerPacket, asbd->mBytesPerFrame);
+            printf("\tChannerlsPerFrame: %d, BitsPerChannel: %d\n", asbd->mChannelsPerFrame, asbd->mBitsPerChannel);
+            
+            printf("\tFormat description: %s\n", 
+                  [description cStringUsingEncoding:NSUTF8StringEncoding]);
+            printf("\tTotal frames: %lld\n", frames);
 
+        }
+
+        printf("%s: ", [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+        fflush(stdout);
     }
 }
 
 -(BOOL)continueFailedConversion:(NSString*)filename reason:(NSString*)reason
 {
-    printf("Failed to convert %s: %s",
-           [filename cStringUsingEncoding:NSUTF8StringEncoding],
-           [reason cStringUsingEncoding:NSUTF8StringEncoding]);
-    if (_skipErrors)
-        printf(", skipping...");
-    printf("\n");
+    if (!_quiet) {
+        printf("%s: failed, %s",
+               [filename cStringUsingEncoding:NSUTF8StringEncoding],
+               [reason cStringUsingEncoding:NSUTF8StringEncoding]);
+        if (_skipErrors)
+            printf(", skipping...");
+        printf("\n");
+    }
     return _skipErrors;
 }
 
 -(void)conversionFinished:(NSString*)filename
 {
-    // got to the beginning of the line
-    printf("\r");
-    printf("%s: [100%%]                              \n",
-           [filename cStringUsingEncoding:NSUTF8StringEncoding]);
- 
+    if (!_quiet) {
+        if (_istty) {
+            // got to the beginning of the line
+            printf("\r");
+            printf("%s: [100%%]                              \n",
+                   [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+        }
+        else {
+            printf("done\n");
+        }
+    }
 }
 
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
@@ -106,12 +129,14 @@
     unsigned int h = seconds / 3600;
     unsigned int m = (seconds % 3600) / 60;
     unsigned int s = (seconds % 60);
-    printf("Finished: %s (", 
-           [filename cStringUsingEncoding:NSUTF8StringEncoding]);
-    if (h)
-        printf("%dh ", h);
+    if (!_quiet) {
+        printf("Finished: %s (", 
+               [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+        if (h)
+            printf("%dh ", h);
 
-    printf("%dm %ds)\n", m, s);
+        printf("%dm %ds)\n", m, s);
+    }
 }
 
 -(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason

@@ -30,11 +30,14 @@
 
 @interface ConsoleDelegate : NSObject <AudioBinderDelegate> {
     BOOL _verbose;
+    BOOL _istty;
+    BOOL _quiet;
     BOOL _skipErrors;
 }
 
 -(id) init;
 -(void) setVerbose:(BOOL)verbose;
+-(void) setQuiet:(BOOL)quiet;
 -(void) setSkipErrors:(BOOL)skip;
 
 // AudioBinderDelegate methods
