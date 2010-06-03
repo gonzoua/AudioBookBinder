@@ -1,3 +1,7 @@
+TBD 1.5
+	- Added -q command-line switch for quiet mode
+	- abbbinder do not output progress updates if stdout is redirected
+
 2010/05/26 1.4
 	- Fixed bug when mp3 files have different bitrate
 	- Fixed advanced editing in author/title fields (copy/cut/paste, etc..)

@@ -9,6 +9,7 @@ abbinder [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title]
     -C file.png cover image
     -h          show this message
     -i file     get input files list from file, "-" for standard input
+    -q          quiet mode (no output)
     -r rate     sample rate of audiobook. Default: 44100
     -s          skip errors and go on with conversion
     -t title    set book title
