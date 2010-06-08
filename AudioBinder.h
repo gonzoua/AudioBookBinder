@@ -71,6 +71,6 @@
 -(BOOL) openOutFile;
 -(void) closeOutFile;
 -(BOOL) convertOneFile: (NSString*)inFileName reason: (NSString**)reason;
-- (void) cancel;
+-(void) cancel;
 
 @end
