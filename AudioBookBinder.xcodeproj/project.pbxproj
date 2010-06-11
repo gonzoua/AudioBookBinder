@@ -37,9 +37,14 @@
 		9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
 		9F95914211658710001C2433 /* iAudiobook256.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9F95914111658710001C2433 /* iAudiobook256.icns */; };
+		9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
 		9FAB146D11619F9F00A2F36A /* ExpandedPathToIconTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */; };
 		9FAB146E11619F9F00A2F36A /* ExpandedPathToPathTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */; };
 		9FAB14821161A51400A2F36A /* PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB14811161A51400A2F36A /* PrefsController.m */; };
+		9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
+		9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
+		9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
+		9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */; };
 		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
 /* End PBXBuildFile section */
@@ -109,6 +114,9 @@
 		9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedPathToPathTransformer.m; sourceTree = "<group>"; };
 		9FAB14801161A51400A2F36A /* PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefsController.h; sourceTree = "<group>"; };
 		9FAB14811161A51400A2F36A /* PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefsController.m; sourceTree = "<group>"; };
+		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
+		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
+		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = /opt/local/lib/libmp4v2.a; sourceTree = "<absolute>"; };
 		9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleDelegate.h; sourceTree = "<group>"; };
 		9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleDelegate.m; sourceTree = "<group>"; };
 		9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineView_Extension.h; sourceTree = "<group>"; };
@@ -125,6 +133,7 @@
 				9F02CE19101EABCD00AE315D /* AudioToolbox.framework in Frameworks */,
 				9F02CE4C101EBB9600AE315D /* CoreServices.framework in Frameworks */,
 				9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */,
+				9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +146,7 @@
 				9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */,
 				9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */,
 				9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */,
+				9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +198,8 @@
 				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
 				9F62872A1194D502000D3A05 /* CoverImageView.h */,
 				9F62872B1194D502000D3A05 /* CoverImageView.m */,
+				9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */,
+				9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -195,6 +207,7 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9FB4DE3911C0610F007B3DDE /* libmp4v2.a */,
 				9F02D006102161FD00AE315D /* QTKit.framework */,
 				9F02CE4B101EBB9600AE315D /* CoreServices.framework */,
 				9F02CE18101EABCD00AE315D /* AudioToolbox.framework */,
@@ -334,6 +347,8 @@
 				9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */,
 				9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */,
 				9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */,
+				9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */,
+				9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +369,7 @@
 				9FAB146E11619F9F00A2F36A /* ExpandedPathToPathTransformer.m in Sources */,
 				9FAB14821161A51400A2F36A /* PrefsController.m in Sources */,
 				9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */,
+				9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +409,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = abbinder;
 			};
 			name = Debug;
@@ -406,6 +426,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = abbinder;
 			};
 			name = Release;
@@ -419,8 +443,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include/;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = AudioBookBinder;
 				SDKROOT = macosx10.5;
 			};
@@ -433,7 +460,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include/;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
 				PREBINDING = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx10.5;
 			};
@@ -456,6 +486,10 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "AudioBookBinder-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -483,6 +517,10 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "AudioBookBinder-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
