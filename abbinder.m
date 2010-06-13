@@ -45,12 +45,16 @@ int validRates[NUM_VALID_RATES] = { 8000, 11025, 12000, 16000, 22050,
 
 void usage(char *cmd)
 {
-    printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] outfile [infile ...]\n", cmd);
+    printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
+           "outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
     printf("\t-C file.png\tcover image\n");
     printf("\t-e\t\talias for -E ''\n");
     printf("\t-E template\tmake each file a chapter with name defined by template\n");
+    printf("\t\t\t    %%N - chapter number\n");
+    printf("\t\t\t    %%a - artis (obtained from source file)\n");
+    printf("\t\t\t    %%t - title (obtained from source file)\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
     printf("\t-q\t\tquiet mode (no output)\n");
