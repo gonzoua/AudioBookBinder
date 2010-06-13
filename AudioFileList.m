@@ -39,9 +39,9 @@
     AudioFile *file = [[AudioFile alloc] initWithPath:fileName];
 
     [self willChangeValueForKey:@"hasFiles"];
-    if ([file isValid]) {
+    if (file.valid) {
         [_files addObject:file];
-        // kee track of most common directory for file list
+        // keep track of most common directory for file list
 #if 0        
         NSString *fileDirectory = [fileName stringByDeletingLastPathComponent];
 
@@ -151,9 +151,11 @@
         if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
             objectValue = file.name;
         else {
-            int hours = file.duration / 3600;
-            int minutes = (file.duration - (hours * 3600)) / 60;
-            int seconds = file.duration % 60;
+            UInt32 duration = file.duration;
+            duration /= 1000;
+            int hours = duration / 3600;
+            int minutes = (duration - (hours * 3600)) / 60;
+            int seconds = duration % 60;
             
             if (hours > 3600)
                 objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",

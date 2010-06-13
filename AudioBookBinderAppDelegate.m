@@ -202,7 +202,7 @@ enum abb_form_fields {
     
     NSArray *files = [fileList files];
     for (AudioFile *file in files) 
-        [_binder addInputFile:file.filePath];
+        [_binder addInputFile:file];
     
     
     // setup channels/samplerate
@@ -279,24 +279,25 @@ enum abb_form_fields {
 //
 // AudioBinderDelegate methods
 // 
--(void) conversionStart: (NSString*)filename 
+-(void) conversionStart: (AudioFile*)file 
                  format: (AudioStreamBasicDescription*)asbd 
       formatDescription: (NSString*)description 
                  length: (UInt64)frames
 
 {
-    [currentFile setStringValue:[NSString stringWithFormat:TEXT_CONVERTING, filename]];
+    [currentFile setStringValue:[NSString stringWithFormat:TEXT_CONVERTING, 
+                                 [file filePath]]];
     [fileProgress setMaxValue:(double)frames];
     [fileProgress setDoubleValue:0];
 }
 
--(void) updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
+-(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
     [fileProgress setMaxValue:(double)totalFrames];
     [fileProgress setDoubleValue:(double)handledFrames];
 }
 
--(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason
+-(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason
 {
 
     NSAlert *alert = [[[NSAlert alloc] init] retain];
@@ -320,9 +321,11 @@ enum abb_form_fields {
 }
 
 
--(void) conversionFinished: (NSString*)filename
+-(void) conversionFinished: (AudioFile*)file duration:(UInt32)milliseconds
 {
     [fileProgress setDoubleValue:[fileProgress doubleValue]];
+    file.valid = YES;
+    file.duration = milliseconds;
 }
 
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
