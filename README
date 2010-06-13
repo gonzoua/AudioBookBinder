@@ -1,25 +1,45 @@
 = Command line utility: abbinder 
 
 == Usage
-
 abbinder [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] 
-  [-i filelist] outfile [infile ...]
-    -a author   set book author
-    -c 1|2      number of channels in audiobook. Default: 2
-    -C file.png cover image
-    -h          show this message
-    -i file     get input files list from file, "-" for standard input
-    -q          quiet mode (no output)
-    -r rate     sample rate of audiobook. Default: 44100
-    -s          skip errors and go on with conversion
-    -t title    set book title
-    -v          print some info on files being converted
+  [-i filelist] outfile [@chapter_1@ infile @chapter_2@ ...]
+        -a author       set book author
+        -c 1|2          number of channels in audiobook. Default: 2
+        -C file.png     cover image
+        -e              alias for -E ''
+        -E template     make each file a chapter with name defined by template
+                            %N - chapter number
+                            %a - artis (obtained from source file)
+                            %t - title (obtained from source file)
+        -h              show this message
+        -i file         get input files list from file, "-" for standard input
+        -q              quiet mode (no output)
+        -r rate         sample rate of audiobook. Default: 44100
+        -s              skip errors and go on with conversion
+        -t title        set book title
+        -v              print some info on files being converted
 
 Attributes for -a and -t arguments (author and title) should be in UTF8.
 Only jpeg and png are supported as cover page format. 
 Valid sample rate values:
     8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000
 
+Chapters could be set either by chapter markers in file list or by
+treating each source file as a chapter.  In former case chapter name is
+provided by user and should be enclosed in '@' characters to distinguish
+it from file names. e.g.:
+    abbinder book.m4b '@Chapter 1@' track01.mp3 '@Chapter 2@' track02.mp3
+
+Chapter names in the latter case are generated for each input file and 
+may contain some escaped sequences that would be expanded when creating 
+a chapter. Template is provided as argument for -E switch. 
+Available sequences:
+    %N - number of chapter, starts from 1
+    %a - value of 'artist' tag from source file
+    %t - value of 'title' tag from source file
+
+So previous example could be rewritten like:
+    abbinder -E 'Chapter %N' track01.mp3 track02.mp3
 
 == Examples
 
@@ -32,3 +52,11 @@ Convert several files to mono m4b with sample rate 8000
 Convert all mp3 files in directory and set author, title and cover image
   bash$ find ./dir -name '*mp3' > list
   bash$ abbinder -i list -a Author -t Title -C ~/cover.png out.m4b
+
+Convert three-chapter book with explicit chapter names:
+  bash$ abbinder book.m4b '@The very beginning@' 01.mp3 \
+      '@In the middle of something@' 02.mp3 \
+      '@Ashes to ashes and dust to dust@' 03.mp3
+
+Convert several short-stories files and make each of them a chapter
+  bash$ abbinder -E '%t' story01.mp3 story02.mp3 story03.mp3
