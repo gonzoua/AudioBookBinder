@@ -19,50 +19,71 @@
         self.filePath = path;
         self.name = [path lastPathComponent];
         self.duration = -1;
-        [self updateDuration];
+        self.valid = NO;
+        [self updateInfo];
     }
     
     return self;
 }
 
-- (BOOL) isValid
-{
-    if (self.duration >= 0)
-        return TRUE;
-    
-    return FALSE;
-}
-
 - (void) dealloc
 {
-    [filePath release];
-    [name release];
+    self.filePath = nil;
+    self.name = nil;
+    self.artist = nil;
+    self.title = nil;
     [super dealloc];
 }
 
-@synthesize filePath, name, duration;
+@synthesize filePath, name, duration, valid, artist, title;
 
-- (void) updateDuration
+- (void) updateInfo
 {
-    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
-    NSString *extension = [[self.filePath pathExtension] lowercaseString];
-    if ([ws filenameExtension:extension isValidForType:@"public.audio"]) 
-    {
-        AudioFileID audioFile;
-        CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
-                                                     (CFStringRef)self.filePath,
-                                                     kCFURLPOSIXPathStyle, FALSE);
-        if (AudioFileOpenURL(url, 0x01, 0, &audioFile) == noErr) 
-        {        
-            UInt32 len = sizeof(NSTimeInterval);
-            NSTimeInterval dur;
-            if (AudioFileGetProperty(audioFile, kAudioFilePropertyEstimatedDuration, &len, &dur) == noErr) 
-                self.duration = dur;
-            AudioFileClose(audioFile);
+    // NSString *extension = [[self.filePath pathExtension] lowercaseString];
+    OSStatus status;
+    AudioFileID audioFile;
+    CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                                                 (CFStringRef)self.filePath,
+                                                 kCFURLPOSIXPathStyle, FALSE);
+    if (AudioFileOpenURL(url, 0x01, 0, &audioFile) == noErr) {        
+        UInt32 len = sizeof(NSTimeInterval);
+        NSTimeInterval dur;
+        if (AudioFileGetProperty(audioFile, kAudioFilePropertyEstimatedDuration, &len, &dur) == noErr) 
+            self.duration = dur*1000;
+
+        UInt32 writable = 0, size;
+        status = AudioFileGetPropertyInfo(audioFile, 
+            kAudioFilePropertyInfoDictionary, &size, &writable);
+
+        if ( status == noErr ) {
+            CFDictionaryRef info = NULL;
+            status = AudioFileGetProperty(audioFile, 
+                kAudioFilePropertyInfoDictionary, &size, &info);
+            if ( status == noErr ) {
+                NSDictionary *properties = (NSDictionary *)info;
+                // NSLog(@"file properties: %@", properties);
+                NSString *s = [NSString stringWithUTF8String:
+                               [[properties objectForKey:@"artist"] UTF8String]];
+                if (s) 
+                    self.artist = s;
+                else
+                    self.artist = @"";
+
+
+                s = [NSString stringWithUTF8String:
+                               [[properties objectForKey:@"title"] UTF8String]];
+                if (s) 
+                    self.title = s;
+                else
+                    self.title = @"";
+            }
         }
-        CFRelease(url);
+        self.valid = YES;
+        AudioFileClose(audioFile);
     }
-    NSLog(@"updateDuration: %d", self.duration);
+
+    CFRelease(url);
 }
+
 
 @end

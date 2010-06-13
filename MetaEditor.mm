@@ -12,6 +12,7 @@ extern "C" {
 };
 #include <vector>
 #include <mp4v2/mp4v2.h>
+#import "Chapter.h"
 
 using namespace std;
 const double CHAPTERTIMESCALE = 1000.0;
@@ -37,7 +38,7 @@ extern "C" int setBookInfo(const char *mp4, const char *author, const char *titl
     return 0;
 }
 
-int addChapters(const char *mp4, Chapter *chapters, int count)
+int addChapters(const char *mp4, NSArray *chapters)
 { 
     MP4FileHandle h = MP4Modify( mp4 );
     
@@ -68,11 +69,12 @@ int addChapters(const char *mp4, Chapter *chapters, int count)
     trackDuration /= trackTimeScale;
     vector<MP4Chapter_t> mp4chapters;
     
-    for (int i = 0; i < count; i++) 
+    for (Chapter *chapter in chapters) 
     {
         MP4Chapter_t chap;
-        chap.duration = chapters[i].duration;
-        strncpy(chap.title, chapters[i].title, sizeof(chap.title)-1);
+        chap.duration = [chapter totalDuration];
+        strncpy(chap.title, 
+                [chapter.name UTF8String], sizeof(chap.title)-1);
         
         mp4chapters.push_back( chap );
     }

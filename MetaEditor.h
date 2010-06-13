@@ -9,11 +9,6 @@
 #ifndef __METAEDITOR__
 #define __METAEDITOR__
 
-typedef struct {
-    uint32_t duration; // milliseconds
-    char title[1024];
-} Chapter;
-
-int addChapters(const char *mp4, Chapter *chapters, int count);
+int addChapters(const char *mp4, NSArray *chapters);
 
 #endif // __METAEDITOR__

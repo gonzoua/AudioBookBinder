@@ -136,9 +136,9 @@ stringForOSStatus(OSStatus err)
     _delegate = delegate;
 }
 
--(void)addInputFile: (NSString*)fileName
+-(void)addInputFile: (AudioFile*)file
 {
-    [_inFiles addObject: fileName];
+    [_inFiles addObject: file];
 }
 
 -(void)setOutputFile: (NSString*)outFileName
@@ -167,7 +167,7 @@ stringForOSStatus(OSStatus err)
         return NO;
     }
     
-    for (NSString* inFile in _inFiles) 
+    for (AudioFile* inFile in _inFiles) 
     {
         NSString *reason;
         if ([self convertOneFile:inFile reason:&reason] == NO)
@@ -251,7 +251,7 @@ stringForOSStatus(OSStatus err)
    
     status = ExtAudioFileCreateNew(&dirFSRef, 
                                    (CFStringRef)[_outFileName lastPathComponent], 
-                                   kAudioFileM4AType, &outputFormat, 
+                                   kAudioFileMPEG4Type, &outputFormat, 
                                    NULL, &_outAudioFile);
     
     if (status != noErr)
@@ -271,7 +271,7 @@ stringForOSStatus(OSStatus err)
     _outAudioFile = nil;
 }
 
--(BOOL) convertOneFile: (NSString *)inFileName reason: (NSString**)reason
+-(BOOL) convertOneFile: (AudioFile *)inFile reason: (NSString**)reason
 {
     // Get description
     NSString *fileFormat;
@@ -292,16 +292,16 @@ stringForOSStatus(OSStatus err)
     @try {
         // open audio file
         status = FSPathMakeRef(
-                               (const UInt8 *)[inFileName fileSystemRepresentation], 
+                               (const UInt8 *)[inFile.filePath fileSystemRepresentation], 
                                &ref, &isDirectory);
         if (status != noErr)
             [NSException raise:@"ConvertException" 
                 format:@"Failed to make reference for file %@: %@", 
-                inFileName, stringForOSStatus(status)];
+                inFile.filePath, stringForOSStatus(status)];
         
         if (isDirectory)
             [NSException raise:@"ConvertException" 
-                format:@"Error: %@ is directory", inFileName];
+                format:@"Error: %@ is directory", inFile.filePath];
         
         status = ExtAudioFileOpen(&ref, &inAudioFile);
         if (status != noErr)
@@ -339,7 +339,7 @@ stringForOSStatus(OSStatus err)
                         format:@"failed to get input file length: %@", 
              stringForOSStatus(status)];
         
-        [_delegate conversionStart: inFileName 
+        [_delegate conversionStart: inFile 
                             format: &format
                  formatDescription: fileFormat
                             length: framesTotal];        
@@ -422,6 +422,7 @@ stringForOSStatus(OSStatus err)
         bufferList.mBuffers[0].mData = audioBuffer;
         bufferList.mBuffers[0].mDataByteSize = AUDIO_BUFFER_SIZE;
                 
+        SInt64 prevPos = _outFileLength;
         do {
             
             framesToRead = 
@@ -444,7 +445,7 @@ stringForOSStatus(OSStatus err)
 
             framesConverted += framesToRead;
 
-            [_delegate updateStatus:inFileName 
+            [_delegate updateStatus:inFile 
                             handled:framesConverted 
                               total:framesTotal];
 
@@ -459,7 +460,10 @@ stringForOSStatus(OSStatus err)
 
         } while(framesToRead > 0);
 
-        [_delegate conversionFinished:inFileName];
+
+        UInt32 duration = (_outFileLength - prevPos)*1000/_sampleRate;
+        [_delegate conversionFinished:inFile
+                             duration:duration];
     }  
     @catch (NSException *e) {
         *reason = [e reason];

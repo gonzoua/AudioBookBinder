@@ -33,7 +33,11 @@
 #import "AudioBinder.h"
 #import "ABLog.h"
 #import "ConsoleDelegate.h"
+#import "AudioFile.h"
 #import "MP4File.h"
+
+#include "MetaEditor.h"
+#import "Chapter.h"
 
 #define NUM_VALID_RATES 9
 int validRates[NUM_VALID_RATES] = { 8000, 11025, 12000, 16000, 22050,
@@ -45,6 +49,8 @@ void usage(char *cmd)
     printf("\t-a author\tset book author\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
     printf("\t-C file.png\tcover image\n");
+    printf("\t-e\t\talias for -E ''\n");
+    printf("\t-E template\tmake each file a chapter with name defined by template\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
     printf("\t-q\t\tquiet mode (no output)\n");
@@ -53,6 +59,30 @@ void usage(char *cmd)
     printf("\t-t title\tset book title\n");
     printf("\t-v\t\tprint some info on files being converted\n");
     
+}
+
+NSString *makeChapterName(NSString *format, int chapterNum, AudioFile *file)
+{
+
+    NSString *numStr = [[NSString stringWithFormat:@"%d", chapterNum + 1] retain];
+    NSMutableString *name = [[NSMutableString stringWithString:format] retain];
+
+    [name replaceOccurrencesOfString:@"%a" 
+                          withString:file.artist
+                             options:NSLiteralSearch 
+                               range:NSMakeRange(0, [name length])];
+ 
+    [name replaceOccurrencesOfString:@"%t" 
+                          withString:file.title 
+                             options:NSLiteralSearch 
+                               range:NSMakeRange(0, [name length])];
+
+    [name replaceOccurrencesOfString:@"%N" 
+                          withString:numStr
+                             options:NSLiteralSearch 
+                               range:NSMakeRange(0, [name length])];
+
+    return name;
 }
 
 int main (int argc, char * argv[]) {
@@ -64,6 +94,7 @@ int main (int argc, char * argv[]) {
     NSString *outFile = nil;
     NSString *inputFileList = nil;
     NSString *coverFile = nil;
+    NSMutableArray *inputFilenames;
     NSMutableArray *inputFiles;
     NSError *error;
     ConsoleDelegate *delegate;
@@ -72,9 +103,13 @@ int main (int argc, char * argv[]) {
     BOOL skipErrors = NO;
     int channels = 2;
     float samplerate = 44100.;
+    BOOL withChapters = NO;
+    BOOL eachFileIsChapter = NO;
+    NSString *chapterNameFormat;
+    NSMutableArray *chapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:c:C:hi:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:c:C:eE:hi:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -105,6 +140,24 @@ int main (int argc, char * argv[]) {
                 break;
             case 'q':
                 quiet = YES;
+                break;
+            case 'e':
+                if (withChapters) {
+                    fprintf(stderr, "You can't use both -e and -E together");
+                    exit(1);
+                }
+                withChapters = YES;
+                eachFileIsChapter = YES;
+                chapterNameFormat = @"";
+                break;
+            case 'E':
+                if (withChapters) {
+                    fprintf(stderr, "You can't use both -e and -E together");
+                    exit(1);
+                }
+                withChapters = YES;
+                eachFileIsChapter = YES;
+                chapterNameFormat = [NSString stringWithUTF8String:optarg];
                 break;
             default:
                 usage(argv[0]);
@@ -148,6 +201,7 @@ int main (int argc, char * argv[]) {
 
     // Get input files from all possible sources:
     // 
+    inputFilenames = [[NSMutableArray alloc] init];
     inputFiles = [[NSMutableArray alloc] init];
     if (inputFileList != nil)
     {
@@ -177,26 +231,39 @@ int main (int argc, char * argv[]) {
         NSArray *filesList = [listContent componentsSeparatedByString: @"\n"];
         for (NSString *file in filesList)
             if ([file length] > 0)
-                [inputFiles addObject:file];
+                [inputFilenames addObject:file];
     }
 
     // Now get input files from the remain of arguments
     while (optind < argc) 
     {
-        [inputFiles addObject:[NSString stringWithUTF8String:argv[optind]]];
+        NSString *path = [NSString stringWithUTF8String:argv[optind]];
+        [inputFilenames addObject:path];
         optind++;
     }
 
-    if ([inputFiles count] == 0)
+    if ([inputFilenames count] == 0)
     {
         fprintf(stderr, "No input file specified\n");
         usage(argv[0]);
         exit(1);
     }
 
+    for (NSString *path in inputFilenames) { 
+        AudioFile *file = [[AudioFile alloc] initWithPath:path];
+        if (eachFileIsChapter) {
+            Chapter *chapter = [[Chapter alloc] init];
+            chapter.name = makeChapterName(chapterNameFormat, 
+                                           [chapters count], file);
+            [chapter addFile:file];
+            [chapters addObject:chapter];
+        }
+        [inputFiles addObject:file];
+    }
+    
     // Feed files to binder
     [binder setOutputFile:outFile];
-    for (NSString *file in inputFiles) 
+    for (AudioFile *file in inputFiles) 
         [binder addInputFile:file];
     
     binder.channels = channels;
@@ -226,6 +293,8 @@ int main (int argc, char * argv[]) {
         [mp4 updateFile];
         printf("done\n");
     }
+
+    addChapters("1.m4b", chapters);
 
     [pool drain];
     return 0;

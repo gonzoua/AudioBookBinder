@@ -29,18 +29,19 @@
 
 #include <AudioToolbox/AudioFormat.h>
 #include <AudioToolbox/ExtendedAudioFile.h>
+#import "AudioFile.h"
 
 #define DEFAULT_SAMPLE_RATE 44100.f
 
 @protocol AudioBinderDelegate
 
--(void) updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames;
--(void) conversionStart: (NSString*)filename 
+-(void) updateStatus: (AudioFile*)file handled:(UInt64)handledFrames total:(UInt64)totalFrames;
+-(void) conversionStart: (AudioFile*)file 
                  format: (AudioStreamBasicDescription*)format
       formatDescription: (NSString*)description
                  length: (UInt64)frames;
--(BOOL) continueFailedConversion:(NSString*)filename reason:(NSString*)reason;
--(void) conversionFinished: (NSString*)filename;
+-(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason;
+-(void) conversionFinished: (AudioFile*)file duration: (UInt32)milliseconds;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
 -(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
 
@@ -65,12 +66,12 @@
 -(id) init;
 -(void) reset;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
--(void) addInputFile: (NSString*)fileName;
+-(void) addInputFile: (AudioFile*)file;
 -(void) setOutputFile: (NSString*)outFileName;
 -(BOOL) convert;
 -(BOOL) openOutFile;
 -(void) closeOutFile;
--(BOOL) convertOneFile: (NSString*)inFileName reason: (NSString**)reason;
+-(BOOL) convertOneFile: (AudioFile*)inFile reason: (NSString**)reason;
 -(void) cancel;
 
 @end

@@ -57,20 +57,20 @@
     _skipErrors = skip;
 }
 
--(void)updateStatus: (NSString *)filename handled:(UInt64)handledFrames total:(UInt64)totalFrames
+-(void)updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
     if (!_quiet && _istty) {
         unsigned int percent = handledFrames * 100 / totalFrames;
         // got to the beginning of the line
         printf("\r");
         printf("%s: [%3d%%] %lld/%lld", 
-               [filename cStringUsingEncoding:NSUTF8StringEncoding], percent,
+               [file.filePath cStringUsingEncoding:NSUTF8StringEncoding], percent,
                handledFrames, totalFrames);
         fflush(stdout);
     }
 }
 
--(void) conversionStart: (NSString*)filename 
+-(void) conversionStart: (AudioFile*)file 
                  format: (AudioStreamBasicDescription*)asbd
       formatDescription: (NSString*)description
                  length: (UInt64)frames;
@@ -79,7 +79,7 @@
         if (_verbose)
         {
             printf("Stream info for %s:\n",
-               [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+               [file.filePath cStringUsingEncoding:NSUTF8StringEncoding]);
             printf("\tFormatID: %s, FormatFlags: %08x\n", (char*)&asbd->mFormatID, asbd->mFormatFlags);
             printf("\tBytesPerPacket: %d, FramesPerPacker: %d, BytesPerFrame: %d\n",
                   asbd->mBytesPerPacket, asbd->mFramesPerPacket, asbd->mBytesPerFrame);
@@ -91,37 +91,43 @@
 
         }
 
-        printf("%s: ", [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+        printf("%s: ", [file.filePath cStringUsingEncoding:NSUTF8StringEncoding]);
         fflush(stdout);
     }
 }
 
--(BOOL)continueFailedConversion:(NSString*)filename reason:(NSString*)reason
+-(BOOL)continueFailedConversion:(AudioFile*)file reason:(NSString*)reason
 {
     if (!_quiet) {
         printf("%s: failed, %s",
-               [filename cStringUsingEncoding:NSUTF8StringEncoding],
+               [file.filePath cStringUsingEncoding:NSUTF8StringEncoding],
                [reason cStringUsingEncoding:NSUTF8StringEncoding]);
         if (_skipErrors)
             printf(", skipping...");
         printf("\n");
     }
+    file.duration = 0;
+    file.valid = NO;
     return _skipErrors;
 }
 
--(void)conversionFinished:(NSString*)filename
+-(void) conversionFinished: (AudioFile*)file duration:(UInt32)duration
 {
     if (!_quiet) {
         if (_istty) {
             // got to the beginning of the line
             printf("\r");
             printf("%s: [100%%]                              \n",
-                   [filename cStringUsingEncoding:NSUTF8StringEncoding]);
+                   [file.filePath cStringUsingEncoding:NSUTF8StringEncoding]);
         }
         else {
             printf("done\n");
         }
     }
+    
+    // set actual duration and mark as valid
+    file.duration = duration;
+    file.valid = NO;    
 }
 
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
