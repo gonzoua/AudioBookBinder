@@ -248,15 +248,64 @@ int main (int argc, char * argv[]) {
         usage(argv[0]);
         exit(1);
     }
-
+    
+    // check if we have chapter markers in file list
     for (NSString *path in inputFilenames) { 
+        int len = [path length];
+        if (len == 0)
+            continue;
+        
+        // is it chapter marker?
+        if ((len > 2) && ([path characterAtIndex:0] == '@') 
+            && ([path characterAtIndex:(len-1)] == '@')) {
+            if (withChapters) {
+                fprintf(stderr, "You can not use -e/-E and chapter marks together\n");
+                exit(1);
+            }
+            withChapters = YES;
+            break;
+        }
+    }
+
+    // create implicit first chapter. It wil be overriden
+    // if files list starts with chapter marker
+    Chapter *curChapter = [[Chapter alloc] init];
+    for (NSString *path in inputFilenames) { 
+        int len = [path length];
+        
+        if (len == 0)
+            continue;
+        
+        // is it chapter marker?
+        if ((len > 2) && ([path characterAtIndex:0] == '@')
+            && ([path characterAtIndex:(len-1)] == '@')) {
+            NSString *chapterName = [path substringWithRange:NSMakeRange(1, len-2)];
+            curChapter = [[Chapter alloc] init];
+            curChapter.name = chapterName;
+            [chapters addObject:curChapter];
+            continue;
+        }
+            
         AudioFile *file = [[AudioFile alloc] initWithPath:path];
-        if (eachFileIsChapter) {
-            Chapter *chapter = [[Chapter alloc] init];
-            chapter.name = makeChapterName(chapterNameFormat, 
-                                           [chapters count], file);
-            [chapter addFile:file];
-            [chapters addObject:chapter];
+        
+        if (withChapters) {
+            if (eachFileIsChapter) {
+                Chapter *chapter = [[Chapter alloc] init];
+                chapter.name = makeChapterName(chapterNameFormat, 
+                                               [chapters count], file);
+                [chapter addFile:file];
+                [chapters addObject:chapter];
+            }
+            else {
+                // at this point we should have at least one item in chapters
+                // list. If there is none - the first element of files list is
+                // not chapter mark and we should add our implicit marker
+                if ([chapters count] == 0)
+                    [chapters addObject:curChapter];
+                
+                [curChapter addFile:file];
+            }
+
         }
         [inputFiles addObject:file];
     }
