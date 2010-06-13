@@ -49,12 +49,10 @@ int addChapters(const char *mp4, NSArray *chapters)
     MP4TrackId refTrackId = MP4_INVALID_TRACK_ID;
     uint32_t trackCount = MP4GetNumberOfTracks( h );
 
-    for( uint32_t i = 0; i < trackCount; ++i )
-    {
+    for( uint32_t i = 0; i < trackCount; ++i ) {
         MP4TrackId    id = MP4FindTrackId( h, i );
         const char* type = MP4GetTrackType( h, id );
-        if( MP4_IS_AUDIO_TRACK_TYPE( type ) )
-        {
+        if( MP4_IS_AUDIO_TRACK_TYPE( type ) ) {
             refTrackId = id;
             break;
         }
@@ -65,12 +63,10 @@ int addChapters(const char *mp4, NSArray *chapters)
 
     MP4Duration trackDuration = MP4GetTrackDuration( h, refTrackId ); 
     uint32_t trackTimeScale = MP4GetTrackTimeScale( h, refTrackId );
-    NSLog(@"duration: %ld scale: %d", trackDuration, trackTimeScale);
     trackDuration /= trackTimeScale;
     vector<MP4Chapter_t> mp4chapters;
     
-    for (Chapter *chapter in chapters) 
-    {
+    for (Chapter *chapter in chapters) {
         MP4Chapter_t chap;
         chap.duration = [chapter totalDuration];
         strncpy(chap.title, 
