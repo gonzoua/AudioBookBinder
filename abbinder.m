@@ -337,21 +337,27 @@ int main (int argc, char * argv[]) {
     
     if ((bookAuthor != nil) || (bookTitle != nil) || (coverFile != nil))
     {
-        printf("Adding metadata, it may take a while...");
-        fflush(stdout);
+        if (!quiet) {
+            printf("Adding metadata, it may take a while...");
+            fflush(stdout);
+        }
         MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
         [mp4 setArtist:bookAuthor]; 
         [mp4 setTitle:bookTitle]; 
         [mp4 setCoverFile:coverFile];
         [mp4 updateFile];
-        printf("done\n");
+        if (!quiet)
+            printf("done\n");
     }
 
     if ([chapters count]) {
-        printf("Adding chapter markers, it may take a while...");
-        fflush(stdout);
+        if (!quiet) {
+            printf("Adding chapter markers, it may take a while...");
+            fflush(stdout);
+        }
         addChapters([outFile UTF8String], chapters);
-        printf("done\n");
+        if (!quiet)
+            printf("done\n");
     }
 
     [pool drain];
