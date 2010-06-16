@@ -347,7 +347,12 @@ int main (int argc, char * argv[]) {
         printf("done\n");
     }
 
-    addChapters("1.m4b", chapters);
+    if ([chapters count]) {
+        printf("Adding chapter markers, it may take a while...");
+        fflush(stdout);
+        addChapters([outFile UTF8String], chapters);
+        printf("done\n");
+    }
 
     [pool drain];
     return 0;
