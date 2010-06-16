@@ -99,9 +99,7 @@
 -(BOOL)continueFailedConversion:(AudioFile*)file reason:(NSString*)reason
 {
     if (!_quiet) {
-        printf("%s: failed, %s",
-               [file.filePath cStringUsingEncoding:NSUTF8StringEncoding],
-               [reason cStringUsingEncoding:NSUTF8StringEncoding]);
+        printf("failed, %s", [reason cStringUsingEncoding:NSUTF8StringEncoding]);
         if (_skipErrors)
             printf(", skipping...");
         printf("\n");
