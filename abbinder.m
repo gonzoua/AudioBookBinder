@@ -48,6 +48,7 @@ void usage(char *cmd)
     printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
            "outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
+    printf("\t-b bitrate\tset bitrate (KBps)\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
     printf("\t-C file.png\tcover image\n");
     printf("\t-e\t\talias for -E ''\n");
@@ -107,13 +108,14 @@ int main (int argc, char * argv[]) {
     BOOL skipErrors = NO;
     int channels = 2;
     float samplerate = 44100.;
+    int bitrate;
     BOOL withChapters = NO;
     BOOL eachFileIsChapter = NO;
     NSString *chapterNameFormat;
     NSMutableArray *chapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:c:C:eE:hi:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:b:c:C:eE:hi:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -162,6 +164,13 @@ int main (int argc, char * argv[]) {
                 withChapters = YES;
                 eachFileIsChapter = YES;
                 chapterNameFormat = [NSString stringWithUTF8String:optarg];
+                break;
+            case 'b':
+                bitrate = atoi(optarg)*1000;
+                if (bitrate == 0) {
+                    fprintf(stderr, "Invalid bitrate: %s", optarg);
+                    exit(1);
+                }
                 break;
             default:
                 usage(argv[0]);
@@ -321,7 +330,32 @@ int main (int argc, char * argv[]) {
     
     binder.channels = channels;
     binder.sampleRate = samplerate;
-
+    
+    if (bitrate) {
+        BOOL found = NO;
+        NSArray *validBitrates = [binder validBitrates];
+        for (NSNumber *rate in validBitrates) {
+            if ([rate intValue] == bitrate) {
+                binder.bitrate = bitrate;
+                found = YES;
+                break;
+            }
+        }
+        
+        if (!found) {
+            fprintf(stderr, "Invalid bitrate value %d, valid values:\n    ", bitrate/1000);
+            bool first = YES;
+            for (NSNumber *rate in validBitrates) {
+                if (!first)
+                    fprintf(stderr, ", ");
+                fprintf(stderr, "%d", [rate intValue]/1000);
+                first = NO;
+            }
+            fprintf(stderr, "\n");
+            exit(1);
+        }
+    }
+    
     // Setup delegate, it will print progress messages on console
     delegate = [[ConsoleDelegate alloc] init];
     [delegate setQuiet:quiet];
