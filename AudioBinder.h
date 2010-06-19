@@ -57,11 +57,14 @@
     BOOL _canceled;
     float _sampleRate;
     int _channels;
+    UInt32 _bitrate;
+    NSMutableArray *_availableBitrates;
 }
 
 
 @property (assign) int channels;
 @property (assign) float sampleRate;
+@property (assign) UInt32 bitrate;
 
 -(id) init;
 -(void) reset;
@@ -73,5 +76,6 @@
 -(void) closeOutFile;
 -(BOOL) convertOneFile: (AudioFile*)inFile reason: (NSString**)reason;
 -(void) cancel;
-
+-(BOOL) setConverterBitrate;
+-(NSArray*) validBitrates;
 @end
