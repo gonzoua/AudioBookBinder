@@ -50,6 +50,7 @@
             case NSDeleteCharacter:                                
                 isDeleteKey = YES;
                 break;
+
             default:
                 break;
         }

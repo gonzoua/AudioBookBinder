@@ -7,15 +7,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "AudioFile.h"
 
 @interface AudioFileList : NSObject {
     NSMutableArray *_files;
+    NSMutableArray *_chapters;
     NSString *_topDir;
     NSArray *_draggedNodes;
+    BOOL _chapterMode, _canJoin, _canSplit;
 }
 
 @property (readonly) BOOL hasFiles;
+@property BOOL chapterMode;
 
 // class methods
 - (id) init;
@@ -24,6 +27,11 @@
 - (void) addFile:(NSString*)fileName;
 - (void) addFilesInDirectory:(NSString*)dirName;
 - (NSArray*) files;
+- (NSArray*) chapters;
+- (void) orphanFile:(AudioFile*)file;
+- (void) cleanupChapters;
+- (void) switchChapterMode;
+- (void) renumberChapters;
 
 // NSOutlineView data source methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
@@ -32,5 +40,7 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item;
 - (void)delKeyDown:(NSOutlineView *)outlineView;
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView;
+- (BOOL)joinSelectedFiles:(NSOutlineView *)outlineView;
+- (BOOL)splitSelectedFiles: (NSOutlineView*)outlineView;
 
 @end

@@ -125,7 +125,7 @@
     
     // set actual duration and mark as valid
     file.duration = duration;
-    file.valid = NO;    
+    file.valid = YES;    
 }
 
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds

@@ -11,12 +11,18 @@
 
 @interface Chapter : NSObject {
     NSString *name;
-    NSMutableArray *_files;
+    NSMutableArray *files;
 }
 
 @property (readwrite, copy) NSString *name;
+@property (readwrite, copy) NSMutableArray *files;
 
 - (void) addFile:(AudioFile *)file;
+- (void) addFiles:(NSArray *)newFiles;
 - (BOOL) containsFile:(AudioFile*)file;
+- (AudioFile*) fileAtIndex:(NSInteger)index;
+- (void) removeFile:(AudioFile*)file;
+- (void) insertFile:(AudioFile*)file atIndex:(NSInteger)index;
+- (int) totalFiles;
 - (UInt32) totalDuration;
 @end

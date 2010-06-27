@@ -33,6 +33,11 @@
 - (IBAction) setCover: (id)sender;
 - (IBAction) bind: (id)sender;
 - (IBAction) cancel: (id)sender;
+- (IBAction) chapterModeWillChange: (id)sender;
+- (IBAction) joinFiles: (id)sender;
+- (IBAction) splitFiles: (id)sender;
+- (IBAction) renumberChapters: (id)sender;
+
 - (void) bindingThreadIsDone: (id) sender;
 
 // AudioBinderDelegate methods

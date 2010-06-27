@@ -9,11 +9,17 @@
 #import "AudioFileList.h"
 #import "AudioFile.h"
 #include "NSOutlineView_Extension.h"
+#import "Chapter.h"
 
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
-#define COLUMNID_NAME               @"NameColumn"
+#define COLUMNID_NAME                @"NameColumn"
 #define COLUMNID_DURATION            @"DurationColumn"
+
+#define TEXT_CHAPTER  \
+    NSLocalizedString(@"Chapter", nil)
+#define TEXT_CHAPTER_N  \
+    NSLocalizedString(@"Chapter %d", nil)
 
 @implementation AudioFileList
 
@@ -22,7 +28,9 @@
     if (self = [super init]) 
     {
         _files = [[[NSMutableArray alloc] init] retain];
+        _chapters = [[[NSMutableArray alloc] init] retain];
         _topDir = nil;
+        _chapterMode = NO;
     }
     return self;
 }
@@ -31,63 +39,52 @@
 {
     [_files release];
     [_topDir release];
+    [_chapters release];
     [super dealloc];
 }
+
+@synthesize chapterMode = _chapterMode;
 
 - (void) addFile:(NSString*)fileName
 {
     AudioFile *file = [[AudioFile alloc] initWithPath:fileName];
 
     [self willChangeValueForKey:@"hasFiles"];
+    
     if (file.valid) {
         [_files addObject:file];
-        // keep track of most common directory for file list
-#if 0        
-        NSString *fileDirectory = [fileName stringByDeletingLastPathComponent];
-
-        if (_topDir == nil)
-        {
-            _topDir = [[NSString stringWithString:fileDirectory] retain];
+        if (_chapterMode) {
+            Chapter *chapter = [_chapters lastObject];
+            [chapter addFile:file];  
         }
-        else
-        {
-            NSArray *a1 = [_topDir pathComponents];
-            NSArray *a2 = [fileDirectory pathComponents];
-            NSMutableArray *result = [[[NSMutableArray alloc] init] retain];
-            int i, common = 0;
-            
-            for (i = 0; i < MIN([a1 count], [a2 count]); i++)
-            {
-                if ([[a1 objectAtIndex:i] isEqualToString:[a2 objectAtIndex:i]])
-                    common++;
-            }
-            
-            if ((common > 0) && (common != [a1 count]))
-            {
-                NSRange newRange;
-                newRange.location = 0;
-                newRange.length = common;
-
-                [_topDir release];
-                _topDir = [[[a1 subarrayWithRange:newRange] componentsJoinedByString:@"/"] retain];
-            }
-            else if (common == 0)
-            
-            [a1 release];
-            [a2 release];
-        }
-#endif
-        
     }
     else
         [file release];
+    
     [self didChangeValueForKey:@"hasFiles"];
+}
 
+- (NSArray*) chapters
+{
+    NSArray *result;
+
+    result = [[NSArray arrayWithArray:_chapters] retain];
+    
+    return result;
 }
 
 - (NSArray*) files
 {
-    NSArray *result = [[NSArray arrayWithArray:_files] retain];
+    NSMutableArray *result;
+    if (_chapterMode) {
+        result = [[NSMutableArray alloc] init];
+        for (Chapter *ch in _chapters)
+            [result addObjectsFromArray:[ch files]];
+    }
+    else {
+        result = [[NSArray arrayWithArray:_files] retain];
+    }
+    
     return result;
 }
 
@@ -110,32 +107,97 @@
     }
 }
 
+- (void) switchChapterMode
+{
+    // this function is called before _chapterMode is changed by binding
+    if (!_chapterMode) {
+        // put all files in one folder
+        Chapter *newChapter = [[Chapter alloc] init];
+        newChapter.name = TEXT_CHAPTER;
+        [_chapters removeAllObjects];
+        for (AudioFile *file in _files) {
+            [newChapter addFile:file];
+        }
+        [_chapters addObject:newChapter];
+        // change explicitely because we need to update outlineView in new mode
+        _chapterMode = YES;
+
+    } else
+    {
+        // flatten chapter tree
+        [_files removeAllObjects];
+        for (Chapter *ch in _chapters) {
+            for (AudioFile *f in [ch files])
+                [_files addObject:f];
+        }
+        // change explicitely because we need to update outlineView in new mode
+        _chapterMode = NO;
+    }
+}
+
+- (void) renumberChapters
+{
+    if (_chapterMode) {
+        int idx = 1;
+        for (Chapter *ch in _chapters) {
+            ch.name = [NSString stringWithFormat:TEXT_CHAPTER_N, idx];
+            idx++;
+        }
+    }
+}
 
 // The NSOutlineView uses 'nil' to indicate the root item. We return our root tree node for that case.
 - (NSArray *)childrenForItem:(id)item {
     if (item == nil) {
-        return _files;
+        if (_chapterMode)
+            return _chapters;
+        else
+            return _files;
     }
-    
+    else {
+        if ([item isKindOfClass:[Chapter class]]) {
+            return [(Chapter*)item files];
+        }
+    }
     return nil;
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
-
-    return [_files count];
+    if (item == nil) {
+        if (_chapterMode)
+            return [_chapters count];
+        else
+            return [_files count];
+    }
+    else {
+        if ([item isKindOfClass:[Chapter class]])
+            return [item totalFiles];
+    }
+    
+    return 0;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-    return FALSE;
+    if ([item isKindOfClass:[Chapter class]])
+        return YES;
+    else
+        return NO;
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 
-    if (item == nil)
-        return [_files objectAtIndex:index];
+    if (item == nil) {
+        if (_chapterMode)
+            return [_chapters objectAtIndex:index];
+        else
+            return [_files objectAtIndex:index];
+    }
+    
+    if ([item isKindOfClass:[Chapter class]])
+        return [item fileAtIndex:index];
     
     return nil;
 }
@@ -143,8 +205,10 @@
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
     id objectValue = nil;
-
-    if (item != nil)
+    if (item == nil)
+        return nil;
+    
+    if ([item isKindOfClass:[AudioFile class]])
     {
         AudioFile *file = item;
 
@@ -164,9 +228,33 @@
                 objectValue = [[NSString stringWithFormat:@"%d:%02d",
                                 minutes, seconds] retain];
         }
+        
+        return objectValue;
     }
+    else {
+        Chapter *chapter = item;
+        if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+            return [chapter name];
+        else {
+            UInt32 duration = [chapter totalDuration];
+            duration /= 1000;
+            int hours = duration / 3600;
+            int minutes = (duration - (hours * 3600)) / 60;
+            int seconds = duration % 60;
+            
+            if (hours > 3600)
+                objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
+                                hours, minutes, seconds] retain];
+            else
+                objectValue = [[NSString stringWithFormat:@"%d:%02d",
+                                minutes, seconds] retain];
+            return objectValue;
+        }
+        
+    }
+
     
-    return objectValue;
+    return nil;
 }
 
 // We can return a different cell for each row, if we want
@@ -184,31 +272,45 @@
 // optional methods for content editing
 //
 
+- (BOOL)    outlineView:(NSOutlineView *)outlineView 
+  shouldEditTableColumn:(NSTableColumn *)tableColumn 
+                   item:(id)item {
+
+    if ([item isKindOfClass:[Chapter class]])
+        if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+            return YES;
+    // [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
+    return NO;
+}
+
 - (void)outlineView:(NSOutlineView *)outlineView 
      setObjectValue:(id)object 
      forTableColumn:(NSTableColumn *)tableColumn 
              byItem:(id)item  
 {
+    Chapter *chapter = item;
 
-    NSLog(@"setObjectValue");
+    if ([item isKindOfClass:[Chapter class]])
+        if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+            chapter.name = object;
 }
 
 // To get the "group row" look, we implement this method.
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item 
 {
 
-    return NO;
+    return ([item isKindOfClass:[Chapter class]]);
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item 
 {
-
-    return NO;
+    
+    return ([item isKindOfClass:[Chapter class]]);
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item 
 {
-    NSLog(@"shouldSelectItem");
+    
     return YES;
 }        
 
@@ -252,6 +354,19 @@
     if (childIndex == NSOutlineViewDropOnItemIndex)
             result = NSDragOperationNone;
     
+    if (_chapterMode) {
+        BOOL draggingChapters = YES;
+        for (id audioItem in _draggedNodes) {
+            if ([audioItem isKindOfClass:[AudioFile class]]) {
+                draggingChapters = NO;
+                break;
+            }
+        }
+        
+        if ((item == nil) && !draggingChapters) 
+            result = NSDragOperationNone;
+    }
+    
     return result;
 }
 
@@ -260,23 +375,56 @@
                item:(id)item childIndex:(NSInteger)childIndex 
 {
     NSMutableArray *newSelectedItems = [NSMutableArray array];
+
     if ([info draggingSource] == outlineView)
     {
-        // Go ahead and move things. 
-        for (AudioFile *file in _draggedNodes) {
-            // Remove the node from its old location
-            NSInteger oldIndex = [_files indexOfObject:file];
-            NSInteger newIndex = childIndex;
-            if (oldIndex != NSNotFound) {
-                [_files removeObjectAtIndex:oldIndex];
-                if (childIndex > oldIndex) {
-                    newIndex--; // account for the remove
+        if (_chapterMode) {
+            Chapter *dropChapter = item;
+            if (dropChapter != nil) {
+                for (id audioItem in _draggedNodes) {
+                    if ([audioItem isKindOfClass:[Chapter class]]) {
+                        for (AudioFile *file in [audioItem files]) {
+                            [dropChapter insertFile:file atIndex:childIndex];
+                            childIndex++;
+                        }
+                        [_chapters removeObject:audioItem];
+                    }
+                    else {
+                        [self orphanFile:audioItem];
+                        [dropChapter insertFile:audioItem atIndex:childIndex];
+                        childIndex++;
+                    }
                 }
             }
-            [_files insertObject:file atIndex:newIndex];
-            NSLog(@"%@ %d -> %d", file, oldIndex, newIndex);
-            newIndex++;
-            [newSelectedItems addObject:file];
+            else {
+                // reorder chapters, validateDrop will ensure there are
+                // only Chapter nodes are dropped
+                for (Chapter *ch in _draggedNodes) {
+                    [_chapters removeObject:ch];
+                    [_chapters insertObject:ch atIndex:childIndex];
+                    childIndex++;
+                }
+            }
+            
+            [self cleanupChapters];
+
+        }
+        else {
+            // Go ahead and move things. 
+            for (AudioFile *file in _draggedNodes) {
+                // Remove the node from its old location
+                NSInteger oldIndex = [_files indexOfObject:file];
+                NSInteger newIndex = childIndex;
+                if (oldIndex != NSNotFound) {
+                    [_files removeObjectAtIndex:oldIndex];
+                    if (childIndex > oldIndex) {
+                        newIndex--; // account for the remove
+                    }
+                }
+                [_files insertObject:file atIndex:newIndex];
+                newIndex++;
+                [newSelectedItems addObject:file];
+            }
         }
     }
     else {
@@ -309,7 +457,6 @@
         }
         
     }
-
     [outlineView reloadData];
     // Reselect old items.
     [outlineView setSelectedItems:newSelectedItems];
@@ -322,21 +469,147 @@
     [self deleteSelected:outlineView];
 }
 
+- (void)enterKeyDown:(NSOutlineView *)outlineView
+{
+    [self joinSelectedFiles:outlineView];
+}
+
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView
 {
     // Go ahead and move things. 
     [self willChangeValueForKey:@"hasFiles"];
-    for (AudioFile *file in [outlineView selectedItems]) {
-        // Remove the node from its old location
-        NSInteger oldIndex = [_files indexOfObject:file];
-        if (oldIndex != NSNotFound) {
-            [_files removeObjectAtIndex:oldIndex];
+    for (id item in [outlineView selectedItems]) {
+        if ([item isKindOfClass:[Chapter class]]) {
+            Chapter *ch = item;
+            if ([_chapters count] > 1)
+                [_chapters removeObject:ch];
+        }
+        else {
+            AudioFile *file = item;
+            // Remove the node from its old location
+            NSInteger oldIndex = [_files indexOfObject:file];
+            if (oldIndex != NSNotFound) {
+                [_files removeObjectAtIndex:oldIndex];
+            }
+            
+            for (Chapter *ch in _chapters) {
+                if ([ch containsFile:file])
+                    [ch removeFile:file];
+            }
         }
     }
+    [self cleanupChapters];
     [self didChangeValueForKey:@"hasFiles"];
     [outlineView deselectAll:self];
     [outlineView reloadData];    
     return YES;
+}
+
+- (BOOL)joinSelectedFiles:(NSOutlineView *)outlineView
+{
+    if (!_chapterMode)
+        return NO;
+    
+    if (![[outlineView selectedItems] count]) 
+        return NO;
+    
+    Chapter *newChapter = [[Chapter alloc] init];
+    newChapter.name = TEXT_CHAPTER;
+    Chapter *ch;
+    
+    id item = [[outlineView selectedItems] objectAtIndex:0];
+    
+    NSInteger chapterIndex;
+    
+    if ([item isKindOfClass:[Chapter class]])
+        chapterIndex = [_chapters indexOfObject:item];
+    else {
+        AudioFile *file = item;
+        for (ch in _chapters) {
+            if ([ch containsFile:file]) {
+                break;
+            }
+        }
+        chapterIndex = [_chapters indexOfObject:ch] + 1;
+    }
+    
+    for (item in [outlineView selectedItems]) {
+        if ([item isKindOfClass:[Chapter class]]) {
+            // copy all files
+            for (AudioFile *f in [item files]) {
+                if (![newChapter containsFile:f])
+                    [newChapter addFile:f];
+            }
+            [_chapters removeObject:item];
+        }
+        else {
+            if (![newChapter containsFile:item]) {
+                [self orphanFile:item];
+                [newChapter addFile:item]; 
+            }
+        }
+    }
+    
+    [_chapters insertObject:newChapter atIndex:chapterIndex];
+    [self cleanupChapters];
+    [outlineView deselectAll:self];
+    [outlineView reloadData]; 
+    [outlineView expandItem:newChapter];
+    
+    return YES;
+}
+
+- (BOOL)splitSelectedFiles:(NSOutlineView *)outlineView
+{
+    if (!_chapterMode)
+        return NO;
+    
+    if (![[outlineView selectedItems] count]) 
+        return NO;
+    
+    NSMutableArray *newChapters = [[NSMutableArray alloc] init];
+    for (id item in [outlineView selectedItems]) {
+        if (![item isKindOfClass:[Chapter class]])
+            continue;
+        Chapter *ch = item;
+        int chapterIndex = [_chapters indexOfObject:ch]+1;
+        for (AudioFile *file in [ch files]) {
+            Chapter *newChapter = [[Chapter alloc] init];
+            newChapter.name = TEXT_CHAPTER;
+            [newChapter addFile:file];
+            [_chapters insertObject:newChapter atIndex:chapterIndex];
+            chapterIndex++;
+            [newChapters addObject:newChapter];
+        }
+        [_chapters removeObject:ch];
+    }
+    [self cleanupChapters];
+    [outlineView deselectAll:self];
+    [outlineView reloadData]; 
+    for (id item in newChapters)
+        [outlineView expandItem:item];
+    [newChapters release];
+    return YES;
+}
+
+- (void) orphanFile:(AudioFile*)file
+{
+    for (Chapter *ch in _chapters) {
+        if ([ch containsFile:file])
+            [ch removeFile:file];
+    }
+}
+
+- (void) cleanupChapters
+{
+    int index = 0;
+    while (index < [_chapters count]) {
+        Chapter *ch = [_chapters objectAtIndex:index];
+        if (([ch totalFiles] == 0) && ([_chapters count] > 1))
+            [_chapters removeObject:ch];
+        else
+            index++;
+    }
 }
 
 @end

@@ -11,12 +11,12 @@
 
 @implementation Chapter
 
-@synthesize name;
+@synthesize name, files;
 
 - (id) init
 {
     if (self = [super init]) {
-        _files = [[NSMutableArray alloc] init];
+        files = [[NSMutableArray alloc] init];
         name = nil;
     }
     
@@ -25,18 +25,44 @@
 
 - (void) addFile:(AudioFile *)file
 {
-    [_files addObject:file];
+    [files addObject:file];
+}
+
+- (void) addFiles:(NSArray *)newFiles
+{
+    [files addObjectsFromArray:newFiles];
 }
 
 - (BOOL) containsFile:(AudioFile*)file
 {
-    return [_files containsObject:file];
+    return [files containsObject:file];
 }
+
+- (int) totalFiles
+{
+    return [files count];
+}
+
+- (AudioFile*) fileAtIndex:(NSInteger)index
+{
+    return [files objectAtIndex:index];
+}
+
+- (void) removeFile:(AudioFile*)file
+{
+    [files removeObject:file];
+}
+
+- (void) insertFile:(AudioFile*)file atIndex:(NSInteger)index
+{
+    [files insertObject:file atIndex:index];
+}
+
 
 - (UInt32) totalDuration
 {
     UInt32 duration = 0;
-    for (AudioFile *file in _files) {
+    for (AudioFile *file in files) {
         duration += [file duration];
     }
     
