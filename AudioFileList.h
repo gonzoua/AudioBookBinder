@@ -42,5 +42,4 @@
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView;
 - (BOOL)joinSelectedFiles:(NSOutlineView *)outlineView;
 - (BOOL)splitSelectedFiles: (NSOutlineView*)outlineView;
-
 @end
