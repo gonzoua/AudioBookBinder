@@ -24,7 +24,10 @@
     IBOutlet CoverImageView *coverImageView;
     NSString *outFile;
     AudioBinder *_binder;
+    NSArray *validBitrates;
 };
+
+@property (readwrite, retain) NSArray *validBitrates;
 
 + (void) initialize;
 
@@ -37,8 +40,10 @@
 - (IBAction) joinFiles: (id)sender;
 - (IBAction) splitFiles: (id)sender;
 - (IBAction) renumberChapters: (id)sender;
+- (IBAction) updateValidBitrates: (id)sender;
 
 - (void) bindingThreadIsDone: (id) sender;
+- (void) fixupBitrate;
 
 // AudioBinderDelegate methods
 -(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames;

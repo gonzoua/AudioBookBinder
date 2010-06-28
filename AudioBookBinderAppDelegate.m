@@ -12,6 +12,7 @@
 #import "ExpandedPathToPathTransformer.h"
 #import "ExpandedPathToIconTransformer.h"
 #include "MetaEditor.h"
+#import "AudioBinder.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  \
@@ -38,10 +39,11 @@ enum abb_form_fields {
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *appDefaults = [NSMutableDictionary
-                                        dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"Channels"];
+                                        dictionaryWithObject:[NSNumber numberWithInt:2] forKey:@"Channels"];
     // for checkbox "add to itunes"
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
+    [appDefaults setObject:@"128000" forKey:@"Bitrate"];
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
     [appDefaults setObject:homePath forKey:@"DestinationFolder"];
@@ -55,7 +57,11 @@ enum abb_form_fields {
     [NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
     ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
     [NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
+
+
 }
+
+@synthesize validBitrates;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [fileListView setDataSource:fileList];
@@ -69,6 +75,7 @@ enum abb_form_fields {
     
     
     _binder = [[[AudioBinder alloc] init] retain];
+    [self updateValidBitrates:self];
 }
 
 - (IBAction) addFiles: (id)sender
@@ -229,11 +236,14 @@ enum abb_form_fields {
     for (AudioFile *file in files) 
         [_binder addInputFile:file];
     
-    
+    // make sure that at this point we have valid bitrate in settings
+    [self fixupBitrate];
     // setup channels/samplerate
+
     _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channels"];
     _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:@"SampleRate"];
-
+    _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"Bitrate"];
+    
     [NSApp beginSheet:progressPanel modalForWindow:window
         modalDelegate:self didEndSelector:NULL contextInfo:nil];    
     
@@ -390,6 +400,38 @@ enum abb_form_fields {
     
     returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
     [scriptObject release];
+}
+
+- (IBAction) updateValidBitrates: (id)sender
+{
+    // Initialize samplerate/channels -> avail bitrates
+    AudioBinder *tmpBinder = [[AudioBinder alloc] init];
+
+    // setup channels/samplerate
+    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channels"];
+    tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:@"SampleRate"];
+    self.validBitrates = [tmpBinder validBitrates];
+    [self fixupBitrate];
+    
+    [tmpBinder release];
+}
+
+- (void) fixupBitrate
+{
+    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"Bitrate"];
+    int newBitrate;
+    int distance = bitrate;
+    
+    for (NSNumber *n in validBitrates) {
+        if (abs([n integerValue] - bitrate) < distance) {
+            distance = abs([n integerValue] - bitrate);
+            newBitrate = [n integerValue];
+        }
+    }
+    
+    if (newBitrate != bitrate) {
+        [[NSUserDefaults standardUserDefaults] setInteger:newBitrate forKey:@"Bitrate"];
+    }
 }
 
 @end
