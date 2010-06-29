@@ -1,9 +1,11 @@
-TBD 1.5
+2010/06/29 1.5
+	- Added support for chapter markers
+	- Added support for bitrate (encoding quality)
 	- Added -q command-line switch for quiet mode
 	- abbbinder do not output progress updates if stdout is redirected
 
 2010/05/26 1.4
-	- Fixed bug when mp3 files have different bitrate
+	- Fixed bug with mp3 files with different bitrate
 	- Fixed advanced editing in author/title fields (copy/cut/paste, etc..)
 
 2010/05/22 1.3
