@@ -1,10 +1,10 @@
-"Adding artist/title tags" = "Добавляется инофрмация об авторе/названии";
+"Adding artist/title tags" = "Добавляется информация об авторе/названии";
 "Adding chapter markers" = "Добавляется информация о содержании";
 "Adding file to iTunes" = "Книга добавляется в iTunes";
-"Audiobook binding failed" = "При ковертации произошла ошибка ";
+"Audiobook binding failed" = "При конвертации произошла ошибка ";
 "Audiofile conversion failed" = "При конвертации произошла ошибка";
 "Chapter" = "Глава";
 "Chapter %d" = "Глава %d";
-"Converting %@" = "Ковертируется %@";
+"Converting %@" = "Конвертируется %@";
 "Select" = "Выбрать";
 "⌘ + I\nor\nDrag Image Here" = "Нажмите ⌘ + I\nили\nперетащите\nсюда изображение";
