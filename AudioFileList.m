@@ -221,7 +221,7 @@
             int minutes = (duration - (hours * 3600)) / 60;
             int seconds = duration % 60;
             
-            if (hours > 3600)
+            if (hours > 0)
                 objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
                                 hours, minutes, seconds] retain];
             else
@@ -242,7 +242,7 @@
             int minutes = (duration - (hours * 3600)) / 60;
             int seconds = duration % 60;
             
-            if (hours > 3600)
+            if (hours > 0)
                 objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
                                 hours, minutes, seconds] retain];
             else
