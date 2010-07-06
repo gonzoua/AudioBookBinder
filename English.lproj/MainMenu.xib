@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="612"/>
-			<integer value="773"/>
 			<integer value="863"/>
+			<integer value="784"/>
+			<integer value="612"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -616,7 +616,7 @@
 																	<bool key="EncodedWithXMLCoder">YES</bool>
 																	<object class="NSTableColumn" id="737979113">
 																		<string key="NSIdentifier">NameColumn</string>
-																		<double key="NSWidth">362</double>
+																		<double key="NSWidth">340</double>
 																		<double key="NSMinWidth">16</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -668,7 +668,7 @@
 																	</object>
 																	<object class="NSTableColumn" id="612780374">
 																		<string key="NSIdentifier">DurationColumn</string>
-																		<double key="NSWidth">50</double>
+																		<double key="NSWidth">72</double>
 																		<double key="NSMinWidth">40</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -681,7 +681,7 @@
 																		</object>
 																		<object class="NSTextFieldCell" key="NSDataCell" id="75843865">
 																			<int key="NSCellFlags">337772096</int>
-																			<int key="NSCellFlags2">2304</int>
+																			<int key="NSCellFlags2">67111168</int>
 																			<string key="NSContents">Text Cell</string>
 																			<reference key="NSSupport" ref="184962985"/>
 																			<reference key="NSControlView" ref="507439630"/>
@@ -690,7 +690,6 @@
 																		</object>
 																		<int key="NSResizingMask">3</int>
 																		<bool key="NSIsResizeable">YES</bool>
-																		<bool key="NSIsEditable">YES</bool>
 																		<reference key="NSTableView" ref="507439630"/>
 																	</object>
 																</object>
@@ -738,16 +737,17 @@
 														<int key="NSvFlags">-2147483392</int>
 														<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 														<reference key="NSSuperview" ref="261625228"/>
+														<bool key="NSEnabled">YES</bool>
 														<int key="NSsFlags">1</int>
 														<reference key="NSTarget" ref="261625228"/>
 														<string key="NSAction">_doScroller:</string>
-														<double key="NSPercent">0.98859315589353614</double>
+														<double key="NSPercent">0.99761336515513122</double>
 													</object>
 												</object>
 												<string key="NSFrame">{{17, 38}, {420, 285}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
 												<reference key="NSNextKeyView" ref="823383498"/>
-												<int key="NSsFlags">561</int>
+												<int key="NSsFlags">689</int>
 												<reference key="NSVScroller" ref="998352342"/>
 												<reference key="NSHScroller" ref="595255393"/>
 												<reference key="NSContentView" ref="823383498"/>
@@ -877,10 +877,6 @@
 				<string key="NSClassName">NSFontManager</string>
 			</object>
 			<object class="NSUserDefaultsController" id="661846977">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>Bitrate</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSWindowTemplate" id="458620454">
