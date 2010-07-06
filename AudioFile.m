@@ -62,16 +62,21 @@
             if ( status == noErr ) {
                 NSDictionary *properties = (NSDictionary *)info;
                 // NSLog(@"file properties: %@", properties);
-                NSString *s = [NSString stringWithUTF8String:
-                               [[properties objectForKey:@"artist"] UTF8String]];
+                NSString *s = nil;
+                
+                id obj = [properties objectForKey:@"artist"];
+                
+                if (obj != nil)
+                    s = [NSString stringWithUTF8String:[obj UTF8String]];
                 if (s) 
                     self.artist = s;
                 else
                     self.artist = @"";
 
-
-                s = [NSString stringWithUTF8String:
-                               [[properties objectForKey:@"title"] UTF8String]];
+                obj = [properties objectForKey:@"title"];
+                s = nil;
+                if (obj != nil)
+                    s = [NSString stringWithUTF8String:[obj UTF8String]];
                 if (s) 
                     self.title = s;
                 else
