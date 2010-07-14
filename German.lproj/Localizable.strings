@@ -1,10 +1,10 @@
 "Adding artist/title tags" = "Autor/Titel Informationen hinzufügen";
-"Adding chapter markers" = "Kapitel hinzufügen";
-"Adding file to iTunes" = "Füge die Datei zu iTunes";
-"Audiobook binding failed" = "Das Exportieren des Hörbuchs ist fehlgeschlagen";
+"Adding chapter markers" = "Kapitelmarken hinzufügen";
+"Adding file to iTunes" = "Füge Hörbuch zu iTunes hinzu";
+"Audiobook binding failed" = "Das Erstellen des Hörbuchs ist fehlgeschlagen";
 "Audiofile conversion failed" = "Konvertieren der Audiodatei ist fehlgeschlagen";
 "Chapter" = "Kapitel";
 "Chapter %d" = "Kapitel %d";
 "Converting %@" = "Konvertieren %@";
 "Select" = "Auswählen";
-"⌘ + I\nor\nDrag Image Here" = "⌘ + I\noder\nBild hierher bewegen";
+"⌘ + I\nor\nDrag Image Here" = "⌘ + I\noder Bilddatei\nhierher bewegen";
