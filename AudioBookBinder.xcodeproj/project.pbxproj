@@ -87,6 +87,8 @@
 		9F02CE64101FF8D900AE315D /* ABLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLog.h; sourceTree = "<group>"; };
 		9F02CE65101FF8D900AE315D /* ABLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABLog.m; sourceTree = "<group>"; };
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		9F11CC6111E3C99800D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9F11CC6211E3C9B200D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			children = (
 				9F6FA3D7111BBBC20047728F /* English */,
 				9F9C32D711A750A600F3FBC4 /* Russian */,
+				9F11CC6111E3C99800D83B54 /* German */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 			children = (
 				9F78673911A88F470054ADF0 /* English */,
 				9F78673D11A891940054ADF0 /* Russian */,
+				9F11CC6211E3C9B200D83B54 /* German */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
