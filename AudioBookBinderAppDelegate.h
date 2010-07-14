@@ -45,6 +45,8 @@
 - (void) bindingThreadIsDone: (id) sender;
 - (void) fixupBitrate;
 
+- (BOOL) windowShouldClose:(NSNotification *)notification;
+
 // AudioBinderDelegate methods
 -(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames;
 -(void) conversionStart: (AudioFile*)file format: (AudioStreamBasicDescription*)asbd formatDescription: (NSString*)description length: (UInt64)frames;

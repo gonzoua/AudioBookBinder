@@ -434,4 +434,20 @@ enum abb_form_fields {
     }
 }
 
+- (BOOL)windowShouldClose:(NSNotification *)notification
+{
+	[window orderOut:self];
+	return NO;
+}
+
+- (BOOL) applicationShouldHandleReopen:(NSApplication *)theApplication
+                     hasVisibleWindows:(BOOL)flag 
+{
+    if (!flag) {
+        [window makeKeyAndOrderFront:nil];
+    }
+    return YES;
+}
+
+
 @end
