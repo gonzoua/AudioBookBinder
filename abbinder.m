@@ -48,6 +48,7 @@ void usage(char *cmd)
     printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
            "outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
+    printf("\t-A\t\tadd audiobook to iTunes\n");
     printf("\t-b bitrate\tset bitrate (KBps)\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
     printf("\t-C file.png\tcover image\n");
@@ -111,11 +112,12 @@ int main (int argc, char * argv[]) {
     int bitrate;
     BOOL withChapters = NO;
     BOOL eachFileIsChapter = NO;
+    BOOL addToiTunes = NO;
     NSString *chapterNameFormat;
     NSMutableArray *chapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:b:c:C:eE:hi:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:hi:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -171,6 +173,9 @@ int main (int argc, char * argv[]) {
                     fprintf(stderr, "Invalid bitrate: %s", optarg);
                     exit(1);
                 }
+                break;
+            case 'A':
+                addToiTunes = YES;
                 break;
             default:
                 usage(argv[0]);
@@ -408,7 +413,38 @@ int main (int argc, char * argv[]) {
         if (!quiet)
             printf("done\n");
     }
+    
+    if (!quiet) {
+        printf("Adding audiobook to iTunes, it may take a while...");
+        fflush(stdout);
+    }
+    
+    if (addToiTunes) {
+        for (NSString *volume in volumes) {
+            NSDictionary* errorDict;
+            NSAppleEventDescriptor* returnDescriptor = NULL;
+            NSString *path;
+            if ([volume isAbsolutePath])
+                path = [NSString stringWithString:volume];
+            else
+                path  = [[[NSFileManager defaultManager] currentDirectoryPath]
+                                   stringByAppendingPathComponent:volume];
+            NSString *source = [NSString stringWithFormat:
+                                @"\
+                                tell application \"iTunes\"\n\
+                                add POSIX file \"%@\"\n\
+                                end tell", path, nil];
+            
+            NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:source];
+            
+            returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
+            [scriptObject release];
+        }
+    }
 
+    if (!quiet)
+        printf("done\n");
+    
     [pool drain];
     return 0;
 }
