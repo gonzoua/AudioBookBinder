@@ -388,6 +388,8 @@ int main (int argc, char * argv[]) {
         mp4.coverFile = coverFile;
         mp4.tracksTotal = totalTracks;
         mp4.track = track;
+        if (totalTracks > 1)
+            mp4.gaplessPlay = YES;
         [mp4 updateFile];
         [mp4 release];
         track++;
