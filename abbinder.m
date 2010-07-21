@@ -369,26 +369,39 @@ int main (int argc, char * argv[]) {
         exit(255);
     }
     
-    if ((bookAuthor != nil) || (bookTitle != nil) || (coverFile != nil))
-    {
-        if (!quiet) {
-            printf("Adding metadata, it may take a while...");
-            fflush(stdout);
-        }
-        MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
-        [mp4 setArtist:bookAuthor]; 
-        [mp4 setTitle:bookTitle]; 
-        [mp4 setCoverFile:coverFile];
-        [mp4 updateFile];
-        if (!quiet)
-            printf("done\n");
+    NSArray *volumes = [binder volumeNames];
+    int totalTracks = [volumes count];
+    if (!quiet) {
+        printf("Adding metadata, it may take a while...");
+        fflush(stdout);
     }
+    
+    int track = 1;
+    for (NSString *volumeName in volumes) {
+        MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
+        mp4.artist = bookAuthor;
+        if (totalTracks > 1)
+            mp4.title = [NSString stringWithFormat:@"%@ #%02d", bookTitle, track];
+        else
+            mp4.title = bookTitle;
+        mp4.album = bookTitle;
+        mp4.coverFile = coverFile;
+        mp4.tracksTotal = totalTracks;
+        mp4.track = track;
+        [mp4 updateFile];
+        [mp4 release];
+        track++;
+    }
+    
+    if (!quiet)
+        printf("done\n");
 
     if ([chapters count]) {
         if (!quiet) {
             printf("Adding chapter markers, it may take a while...");
             fflush(stdout);
         }
+        
         addChapters([outFile UTF8String], chapters);
         if (!quiet)
             printf("done\n");
