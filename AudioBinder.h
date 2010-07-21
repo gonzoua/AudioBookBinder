@@ -44,13 +44,15 @@
 -(void) conversionFinished: (AudioFile*)file duration: (UInt32)milliseconds;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
 -(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
-
+-(void) nextVolume: (NSString*)volumeName;
 @end
 
 
 @interface AudioBinder : NSObject {
     NSMutableArray *_inFiles;
-    NSString *_outFileName;
+    NSString *_outVolumeName;
+    NSString *_outFileBase;
+    NSString *_outFileExt;
     ExtAudioFileRef _outAudioFile;
     SInt64 _outFileLength;
     id _delegate;
@@ -58,6 +60,10 @@
     float _sampleRate;
     int _channels;
     UInt32 _bitrate;
+    SInt32 _maxVolumeLength; // in seconds
+    BOOL _needNextVolume;
+    int _volumeNumber;
+    
     NSMutableArray *_availableBitrates;
 }
 
