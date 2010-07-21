@@ -50,7 +50,7 @@
 
 @interface AudioBinder : NSObject {
     NSMutableArray *_inFiles;
-    NSString *_outVolumeName;
+    NSString *_volumeName;
     NSString *_outFileBase;
     NSString *_outFileExt;
     ExtAudioFileRef _outAudioFile;
@@ -63,14 +63,14 @@
     SInt32 _maxVolumeLength; // in seconds
     BOOL _needNextVolume;
     int _volumeNumber;
-    
-    NSMutableArray *_availableBitrates;
+    NSMutableArray *_volumeNames;
 }
 
 
 @property (assign) int channels;
 @property (assign) float sampleRate;
 @property (assign) UInt32 bitrate;
+@property (readonly, copy) NSArray *volumeNames;
 
 -(id) init;
 -(void) reset;
