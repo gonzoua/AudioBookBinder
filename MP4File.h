@@ -33,12 +33,18 @@
     NSFileHandle *_fh;
     NSString *artist;
     NSString *title;
+    NSString *album;
     NSString *coverFile;
+    unsigned short track, tracksTotal;
+    BOOL gaplessPlay;
 }
 
 @property (readwrite, copy) NSString *artist;
+@property (readwrite, copy) NSString *album;
 @property (readwrite, copy) NSString *title;
 @property (readwrite, copy) NSString *coverFile;
+@property (readwrite, assign) unsigned short track, tracksTotal;
+@property (readwrite, assign) BOOL gaplessPlay;
 
 -(void) dealloc;
 -(id) initWithFileName: (NSString*)fileName;

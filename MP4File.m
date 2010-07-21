@@ -34,9 +34,9 @@
 
 @implementation MP4File
 
-@synthesize artist;
-@synthesize title;
-@synthesize coverFile;
+@synthesize artist, album, title, coverFile;
+@synthesize track, tracksTotal, gaplessPlay;
+
 
 -(id) initWithFileName: (NSString*)fileName
 {
@@ -44,8 +44,12 @@
     
     _fh = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
     self.artist = nil;
+    self.album = nil;
     self.title = nil;
     self.coverFile = nil;
+    
+    track = tracksTotal = 0;
+    gaplessPlay = NO;
 
     UInt64 pos = 0;
     NSData *buffer;
@@ -142,20 +146,40 @@
     
     NSMutableData *newAtomsData = [[NSMutableData alloc] init];
     if (title != nil)
-    {
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©nam" 
                                                 value:[title dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
+    if (album != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©alb" 
-                                                value:[title dataUsingEncoding:NSUTF8StringEncoding] 
-                                                 type:ITUNES_METADATA_STRING_CLASS]];        
-    }   
-    
+                                                value:[album dataUsingEncoding:NSUTF8StringEncoding] 
+                                                 type:ITUNES_METADATA_STRING_CLASS]];    
     if (artist != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©ART" 
                                                 value:[artist dataUsingEncoding:NSUTF8StringEncoding] 
                                                  type:ITUNES_METADATA_STRING_CLASS]];
+
+
+    if (track) {
+        short bytes[4];
+        bytes[0] = bytes[3] = 0;
+        bytes[1] = htons(track);
+        bytes[2] = htons(tracksTotal);
+        NSData * data = [[NSData alloc] initWithBytes:bytes length:8];
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"trkn" 
+                                                value:data
+                                                 type:ITUNES_METADATA_IMPLICIT_CLASS]];
+        [data release];
+    }
+    
+    if (gaplessPlay) {        
+        char pgap = 1;
+        NSData * data = [[NSData alloc] initWithBytes:&pgap length:1];
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"pgap" 
+                                                    value:data
+                                                     type:ITUNES_METADATA_UINT8_CLASS]];
+        [data release];
+    }
 
     [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
                                             value:[@"Audiobooks" dataUsingEncoding:NSUTF8StringEncoding] 
@@ -262,7 +286,8 @@
  * Encode iTunes metadata atoms
  */
 -(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value 
-    type:(UInt32) type;
+                         type:(UInt32)type
+                        
 {
     UInt32 dataAtomSize = 
             [value length] + 
@@ -274,8 +299,8 @@
                                             andLength:dataAtomSize];
     [data appendData:[dataAtom encode]];
     // version and flags
-    UInt32 flags = htonl(type);
-    [data appendBytes:&flags length:4];
+    type = htonl(type);
+    [data appendBytes:&type length:4];
     // null data
     UInt32 zeroData = 0;
     [data appendBytes:&zeroData length:4];
