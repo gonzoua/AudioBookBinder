@@ -47,5 +47,6 @@
 -(void) conversionFinished: (AudioFile*)file duration:(UInt32)duration;
 -(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
 -(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
+- (void)nextVolume:(NSString *)volumeName;
 
 @end

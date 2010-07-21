@@ -147,4 +147,12 @@
 {
 }
 
+- (void)nextVolume:(NSString *)volumeName
+{
+    if (!_quiet) {
+        printf("New volume: %s\n", 
+               [volumeName cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+}
+
 @end

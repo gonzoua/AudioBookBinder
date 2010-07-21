@@ -380,6 +380,10 @@ enum abb_form_fields {
 {
 }
 
+-(void) nextVolume: (NSString*)volumeName
+{
+}
+
 - (IBAction) cancel: (id)sender
 {
     [_binder cancel];
