@@ -263,17 +263,14 @@ enum abb_form_fields {
             NSLog(@"Adding metadata, it may take a while...");
             @try {
                 [currentFile setStringValue:TEXT_ADDING_TAGS];
-                
-                MP4File *mp4 = [[MP4File alloc] initWithFileName:outFile];
-                [mp4 setArtist:author]; 
-                [mp4 setTitle:title];
                 NSString *imgFileName = nil;
+
                 if (coverImage) 
                 {
                     NSString *tempFileTemplate =
                     [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
                     const char *tempFileTemplateCString =
-                        [tempFileTemplate fileSystemRepresentation];
+                    [tempFileTemplate fileSystemRepresentation];
                     char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
                     strcpy(tempFileNameCString, tempFileTemplateCString);
                     if (mktemp(tempFileNameCString)) {
@@ -282,21 +279,38 @@ enum abb_form_fields {
                         NSDictionary *dict = [[NSDictionary alloc] init];
                         [[[NSBitmapImageRep imageRepWithData:imgData] 
                           representationUsingType:NSPNGFileType properties:dict]
-                            writeToFile:imgFileName atomically:YES];
+                         writeToFile:imgFileName atomically:YES];
                         [dict release];
-                        [mp4 setCoverFile:imgFileName];
                     }
                     else {
                         NSLog(@"Failed to generate tmp filename");
                     }
                 }
-                [mp4 updateFile];
+                
+                int track = 1;
+                NSArray *volumes = [_binder volumeNames];
+                for (NSString *volumeName in volumes) {
+                    MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
+                    mp4.artist = author;
+                    if ([volumes count] > 1)
+                        mp4.title = [NSString stringWithFormat:@"%@ #%02d", title, track];
+                    else
+                        mp4.title = title;
+                    mp4.album = title;
+                    if (imgFileName)        
+                        [mp4 setCoverFile:imgFileName];
+                    mp4.track = track;
+                    mp4.tracksTotal = [volumes count];
+                    [mp4 updateFile];
+                    [mp4 release];
+                    track ++;
+                }
+                
                 if (imgFileName) {
                     NSLog(@"Unlink %@", imgFileName);
                     [[NSFileManager defaultManager] removeFileAtPath:imgFileName 
                                                              handler:nil];
                 }
-                
                 
                 if ([fileList chapterMode]) {
                     [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
@@ -304,9 +318,13 @@ enum abb_form_fields {
 
                 }
                 
-                [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"])
-                    [self addFileToiTunes:outFile];
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"]) {
+
+                    [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
+                    for(NSString *volume in volumes)
+                        [self addFileToiTunes:volume];
+                }
+                
                 [currentFile setStringValue:@"Done"];
                 
             }
