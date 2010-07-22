@@ -524,7 +524,7 @@ stringForOSStatus(OSStatus err)
         return NO;
     }
     
-    _needNextVolume = YES;
+    // _needNextVolume = YES;
     
     if (inAudioFile != nil)
         ExtAudioFileDispose(inAudioFile);
