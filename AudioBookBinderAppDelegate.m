@@ -292,8 +292,10 @@ enum abb_form_fields {
                 for (NSString *volumeName in volumes) {
                     MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
                     mp4.artist = author;
-                    if ([volumes count] > 1)
+                    if ([volumes count] > 1) {
                         mp4.title = [NSString stringWithFormat:@"%@ #%02d", title, track];
+                        mp4.gaplessPlay = YES;
+                    }
                     else
                         mp4.title = title;
                     mp4.album = title;
