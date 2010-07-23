@@ -304,6 +304,9 @@ stringForOSStatus(OSStatus err)
         return NO;
     }
     
+    // reset output file length
+    _outFileLength = 0;
+
     return YES;
 }
 
