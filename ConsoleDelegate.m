@@ -128,7 +128,7 @@
     file.valid = YES;    
 }
 
--(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
+-(void) volumeReady: (NSString*)filename duration: (UInt32)seconds
 {
     unsigned int h = seconds / 3600;
     unsigned int m = (seconds % 3600) / 60;
@@ -143,16 +143,23 @@
     }
 }
 
--(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason
+-(void) audiobookReady:(UInt32)seconds
 {
+    unsigned int h = seconds / 3600;
+    unsigned int m = (seconds % 3600) / 60;
+    unsigned int s = (seconds % 60);
+    if (!_quiet) {
+        printf("Total: "); 
+
+        if (h)
+            printf("%dh ", h);
+        
+        printf("%dm %ds\n", m, s);
+    }
 }
 
-- (void)nextVolume:(NSString *)volumeName
+-(void) volumeFailed: (NSString*)filename reason: (NSString*)reason
 {
-    if (!_quiet) {
-        printf("New volume: %s\n", 
-               [volumeName cStringUsingEncoding:NSUTF8StringEncoding]);
-    }
 }
 
 @end

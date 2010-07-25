@@ -40,13 +40,6 @@
 -(void) setQuiet:(BOOL)quiet;
 -(void) setSkipErrors:(BOOL)skip;
 
-// AudioBinderDelegate methods
--(void) updateStatus: (AudioFile*)file handled:(UInt64)handledFrames total:(UInt64)totalFrames;
--(void) conversionStart: (AudioFile*)file format: (AudioStreamBasicDescription*)asbd formatDescription: (NSString*)description length: (UInt64)frames;
--(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason;
--(void) conversionFinished: (AudioFile*)file duration:(UInt32)duration;
--(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
--(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
-- (void)nextVolume:(NSString *)volumeName;
+
 
 @end
