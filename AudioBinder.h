@@ -42,43 +42,35 @@
                  length: (UInt64)frames;
 -(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason;
 -(void) conversionFinished: (AudioFile*)file duration: (UInt32)milliseconds;
--(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
--(void) audiobookFailed: (NSString*)filename reason: (NSString*)reason;
--(void) nextVolume: (NSString*)volumeName;
+-(void) audiobookReady: (UInt32)seconds;
+-(void) volumeFailed: (NSString*)filename reason: (NSString*)reason;
+-(void) volumeReady: (NSString*)volumeName duration: (UInt32)seconds;
 @end
 
 
 @interface AudioBinder : NSObject {
-    NSMutableArray *_inFiles;
-    NSString *_volumeName;
-    NSString *_outFileBase;
-    NSString *_outFileExt;
     ExtAudioFileRef _outAudioFile;
     SInt64 _outFileLength;
+    SInt64 _outBookLength;
     id _delegate;
     BOOL _canceled;
     float _sampleRate;
     int _channels;
     UInt32 _bitrate;
-    SInt32 _maxVolumeLength; // in seconds
-    BOOL _needNextVolume;
-    int _volumeNumber;
-    NSMutableArray *_volumeNames;
+    NSMutableArray *_volumes;
 }
 
 
 @property (assign) int channels;
 @property (assign) float sampleRate;
 @property (assign) UInt32 bitrate;
-@property (readonly, copy) NSArray *volumeNames;
-
+@property (readonly) NSMutableArray *volumes;
 -(id) init;
 -(void) reset;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
--(void) addInputFile: (AudioFile*)file;
--(void) setOutputFile: (NSString*)outFileName;
+-(void) addVolume:(NSString*)filename files:(NSArray*)files;
 -(BOOL) convert;
--(BOOL) openOutFile;
+-(BOOL) openOutFile:(NSString*)file;
 -(void) closeOutFile;
 -(BOOL) convertOneFile: (AudioFile*)inFile reason: (NSString**)reason;
 -(void) cancel;

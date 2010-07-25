@@ -27,6 +27,7 @@
 
 #import <AudioToolbox/AudioConverter.h>
 #import "AudioBinder.h"
+#import "AudioBinderVolume.h"
 
 #include "ABLog.h"
 
@@ -109,12 +110,11 @@ stringForOSStatus(OSStatus err)
 @synthesize channels = _channels;
 @synthesize sampleRate = _sampleRate;
 @synthesize bitrate = _bitrate;
-@synthesize volumeNames = _volumeNames;
+@synthesize volumes = _volumes;
 -(id)init
 {
     if (self = [super init]) {
-        _inFiles = [[NSMutableArray alloc] init];
-        _volumeNames = [[NSMutableArray alloc] init];
+        _volumes = [[NSMutableArray alloc] init];
         [self reset];
     }
  
@@ -123,9 +123,7 @@ stringForOSStatus(OSStatus err)
 
 - (void) reset
 {
-    [_inFiles removeAllObjects];
-    [_volumeNames removeAllObjects];
-    _volumeName = nil;
+    [_volumes removeAllObjects];
     _outAudioFile = nil;
     _outFileLength = 0;
     _delegate = nil;
@@ -133,9 +131,6 @@ stringForOSStatus(OSStatus err)
     _sampleRate = DEFAULT_SAMPLE_RATE;
     _channels = 2;
     _bitrate = 0;
-    _maxVolumeLength = -1;
-    _needNextVolume = NO;
-    _volumeNumber = 0;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -143,22 +138,10 @@ stringForOSStatus(OSStatus err)
     _delegate = delegate;
 }
 
--(void)addInputFile: (AudioFile*)file
+-(void) addVolume:(NSString*)filename files:(NSArray*)files
 {
-    [_inFiles addObject: file];
-}
-
--(void)setOutputFile: (NSString*)outFileName
-{
-    [_volumeName release];
-    [_outFileBase release];
-    [_outFileExt release];
-    
-    _volumeName = [[NSString alloc] initWithString:outFileName];
-    // split output filename to base and extension in order to get 
-    // filenames for consecutive volume files
-    _outFileBase = [[_volumeName stringByDeletingPathExtension] retain];
-    _outFileExt = [[_volumeName pathExtension] retain];
+    AudioBinderVolume *volume = [[AudioBinderVolume alloc] initWithName:filename files:files];
+    [_volumes addObject:volume];
 }
 
 -(BOOL)convert
@@ -166,74 +149,57 @@ stringForOSStatus(OSStatus err)
     BOOL failed = NO;
     NSFileManager *fm;
     int filesConverted = 0;
+    for (AudioBinderVolume *v in _volumes) {
     
-    if ([_inFiles count] == 0)
-    {
-        ABLog(@"No input file");
-        [_delegate audiobookFailed:_volumeName reason:@"No input files"];
-        return NO;
-    }
-
-    if ([self openOutFile] == NO)
-    {
-        ABLog(@"Can't open output file");
-        [_delegate audiobookFailed:_volumeName reason:@"Can't create output file"];
-        return NO;
-    }
-
-
-    int idx = 0;
-    do {
-        
-        AudioFile* inFile = [_inFiles objectAtIndex:idx];
-        NSString *reason;
-
-        if (![[_volumeNames lastObject] isEqualToString:_volumeName])
-            [_volumeNames addObject:_volumeName];
-        
-        if ([self convertOneFile:inFile reason:&reason] == NO)
+        if ([v.inputFiles count] == 0)
         {
-            // We failed 
-            if (![_delegate continueFailedConversion:inFile reason:reason])
+            ABLog(@"No input files");
+            [_delegate volumeFailed:v.filename reason:@"No input files"];
+            return NO;
+        }
+
+        if ([self openOutFile:v.filename] == NO)
+        {
+            ABLog(@"Can't open output file");
+            [_delegate volumeFailed:v.filename reason:@"Can't create output file"];
+            return NO;
+        }
+
+
+        for (AudioFile *inFile in v.inputFiles) {
+            NSString *reason;
+            
+            if ([self convertOneFile:inFile reason:&reason] == NO)
             {
-                failed = YES;
+                // We failed 
+                if (![_delegate continueFailedConversion:inFile reason:reason])
+                {
+                    failed = YES;
+                    break;
+                }
+            }
+            else
+                filesConverted++;
+            
+            if (_canceled)
                 break;
-            }
-        }
-        else
-            filesConverted++;
         
-        if (_canceled)
+            _outBookLength += _outFileLength; 
+        } 
+        
+        [self closeOutFile];
+        
+        if (failed || _canceled)
             break;
+        else
+            [_delegate volumeReady:v.filename duration:(UInt32)(_outFileLength/_sampleRate)];
+    }
     
-        
-        idx++;
-        if ((idx < [_inFiles count]) && _needNextVolume) {
-            [self closeOutFile];
-            
-            _volumeNumber++;
-            [_volumeName release];
-            _volumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@", _outFileBase,
-                              _volumeNumber, _outFileExt];
-            
-            // reopen out file
-            if ([self openOutFile] == NO)
-            {
-                ABLog(@"Can't open output file");
-                [_delegate audiobookFailed:_volumeName reason:@"Can't create output file"];
-                return NO;
-            }
-            
-            [_delegate nextVolume:_volumeName];
-        }
-    
-    } while(idx < [_inFiles count]);
-    
-    [self closeOutFile];
     if (failed || _canceled)
     {
         fm = [NSFileManager defaultManager];
-        [fm removeFileAtPath:_volumeName handler:nil];
+        for (AudioBinderVolume *v in _volumes) 
+            [fm removeFileAtPath:v.filename handler:nil];
     }
        
     BOOL result = YES;
@@ -241,8 +207,7 @@ stringForOSStatus(OSStatus err)
     if (failed || (filesConverted == 0) || _canceled)
         result = NO;
     else
-        [_delegate audiobookReady:_volumeName 
-                         duration:(UInt32)(_outFileLength/_sampleRate)];
+        [_delegate audiobookReady:(UInt32)(_outBookLength/_sampleRate)];
     
     // Back to non-cacneled state
     _canceled = NO;
@@ -250,25 +215,25 @@ stringForOSStatus(OSStatus err)
     return result;
 }
 
--(BOOL)openOutFile
+-(BOOL)openOutFile:(NSString*)outFile
 {
     FSRef dirFSRef;
     OSStatus status;
     AudioStreamBasicDescription outputFormat;
     
     // delete file if exists
-    if([[NSFileManager defaultManager] fileExistsAtPath:_volumeName]) 
+    if([[NSFileManager defaultManager] fileExistsAtPath:outFile]) 
     {
-        if (![[NSFileManager defaultManager] removeFileAtPath:_volumeName 
+        if (![[NSFileManager defaultManager] removeFileAtPath:outFile 
                                                       handler:nil])
         {
-            ABLog(@"Can't remove file %@", _volumeName);
+            ABLog(@"Can't remove file %@", outFile);
             return NO;
         }
     }    
      
     // open out file
-    NSString *dir = [[_volumeName stringByDeletingLastPathComponent] retain];
+    NSString *dir = [[outFile stringByDeletingLastPathComponent] retain];
     // if its only path name - make reference to current directory
     if ([dir isEqualToString:@""])
     {
@@ -283,7 +248,7 @@ stringForOSStatus(OSStatus err)
     if (status != noErr)
     {
         ABLog(@"FSPathMakeRef failed for %@: %@", 
-              _volumeName, stringForOSStatus(status));        
+              outFile, stringForOSStatus(status));        
         return NO;
     }    
     
@@ -293,14 +258,14 @@ stringForOSStatus(OSStatus err)
     outputFormat.mChannelsPerFrame = _channels;
    
     status = ExtAudioFileCreateNew(&dirFSRef, 
-                                   (CFStringRef)[_volumeName lastPathComponent], 
+                                   (CFStringRef)[outFile lastPathComponent], 
                                    kAudioFileMPEG4Type, &outputFormat, 
                                    NULL, &_outAudioFile);
     
     if (status != noErr)
     {
         ABLog(@"Can't create output file %@: %@", 
-              _volumeName, stringForOSStatus(status));
+              outFile, stringForOSStatus(status));
         return NO;
     }
     
