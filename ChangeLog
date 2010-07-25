@@ -1,3 +1,14 @@
+TBD 1.7
+	- Added -A option to abbinder (add result to itunes)
+	- Added audiobook duration limit: Binder would try to split
+	    audiobook into several volumes if total duration is longer
+	    then provided limit.
+	- German translation by Paul Schmalenberg
+
+2010/07/05 1.6
+	- Fixed critical bug with mp3 files without artist/title ID3 tags
+	- Some spelling fixes in russian translation
+
 2010/06/29 1.5
 	- Added support for chapter markers
 	- Added support for bitrate (encoding quality)
