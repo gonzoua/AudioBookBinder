@@ -4,6 +4,7 @@ TBD 1.7
 	    audiobook into several volumes if total duration is longer
 	    then provided limit.
 	- German translation by Paul Schmalenberg
+	- Reopen closed windows if clicked on dock app icon
 
 2010/07/05 1.6
 	- Fixed critical bug with mp3 files without artist/title ID3 tags
