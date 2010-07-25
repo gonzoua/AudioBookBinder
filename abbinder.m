@@ -338,7 +338,7 @@ int main (int argc, char * argv[]) {
                 }
                 else {
                     fprintf(stderr, "%s: duration (%d sec) larger then max. volume duration (%lld sec.)\n", 
-                            [path UTF8String], file.duration, maxVolumeDuration);
+                            [path UTF8String], file.duration/1000, maxVolumeDuration);
                     exit(1);
                 }
             }
