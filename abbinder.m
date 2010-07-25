@@ -31,6 +31,7 @@
 #include <getopt.h>
 
 #import "AudioBinder.h"
+#import "AudioBinderVolume.h"
 #import "ABLog.h"
 #import "ConsoleDelegate.h"
 #import "AudioFile.h"
@@ -45,7 +46,7 @@ int validRates[NUM_VALID_RATES] = { 8000, 11025, 12000, 16000, 22050,
 
 void usage(char *cmd)
 {
-    printf("Usage: %s [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
+    printf("Usage: %s [-Aehqsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
            "outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
     printf("\t-A\t\tadd audiobook to iTunes\n");
@@ -59,6 +60,7 @@ void usage(char *cmd)
     printf("\t\t\t    %%t - title (obtained from source file)\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
+    printf("\t-l hours\t\tsplit audiobook to volumes max # hours long\n");    
     printf("\t-q\t\tquiet mode (no output)\n");
     printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
     printf("\t-s\t\tskip errors and go on with conversion\n");
@@ -113,11 +115,13 @@ int main (int argc, char * argv[]) {
     BOOL withChapters = NO;
     BOOL eachFileIsChapter = NO;
     BOOL addToiTunes = NO;
+    UInt64 maxVolumeDuration = 0;
     NSString *chapterNameFormat;
-    NSMutableArray *chapters = [[NSMutableArray alloc] init];
+    NSMutableArray *currentChapters = [[NSMutableArray alloc] init];
+    NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:hi:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:hi:l:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -176,6 +180,9 @@ int main (int argc, char * argv[]) {
                 break;
             case 'A':
                 addToiTunes = YES;
+                break;
+            case 'l':
+                maxVolumeDuration = atoi(optarg)*3600; // convert to seconds
                 break;
             default:
                 usage(argv[0]);
@@ -284,9 +291,18 @@ int main (int argc, char * argv[]) {
             break;
         }
     }
+    
+    // split output filename to base and extension in order to get 
+    // filenames for consecutive volume files
+    NSString *outFileBase = [[outFile stringByDeletingPathExtension] retain];
+    NSString *outFileExt = [[outFile pathExtension] retain];
+
 
     // create implicit first chapter. It wil be overriden
     // if files list starts with chapter marker
+    UInt64 estTotalDuration = 0;
+    NSString *currentVolumeName = [outFile copy];
+    int totalVolumes = 0;
     Chapter *curChapter = [[Chapter alloc] init];
     for (NSString *path in inputFilenames) { 
         int len = [path length];
@@ -300,38 +316,62 @@ int main (int argc, char * argv[]) {
             NSString *chapterName = [path substringWithRange:NSMakeRange(1, len-2)];
             curChapter = [[Chapter alloc] init];
             curChapter.name = chapterName;
-            [chapters addObject:curChapter];
+            [currentChapters addObject:curChapter];
             continue;
         }
-            
         AudioFile *file = [[AudioFile alloc] initWithPath:path];
+        if (maxVolumeDuration) {
+            if ((estTotalDuration + file.duration) > maxVolumeDuration*1000) {
+                if ([inputFiles count] > 0) {
+                    [binder addVolume:currentVolumeName files:inputFiles];
+                    [inputFiles removeAllObjects];
+                    estTotalDuration = 0;
+                    totalVolumes++;
+                    currentVolumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@",
+                                         outFileBase, totalVolumes, outFileExt];
+                    // restart chapter
+                    [volumeChapters addObject:currentChapters];
+                    currentChapters = [[NSMutableArray alloc] init];
+                    Chapter *c = [[Chapter alloc] init];
+                    c.name = curChapter.name;
+                    curChapter = c;
+                }
+                else {
+                    fprintf(stderr, "%s: duration (%d sec) larger then max. volume duration (%lld sec.)\n", 
+                            [path UTF8String], file.duration, maxVolumeDuration);
+                    exit(1);
+                }
+            }
+        }
+        
+        [inputFiles addObject:file];
+        estTotalDuration += file.duration;
         
         if (withChapters) {
             if (eachFileIsChapter) {
                 Chapter *chapter = [[Chapter alloc] init];
                 chapter.name = makeChapterName(chapterNameFormat, 
-                                               [chapters count], file);
+                                               [currentChapters count], file);
                 [chapter addFile:file];
-                [chapters addObject:chapter];
+                [currentChapters addObject:chapter];
             }
             else {
                 // at this point we should have at least one item in chapters
                 // list. If there is none - the first element of files list is
                 // not chapter mark and we should add our implicit marker
-                if ([chapters count] == 0)
-                    [chapters addObject:curChapter];
+                if ([currentChapters count] == 0)
+                    [currentChapters addObject:curChapter];
                 
                 [curChapter addFile:file];
             }
-
         }
-        [inputFiles addObject:file];
     }
     
-    // Feed files to binder
-    [binder setOutputFile:outFile];
-    for (AudioFile *file in inputFiles) 
-        [binder addInputFile:file];
+    // Add last volume to the binder
+    [binder addVolume:currentVolumeName files:inputFiles];
+    // add chapters for last volume
+    [volumeChapters addObject:currentChapters];
+
     
     binder.channels = channels;
     binder.sampleRate = samplerate;
@@ -374,7 +414,7 @@ int main (int argc, char * argv[]) {
         exit(255);
     }
     
-    NSArray *volumes = [binder volumeNames];
+    NSArray *volumes = [binder volumes];
     int totalTracks = [volumes count];
     if (!quiet) {
         printf("Adding metadata, it may take a while...");
@@ -382,7 +422,8 @@ int main (int argc, char * argv[]) {
     }
     
     int track = 1;
-    for (NSString *volumeName in volumes) {
+    for (AudioBinderVolume *v in volumes) {
+        NSString *volumeName = v.filename;
         MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
         mp4.artist = bookAuthor;
         if (totalTracks > 1)
@@ -403,13 +444,16 @@ int main (int argc, char * argv[]) {
     if (!quiet)
         printf("done\n");
 
-    if ([chapters count]) {
+    if ([currentChapters count]) {
         if (!quiet) {
             printf("Adding chapter markers, it may take a while...");
             fflush(stdout);
         }
-        
-        addChapters([outFile UTF8String], chapters);
+        int idx = 0;
+        for (AudioBinderVolume *v in volumes) {
+            addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
+            idx++;
+        }
         if (!quiet)
             printf("done\n");
     }
@@ -420,7 +464,8 @@ int main (int argc, char * argv[]) {
     }
     
     if (addToiTunes) {
-        for (NSString *volume in volumes) {
+        for (AudioBinderVolume *v in volumes) {
+            NSString *volume = v.filename;
             NSDictionary* errorDict;
             NSAppleEventDescriptor* returnDescriptor = NULL;
             NSString *path;
