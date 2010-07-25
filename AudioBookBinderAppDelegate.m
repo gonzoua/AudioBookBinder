@@ -13,6 +13,7 @@
 #import "ExpandedPathToIconTransformer.h"
 #include "MetaEditor.h"
 #import "AudioBinder.h"
+#import "AudioBinderVolume.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  \
@@ -230,11 +231,9 @@ enum abb_form_fields {
 
     [_binder reset];
     [_binder setDelegate:self];
-    [_binder setOutputFile:outFile];
     
     NSArray *files = [fileList files];
-    for (AudioFile *file in files) 
-        [_binder addInputFile:file];
+    [_binder addVolume:outFile files:files];
     
     // make sure that at this point we have valid bitrate in settings
     [self fixupBitrate];
@@ -288,8 +287,9 @@ enum abb_form_fields {
                 }
                 
                 int track = 1;
-                NSArray *volumes = [_binder volumeNames];
-                for (NSString *volumeName in volumes) {
+                NSArray *volumes = [_binder volumes];
+                for (AudioBinderVolume *v in volumes) {
+                    NSString *volumeName = v.filename;
                     MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
                     mp4.artist = author;
                     if ([volumes count] > 1) {
@@ -323,8 +323,8 @@ enum abb_form_fields {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"]) {
 
                     [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
-                    for(NSString *volume in volumes)
-                        [self addFileToiTunes:volume];
+                    for(AudioBinderVolume *volume in volumes)
+                        [self addFileToiTunes:volume.filename];
                 }
                 
                 [currentFile setStringValue:@"Done"];
@@ -377,7 +377,7 @@ enum abb_form_fields {
     return NO;
 }
 
--(void) audiobookFailed:(NSString*)filename reason:(NSString*)reason
+-(void) volumeFailed:(NSString*)filename reason:(NSString*)reason
 {
     
     NSAlert *alert = [[[NSAlert alloc] init] retain];
@@ -389,18 +389,18 @@ enum abb_form_fields {
 }
 
 
--(void) conversionFinished: (AudioFile*)file duration:(UInt32)milliseconds
+-(void) conversionFinished:(AudioFile*)file duration:(UInt32)milliseconds
 {
     [fileProgress setDoubleValue:[fileProgress doubleValue]];
     file.valid = YES;
     file.duration = milliseconds;
 }
 
--(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds
+-(void) volumeReady:(NSString*)filename duration: (UInt32)seconds
 {
 }
 
--(void) nextVolume: (NSString*)volumeName
+-(void) audiobookReady:(UInt32)seconds
 {
 }
 

@@ -46,14 +46,5 @@
 - (void) fixupBitrate;
 
 - (BOOL) windowShouldClose:(NSNotification *)notification;
-
-// AudioBinderDelegate methods
--(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames;
--(void) conversionStart: (AudioFile*)file format: (AudioStreamBasicDescription*)asbd formatDescription: (NSString*)description length: (UInt64)frames;
--(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason;
--(void) conversionFinished: (AudioFile*)file duration:(UInt32)milliseconds;
--(void) audiobookReady: (NSString*)filename duration: (UInt32)seconds;
--(void) audiobookFailed:(NSString*)filename reason:(NSString*)reason;
-
 - (void) addFileToiTunes:(NSString *)path;
 @end
