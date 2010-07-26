@@ -1,3 +1,4 @@
+"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: продолжительность (%2$d сек.) больше чем макс. продолжительность одного файла (%3$lld сек.)";
 "Adding artist/title tags" = "Добавляется информация об авторе/названии";
 "Adding chapter markers" = "Добавляется информация о содержании";
 "Adding file to iTunes" = "Книга добавляется в iTunes";
@@ -6,5 +7,6 @@
 "Chapter" = "Глава";
 "Chapter %d" = "Глава %d";
 "Converting %@" = "Конвертируется %@";
+"Failed to split audiobook into volumes" = "Не удается разбить аудиокнигу на части";
 "Select" = "Выбрать";
 "⌘ + I\nor\nDrag Image Here" = "Нажмите ⌘ + I\nили\nперетащите\nсюда изображение";
