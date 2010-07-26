@@ -14,6 +14,7 @@
 #include "MetaEditor.h"
 #import "AudioBinder.h"
 #import "AudioBinderVolume.h"
+#import "Chapter.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  \
@@ -28,6 +29,10 @@
     NSLocalizedString(@"Adding file to iTunes", nil)
 #define TEXT_CONVERTING         \
     NSLocalizedString(@"Converting %@", nil)
+#define TEXT_CANT_SPLIT \
+    NSLocalizedString(@"Failed to split audiobook into volumes", nil)
+#define TEXT_MAXDURATION_VIOLATED \
+    NSLocalizedString(@"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)", nil)
 
 enum abb_form_fields {
     ABBAuthor = 0,
@@ -45,6 +50,8 @@ enum abb_form_fields {
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
+    [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
+
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
     [appDefaults setObject:homePath forKey:@"DestinationFolder"];
@@ -228,12 +235,88 @@ enum abb_form_fields {
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
     NSImage *coverImage = coverImageView.coverImage;
-
+    UInt64 maxVolumeDuration = 
+        [[NSUserDefaults standardUserDefaults] integerForKey:@"MaxVolumeSize"] * 3600;
+    
+    NSLog(@"maxVolumeDuration == %lld", maxVolumeDuration);
+    
     [_binder reset];
     [_binder setDelegate:self];
     
+    // split output filename to base and extension in order to get 
+    // filenames for consecutive volume files
+    NSString *outFileBase = [[outFile stringByDeletingPathExtension] retain];
+    NSString *outFileExt = [[outFile pathExtension] retain];
+    
     NSArray *files = [fileList files];
-    [_binder addVolume:outFile files:files];
+    NSMutableArray *inputFiles = [[NSMutableArray alloc] init];
+    UInt64 estTotalDuration = 0;
+    NSString *currentVolumeName = [outFile copy];
+    NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
+    NSArray *chapters = nil;
+    NSMutableArray *curChapters = [[NSMutableArray alloc] init];
+    Chapter *curChapter = nil;
+    int chapterIdx = 0;
+    BOOL hasChapters = [fileList chapterMode];
+    if (hasChapters) {
+        chapters = [fileList chapters];
+        curChapter = [[chapters objectAtIndex:chapterIdx] copy];
+        chapterIdx++;
+        [curChapters addObject:curChapter];
+    }
+    
+    int totalVolumes = 0;
+    BOOL onChapterBoundary = YES;
+    for (AudioFile *file in files) {
+        if (hasChapters) {
+            if (![curChapter containsFile:file]) {
+                NSLog(@"%@ -> next chapter", file.filePath);
+                curChapter = [[chapters objectAtIndex:chapterIdx] copy];
+                chapterIdx++;
+                onChapterBoundary = YES;
+                [curChapters addObject:curChapter];
+            }
+        }
+        
+        if (maxVolumeDuration) {
+            if ((estTotalDuration + file.duration) > maxVolumeDuration*1000) {
+                if ([inputFiles count] > 0) {
+                    [_binder addVolume:currentVolumeName files:inputFiles];
+                    [inputFiles removeAllObjects];
+                    estTotalDuration = 0;
+                    totalVolumes++;
+                    currentVolumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@",
+                                         outFileBase, totalVolumes, outFileExt];
+                    if (hasChapters) {
+                        [volumeChapters addObject:curChapters];
+                        if (!onChapterBoundary) {
+                            curChapter = [curChapter splitAtFile:file];
+                            NSLog(@"Splitting chapter %@ on file %@", curChapter.name, file.filePath);
+                        }
+                        curChapters = [[NSMutableArray alloc] init];
+                        [curChapters addObject:curChapter];
+                    }
+                }
+                else {
+                    NSAlert *alert = [[[NSAlert alloc] init] retain];
+                    NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED, 
+                                     [file.filePath UTF8String], file.duration/1000, maxVolumeDuration];
+                    [alert addButtonWithTitle:@"OK"];
+                    [alert setMessageText:TEXT_CANT_SPLIT];
+                    [alert setInformativeText:msg];
+                    [alert setAlertStyle:NSWarningAlertStyle];
+                    [alert runModal];
+                    return;
+                }
+            }
+        }
+        onChapterBoundary = NO;
+        [inputFiles addObject:file];
+        estTotalDuration += file.duration;
+    }
+    
+    [_binder addVolume:currentVolumeName files:inputFiles];
+    [volumeChapters addObject:curChapters];
     
     // make sure that at this point we have valid bitrate in settings
     [self fixupBitrate];
@@ -316,7 +399,11 @@ enum abb_form_fields {
                 
                 if ([fileList chapterMode]) {
                     [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
-                    addChapters([outFile UTF8String], [fileList chapters]);
+                    int idx = 0;
+                    for (AudioBinderVolume *v in volumes) {
+                        addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
+                        idx++;
+                    }
 
                 }
                 
