@@ -23,6 +23,21 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [name release];
+    [files release];
+    [super dealloc];
+}
+
+- (id)copy
+{
+    Chapter *c = [[Chapter alloc] init];
+    c.name = name;
+    [c addFiles:files];
+    return c;
+}
+
 - (void) addFile:(AudioFile *)file
 {
     [files addObject:file];
@@ -67,6 +82,27 @@
     }
     
     return duration;
+}
+
+
+// splits chapter into two. All files prior to given file
+// remain in this chapter, the rest goes to newly-created 
+// chapter 
+- (Chapter*) splitAtFile:(AudioFile*)file
+{
+
+    NSUInteger idx = [files indexOfObject:file];
+    if (idx == NSNotFound)
+        return nil;
+    Chapter *c = [[Chapter alloc] init];
+    c.name = name;
+    while (idx < [files count]) {
+        AudioFile *f = [files objectAtIndex:idx];
+        [c addFile:f];
+        [files removeObjectAtIndex:idx];
+    }
+    
+    return c;
 }
 
 @end

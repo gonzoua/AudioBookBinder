@@ -17,6 +17,7 @@
 @property (readwrite, copy) NSString *name;
 @property (readwrite, copy) NSMutableArray *files;
 
+- (id) copy;
 - (void) addFile:(AudioFile *)file;
 - (void) addFiles:(NSArray *)newFiles;
 - (BOOL) containsFile:(AudioFile*)file;
@@ -24,5 +25,6 @@
 - (void) removeFile:(AudioFile*)file;
 - (void) insertFile:(AudioFile*)file atIndex:(NSInteger)index;
 - (int) totalFiles;
+- (Chapter*) splitAtFile:(AudioFile*)file;
 - (UInt32) totalDuration;
 @end
