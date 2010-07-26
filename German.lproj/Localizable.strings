@@ -1,3 +1,4 @@
+"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: duration (%2$d sec) is larger then max. volume duration (%3$lld sec.)";
 "Adding artist/title tags" = "Autor/Titel Informationen hinzufügen";
 "Adding chapter markers" = "Kapitelmarken hinzufügen";
 "Adding file to iTunes" = "Füge Hörbuch zu iTunes hinzu";
@@ -6,5 +7,6 @@
 "Chapter" = "Kapitel";
 "Chapter %d" = "Kapitel %d";
 "Converting %@" = "Konvertieren %@";
+"Failed to split audiobook into volumes" = "Failed to split audiobook into volumes";
 "Select" = "Auswählen";
 "⌘ + I\nor\nDrag Image Here" = "⌘ + I\noder Bilddatei\nhierher bewegen";
