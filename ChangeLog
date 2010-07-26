@@ -1,4 +1,4 @@
-TBD 1.7
+2010/07/27 1.7
 	- Added -A option to abbinder (add result to itunes)
 	- Added audiobook duration limit: Binder would try to split
 	    audiobook into several volumes if total duration is longer
