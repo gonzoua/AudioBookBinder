@@ -258,6 +258,7 @@ enum abb_form_fields {
     Chapter *curChapter = nil;
     int chapterIdx = 0;
     BOOL hasChapters = [fileList chapterMode];
+    
     if (hasChapters) {
         chapters = [fileList chapters];
         curChapter = [[chapters objectAtIndex:chapterIdx] copy];
