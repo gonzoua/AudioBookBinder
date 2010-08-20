@@ -120,6 +120,8 @@
 		9F86C0D11023DAC000E65B00 /* MP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4File.m; sourceTree = "<group>"; };
 		9F95914111658710001C2433 /* iAudiobook256.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iAudiobook256.icns; sourceTree = "<group>"; };
 		9F9C32D711A750A600F3FBC4 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Russian; path = Russian.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9FA0773E121E437C003DAC24 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = French.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9FA0773F121E438F003DAC24 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9FA52D9D11C2FFCE003FD879 /* Chapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
 		9FA52D9E11C2FFCE003FD879 /* Chapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chapter.m; sourceTree = "<group>"; };
 		9FAB146911619F9F00A2F36A /* ExpandedPathToIconTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToIconTransformer.h; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				9F6FA3D7111BBBC20047728F /* English */,
 				9F9C32D711A750A600F3FBC4 /* Russian */,
 				9F11CC6111E3C99800D83B54 /* German */,
+				9FA0773E121E437C003DAC24 /* French */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				9F78673911A88F470054ADF0 /* English */,
 				9F78673D11A891940054ADF0 /* Russian */,
 				9F11CC6211E3C9B200D83B54 /* German */,
+				9FA0773F121E438F003DAC24 /* French */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
