@@ -16,10 +16,12 @@
 {
     if (self = [super init])
     {
-        self.filePath = path;
-        self.name = [path lastPathComponent];
+        self.filePath = [path stringByExpandingTildeInPath];
+        self.name = [filePath lastPathComponent];
         self.duration = -1;
         self.valid = NO;
+        self.artist = @"";
+        self.title = @"";
         [self updateInfo];
     }
     
