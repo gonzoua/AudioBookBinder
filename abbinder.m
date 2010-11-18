@@ -253,16 +253,24 @@ int main (int argc, char * argv[]) {
             exit(1);
         }
 
-        NSArray *filesList = [listContent componentsSeparatedByString: @"\n"];
-        for (NSString *file in filesList)
+        NSArray *linesList = [listContent componentsSeparatedByString: @"\n"];
+        for (NSString *line in linesList) {
+            NSString *file = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([file length] > 0)
                 [inputFilenames addObject:file];
+        }
     }
+
+
 
     // Now get input files from the remain of arguments
     while (optind < argc) 
     {
         NSString *path = [NSString stringWithUTF8String:argv[optind]];
+        if (inputFileList != nil) {
+            fprintf(stderr, "-i list provided, ignoring file list from command line\n");
+            break;
+        }
         [inputFilenames addObject:path];
         optind++;
     }
@@ -315,6 +323,9 @@ int main (int argc, char * argv[]) {
             && ([path characterAtIndex:(len-1)] == '@')) {
             NSString *chapterName = [path substringWithRange:NSMakeRange(1, len-2)];
             curChapter = [[Chapter alloc] init];
+            if (verbose) {
+                ABLog(@"Chapter marker detected: '%@'", chapterName);
+            }
             curChapter.name = chapterName;
             [currentChapters addObject:curChapter];
             continue;
