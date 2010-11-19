@@ -8,10 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSOutlineView (MyExtensions)
 
 - (NSArray *)selectedItems;
+- (void)setSelectedItem:(id)item;
 - (void)setSelectedItems:(NSArray *)items;
+- (void)doExpand;
+- (void)doCollapse;
 
 @end

@@ -24,6 +24,12 @@
     return items;
 }
 
+- (void)setSelectedItem:(id)item {    
+    NSInteger row = [self rowForItem:item];
+    if (row >= 0)
+        [self selectRow:row byExtendingSelection:NO];
+}
+
 - (void)setSelectedItems:(NSArray *)items {
     NSMutableIndexSet *newSelection = [[NSMutableIndexSet alloc] init];
     
@@ -40,7 +46,9 @@
 }
 
 - (void)keyDown:(NSEvent*)event_ {
-    BOOL isDeleteKey = FALSE;
+    BOOL isDeleteKey = NO;
+    BOOL isCollapseKey = NO;
+    BOOL isExpandKey = NO;
     
     NSString *eventCharacters = [event_ characters];        
     if ([eventCharacters length]) {
@@ -50,16 +58,86 @@
             case NSDeleteCharacter:                                
                 isDeleteKey = YES;
                 break;
-
+            case NSLeftArrowFunctionKey:
+                isCollapseKey = YES;
+                break;
+            case NSRightArrowFunctionKey:
+                isExpandKey = YES;
+                break;
             default:
                 break;
         }
     }
     
-    if (isDeleteKey) {
+    if (isDeleteKey)
         [self.delegate delKeyDown:self];
-    } else {
+    else if (isCollapseKey)
+        [self doCollapse];
+    else if (isExpandKey)
+        [self doExpand];
+    else
         [super keyDown:event_];
+}
+
+- (void)doExpand
+{
+    NSIndexSet *selectedRows = [self selectedRowIndexes];
+    
+    if (selectedRows == nil)
+        return;
+    
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    for (NSInteger row = [selectedRows firstIndex]; 
+         row != NSNotFound; row = [selectedRows indexGreaterThanIndex:row]) {
+        id item = [self itemAtRow:row];
+        if([self isExpandable:item])
+            [items addObject:item];
+    }
+    
+    for(id item in items)
+        [self expandItem:item];
+    
+    [items release];
+}
+
+- (void)doCollapse
+{
+    NSIndexSet *selectedRows = [self selectedRowIndexes];
+    
+    if (selectedRows == nil)
+        return;
+    
+    if ([selectedRows count] == 1) {
+        NSInteger row = [selectedRows firstIndex];
+        id item = [self itemAtRow:row];
+        // select chapter row if it's a file and if it's a chapter - collapse
+        if ([self isExpandable:item])
+            [self collapseItem:item];
+        else {
+            id parent = [self parentForItem:item];
+            if (parent != nil)
+                [self setSelectedItem:parent];
+        }
+    }   
+    else {
+        // multiple selection rules:
+        //    - if only !expandable items - ignore
+        //    - collapse and select all expandable items
+        
+        NSMutableArray *items = [[NSMutableArray alloc] init];
+
+        for (NSInteger row = [selectedRows firstIndex]; 
+             row != NSNotFound; row = [selectedRows indexGreaterThanIndex:row]) {
+            id item = [self itemAtRow:row];
+            if([self isExpandable:item])
+                [items addObject:item];
+        }
+        if ([items count]) {
+            for(id item in items)
+                [self collapseItem:item];
+            [self setSelectedItems:items];
+        }
+        [items release];
     }
 }
 
