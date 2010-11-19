@@ -253,7 +253,8 @@ int main (int argc, char * argv[]) {
             exit(1);
         }
 
-        NSArray *linesList = [listContent componentsSeparatedByString: @"\n"];
+        NSArray *linesList = [listContent componentsSeparatedByCharactersInSet:
+                                            [NSCharacterSet characterSetWithCharactersInString:@"\r\n"]];
         for (NSString *line in linesList) {
             NSString *file = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([file length] > 0)
