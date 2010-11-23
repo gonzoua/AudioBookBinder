@@ -554,6 +554,7 @@
     [self cleanupChapters];
     [outlineView deselectAll:self];
     [outlineView reloadData]; 
+    [outlineView setSelectedItem:newChapter];
     [outlineView expandItem:newChapter];
     
     return YES;
