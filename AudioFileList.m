@@ -589,6 +589,8 @@
     [outlineView reloadData]; 
     for (id item in newChapters)
         [outlineView expandItem:item];
+    if ([newChapters count])
+        [outlineView setSelectedItem:[newChapters objectAtIndex:0]];
     [newChapters release];
     return YES;
 }
