@@ -34,6 +34,9 @@
 		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
 		9F6FA411111D161A0047728F /* AudioFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA410111D161A0047728F /* AudioFileList.m */; };
 		9F6FA4A9111E56090047728F /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
+		9F7829D3129F8C6000763A5B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7829D2129F8C6000763A5B /* AppKit.framework */; };
+		9F782A2E129F941900763A5B /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2C129F941900763A5B /* Play.png */; };
+		9F782A2F129F941900763A5B /* Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2D129F941900763A5B /* Stop.png */; };
 		9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F78673B11A88F660054ADF0 /* Localizable.strings */; };
 		9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
 		9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
@@ -110,6 +113,9 @@
 		9F6FA410111D161A0047728F /* AudioFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileList.m; sourceTree = "<group>"; };
 		9F6FA4A7111E56090047728F /* AudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFile.h; sourceTree = "<group>"; };
 		9F6FA4A8111E56090047728F /* AudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFile.m; sourceTree = "<group>"; };
+		9F7829D2129F8C6000763A5B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9F782A2C129F941900763A5B /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
+		9F782A2D129F941900763A5B /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stop.png; sourceTree = "<group>"; };
 		9F78673911A88F470054ADF0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F78673D11A891940054ADF0 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F8238B61166B68F00F6D1D8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -163,6 +169,7 @@
 				9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */,
 				9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */,
 				9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */,
+				9F7829D3129F8C6000763A5B /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +240,7 @@
 				9F02CE18101EABCD00AE315D /* AudioToolbox.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 				9F8238B61166B68F00F6D1D8 /* Sparkle.framework */,
+				9F7829D2129F8C6000763A5B /* AppKit.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -258,6 +266,8 @@
 		9F95911E11658523001C2433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F782A2C129F941900763A5B /* Play.png */,
+				9F782A2D129F941900763A5B /* Stop.png */,
 				9F455944116AF4FB00BA501C /* Credits.rtf */,
 				9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */,
 				9F95914111658710001C2433 /* iAudiobook256.icns */,
@@ -323,6 +333,7 @@
 			};
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "AudioBookBinder" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -351,6 +362,8 @@
 				9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */,
 				9F455945116AF4FB00BA501C /* Credits.rtf in Resources */,
 				9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */,
+				9F782A2E129F941900763A5B /* Play.png in Resources */,
+				9F782A2F129F941900763A5B /* Stop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

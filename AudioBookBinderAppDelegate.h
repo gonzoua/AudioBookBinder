@@ -7,9 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "AudioFileList.h"
 #import "AudioBinder.h"
 #import "CoverImageView.h"
+#import <AppKit/NSSound.h>
 
 @interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate> {
     IBOutlet NSWindow *window;
@@ -22,13 +24,19 @@
     IBOutlet NSTabView *tabs;
     IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
+    IBOutlet NSButton *playButton;
+    BOOL _playing;
     NSString *outFile;
     AudioBinder *_binder;
     NSArray *validBitrates;
+    NSSound *_sound;
+    NSString *_playingFile;
+    NSImage *_playImg, *_stopImg;
+    BOOL canPlay;
 };
 
 @property (readwrite, retain) NSArray *validBitrates;
-
+@property (readwrite, assign) BOOL canPlay;
 + (void) initialize;
 
 - (IBAction) addFiles: (id)sender;
@@ -41,10 +49,16 @@
 - (IBAction) splitFiles: (id)sender;
 - (IBAction) renumberChapters: (id)sender;
 - (IBAction) updateValidBitrates: (id)sender;
+- (IBAction) playStop: (id)sender;
 
 - (void) bindingThreadIsDone: (id) sender;
 - (void) fixupBitrate;
 
 - (BOOL) windowShouldClose:(NSNotification *)notification;
 - (void) addFileToiTunes:(NSString *)path;
+
+- (void) playFailed;
+// NSSoundDelegate methods
+- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying;
+
 @end

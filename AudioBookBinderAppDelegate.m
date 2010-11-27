@@ -15,6 +15,7 @@
 #import "AudioBinder.h"
 #import "AudioBinderVolume.h"
 #import "Chapter.h"
+#import "NSOutlineView_Extension.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  \
@@ -33,6 +34,10 @@
     NSLocalizedString(@"Failed to split audiobook into volumes", nil)
 #define TEXT_MAXDURATION_VIOLATED \
     NSLocalizedString(@"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)", nil)
+#define TEXT_FAILED_TO_PLAY \
+    NSLocalizedString(@"Failed to play", nil)
+#define TEXT_CANT_PLAY \
+    NSLocalizedString(@"Failed to play: %@", nil)
 
 enum abb_form_fields {
     ABBAuthor = 0,
@@ -69,7 +74,7 @@ enum abb_form_fields {
 
 }
 
-@synthesize validBitrates;
+@synthesize validBitrates, canPlay;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [fileListView setDataSource:fileList];
@@ -83,7 +88,18 @@ enum abb_form_fields {
     
     
     _binder = [[[AudioBinder alloc] init] retain];
+    _playing = NO;
+    NSString* img = [[NSBundle mainBundle] pathForResource:@"Play" ofType:@"png"];
+    NSURL* url = [NSURL fileURLWithPath:img];
+    _playImg = [[NSImage alloc] initWithContentsOfURL:url];
+    img = [[NSBundle mainBundle] pathForResource:@"Stop" ofType:@"png"];
+    url = [NSURL fileURLWithPath:img];
+    _stopImg = [[NSImage alloc] initWithContentsOfURL:url];    
+    
+    [playButton setImage:_playImg] ;
+    [playButton setEnabled:NO];
     [self updateValidBitrates:self];
+    _playingFile = nil;
 }
 
 - (IBAction) addFiles: (id)sender
@@ -561,5 +577,62 @@ enum abb_form_fields {
     return YES;
 }
 
+
+- (IBAction) playStop: (id)sender
+{
+    if ((_sound != nil) && [_sound isPlaying]) {
+        [_sound stop];
+        return;
+    }
+    
+    if ([[fileListView selectedItems] count] != 1)
+        return;
+    
+    id item = [[fileListView selectedItems] objectAtIndex:0];
+    if ([item isKindOfClass:[AudioFile class]]) {
+        AudioFile *file = (AudioFile *)item;
+        [playButton setImage:_stopImg] ;
+        if (_playingFile)
+            [_playingFile release];
+        
+        _playingFile = [[file.filePath copy] retain];
+        _sound = [[NSSound alloc] initWithContentsOfFile:file.filePath byReference:NO];
+        [_sound setDelegate:self];
+        if (![_sound play]) {
+            [playButton setImage:_playImg] ;
+            [_sound release];
+            _sound = nil;
+            [playButton setEnabled:canPlay];            
+            [self playFailed];
+        }
+    }
+}
+
+- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying
+{
+    [playButton setImage:_playImg] ;
+    [_sound release];
+    _sound = nil;
+    [playButton setEnabled:canPlay];
+}
+
+- (void) playFailed
+{
+    NSAlert *alert = [[[NSAlert alloc] init] retain];
+    NSString *msg = [NSString stringWithFormat:TEXT_CANT_PLAY, _playingFile];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:TEXT_FAILED_TO_PLAY];
+    [alert setInformativeText:msg];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    [alert runModal];
+}
+
+- (void)setCanPlay:(BOOL)b
+{
+    if (_sound == nil) {
+        [playButton setEnabled:b];
+    }
+    canPlay = b;
+}
 
 @end

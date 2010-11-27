@@ -14,7 +14,8 @@
     NSMutableArray *_chapters;
     NSString *_topDir;
     NSArray *_draggedNodes;
-    BOOL _chapterMode, _canJoin, _canSplit;
+    BOOL _chapterMode;
+    BOOL _canPlay;
 }
 
 @property (readonly) BOOL hasFiles;
@@ -38,6 +39,8 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item;
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item;
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item;
+
+// methods
 - (void)delKeyDown:(NSOutlineView *)outlineView;
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView;
 - (BOOL)joinSelectedFiles:(NSOutlineView *)outlineView;

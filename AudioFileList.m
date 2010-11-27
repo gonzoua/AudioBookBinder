@@ -10,6 +10,7 @@
 #import "AudioFile.h"
 #include "NSOutlineView_Extension.h"
 #import "Chapter.h"
+#import "AudioBookBinderAppDelegate.h"
 
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
@@ -31,6 +32,7 @@
         _chapters = [[[NSMutableArray alloc] init] retain];
         _topDir = nil;
         _chapterMode = NO;
+        _canPlay = NO;
     }
     return self;
 }
@@ -612,6 +614,26 @@
             [_chapters removeObject:ch];
         else
             index++;
+    }
+}
+
+
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+    BOOL canPlay = NO;
+    NSOutlineView *view = [notification object];
+    if ([[view selectedItems] count] == 1) {    
+        id item = [[view selectedItems] objectAtIndex:0];
+        if ([item isKindOfClass:[AudioFile class]])
+            canPlay = YES;
+    }
+    
+    // do not spam AppDelegate
+    if (_canPlay != canPlay) {
+        AudioBookBinderAppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
+        _canPlay = canPlay;
+        [appDelegate setCanPlay:_canPlay];
     }
 }
 
