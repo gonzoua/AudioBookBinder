@@ -7,6 +7,8 @@
 "Chapter" = "Глава";
 "Chapter %d" = "Глава %d";
 "Converting %@" = "Конвертируется %@";
+"Failed to play" = "Ошибка проигрывания";
+"Failed to play: %@" = "Не удалось проиграть: %@";
 "Failed to split audiobook into volumes" = "Не удается разбить аудиокнигу на части";
 "Select" = "Выбрать";
 "⌘ + I\nor\nDrag Image Here" = "Нажмите ⌘ + I\nили\nперетащите\nсюда изображение";

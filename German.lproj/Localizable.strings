@@ -7,6 +7,8 @@
 "Chapter" = "Kapitel";
 "Chapter %d" = "Kapitel %d";
 "Converting %@" = "Konvertieren %@";
+"Failed to play" = "Wiedergabe gescheitert";
+"Failed to play: %@" = "Wiedergabe gescheitert: %@";
 "Failed to split audiobook into volumes" = "Aufteilen des Hörbuchs auf Bänder fehlgeschlagen";
 "Select" = "Auswählen";
 "⌘ + I\nor\nDrag Image Here" = "⌘ + I\noder Bilddatei\nhierher bewegen";
