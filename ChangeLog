@@ -1,3 +1,17 @@
+2010/12/01 1.9
+	- Play/stop audiofile directly from Audiobook Binder
+	- Better keyboard navigation in chapters mode (left arrow folds chapter,
+	    right arrow unfolds)
+	- Join operations leave newly created chapter selected 
+	- Split operations leave first of newly created chapters selected 
+	- Command-line tool: better error reporting
+	- Command-line tool: handle file lists with mixed-style newlines
+	- Command-line tool: expand tilde in names from file lists
+	- Add web link to Chapters HowTo to DMG
+
+2010/10/20 1.8
+	- French translation by Philippe Brun
+
 2010/07/27 1.7
 	- Added -A option to abbinder (add result to itunes)
 	- Added audiobook duration limit: Binder would try to split
