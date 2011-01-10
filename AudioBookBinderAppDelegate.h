@@ -50,6 +50,7 @@
 - (IBAction) renumberChapters: (id)sender;
 - (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
+- (IBAction) openChaptersHowTo: (id)sender;
 
 - (void) bindingThreadIsDone: (id) sender;
 - (void) fixupBitrate;

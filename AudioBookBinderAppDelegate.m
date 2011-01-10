@@ -635,4 +635,9 @@ enum abb_form_fields {
     canPlay = b;
 }
 
+- (void)openChaptersHowTo:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bluezbox.com/audiobookbinder/chapters.html"]];
+}
+
 @end
