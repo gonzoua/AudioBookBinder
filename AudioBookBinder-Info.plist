@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIconFile</key>
-	<string>iAudiobook256</string>
+	<string>audiobook</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -36,5 +36,7 @@
 	<integer>604800</integer>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 Oleksandr Tymoshenko. All rights reserved.</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 </dict>
 </plist>
