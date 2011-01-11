@@ -22,6 +22,7 @@
     IBOutlet NSPanel *progressPanel;
     IBOutlet NSTextField *currentFile;
     IBOutlet NSTabView *tabs;
+    IBOutlet NSMenu *applicationMenu;
     IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
     IBOutlet NSButton *playButton;

@@ -581,6 +581,7 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Oleksandr Tymoshenko";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = APP_STORE_BUILD;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include/;

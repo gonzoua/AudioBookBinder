@@ -17,6 +17,8 @@
 #import "Chapter.h"
 #import "NSOutlineView_Extension.h"
 
+#import "Sparkle/SUUpdater.h"
+
 // localized strings
 #define TEXT_CONVERSION_FAILED  \
     NSLocalizedString(@"Audiofile conversion failed", nil)
@@ -76,6 +78,12 @@ enum abb_form_fields {
 
 @synthesize validBitrates, canPlay;
 
+-(void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+#ifdef APP_STORE_BUILD    
+    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
+#endif
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
@@ -100,6 +108,12 @@ enum abb_form_fields {
     [playButton setEnabled:NO];
     [self updateValidBitrates:self];
     _playingFile = nil;
+    
+#ifdef APP_STORE_BUILD     
+    NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
+    [firstSubmenu removeItemAtIndex:1];
+#endif
+    
 }
 
 - (IBAction) addFiles: (id)sender

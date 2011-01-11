@@ -12,6 +12,9 @@
 @interface PrefsController : NSWindowController {
     NSUserDefaults *_userDefaults;
     IBOutlet NSPopUpButton * _folderPopUp;
+    
+    IBOutlet NSTextField *updateLabel;
+    IBOutlet NSButton *updateButton;
 }
 
 // Prefs panel delegates
