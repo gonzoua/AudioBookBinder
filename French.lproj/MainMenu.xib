@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="773"/>
 			<integer value="612"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -489,7 +490,7 @@
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{400, 500}</string>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -803,7 +804,7 @@
 											</object>
 											<object class="NSButton" id="977106492">
 												<reference key="NSNextResponder" ref="929945333"/>
-												<int key="NSvFlags">268</int>
+												<int key="NSvFlags">289</int>
 												<string key="NSFrame">{{398, 6}, {39, 25}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
 												<bool key="NSEnabled">YES</bool>
@@ -892,6 +893,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{500, 511}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMinSize">{400, 522}</string>
