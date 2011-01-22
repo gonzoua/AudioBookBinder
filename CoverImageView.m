@@ -56,13 +56,17 @@
 - (void) setCoverImage:(NSImage *)image
 {
     [coverImage release];
+    [scaledImage release];
     
     if (image == nil)
     {
         coverImage = nil;
+        scaledImage = nil;
         return;
     }
     
+    coverImage = [image copy];
+
     NSSize origSize = [image size];
     if ((origSize.width > ITUNES_COVER_SIZE) || (origSize.height > ITUNES_COVER_SIZE)) {
         NSSize scaledSize;
@@ -75,7 +79,8 @@
             scaledSize.width = origSize.width * ITUNES_COVER_SIZE/origSize.height;                
         }
         
-        NSImage *scaledImage = [[NSImage alloc] initWithSize:scaledSize];
+
+        scaledImage = [[[NSImage alloc] initWithSize:scaledSize] retain];
         
         // Composite image appropriately
         [scaledImage lockFocus];
@@ -85,10 +90,11 @@
                    operation:NSCompositeSourceOver 
                     fraction:1.0];
         [scaledImage unlockFocus];
-        coverImage = scaledImage;
     }
-    else
-        coverImage = [image copy];
+    else {
+        scaledImage = [coverImage copy];
+    }
+
     [self setNeedsDisplay:YES];
 }
 
@@ -104,7 +110,7 @@
 
 - (void)drawRect: (NSRect)dirtyRect 
 {
-    if (coverImage == nil) {
+    if (scaledImage == nil) {
         NSColor *bgColor;
         if(highlighted) {
             bgColor = highlightedColor;
@@ -173,12 +179,12 @@
     }
     else {
         NSRect viewSize = [self bounds];
-        NSSize imageSize = [coverImage size];
+        NSSize imageSize = [scaledImage size];
         NSPoint orig;
         orig.x = (viewSize.size.width - imageSize.width) / 2;
         orig.y = (viewSize.size.height - imageSize.height) / 2;
         
-        [coverImage compositeToPoint:orig operation:NSCompositeSourceOver];
+        [scaledImage compositeToPoint:orig operation:NSCompositeSourceOver];
     }
     
 }

@@ -11,7 +11,7 @@
 #define ITUNES_COVER_SIZE 300
 
 @interface CoverImageView : NSView {
-    NSImage *coverImage;
+    NSImage *coverImage, *scaledImage;
     NSMutableDictionary *attributes;
     NSString *string;
     NSColor *highlightedColor, *normalColor;
