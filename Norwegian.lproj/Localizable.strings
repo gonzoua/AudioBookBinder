@@ -1,0 +1,14 @@
+"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: varighet (%2$d sekunder) er lengre enn maksimal bind varighet (%3$lld sekunder)";
+"Adding artist/title tags" = "Legger inn bokinformasjon";
+"Adding chapter markers" = "Legger inn kappittelmarkører";
+"Adding file to iTunes" = "Legger lydbok til i iTunes";
+"Audiobook binding failed" = "Feil ved oppbygging av lydbok";
+"Audiofile conversion failed" = "Feil ved konvertering av lydfil";
+"Chapter" = "Kapittel";
+"Chapter %d" = "Kapittel %d";
+"Converting %@" = "Konverterer %@";
+"Failed to play" = "Klarte ikke å spille av";
+"Failed to play: %@" = "Klarte ikke å spille av: %@";
+"Failed to split audiobook into volumes" = "Klarte ikke å dele boken inn i bind";
+"Select" = "Velg";
+"⌘ + I\nor\nDrag Image Here" = "⌘ + I\nor\nDra cover bilde hit";

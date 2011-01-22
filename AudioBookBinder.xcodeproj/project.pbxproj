@@ -103,6 +103,8 @@
 		9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderVolume.m; sourceTree = "<group>"; };
 		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
+		9F695E6512EA7FF000E3B9ED /* Norwegian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F695E6612EA800B00E3B9ED /* Norwegian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Norwegian; path = Norwegian.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
 		9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuidoBookBinder.m; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				French,
 				German,
 				Russian,
+				Norwegian,
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* AudioBookBinder */;
 			projectDirPath = "";
@@ -420,6 +423,7 @@
 				9F9C32D711A750A600F3FBC4 /* Russian */,
 				9F11CC6111E3C99800D83B54 /* German */,
 				9FA0773E121E437C003DAC24 /* French */,
+				9F695E6612EA800B00E3B9ED /* Norwegian */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -431,6 +435,7 @@
 				9F78673D11A891940054ADF0 /* Russian */,
 				9F11CC6211E3C9B200D83B54 /* German */,
 				9FA0773F121E438F003DAC24 /* French */,
+				9F695E6512EA7FF000E3B9ED /* Norwegian */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
