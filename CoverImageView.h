@@ -12,6 +12,7 @@
 
 @interface CoverImageView : NSView {
     NSImage *coverImage, *scaledImage;
+    NSString *coverImageFilename;
     NSMutableDictionary *attributes;
     NSString *string;
     NSColor *highlightedColor, *normalColor;
@@ -19,9 +20,13 @@
 }
 
 @property (readwrite, retain) NSImage *coverImage;
+@property (readwrite, retain) NSString *coverImageFilename;
 
 - (void) dealloc;
 - (void) drawStringCenteredIn: (NSRect) bounds;
 - (void) prepareAttributes;
+- (void) resetImage;
+- (BOOL) haveCover;
+- (BOOL) shouldConvert;
 
 @end

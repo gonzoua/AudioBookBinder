@@ -220,9 +220,7 @@ enum abb_form_fields {
         {
             if (!isDir) // just sanity check
             {
-                NSImage *img = [[NSImage alloc] initWithContentsOfFile:fileName]; 
-                coverImageView.coverImage = img;
-                [img release];
+                coverImageView.coverImageFilename = fileName;
                 [tabs selectTabViewItemAtIndex:1];
             }
         }
@@ -264,6 +262,7 @@ enum abb_form_fields {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
     UInt64 maxVolumeDuration = 
         [[NSUserDefaults standardUserDefaults] integerForKey:@"MaxVolumeSize"] * 3600;
@@ -376,29 +375,34 @@ enum abb_form_fields {
             NSLog(@"Adding metadata, it may take a while...");
             @try {
                 [currentFile setStringValue:TEXT_ADDING_TAGS];
-                NSString *imgFileName = nil;
-
-                if (coverImage) 
-                {
-                    NSString *tempFileTemplate =
-                    [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
-                    const char *tempFileTemplateCString =
-                    [tempFileTemplate fileSystemRepresentation];
-                    char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
-                    strcpy(tempFileNameCString, tempFileTemplateCString);
-                    if (mktemp(tempFileNameCString)) {
-                        imgFileName = [NSString stringWithCString:tempFileNameCString encoding:NSUTF8StringEncoding];                
-                        NSData *imgData = [coverImage TIFFRepresentation];
-                        NSDictionary *dict = [[NSDictionary alloc] init];
-                        [[[NSBitmapImageRep imageRepWithData:imgData] 
-                          representationUsingType:NSPNGFileType properties:dict]
-                         writeToFile:imgFileName atomically:YES];
-                        [dict release];
+                BOOL temporaryFile = NO;
+                if ([coverImageView haveCover]) {
+                    if ([coverImageView shouldConvert]) {
+                        NSString *tempFileTemplate =
+                        [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
+                        const char *tempFileTemplateCString =
+                        [tempFileTemplate fileSystemRepresentation];
+                        char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
+                        strcpy(tempFileNameCString, tempFileTemplateCString);
+                        if (mktemp(tempFileNameCString)) {
+                            coverImageFilename = [NSString stringWithCString:tempFileNameCString encoding:NSUTF8StringEncoding];                
+                            NSData *imgData = [coverImage TIFFRepresentation];
+                            NSDictionary *dict = [[NSDictionary alloc] init];
+                            [[[NSBitmapImageRep imageRepWithData:imgData] 
+                              representationUsingType:NSPNGFileType properties:dict]
+                             writeToFile:coverImageFilename atomically:YES];
+                            [dict release];
+                            temporaryFile = YES;
+                        }
+                        else {
+                            NSLog(@"Failed to generate tmp filename");
+                        }
                     }
                     else {
-                        NSLog(@"Failed to generate tmp filename");
+                        coverImageFilename = coverImageView.coverImageFilename;
                     }
                 }
+    
                 
                 int track = 1;
                 NSArray *volumes = [_binder volumes];
@@ -413,8 +417,8 @@ enum abb_form_fields {
                     else
                         mp4.title = title;
                     mp4.album = title;
-                    if (imgFileName)        
-                        [mp4 setCoverFile:imgFileName];
+                    if (coverImageFilename)        
+                        [mp4 setCoverFile:coverImageFilename];
                     mp4.track = track;
                     mp4.tracksTotal = [volumes count];
                     [mp4 updateFile];
@@ -422,9 +426,9 @@ enum abb_form_fields {
                     track ++;
                 }
                 
-                if (imgFileName) {
-                    NSLog(@"Unlink %@", imgFileName);
-                    [[NSFileManager defaultManager] removeFileAtPath:imgFileName 
+                if ((coverImageFilename != nil) && temporaryFile) {
+                    NSLog(@"Unlink %@", coverImageFilename);
+                    [[NSFileManager defaultManager] removeFileAtPath:coverImageFilename 
                                                              handler:nil];
                 }
                 

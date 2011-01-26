@@ -10,6 +10,8 @@
 
 @implementation CoverImageView
 
+@synthesize coverImageFilename;
+
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -21,6 +23,7 @@
         string = NSLocalizedString(@"⌘ + I\nor\nDrag Image Here", nil);
         [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, 
                                        NSFilenamesPboardType, nil]];
+        coverImageFilename = nil;
 
     }
     return self;
@@ -48,10 +51,67 @@
     
 }
 
+- (void) resetImage
+{
+    self.coverImageFilename = nil;
+    self.coverImage = nil;
+}
+
+- (BOOL) haveCover
+{
+    
+    return (coverImage != nil);
+}
+
+- (BOOL) shouldConvert
+{
+    NSString *ext;
+	char ext_temp;
+	unsigned int ch;
+        
+    // we care only about filename. If image was brough by dragging 
+    // picture - it's converted to PNG
+    if (coverImageFilename == nil)
+        return YES;
+    
+    for (ch = [coverImageFilename length]; 
+         ((ext_temp = [coverImageFilename characterAtIndex:(ch - 1)]) != '.') && (ch >= 0); ch--)
+		;
+	ext = [[coverImageFilename lowercaseString] substringFromIndex:ch];
+    
+
+	if ([ext isEqualToString:@"jpg"] || [ext isEqualToString:@"jpeg"])
+		return NO;
+	else if ([ext isEqualToString:@"png"])
+		return NO;
+	else // none of the above
+		return YES;
+}
+
 - (NSImage *) coverImage
 {
     return [coverImage retain];
 }
+
+- (void) setCoverImageFilename:(NSString *)imagePath
+{
+    if (coverImageFilename) {
+        [coverImageFilename release];
+        coverImageFilename = nil;
+    }
+    
+    if (imagePath) {
+        NSImage *img = [[NSImage alloc] initWithContentsOfFile:imagePath]; 
+        self.coverImage = img;
+        [img release];
+        // invalid image, do not set image path
+        if (img == nil)
+            return;
+    
+        coverImageFilename = [imagePath retain];
+    }
+}
+
 
 - (void) setCoverImage:(NSImage *)image
 {
@@ -66,8 +126,13 @@
     }
     
     coverImage = [image copy];
-
-    NSSize origSize = [image size];
+   
+    NSImageRep *rep = [[coverImage representations] objectAtIndex:0]; 
+    [coverImage setScalesWhenResized:YES]; 
+    [coverImage setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])]; 
+    
+    NSSize origSize = NSMakeSize([rep pixelsWide], [rep pixelsHigh]);
+    
     if ((origSize.width > ITUNES_COVER_SIZE) || (origSize.height > ITUNES_COVER_SIZE)) {
         NSSize scaledSize;
         if (origSize.width > origSize.height) {
@@ -78,14 +143,13 @@
             scaledSize.height = ITUNES_COVER_SIZE;
             scaledSize.width = origSize.width * ITUNES_COVER_SIZE/origSize.height;                
         }
-        
 
         scaledImage = [[[NSImage alloc] initWithSize:scaledSize] retain];
         
         // Composite image appropriately
         [scaledImage lockFocus];
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-        [image drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
+        [coverImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
                     fromRect:NSMakeRect(0, 0, origSize.width, origSize.height)
                    operation:NSCompositeSourceOver 
                     fraction:1.0];
@@ -259,8 +323,13 @@
         //the pasteboard was able to give us some meaningful data
         if ([desiredType isEqualToString:NSTIFFPboardType])
         {
+            [self resetImage];
             //we have TIFF bitmap data in the NSData object
             newImage = [[NSImage alloc] initWithData:carriedData];
+            self.coverImage = newImage;
+            [newImage release];
+            if (newImage == nil)
+                return NO;
         }
         else if ([desiredType isEqualToString:NSFilenamesPboardType])
         {
@@ -270,9 +339,10 @@
             //We just happen to know that it will be an array.
             NSString *path = [fileArray objectAtIndex:0];
             //assume that we can ignore all but the first path in the list
-            newImage = [[NSImage alloc] initWithContentsOfFile:path];
             
-            if (nil == newImage)
+            self.coverImageFilename = path;
+            
+            if (coverImageFilename == nil)
                 return NO;
         }
         else
@@ -282,9 +352,6 @@
             return NO;
         }
 
-        self.coverImage = newImage;
-
-        [newImage release];
     }
     
     return YES;
@@ -314,7 +381,7 @@
     }
     
     if (isDeleteKey) {
-        self.coverImage = nil;
+        [self resetImage];
         [self setNeedsDisplay:YES];
     } else {
         [super keyDown:event_];
