@@ -38,8 +38,6 @@
 		9F782A2E129F941900763A5B /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2C129F941900763A5B /* Play.png */; };
 		9F782A2F129F941900763A5B /* Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2D129F941900763A5B /* Stop.png */; };
 		9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F78673B11A88F660054ADF0 /* Localizable.strings */; };
-		9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
-		9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8238B61166B68F00F6D1D8 /* Sparkle.framework */; };
 		9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */; };
 		9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
@@ -76,7 +74,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9F8238DC1166B8C400F6D1D8 /* Sparkle.framework in Copy Frameworks */,
 				9F61BE3911FBBC8D00654B3B /* AudioBinderVolume.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -98,6 +95,7 @@
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		9F11CC6111E3C99800D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F11CC6211E3C9B200D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
 		9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderVolume.m; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 		9F782A2D129F941900763A5B /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stop.png; sourceTree = "<group>"; };
 		9F78673911A88F470054ADF0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F78673D11A891940054ADF0 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9F8238B61166B68F00F6D1D8 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
 		9F86C0CE1023D99300E65B00 /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4Atom.m; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 				9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */,
 				9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */,
 				9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */,
-				9F8238B71166B69000F6D1D8 /* Sparkle.framework in Frameworks */,
 				9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */,
 				9F7829D3129F8C6000763A5B /* AppKit.framework in Frameworks */,
 			);
@@ -187,6 +183,7 @@
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 				9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */,
+				9F3A5BEF12F4D04600528495 /* Sparkle.framework */,
 			);
 			name = AudioBookBinder;
 			sourceTree = "<group>";
@@ -241,7 +238,6 @@
 				9F02CE4B101EBB9600AE315D /* CoreServices.framework */,
 				9F02CE18101EABCD00AE315D /* AudioToolbox.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
-				9F8238B61166B68F00F6D1D8 /* Sparkle.framework */,
 				9F7829D2129F8C6000763A5B /* AppKit.framework */,
 			);
 			name = "External Frameworks and Libraries";
@@ -315,6 +311,7 @@
 				9F6FA203111918F10047728F /* Sources */,
 				9F6FA204111918F10047728F /* Frameworks */,
 				9F8238C71166B6F800F6D1D8 /* Copy Frameworks */,
+				9F3A5C0812F4D31F00528495 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -371,6 +368,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9F3A5C0812F4D31F00528495 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -Rf $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\ncp -R Sparkle.framework $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8DD76F990486AA7600D96B5E /* Sources */ = {
@@ -484,6 +497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = .;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -492,6 +506,8 @@
 				HEADER_SEARCH_PATHS = /opt/local/include/;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-FSparkle.framework";
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = AudioBookBinder;
@@ -508,6 +524,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include/;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
+				OTHER_CFLAGS = "-FSparkle.framework";
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
@@ -537,6 +554,8 @@
 					/opt/local/lib,
 				);
 				OTHER_LDFLAGS = (
+					"-framework",
+					Sparkle,
 					"-framework",
 					Foundation,
 					"-framework",
@@ -568,6 +587,8 @@
 					/opt/local/lib,
 				);
 				OTHER_LDFLAGS = (
+					"-framework",
+					Sparkle,
 					"-framework",
 					Foundation,
 					"-framework",

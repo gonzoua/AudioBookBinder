@@ -13,6 +13,10 @@
 #import "CoverImageView.h"
 #import <AppKit/NSSound.h>
 
+#ifndef APP_STORE_BUILD
+@class SUUpdater;
+#endif
+
 @interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate> {
     IBOutlet NSWindow *window;
     IBOutlet NSOutlineView *fileListView;
@@ -34,6 +38,9 @@
     NSString *_playingFile;
     NSImage *_playImg, *_stopImg;
     BOOL canPlay;
+#ifndef APP_STORE_BUILD
+    IBOutlet SUUpdater *updater;
+#endif
 };
 
 @property (readwrite, retain) NSArray *validBitrates;
@@ -52,6 +59,10 @@
 - (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
 - (IBAction) openChaptersHowTo: (id)sender;
+
+#ifndef APP_STORE_BUILD
+- (IBAction) checkForUpdates: (id)sender;
+#endif
 
 - (void) bindingThreadIsDone: (id) sender;
 - (void) fixupBitrate;

@@ -12,6 +12,8 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="612"/>
+			<integer value="57"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -980,7 +982,7 @@
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="212817051">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1599,15 +1601,13 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{429, 259}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSCustomObject" id="341631139">
 				<string key="NSClassName">PrefsController</string>
-			</object>
-			<object class="NSCustomObject" id="169579315">
-				<string key="NSClassName">SUUpdater</string>
 			</object>
 			<object class="NSCustomObject" id="481012691">
 				<string key="NSClassName">AudioFileList</string>
@@ -1904,30 +1904,6 @@
 						<reference key="destination" ref="44102276"/>
 					</object>
 					<int key="connectionID">734</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">checkForUpdates:</string>
-						<reference key="source" ref="169579315"/>
-						<reference key="destination" ref="603527054"/>
-					</object>
-					<int key="connectionID">738</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: automaticallyChecksForUpdates</string>
-						<reference key="source" ref="617668365"/>
-						<reference key="destination" ref="169579315"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="617668365"/>
-							<reference key="NSDestination" ref="169579315"/>
-							<string key="NSLabel">value: automaticallyChecksForUpdates</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">automaticallyChecksForUpdates</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">750</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2313,6 +2289,14 @@
 						<reference key="destination" ref="913072339"/>
 					</object>
 					<int key="connectionID">948</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">checkForUpdates:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="603527054"/>
+					</object>
+					<int key="connectionID">949</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2895,11 +2879,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">722</int>
 						<reference key="object" ref="341631139"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">736</int>
-						<reference key="object" ref="169579315"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3655,7 +3634,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{525, 802}, {197, 73}}</string>
-					<string>{{358, 644}, {457, 20}}</string>
+					<string>{{358, 644}, {478, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
@@ -3677,7 +3656,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{370, 441}, {252, 203}}</string>
+					<string>{{370, 441}, {258, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{23, 794}, {245, 183}}</string>
@@ -3866,7 +3845,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">948</int>
+			<int key="maxID">949</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3883,6 +3862,7 @@
 							<string>bindingThreadIsDone:</string>
 							<string>cancel:</string>
 							<string>chapterModeWillChange:</string>
+							<string>checkForUpdates:</string>
 							<string>delFiles:</string>
 							<string>joinFiles:</string>
 							<string>openChaptersHowTo:</string>
@@ -3907,6 +3887,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -3918,6 +3899,7 @@
 							<string>bindingThreadIsDone:</string>
 							<string>cancel:</string>
 							<string>chapterModeWillChange:</string>
+							<string>checkForUpdates:</string>
 							<string>delFiles:</string>
 							<string>joinFiles:</string>
 							<string>openChaptersHowTo:</string>
@@ -3947,6 +3929,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">chapterModeWillChange:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">checkForUpdates:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -3998,6 +3984,7 @@
 							<string>playButton</string>
 							<string>progressPanel</string>
 							<string>tabs</string>
+							<string>updater</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4013,6 +4000,7 @@
 							<string>NSButton</string>
 							<string>NSPanel</string>
 							<string>NSTabView</string>
+							<string>SUUpdater</string>
 							<string>NSWindow</string>
 						</object>
 					</object>
@@ -4031,6 +4019,7 @@
 							<string>playButton</string>
 							<string>progressPanel</string>
 							<string>tabs</string>
+							<string>updater</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4078,6 +4067,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">tabs</string>
 								<string key="candidateClassName">NSTabView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">updater</string>
+								<string key="candidateClassName">SUUpdater</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">window</string>

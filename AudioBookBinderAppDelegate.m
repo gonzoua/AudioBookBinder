@@ -73,16 +73,9 @@ enum abb_form_fields {
     ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
     [NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
 
-
 }
 
 @synthesize validBitrates, canPlay;
-
--(void)applicationWillFinishLaunching:(NSNotification *)aNotification {
-#ifdef APP_STORE_BUILD    
-    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
-#endif
-}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [fileListView setDataSource:fileList];
@@ -112,8 +105,10 @@ enum abb_form_fields {
 #ifdef APP_STORE_BUILD     
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
+#else
+    // XXX: hack to make autoupdates work
+    [SUUpdater sharedUpdater];
 #endif
-    
 }
 
 - (IBAction) addFiles: (id)sender
@@ -657,5 +652,14 @@ enum abb_form_fields {
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bluezbox.com/audiobookbinder/chapters.html"]];
 }
+
+- (void) checkForUpdates:(id)sender
+{
+#ifndef APP_STORE_BUILD
+    [[SUUpdater sharedUpdater] checkForUpdates:sender];
+#endif
+
+}
+
 
 @end
