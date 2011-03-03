@@ -381,7 +381,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -Rf $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\ncp -R Sparkle.framework $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/";
+			shellScript = "if [ $CONFIGURATION != AppStore ]; then\n  rm -Rf $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\n  cp -R Sparkle.framework $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -612,7 +612,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include/;
 				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
