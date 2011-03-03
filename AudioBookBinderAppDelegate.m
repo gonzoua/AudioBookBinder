@@ -58,6 +58,7 @@ enum abb_form_fields {
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
     [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
+    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"ChaptersEnabled"];
 
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
@@ -86,7 +87,8 @@ enum abb_form_fields {
     [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
     [fileListView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
     [fileListView setAutoresizesOutlineColumn:NO];
-    
+    // expand initial chapter if chapter mode is enabled
+    [fileListView expandItem:nil expandChildren:YES];
     
     _binder = [[[AudioBinder alloc] init] retain];
     _playing = NO;

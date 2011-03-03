@@ -31,8 +31,15 @@
         _files = [[[NSMutableArray alloc] init] retain];
         _chapters = [[[NSMutableArray alloc] init] retain];
         _topDir = nil;
-        _chapterMode = NO;
+        _chapterMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"ChaptersEnabled"];
         _canPlay = NO;
+        // create initial chapter if chapters are enabled
+        if (_chapterMode) {
+            Chapter *newChapter = [[Chapter alloc] init];
+            newChapter.name = TEXT_CHAPTER;
+            [_chapters removeAllObjects];
+            [_chapters addObject:newChapter];
+        }
     }
     return self;
 }
@@ -135,6 +142,7 @@
         // change explicitely because we need to update outlineView in new mode
         _chapterMode = NO;
     }
+    [[NSUserDefaults standardUserDefaults] setBool:_chapterMode forKey:@"ChaptersEnabled"];
 }
 
 - (void) renumberChapters
