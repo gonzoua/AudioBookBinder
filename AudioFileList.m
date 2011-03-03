@@ -532,7 +532,7 @@
                 break;
             }
         }
-        chapterIndex = [_chapters indexOfObject:ch] + 1;
+        chapterIndex = [_chapters indexOfObject:ch];
     }
     
     for (item in [outlineView selectedItems]) {
