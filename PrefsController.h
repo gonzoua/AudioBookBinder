@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@interface VolumeLengthTransformer : NSValueTransformer {
+}
+
+@end
 
 @interface PrefsController : NSWindowController {
     NSUserDefaults *_userDefaults;

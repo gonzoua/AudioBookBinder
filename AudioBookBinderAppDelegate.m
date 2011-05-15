@@ -57,7 +57,7 @@ enum abb_form_fields {
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
-    [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
+    [appDefaults setObject:[NSNumber numberWithInt:25] forKey:@"MaxVolumeSize"];
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"ChaptersEnabled"];
 
     // for pop-up button Destination Folder
@@ -261,8 +261,10 @@ enum abb_form_fields {
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
-    UInt64 maxVolumeDuration = 
-        [[NSUserDefaults standardUserDefaults] integerForKey:@"MaxVolumeSize"] * 3600;
+    UInt64 maxVolumeDuration = 0;
+    NSInteger hours = [[NSUserDefaults standardUserDefaults] integerForKey:@"MaxVolumeSize"];
+    if ((hours > 0) && (hours < 25))
+        maxVolumeDuration = hours * 3600;
     
     NSLog(@"maxVolumeDuration == %lld", maxVolumeDuration);
     

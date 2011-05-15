@@ -76,3 +76,28 @@
 
 
 @end
+
+
+@implementation VolumeLengthTransformer
+
++ (Class)transformedValueClass {
+    return [NSString class];
+}
+
++ (BOOL)allowsReverseTransformation {
+    return NO;
+}
+
+- (id)transformedValue:(id)value {
+	if (value != nil)
+	{
+        NSInteger len = [value intValue];
+        if (len == 25)
+            return @"--";
+        else
+            return [NSString stringWithFormat:@"%d", len];
+	}
+	
+    return @"";
+}
+@end
