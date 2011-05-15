@@ -473,6 +473,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -490,6 +491,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
@@ -563,6 +565,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -596,6 +599,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
+				SDKROOT = macosx10.6;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -635,6 +639,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
+				SDKROOT = macosx10.6;
 			};
 			name = AppStore;
 		};
@@ -666,6 +671,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
+				SDKROOT = macosx10.6;
 				ZERO_LINK = NO;
 			};
 			name = AppStore;
