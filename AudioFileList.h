@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AudioFile.h"
 
-@interface AudioFileList : NSObject {
+@interface AudioFileList : NSObject<NSOutlineViewDataSource, NSOutlineViewDelegate> {
     NSMutableArray *_files;
     NSMutableArray *_chapters;
     NSString *_topDir;
