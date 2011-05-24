@@ -14,7 +14,7 @@
 
 - (id) initWithPath:(NSString*)path
 {
-    if (self = [super init])
+    if ((self = [super init]))
     {
         self.filePath = [path stringByExpandingTildeInPath];
         self.name = [filePath lastPathComponent];
@@ -22,6 +22,7 @@
         self.valid = NO;
         self.artist = @"";
         self.title = @"";
+        self.album = @"";
         [self updateInfo];
     }
     
@@ -34,10 +35,11 @@
     self.name = nil;
     self.artist = nil;
     self.title = nil;
+    self.album = nil;
     [super dealloc];
 }
 
-@synthesize filePath, name, duration, valid, artist, title;
+@synthesize filePath, name, duration, valid, artist, title, album;
 
 - (void) updateInfo
 {
@@ -83,6 +85,15 @@
                     self.title = s;
                 else
                     self.title = @"";
+                
+                obj = [properties objectForKey:@"album"];
+                s = nil;
+                if (obj != nil)
+                    s = [NSString stringWithUTF8String:[obj UTF8String]];
+                if (s) 
+                    self.album = s;
+                else
+                    self.album = @"";
             }
         }
         self.valid = YES;

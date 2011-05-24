@@ -13,7 +13,7 @@
     NSString *filePath;
     NSString *name;
     NSInteger duration;
-    NSString *artist, *title;
+    NSString *artist, *title, *album;
     BOOL valid;
 }
 
@@ -23,6 +23,8 @@
 @property(readwrite, assign) BOOL valid;
 @property(readwrite, copy) NSString *artist;
 @property(readwrite, copy) NSString *title;
+@property(readwrite, copy) NSString *album;
+
 
 
 - (id) initWithPath:(NSString*)path;

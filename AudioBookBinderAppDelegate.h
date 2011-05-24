@@ -17,7 +17,7 @@
 @class SUUpdater;
 #endif
 
-@interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate> {
+@interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate, NSSoundDelegate> {
     IBOutlet NSWindow *window;
     IBOutlet NSOutlineView *fileListView;
     IBOutlet NSForm *form;
@@ -41,6 +41,8 @@
 #ifndef APP_STORE_BUILD
     IBOutlet SUUpdater *updater;
 #endif
+    
+    NSMutableArray *currentColumns;
 };
 
 @property (readwrite, retain) NSArray *validBitrates;

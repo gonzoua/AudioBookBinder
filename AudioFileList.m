@@ -14,8 +14,7 @@
 
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
-#define COLUMNID_NAME                @"NameColumn"
-#define COLUMNID_DURATION            @"DurationColumn"
+
 
 #define TEXT_CHAPTER  \
     NSLocalizedString(@"Chapter", nil)
@@ -222,9 +221,16 @@
     {
         AudioFile *file = item;
 
-        if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+        if ([tableColumn.identifier isEqualToString:COLUMNID_FILE])
             objectValue = file.name;
-        else {
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
+            objectValue = file.title;
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_AUTHOR])
+            objectValue = file.artist;
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_ALBUM])
+            objectValue = file.album;
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_TIME])
+        {
             UInt32 duration = file.duration;
             duration /= 1000;
             int hours = duration / 3600;
@@ -238,6 +244,8 @@
                 objectValue = [[NSString stringWithFormat:@"%d:%02d",
                                 minutes, seconds] retain];
         }
+        else
+            objectValue = @"";
         
         return objectValue;
     }
@@ -245,7 +253,8 @@
         Chapter *chapter = item;
         if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
             return [chapter name];
-        else {
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_TIME])
+        {            
             UInt32 duration = [chapter totalDuration];
             duration /= 1000;
             int hours = duration / 3600;
@@ -260,6 +269,8 @@
                                 minutes, seconds] retain];
             return objectValue;
         }
+        else
+            return @"";
         
     }
 

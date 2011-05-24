@@ -9,6 +9,19 @@
 #import <Cocoa/Cocoa.h>
 #import "AudioFile.h"
 
+#define COLUMNID_NAME           @"NameColumn"
+#define COLUMNID_FILE           @"FileColumn"
+#define COLUMNID_AUTHOR         @"AuthorColumn"
+#define COLUMNID_ALBUM          @"AlbumColumn"
+#define COLUMNID_TIME           @"TimeColumn"
+
+typedef struct 
+{
+    NSString *id;
+    NSString *title;
+    BOOL enabled;
+} column_t;
+
 @interface AudioFileList : NSObject<NSOutlineViewDataSource, NSOutlineViewDelegate> {
     NSMutableArray *_files;
     NSMutableArray *_chapters;

@@ -41,6 +41,16 @@
 #define TEXT_CANT_PLAY \
     NSLocalizedString(@"Failed to play: %@", nil)
 
+
+column_t columnDefs[] = {
+    {COLUMNID_FILE, @"File", NO}, 
+    {COLUMNID_AUTHOR, @"Author", NO}, 
+    {COLUMNID_ALBUM, @"Album", NO}, 
+    {COLUMNID_TIME, @"Time", NO}, 
+    {nil, nil}
+};
+
+
 enum abb_form_fields {
     ABBAuthor = 0,
     ABBTitle,
@@ -59,6 +69,7 @@ enum abb_form_fields {
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
     [appDefaults setObject:[NSNumber numberWithInt:25] forKey:@"MaxVolumeSize"];
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"ChaptersEnabled"];
+    [appDefaults setObject:[NSArray arrayWithObjects:COLUMNID_TIME, nil] forKey:@"ColumnsConfiguration"];
 
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
@@ -79,9 +90,60 @@ enum abb_form_fields {
 @synthesize validBitrates, canPlay;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    int idx;
+
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
     [fileListView setAllowsMultipleSelection:YES];
+    
+    // add column
+    // build table header context menu
+    NSMenu *tableHeaderContextMenu = [[NSMenu alloc] initWithTitle:@""];
+    [[fileListView headerView] setMenu:tableHeaderContextMenu];
+#if 0    
+    NSArray *tableColumns = [NSArray arrayWithObjects:@"File", @"Title", @"Author", @"Album", @"Duration", nil]; 
+    NSEnumerator *enumerator = [tableColumns objectEnumerator];
+    NSString *column;
+    // while((column = [enumerator nextObject])) 
+#endif
+    
+    NSTableColumn *outlineColumn = [[fileListView tableColumns] objectAtIndex:0];
+    outlineColumn.identifier = COLUMNID_NAME; 
+    [[outlineColumn headerCell] setStringValue:@"Name"];
+
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    currentColumns = [[NSMutableArray alloc] init];
+    [currentColumns addObjectsFromArray:[defaults objectForKey:@"ColumnsConfiguration"]];
+    
+    
+    for (NSString *column_id in currentColumns) {
+        BOOL found = NO;
+        for (idx = 0; columnDefs[idx].id; idx++)
+        {
+            if ([columnDefs[idx].id isEqualToString:column_id]) {
+                columnDefs[idx].enabled = YES;
+                found = YES;
+                break;
+            }
+        }
+        
+        if (found) {
+            NSTableColumn *c = [[NSTableColumn alloc] initWithIdentifier:columnDefs[idx].id];
+            [fileListView addTableColumn:c];
+            [[c headerCell] setStringValue:columnDefs[idx].title];
+        }
+    }
+    
+    for (idx = 0; columnDefs[idx].id; idx++)
+    {
+        NSString *title = columnDefs[idx].title;
+        NSMenuItem *item = [tableHeaderContextMenu addItemWithTitle:title action:@selector(contextMenuSelected:) keyEquivalent:@""];
+        [item setTarget:self];
+        [item setRepresentedObject:columnDefs[idx].id];
+        [item setState:columnDefs[idx].enabled?NSOnState:NSOffState];        
+    }
+
     
     [fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
     [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
@@ -665,5 +727,35 @@ enum abb_form_fields {
 
 }
 
+- (void)contextMenuSelected:(id)sender
+{
+    NSMenuItem *item = sender;
+    if (item.state == NSOffState) {
+        [item setState:NSOnState];
+        
+        BOOL found = NO;
+        int idx;
+        for (idx = 0; columnDefs[idx].id; idx++)
+        {
+            if ([columnDefs[idx].id isEqualToString:[item representedObject]]) {
+                found = YES;
+                break;
+            }
+        }
+        
+        if (found) {
+            NSTableColumn *c = [[NSTableColumn alloc] initWithIdentifier:columnDefs[idx].id];
+            [fileListView addTableColumn:c];
+            [[c headerCell] setStringValue:columnDefs[idx].title];
+        }
+    }
+    else {
+        NSTableColumn *c = [fileListView tableColumnWithIdentifier:[item representedObject]];
+        if (c) {
+            [fileListView removeTableColumn:c];
+        }
+        [item setState:NSOffState];
+    }
+}
 
 @end
