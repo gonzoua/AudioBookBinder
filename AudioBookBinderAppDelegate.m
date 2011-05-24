@@ -91,6 +91,10 @@ enum abb_form_fields {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     int idx;
+    
+    [[window windowController] setShouldCascadeWindows:NO];      // Tell the controller to not cascade its windows.
+    [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
+    [window setFrameUsingName:@"AudioBookbinderWindow"];
 
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
