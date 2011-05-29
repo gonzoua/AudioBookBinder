@@ -41,6 +41,7 @@
 #define TEXT_CANT_PLAY \
     NSLocalizedString(@"Failed to play: %@", nil)
 
+#define ColumnsConfiguration @"ColumnsConfiguration"
 
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO}, 
@@ -69,15 +70,14 @@ enum abb_form_fields {
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
     [appDefaults setObject:[NSNumber numberWithInt:25] forKey:@"MaxVolumeSize"];
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"ChaptersEnabled"];
-    [appDefaults setObject:[NSArray arrayWithObjects:COLUMNID_TIME, nil] forKey:@"ColumnsConfiguration"];
-
+    
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
     [appDefaults setObject:homePath forKey:@"DestinationFolder"];
 #ifdef notyet
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
 #endif    
-    [defaults registerDefaults:appDefaults];
+    [defaults registerDefaults:appDefaults];    
     
     //set custom value transformers    
     ExpandedPathToPathTransformer * pathTransformer = [[[ExpandedPathToPathTransformer alloc] init] autorelease];
@@ -90,7 +90,6 @@ enum abb_form_fields {
 @synthesize validBitrates, canPlay;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    int idx;
     
     [[window windowController] setShouldCascadeWindows:NO];      // Tell the controller to not cascade its windows.
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
@@ -99,53 +98,6 @@ enum abb_form_fields {
     [fileListView setDelegate:fileList];
     [fileListView setAllowsMultipleSelection:YES];
     
-    // add column
-    // build table header context menu
-    NSMenu *tableHeaderContextMenu = [[NSMenu alloc] initWithTitle:@""];
-    [[fileListView headerView] setMenu:tableHeaderContextMenu];
-#if 0    
-    NSArray *tableColumns = [NSArray arrayWithObjects:@"File", @"Title", @"Author", @"Album", @"Duration", nil]; 
-    NSEnumerator *enumerator = [tableColumns objectEnumerator];
-    NSString *column;
-    // while((column = [enumerator nextObject])) 
-#endif
-    
-    NSTableColumn *outlineColumn = [[fileListView tableColumns] objectAtIndex:0];
-    outlineColumn.identifier = COLUMNID_NAME; 
-    [[outlineColumn headerCell] setStringValue:@"Name"];
-
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    currentColumns = [[NSMutableArray alloc] init];
-    [currentColumns addObjectsFromArray:[defaults objectForKey:@"ColumnsConfiguration"]];
-    
-    
-    for (NSString *column_id in currentColumns) {
-        BOOL found = NO;
-        for (idx = 0; columnDefs[idx].id; idx++)
-        {
-            if ([columnDefs[idx].id isEqualToString:column_id]) {
-                columnDefs[idx].enabled = YES;
-                found = YES;
-                break;
-            }
-        }
-        
-        if (found) {
-            NSTableColumn *c = [[NSTableColumn alloc] initWithIdentifier:columnDefs[idx].id];
-            [fileListView addTableColumn:c];
-            [[c headerCell] setStringValue:columnDefs[idx].title];
-        }
-    }
-    
-    for (idx = 0; columnDefs[idx].id; idx++)
-    {
-        NSString *title = columnDefs[idx].title;
-        NSMenuItem *item = [tableHeaderContextMenu addItemWithTitle:title action:@selector(contextMenuSelected:) keyEquivalent:@""];
-        [item setTarget:self];
-        [item setRepresentedObject:columnDefs[idx].id];
-        [item setState:columnDefs[idx].enabled?NSOnState:NSOffState];        
-    }
 
     
     [fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
@@ -176,6 +128,101 @@ enum abb_form_fields {
     // XXX: hack to make autoupdates work
     [SUUpdater sharedUpdater];
 #endif
+}
+
+- (void)awakeFromNib {
+    int idx;
+
+    // build table header context menu
+    NSArray *cols = [[NSUserDefaults standardUserDefaults] arrayForKey:ColumnsConfiguration];
+    // default case, add Name and Time columns
+    if (cols == nil) {
+        NSArray *tableColumns = [NSArray arrayWithArray:[fileListView tableColumns]];  
+        NSTableColumn *column = [tableColumns objectAtIndex:0];
+        [column setIdentifier:COLUMNID_NAME];
+        column = [[NSTableColumn alloc] initWithIdentifier:COLUMNID_TIME];
+        [fileListView addTableColumn:column];
+    }
+    else
+    {
+        // load from saved state
+        NSDictionary *colinfo;
+        NSTableColumn *column;
+        NSArray *tableColumns = [NSArray arrayWithArray:[fileListView tableColumns]];  
+
+        idx = 0;
+        for (colinfo in cols) {
+            NSString *identifier = [colinfo objectForKey:@"identifier"];
+            CGFloat width = [[colinfo objectForKey:@"width"] floatValue];
+            if (idx == 0) {
+                column = [tableColumns objectAtIndex:0];
+                [column setIdentifier:identifier];
+                [column setWidth:width];
+            }
+            else {
+                column = [[NSTableColumn alloc] initWithIdentifier:identifier];
+                [column setWidth:width];
+                [fileListView addTableColumn:column];                
+            }
+            
+            idx++;
+        }
+        
+    }
+    
+    // build table header context menu
+    NSMenu *tableHeaderContextMenu = [[NSMenu alloc] initWithTitle:@""];
+    [[fileListView headerView] setMenu:tableHeaderContextMenu];
+    
+    NSArray *columns = [fileListView tableColumns];
+    
+    for (NSTableColumn *c in columns) {
+        BOOL found = NO;
+        for (idx = 0; columnDefs[idx].id; idx++)
+        {
+            if ([columnDefs[idx].id isEqualToString:c.identifier]) {
+                columnDefs[idx].enabled = YES;
+                [[c headerCell] setStringValue:columnDefs[idx].title];
+                found = YES;
+                break;
+            }
+        }
+        // Name column is special. It can't be removed from view
+        if (!found && ([c.identifier isEqualToString:COLUMNID_NAME])) {
+            [[c headerCell] setStringValue:@"Name"];
+            // make sure outline column is NameColumn
+            [fileListView setOutlineTableColumn:c];
+        }
+    }
+    
+    for (idx = 0; columnDefs[idx].id; idx++)
+    {
+        NSString *title = columnDefs[idx].title;
+        NSMenuItem *item = [tableHeaderContextMenu addItemWithTitle:title action:@selector(contextMenuSelected:) keyEquivalent:@""];
+        [item setTarget:self];
+        [item setRepresentedObject:columnDefs[idx].id];
+        [item setState:columnDefs[idx].enabled?NSOnState:NSOffState];        
+    }
+
+    
+    [fileListView sizeLastColumnToFit];
+    // listen for changes so know when to save
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidMoveNotification object:fileListView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
+}
+
+
+- (void)saveTableColumns {
+    NSMutableArray *cols = [NSMutableArray array];
+    NSEnumerator *enumerator = [[fileListView tableColumns] objectEnumerator];
+    NSTableColumn *column;
+    while((column = [enumerator nextObject])) {
+        [cols addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                         [column identifier], @"identifier",
+                         [NSNumber numberWithFloat:[column width]], @"width",
+                         nil]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:cols forKey:ColumnsConfiguration];
 }
 
 - (IBAction) addFiles: (id)sender
@@ -759,6 +806,7 @@ enum abb_form_fields {
         }
         [item setState:NSOffState];
     }
+    
 }
 
 @end
