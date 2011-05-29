@@ -17,11 +17,11 @@
     if ((self = [super init]))
     {
         self.filePath = [path stringByExpandingTildeInPath];
-        self.name = [filePath lastPathComponent];
-        self.duration = -1;
+        self.file = [filePath lastPathComponent];
+        self.duration = [[NSNumber alloc] initWithInt:-1];
         self.valid = NO;
         self.artist = @"";
-        self.title = @"";
+        self.name = @"";
         self.album = @"";
         [self updateInfo];
     }
@@ -32,14 +32,14 @@
 - (void) dealloc
 {
     self.filePath = nil;
-    self.name = nil;
+    self.file = nil;
     self.artist = nil;
-    self.title = nil;
+    self.name = nil;
     self.album = nil;
     [super dealloc];
 }
 
-@synthesize filePath, name, duration, valid, artist, title, album;
+@synthesize filePath, file, duration, valid, artist, name, album;
 
 - (void) updateInfo
 {
@@ -53,7 +53,7 @@
         UInt32 len = sizeof(NSTimeInterval);
         NSTimeInterval dur;
         if (AudioFileGetProperty(audioFile, kAudioFilePropertyEstimatedDuration, &len, &dur) == noErr) 
-            self.duration = dur*1000;
+            self.duration = [[NSNumber alloc] initWithInt:(dur*1000)];
 
         UInt32 writable = 0, size;
         status = AudioFileGetPropertyInfo(audioFile, 
@@ -82,9 +82,9 @@
                 if (obj != nil)
                     s = [NSString stringWithUTF8String:[obj UTF8String]];
                 if (s) 
-                    self.title = s;
+                    self.name = s;
                 else
-                    self.title = @"";
+                    self.name = @"";
                 
                 obj = [properties objectForKey:@"album"];
                 s = nil;

@@ -9,11 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "AudioFile.h"
 
-#define COLUMNID_NAME           @"NameColumn"
-#define COLUMNID_FILE           @"FileColumn"
-#define COLUMNID_AUTHOR         @"AuthorColumn"
-#define COLUMNID_ALBUM          @"AlbumColumn"
-#define COLUMNID_TIME           @"TimeColumn"
+// the name should be the same as properties in AudioFile
+#define COLUMNID_NAME           @"name"
+#define COLUMNID_FILE           @"file"
+#define COLUMNID_AUTHOR         @"artist"
+#define COLUMNID_ALBUM          @"album"
+#define COLUMNID_TIME           @"duration"
 
 typedef struct 
 {
@@ -29,6 +30,8 @@ typedef struct
     NSArray *_draggedNodes;
     BOOL _chapterMode;
     BOOL _canPlay;
+    BOOL _sortAscending;
+    NSString *_sortKey;
 }
 
 @property (readonly) BOOL hasFiles;

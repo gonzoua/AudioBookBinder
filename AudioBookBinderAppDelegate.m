@@ -417,7 +417,7 @@ enum abb_form_fields {
         }
         
         if (maxVolumeDuration) {
-            if ((estTotalDuration + file.duration) > maxVolumeDuration*1000) {
+            if ((estTotalDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
                 if ([inputFiles count] > 0) {
                     [_binder addVolume:currentVolumeName files:inputFiles];
                     [inputFiles removeAllObjects];
@@ -438,7 +438,7 @@ enum abb_form_fields {
                 else {
                     NSAlert *alert = [[[NSAlert alloc] init] retain];
                     NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED, 
-                                     [file.filePath UTF8String], file.duration/1000, maxVolumeDuration];
+                                     [file.filePath UTF8String], [file.duration intValue]/1000, maxVolumeDuration];
                     [alert addButtonWithTitle:@"OK"];
                     [alert setMessageText:TEXT_CANT_SPLIT];
                     [alert setInformativeText:msg];
@@ -450,7 +450,7 @@ enum abb_form_fields {
         }
         onChapterBoundary = NO;
         [inputFiles addObject:file];
-        estTotalDuration += file.duration;
+        estTotalDuration += [file.duration intValue];
     }
     
     [_binder addVolume:currentVolumeName files:inputFiles];
@@ -623,7 +623,7 @@ enum abb_form_fields {
 {
     [fileProgress setDoubleValue:[fileProgress doubleValue]];
     file.valid = YES;
-    file.duration = milliseconds;
+    file.duration = [[NSNumber alloc] initWithInt:milliseconds];
 }
 
 -(void) volumeReady:(NSString*)filename duration: (UInt32)seconds
@@ -805,5 +805,6 @@ enum abb_form_fields {
     }
     
 }
+
 
 @end

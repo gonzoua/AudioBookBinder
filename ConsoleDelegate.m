@@ -104,7 +104,7 @@
             printf(", skipping...");
         printf("\n");
     }
-    file.duration = 0;
+    file.duration = [[NSNumber alloc] initWithInt:0];
     file.valid = NO;
     return _skipErrors;
 }
@@ -124,7 +124,7 @@
     }
     
     // set actual duration and mark as valid
-    file.duration = duration;
+    file.duration = [[NSNumber alloc] initWithInt:duration];
     file.valid = YES;    
 }
 

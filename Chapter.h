@@ -27,4 +27,5 @@
 - (int) totalFiles;
 - (Chapter*) splitAtFile:(AudioFile*)file;
 - (UInt32) totalDuration;
+- (void) sortUsingDecriptor:(NSSortDescriptor*)descriptor;
 @end

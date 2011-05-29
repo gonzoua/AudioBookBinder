@@ -11,18 +11,18 @@
 
 @interface AudioFile : NSObject {
     NSString *filePath;
-    NSString *name;
-    NSInteger duration;
-    NSString *artist, *title, *album;
+    NSString *file;
+    NSNumber *duration;
+    NSString *artist, *name, *album;
     BOOL valid;
 }
 
 @property(readwrite, copy) NSString *filePath;
-@property(readwrite, copy) NSString *name;
-@property(readwrite, assign) NSInteger duration;
+@property(readwrite, copy) NSString *file;
+@property(readwrite, copy) NSNumber *duration;
 @property(readwrite, assign) BOOL valid;
 @property(readwrite, copy) NSString *artist;
-@property(readwrite, copy) NSString *title;
+@property(readwrite, copy) NSString *name;
 @property(readwrite, copy) NSString *album;
 
 

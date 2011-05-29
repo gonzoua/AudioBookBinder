@@ -81,7 +81,7 @@ NSString *makeChapterName(NSString *format, int chapterNum, AudioFile *file)
                                range:NSMakeRange(0, [name length])];
  
     [name replaceOccurrencesOfString:@"%t" 
-                          withString:file.title 
+                          withString:file.name 
                              options:NSLiteralSearch 
                                range:NSMakeRange(0, [name length])];
 
@@ -333,7 +333,7 @@ int main (int argc, char * argv[]) {
         }
         AudioFile *file = [[AudioFile alloc] initWithPath:path];
         if (maxVolumeDuration) {
-            if ((estTotalDuration + file.duration) > maxVolumeDuration*1000) {
+            if ((estTotalDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
                 if ([inputFiles count] > 0) {
                     [binder addVolume:currentVolumeName files:inputFiles];
                     [inputFiles removeAllObjects];
@@ -350,14 +350,14 @@ int main (int argc, char * argv[]) {
                 }
                 else {
                     fprintf(stderr, "%s: duration (%d sec) is larger then max. volume duration (%lld sec.)\n", 
-                            [path UTF8String], file.duration/1000, maxVolumeDuration);
+                            [path UTF8String], [file.duration intValue]/1000, maxVolumeDuration);
                     exit(1);
                 }
             }
         }
         
         [inputFiles addObject:file];
-        estTotalDuration += file.duration;
+        estTotalDuration += [file.duration intValue];
         
         if (withChapters) {
             if (eachFileIsChapter) {

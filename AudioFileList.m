@@ -35,6 +35,8 @@
         if (modeObj != nil)
             _chapterMode = [modeObj boolValue];
         _canPlay = NO;
+        _sortAscending = YES;
+        _sortKey = nil;
         // create initial chapter if chapters are enabled
         if (_chapterMode) {
             Chapter *newChapter = [[Chapter alloc] init];
@@ -225,16 +227,16 @@
         AudioFile *file = item;
 
         if ([tableColumn.identifier isEqualToString:COLUMNID_FILE])
-            objectValue = file.name;
+            objectValue = file.file;
         else if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
-            objectValue = file.title;
+            objectValue = file.name;
         else if ([tableColumn.identifier isEqualToString:COLUMNID_AUTHOR])
             objectValue = file.artist;
         else if ([tableColumn.identifier isEqualToString:COLUMNID_ALBUM])
             objectValue = file.album;
         else if ([tableColumn.identifier isEqualToString:COLUMNID_TIME])
         {
-            UInt32 duration = file.duration;
+            UInt32 duration = [file.duration intValue];
             duration /= 1000;
             int hours = duration / 3600;
             int minutes = (duration - (hours * 3600)) / 60;
@@ -659,4 +661,42 @@
     }
 }
 
+
+
+- (void)      outlineView:(NSOutlineView *) outlineView
+    didClickTableColumn:(NSTableColumn *) tableColumn 
+{
+    NSArray *columns = [outlineView tableColumns];
+    if (_sortKey != nil) {
+        for (NSTableColumn *c in columns) {
+            [outlineView setIndicatorImage:nil
+                         inTableColumn:c]; 
+        }
+        
+        if ([_sortKey isEqualToString:[tableColumn identifier]])
+            _sortAscending = !_sortAscending;
+        else
+            _sortAscending = YES;
+    }
+    
+    _sortKey = [tableColumn identifier];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:_sortKey ascending:_sortAscending];
+    if (_chapterMode) {
+        for (Chapter *c in _chapters) {
+            [c sortUsingDecriptor:sortDescriptor];
+        }
+    }
+    else
+        [_files sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [sortDescriptor release];
+    [outlineView setIndicatorImage:(_sortAscending ?
+                                    [NSImage imageNamed:@"NSAscendingSortIndicator"] :
+                                    [NSImage imageNamed:@"NSDescendingSortIndicator"])
+                     inTableColumn:tableColumn];
+    
+    [outlineView reloadData];
+
+    
+}
+          
 @end

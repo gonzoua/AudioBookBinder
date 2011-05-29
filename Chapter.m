@@ -78,7 +78,7 @@
 {
     UInt32 duration = 0;
     for (AudioFile *file in files) {
-        duration += [file duration];
+        duration += [[file duration] intValue];
     }
     
     return duration;
@@ -104,5 +104,11 @@
     
     return c;
 }
+
+- (void) sortUsingDecriptor:(NSSortDescriptor*)descriptor
+{
+    [files sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+}
+
 
 @end
