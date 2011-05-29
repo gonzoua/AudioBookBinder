@@ -89,15 +89,12 @@ enum abb_form_fields {
 @synthesize validBitrates, canPlay;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    
     [[window windowController] setShouldCascadeWindows:NO];      // Tell the controller to not cascade its windows.
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
 
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
     [fileListView setAllowsMultipleSelection:YES];
-    
-
     
     [fileListView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
     [fileListView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
@@ -140,7 +137,9 @@ enum abb_form_fields {
         NSTableColumn *column = [tableColumns objectAtIndex:0];
         [column setIdentifier:COLUMNID_NAME];
         column = [[NSTableColumn alloc] initWithIdentifier:COLUMNID_TIME];
+        
         [fileListView addTableColumn:column];
+        [column setWidth:150];
     }
     else
     {
@@ -204,7 +203,6 @@ enum abb_form_fields {
     }
 
     
-    [fileListView sizeLastColumnToFit];
     // listen for changes so know when to save
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidMoveNotification object:fileListView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
