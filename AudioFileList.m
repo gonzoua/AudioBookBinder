@@ -30,7 +30,10 @@
         _files = [[[NSMutableArray alloc] init] retain];
         _chapters = [[[NSMutableArray alloc] init] retain];
         _topDir = nil;
-        _chapterMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"ChaptersEnabled"];
+        _chapterMode = YES;
+        id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChaptersEnabled"];
+        if (modeObj != nil)
+            _chapterMode = [modeObj boolValue];
         _canPlay = NO;
         // create initial chapter if chapters are enabled
         if (_chapterMode) {
