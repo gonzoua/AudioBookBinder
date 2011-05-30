@@ -25,7 +25,7 @@
 
 - (id) init
 {
-    if (self = [super init]) 
+    if ((self = [super init])) 
     {
         _files = [[[NSMutableArray alloc] init] retain];
         _chapters = [[[NSMutableArray alloc] init] retain];
