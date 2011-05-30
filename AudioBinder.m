@@ -199,7 +199,7 @@ stringForOSStatus(OSStatus err)
     {
         fm = [NSFileManager defaultManager];
         for (AudioBinderVolume *v in _volumes) 
-            [fm removeFileAtPath:v.filename handler:nil];
+            [fm removeItemAtPath:v.filename error:nil];
     }
        
     BOOL result = YES;
@@ -224,8 +224,8 @@ stringForOSStatus(OSStatus err)
     // delete file if exists
     if([[NSFileManager defaultManager] fileExistsAtPath:outFile]) 
     {
-        if (![[NSFileManager defaultManager] removeFileAtPath:outFile 
-                                                      handler:nil])
+        if (![[NSFileManager defaultManager] removeItemAtPath:outFile 
+                                                      error:nil])
         {
             ABLog(@"Can't remove file %@", outFile);
             return NO;
@@ -564,7 +564,7 @@ stringForOSStatus(OSStatus err)
 
     if(status != noErr) {
         ExtAudioFileDispose(tmpAudioFile);
-        [[NSFileManager defaultManager] removeFileAtPath:file handler:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
         return validBitrates;
     }
     
@@ -576,7 +576,7 @@ stringForOSStatus(OSStatus err)
     
     if(status != noErr) {
         ExtAudioFileDispose(tmpAudioFile);
-        [[NSFileManager defaultManager] removeFileAtPath:file handler:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
         return validBitrates;
     }
     
@@ -587,7 +587,7 @@ stringForOSStatus(OSStatus err)
                                            &size, NULL);
     if(noErr != status) {
         ExtAudioFileDispose(tmpAudioFile);
-        [[NSFileManager defaultManager] removeFileAtPath:file handler:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
         return validBitrates;
     }
 
@@ -613,7 +613,7 @@ stringForOSStatus(OSStatus err)
     free(bitrates);
     
     ExtAudioFileDispose(tmpAudioFile);
-    [[NSFileManager defaultManager] removeFileAtPath:file handler:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
 
     return validBitrates;
     

@@ -536,8 +536,8 @@ enum abb_form_fields {
                 
                 if ((coverImageFilename != nil) && temporaryFile) {
                     NSLog(@"Unlink %@", coverImageFilename);
-                    [[NSFileManager defaultManager] removeFileAtPath:coverImageFilename 
-                                                             handler:nil];
+                    [[NSFileManager defaultManager] removeItemAtPath:coverImageFilename 
+                                                             error:nil];
                 }
                 
                 if ([fileList chapterMode]) {
