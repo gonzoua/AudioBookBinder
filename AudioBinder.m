@@ -217,7 +217,6 @@ stringForOSStatus(OSStatus err)
 
 -(BOOL)openOutFile:(NSString*)outFile
 {
-    FSRef dirFSRef;
     OSStatus status;
     AudioStreamBasicDescription outputFormat;
     
@@ -231,36 +230,17 @@ stringForOSStatus(OSStatus err)
             return NO;
         }
     }    
-     
-    // open out file
-    NSString *dir = [[outFile stringByDeletingLastPathComponent] retain];
-    // if its only path name - make reference to current directory
-    if ([dir isEqualToString:@""])
-    {
-        [dir release];
-        dir = [[NSString stringWithString:@"."] retain];
-    }
-    
-    status = FSPathMakeRef((UInt8 *)
-                           [dir UTF8String], 
-                           &dirFSRef, NULL);
-    [dir release];
-    if (status != noErr)
-    {
-        ABLog(@"FSPathMakeRef failed for %@: %@", 
-              outFile, stringForOSStatus(status));        
-        return NO;
-    }    
+   
+    id url = [NSURL fileURLWithPath:outFile];
     
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
     outputFormat.mSampleRate = _sampleRate;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
     outputFormat.mChannelsPerFrame = _channels;
    
-    status = ExtAudioFileCreateNew(&dirFSRef, 
-                                   (CFStringRef)[outFile lastPathComponent], 
+    status = ExtAudioFileCreateWithURL((CFURLRef)url, 
                                    kAudioFileMPEG4Type, &outputFormat, 
-                                   NULL, &_outAudioFile);
+                                   NULL, kAudioFileFlags_EraseFile, &_outAudioFile);
     
     if (status != noErr)
     {
@@ -288,8 +268,7 @@ stringForOSStatus(OSStatus err)
     NSString *fileFormat;
     UInt32 specSize;
     OSStatus status;
-    FSRef ref;
-    Boolean isDirectory;
+
     ExtAudioFileRef inAudioFile = nil;
     AudioStreamBasicDescription format;    
     AudioStreamBasicDescription pcmFormat;      
@@ -301,20 +280,9 @@ stringForOSStatus(OSStatus err)
     void *audioBuffer = NULL;
         
     @try {
-        // open audio file
-        status = FSPathMakeRef(
-                               (const UInt8 *)[inFile.filePath fileSystemRepresentation], 
-                               &ref, &isDirectory);
-        if (status != noErr)
-            [NSException raise:@"ConvertException" 
-                format:@"Can't make reference for file %@: %@", 
-                inFile.filePath, stringForOSStatus(status)];
-        
-        if (isDirectory)
-            [NSException raise:@"ConvertException" 
-                format:@"Error: %@ is directory", inFile.filePath];
-        
-        status = ExtAudioFileOpen(&ref, &inAudioFile);
+
+        id url = [NSURL fileURLWithPath:inFile.filePath];
+        status = ExtAudioFileOpenURL((CFURLRef)url, &inAudioFile);
         if (status != noErr)
             [NSException raise:@"ConvertException" 
                 format:@"ExtAudioFileWrapAudioFileID failed: %@", 
@@ -515,7 +483,6 @@ stringForOSStatus(OSStatus err)
     NSMutableArray *validBitrates = [[[NSMutableArray alloc] init] autorelease];
     UInt32 size;
     
-    FSRef dirFSRef;
     AudioStreamBasicDescription outputFormat, pcmFormat;  
     
     // open out file
@@ -523,21 +490,16 @@ stringForOSStatus(OSStatus err)
     NSString *file = [dir stringByAppendingFormat:@"/%@",
                       [[NSProcessInfo processInfo] globallyUniqueString]];
 
-    status = FSPathMakeRef((UInt8 *)
-                           [dir UTF8String], 
-                           &dirFSRef, NULL);
-    if (status != noErr)
-        return validBitrates;
     
     memset(&outputFormat, 0, sizeof(AudioStreamBasicDescription));
     outputFormat.mSampleRate = _sampleRate;
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
     outputFormat.mChannelsPerFrame = _channels;
     
-    status = ExtAudioFileCreateNew(&dirFSRef, 
-                                   (CFStringRef)[file lastPathComponent], 
+    id url = [NSURL fileURLWithPath:file];
+    status = ExtAudioFileCreateWithURL((CFURLRef)url,
                                    kAudioFileMPEG4Type, &outputFormat, 
-                                   NULL, &tmpAudioFile);
+                                   NULL, kAudioFileFlags_EraseFile, &tmpAudioFile);
     
     if (status != noErr)
         return validBitrates;
