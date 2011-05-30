@@ -113,7 +113,7 @@ stringForOSStatus(OSStatus err)
 @synthesize volumes = _volumes;
 -(id)init
 {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         _volumes = [[NSMutableArray alloc] init];
         [self reset];
     }
