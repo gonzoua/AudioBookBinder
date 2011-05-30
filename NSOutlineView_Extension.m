@@ -27,7 +27,7 @@
 - (void)setSelectedItem:(id)item {    
     NSInteger row = [self rowForItem:item];
     if (row >= 0)
-        [self selectRow:row byExtendingSelection:NO];
+        [self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
 - (void)setSelectedItems:(NSArray *)items {
