@@ -90,7 +90,6 @@ enum abb_form_fields {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     [[window windowController] setShouldCascadeWindows:NO];      // Tell the controller to not cascade its windows.
-    [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
 
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
@@ -206,6 +205,8 @@ enum abb_form_fields {
     // listen for changes so know when to save
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidMoveNotification object:fileListView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
+    
+    [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
 }
 
 
