@@ -12,3 +12,8 @@
 "Failed to split audiobook into volumes" = "Echec lors de la découpe du livre audio";
 "Select" = "Sélectionné";
 "⌘ + I\nor\nDrag Image Here" = "⌘ + I\nou\nDéposer l'image ici";
+"File" = "Fichier";
+"Author" = "Artiste";
+"Album" = "Album";
+"Time" = "Durée";
+"Name" = "Nom";

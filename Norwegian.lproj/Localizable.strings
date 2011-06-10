@@ -12,3 +12,8 @@
 "Failed to split audiobook into volumes" = "Klarte ikke å dele boken inn i bind";
 "Select" = "Velg";
 "⌘ + I\nor\nDrag Image Here" = "⌘ + I\nor\nDra cover bilde hit";
+"File" = "Arkiv";
+"Author" = "Artist";
+"Album" = "Album";
+"Time" = "Tid";
+"Name" = "Navn";

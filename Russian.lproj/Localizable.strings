@@ -12,3 +12,8 @@
 "Failed to split audiobook into volumes" = "Не удается разбить аудиокнигу на части";
 "Select" = "Выбрать";
 "⌘ + I\nor\nDrag Image Here" = "Нажмите ⌘ + I\nили\nперетащите\nсюда изображение";
+"File" = "Файл";
+"Author" = "Автор";
+"Album" = "Альбом";
+"Time" = "Длительность";
+"Name" = "Название";

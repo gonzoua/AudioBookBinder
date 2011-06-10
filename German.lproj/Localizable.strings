@@ -12,3 +12,8 @@
 "Failed to split audiobook into volumes" = "Aufteilen des Hörbuchs auf Bänder fehlgeschlagen";
 "Select" = "Auswählen";
 "⌘ + I\nor\nDrag Image Here" = "⌘ + I\noder Bilddatei\nhierher bewegen";
+"File" = "Ablage";
+"Author" = "Interpret";
+"Album" = "Album";
+"Time" = "Dauer";
+"Name" = "Name";
