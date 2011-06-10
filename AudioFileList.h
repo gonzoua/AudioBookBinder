@@ -50,6 +50,9 @@ typedef struct
 - (void) switchChapterMode;
 - (void) renumberChapters;
 
+- (NSString*) commonAuthor;
+- (NSString*) commonAlbum;
+
 // NSOutlineView data source methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item;

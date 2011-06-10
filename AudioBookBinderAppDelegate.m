@@ -234,6 +234,8 @@ enum abb_form_fields {
     [openDlg setCanChooseDirectories:YES];
     [openDlg setAllowsMultipleSelection:YES];
     
+    BOOL tryGuess = ![fileList hasFiles];
+    
     if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
     {
         NSArray *files = [openDlg filenames];
@@ -251,7 +253,23 @@ enum abb_form_fields {
                     [fileList addFile:fileName];
             }
         }
-        
+        if (tryGuess)
+        {
+            NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+            NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+            if ([author isEqualTo:@""] || (author == nil))
+            {
+                NSString *guessedAuthor = [fileList commonAuthor];
+                if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
+                    [[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
+            }
+            if ([title isEqualTo:@""] || (title == nil))
+            {
+                NSString *guessedTitle = [fileList commonAlbum];
+                if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
+                    [[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
+            }
+        }
         [fileListView reloadData];
     }    
 }

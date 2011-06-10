@@ -698,5 +698,29 @@
 
     
 }
+
+- (NSString *)commonAuthor
+{
+    if ([_files count] == 0)
+        return nil;
+    NSString *author = [[_files objectAtIndex:0] artist]; 
+    for (AudioFile *f in _files) {
+        if (![author isEqualToString:f.artist])
+            return nil;
+    }
+    return author;
+}
+
+- (NSString *)commonAlbum
+{
+    if ([_files count] == 0)
+        return nil;
+    NSString *album = [[_files objectAtIndex:0] album]; 
+    for (AudioFile *f in _files) {
+        if (![album isEqualToString:f.album])
+            return nil;
+    }
+    return album;
+}
           
 @end
