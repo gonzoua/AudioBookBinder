@@ -179,14 +179,14 @@ enum abb_form_fields {
         {
             if ([columnDefs[idx].id isEqualToString:c.identifier]) {
                 columnDefs[idx].enabled = YES;
-                [[c headerCell] setStringValue:columnDefs[idx].title];
+                [[c headerCell] setStringValue:NSLocalizedString(columnDefs[idx].title, nil)];
                 found = YES;
                 break;
             }
         }
         // Name column is special. It can't be removed from view
         if (!found && ([c.identifier isEqualToString:COLUMNID_NAME])) {
-            [[c headerCell] setStringValue:@"Name"];
+            [[c headerCell] setStringValue:NSLocalizedString(@"Name", nil)];
             // make sure outline column is NameColumn
             [fileListView setOutlineTableColumn:c];
         }
@@ -194,7 +194,7 @@ enum abb_form_fields {
     
     for (idx = 0; columnDefs[idx].id; idx++)
     {
-        NSString *title = columnDefs[idx].title;
+        NSString *title = NSLocalizedString(columnDefs[idx].title, nil);
         NSMenuItem *item = [tableHeaderContextMenu addItemWithTitle:title action:@selector(contextMenuSelected:) keyEquivalent:@""];
         [item setTarget:self];
         [item setRepresentedObject:columnDefs[idx].id];
