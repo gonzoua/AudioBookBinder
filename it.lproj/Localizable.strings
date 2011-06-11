@@ -1,0 +1,14 @@
+"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: duration (%2$d sec) is larger then max. volume duration (%3$lld sec.)";
+"Adding artist/title tags" = "Aggiungi i tags artista/titolo";
+"Adding chapter markers" = "Sto aggiungendo capitoli...";
+"Adding file to iTunes" = "Aggiungi il file ad itunes";
+"Audiobook binding failed" = "Procedura di \"binding\" fallita...";
+"Audiofile conversion failed" = "Conversione del file audio fallita!";
+"Chapter" = "Capitolo";
+"Chapter %d" = "Capitolo %d";
+"Converting %@" = "Sto convertendo  %@";
+"Failed to play" = "Riproduzione fallita!";
+"Failed to play: %@" = "Non riesco a riprodurre: %@";
+"Failed to split audiobook into volumes" = "Il tentativo di split dell'audiobook sul volume fallito!";
+"Select" = "Selezionato";
+"⌘ + I\nor\nDrag Image Here" = "⌘ + I\nor\nDrag Image Here";
