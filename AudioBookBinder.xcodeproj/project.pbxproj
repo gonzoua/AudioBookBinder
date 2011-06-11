@@ -248,22 +248,14 @@
 			children = (
 				8DD76FA10486AA7600D96B5E /* abbinder */,
 				9F6FA206111918F10047728F /* AudioBookBinder.app */,
-				9F6FA3D5111BBB870047728F /* Resources */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9F6FA3D5111BBB870047728F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		9F95911E11658523001C2433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
 				9FFF519E12DC0D7000E3A54F /* audiobook.icns */,
 				9F782A2C129F941900763A5B /* Play.png */,
 				9F782A2D129F941900763A5B /* Stop.png */,
