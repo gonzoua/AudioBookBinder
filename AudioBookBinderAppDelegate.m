@@ -812,7 +812,7 @@ enum abb_form_fields {
         if (found) {
             NSTableColumn *c = [[NSTableColumn alloc] initWithIdentifier:columnDefs[idx].id];
             [fileListView addTableColumn:c];
-            [[c headerCell] setStringValue:columnDefs[idx].title];
+            [[c headerCell] setStringValue:NSLocalizedString(columnDefs[idx].title, nil)];
         }
     }
     else {
