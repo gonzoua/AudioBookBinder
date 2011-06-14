@@ -285,7 +285,7 @@ stringForOSStatus(OSStatus err)
         status = ExtAudioFileOpenURL((CFURLRef)url, &inAudioFile);
         if (status != noErr)
             [NSException raise:@"ConvertException" 
-                format:@"ExtAudioFileWrapAudioFileID failed: %@", 
+                format:@"ExtAudioFileOpenURL failed: %@", 
                 stringForOSStatus(status)];
         
         // Query file type
