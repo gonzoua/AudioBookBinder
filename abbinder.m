@@ -111,7 +111,7 @@ int main (int argc, char * argv[]) {
     BOOL skipErrors = NO;
     int channels = 2;
     float samplerate = 44100.;
-    int bitrate;
+    int bitrate = 0;
     BOOL withChapters = NO;
     BOOL eachFileIsChapter = NO;
     BOOL addToiTunes = NO;
