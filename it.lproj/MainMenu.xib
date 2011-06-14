@@ -644,14 +644,13 @@
 																	<int key="NSvFlags">256</int>
 																	<string key="NSFrameSize">{418, 17}</string>
 																	<reference key="NSSuperview" ref="369897762"/>
-																	<reference key="NSNextKeyView" ref="716627907"/>
+																	<reference key="NSNextKeyView" ref="823383498"/>
 																	<reference key="NSTableView" ref="507439630"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="716627907">
-																	<reference key="NSNextResponder" ref="261625228"/>
+																<object class="_NSCornerView" key="NSCornerView">
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">-2147483392</int>
 																	<string key="NSFrame">{{224, 0}, {16, 17}}</string>
-																	<reference key="NSSuperview" ref="261625228"/>
 																	<reference key="NSNextKeyView" ref="823383498"/>
 																</object>
 																<object class="NSMutableArray" key="NSTableColumns">
@@ -775,7 +774,6 @@
 														<reference key="NSBGColor" ref="768088071"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="716627907"/>
 												</object>
 												<string key="NSFrame">{{17, 38}, {420, 285}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
@@ -854,7 +852,7 @@
 														<int key="NSfFlags">16</int>
 													</object>
 													<reference key="NSControlView" ref="977106492"/>
-													<int key="NSButtonFlags">-2033958657</int>
+													<int key="NSButtonFlags">-2033434369</int>
 													<int key="NSButtonFlags2">163</int>
 													<object class="NSCustomResource" key="NSNormalImage">
 														<string key="NSClassName">NSImage</string>
@@ -930,7 +928,7 @@
 							</object>
 						</object>
 					</object>
-					<string key="NSFrame">{{7, 11}, {500, 511}}</string>
+					<string key="NSFrameSize">{500, 511}</string>
 					<reference key="NSNextKeyView" ref="338053813"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
@@ -1301,7 +1299,7 @@
 									<int key="NSTag">1</int>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">0</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="8165807">
+									<object class="NSCustomResource" key="NSNormalImage" id="940108200">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSRadioButton</string>
 									</object>
@@ -1322,7 +1320,7 @@
 									<int key="NSTag">2</int>
 									<int key="NSButtonFlags">1211912703</int>
 									<int key="NSButtonFlags2">0</int>
-									<reference key="NSNormalImage" ref="8165807"/>
+									<reference key="NSNormalImage" ref="940108200"/>
 									<reference key="NSAlternateImage" ref="1025545411"/>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -1340,7 +1338,7 @@
 								<reference key="NSSupport" ref="217545718"/>
 								<int key="NSButtonFlags">1211912703</int>
 								<int key="NSButtonFlags2">0</int>
-								<reference key="NSNormalImage" ref="8165807"/>
+								<reference key="NSNormalImage" ref="940108200"/>
 								<reference key="NSAlternateImage" ref="1025545411"/>
 								<string key="NSAlternateContents"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -1598,7 +1596,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="719205860">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">71304192</int>
-								<string key="NSContents">Massima dimensione del supporto</string>
+								<string key="NSContents">Massima durata del volume:</string>
 								<reference key="NSSupport" ref="217545718"/>
 								<reference key="NSControlView" ref="852088768"/>
 								<reference key="NSBackgroundColor" ref="490285552"/>
@@ -1615,7 +1613,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="982306210">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents"> hr.</string>
+								<string key="NSContents"> ora</string>
 								<reference key="NSSupport" ref="217545718"/>
 								<reference key="NSControlView" ref="83404391"/>
 								<reference key="NSBackgroundColor" ref="490285552"/>
