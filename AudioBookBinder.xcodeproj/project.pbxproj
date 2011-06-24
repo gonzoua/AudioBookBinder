@@ -17,7 +17,6 @@
 		9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
 		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
 		9F61BE3811FBBC8D00654B3B /* AudioBinderVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */; };
-		9F61BE3911FBBC8D00654B3B /* AudioBinderVolume.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */; };
 		9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
 		9F61BE3B11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
 		9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F62872B1194D502000D3A05 /* CoverImageView.m */; };
@@ -74,7 +73,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9F61BE3911FBBC8D00654B3B /* AudioBinderVolume.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
