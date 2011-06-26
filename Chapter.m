@@ -8,6 +8,8 @@
 
 #import "Chapter.h"
 
+#define TEXT_CHAPTER  \
+	NSLocalizedString(@"Chapter", nil)
 
 @implementation Chapter
 
@@ -40,6 +42,10 @@
 
 - (void) addFile:(AudioFile *)file
 {
+	if ([ name isEqualToString:TEXT_CHAPTER])
+	{
+		name = file.name;
+	}
     [files addObject:file];
 }
 
