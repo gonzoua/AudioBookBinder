@@ -466,6 +466,7 @@
         
         if ([desiredType isEqualToString:NSFilenamesPboardType])
         {
+			BOOL tryGuess = ![self hasFiles];
             //we have a list of file names in an NSData object
             NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
             for (NSString *s in fileArray) {
@@ -480,6 +481,11 @@
                         [self addFile:s];
                 }
             }
+			if (tryGuess) 
+			{
+				AudioBookBinderAppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
+				[appDelegate updateGuiWithGuessedData];
+			}
         }
         
     }
