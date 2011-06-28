@@ -96,8 +96,6 @@
 		9F11CC6111E3C99800D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F11CC6211E3C9B200D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		9F435FB713A334A100996613 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = it.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		9F435FB813A334A100996613 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
 		9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderVolume.m; sourceTree = "<group>"; };
@@ -145,6 +143,8 @@
 		9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOutlineView_Extension.m; sourceTree = "<group>"; };
 		9FFF519E12DC0D7000E3A54F /* audiobook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = audiobook.icns; sourceTree = "<group>"; };
 		C6859EA3029092ED04C91782 /* AudioBookBinder.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AudioBookBinder.1; sourceTree = "<group>"; };
+		F0B2A8B113BA636600C6685B /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F0B2A8B213BA637500C6685B /* Italian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Italian; path = Italian.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +335,7 @@
 				German,
 				Russian,
 				Norwegian,
+				Italian,
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* AudioBookBinder */;
 			projectDirPath = "";
@@ -431,7 +432,7 @@
 				9F11CC6111E3C99800D83B54 /* German */,
 				9FA0773E121E437C003DAC24 /* French */,
 				9F695E6612EA800B00E3B9ED /* Norwegian */,
-				9F435FB713A334A100996613 /* MainMenu.xib */,
+				F0B2A8B213BA637500C6685B /* Italian */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -444,7 +445,7 @@
 				9F11CC6211E3C9B200D83B54 /* German */,
 				9FA0773F121E438F003DAC24 /* French */,
 				9F695E6512EA7FF000E3B9ED /* Norwegian */,
-				9F435FB813A334A100996613 /* Localizable.strings */,
+				F0B2A8B113BA636600C6685B /* Italian */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
