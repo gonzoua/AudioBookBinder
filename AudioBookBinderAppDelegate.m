@@ -789,6 +789,15 @@ enum abb_form_fields {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bluezbox.com/audiobookbinder/chapters.html"]];
 }
 
+- (void)newAudioBook:(id)sender
+{
+	[fileList removeAllFilesAndChapters];
+	[fileListView reloadData];
+	[[form cellAtIndex:ABBAuthor] setStringValue:@""];
+	[[form cellAtIndex:ABBTitle] setStringValue:@""];
+	
+}
+
 - (void) checkForUpdates:(id)sender
 {
 #ifndef APP_STORE_BUILD

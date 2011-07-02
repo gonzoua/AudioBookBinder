@@ -61,6 +61,7 @@
 - (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
 - (IBAction) openChaptersHowTo: (id)sender;
+- (IBAction) newAudioBook: (id)sender;
 
 #ifndef APP_STORE_BUILD
 - (IBAction) checkForUpdates: (id)sender;
