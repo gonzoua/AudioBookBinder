@@ -127,10 +127,10 @@
         // put all files in one folder
         Chapter *newChapter = [[Chapter alloc] init];
         newChapter.name = TEXT_CHAPTER;
-        [_chapters removeAllObjects];
-        for (AudioFile *file in _files) {
-            [newChapter addFile:file];
-        }
+		[_chapters removeAllObjects];
+		for (AudioFile *file in _files) {
+			[newChapter addFile:file];
+		}
         [_chapters addObject:newChapter];
         // change explicitely because we need to update outlineView in new mode
         _chapterMode = YES;
@@ -647,6 +647,17 @@
     }
 }
 
+- (void) removeAllFilesAndChapters
+{
+	[_files removeAllObjects];
+	[_chapters removeAllObjects];
+	if (_chapterMode) {
+		Chapter *newChapter = [[Chapter alloc] init];
+		newChapter.name = TEXT_CHAPTER;
+		[_chapters removeAllObjects];
+		[_chapters addObject:newChapter];
+	}
+}
 
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification

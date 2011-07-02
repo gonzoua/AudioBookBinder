@@ -47,6 +47,7 @@ typedef struct
 - (NSArray*) chapters;
 - (void) orphanFile:(AudioFile*)file;
 - (void) cleanupChapters;
+- (void) removeAllFilesAndChapters;
 - (void) switchChapterMode;
 - (void) renumberChapters;
 
