@@ -23,6 +23,9 @@
         self.artist = @"";
         self.name = @"";
         self.album = @"";
+        self.year = @"";
+        self.genre = @"";
+        self.composer = @"";
         [self updateInfo];
     }
     
@@ -36,10 +39,24 @@
     self.artist = nil;
     self.name = nil;
     self.album = nil;
+	self.year = nil;
+	self.genre = nil;
+	self.composer = nil;
     [super dealloc];
 }
 
-@synthesize filePath, file, duration, valid, artist, name, album;
+@synthesize filePath, file, duration, valid, artist, name, album, year, composer, genre;
+
+NSString* getPropertyFromAudioFile(NSString *propName, NSDictionary *properties)
+{
+	id obj = [properties objectForKey:propName];
+	
+	if (obj != nil)
+	{
+		return [NSString stringWithUTF8String:[obj UTF8String]];
+	}
+	return @"";
+}
 
 - (void) updateInfo
 {
@@ -76,25 +93,13 @@
                     self.artist = s;
                 else
                     self.artist = @"";
-
-                obj = [properties objectForKey:@"title"];
-                s = nil;
-                if (obj != nil)
-                    s = [NSString stringWithUTF8String:[obj UTF8String]];
-                if (s) 
-                    self.name = s;
-                else
-                    self.name = @"";
-                
-                obj = [properties objectForKey:@"album"];
-                s = nil;
-                if (obj != nil)
-                    s = [NSString stringWithUTF8String:[obj UTF8String]];
-                if (s) 
-                    self.album = s;
-                else
-                    self.album = @"";
-            }
+				self.artist = getPropertyFromAudioFile(@"artist", properties);
+				self.name = getPropertyFromAudioFile(@"title", properties);
+				self.album = getPropertyFromAudioFile(@"album", properties);
+				self.year = getPropertyFromAudioFile(@"year", properties);
+				self.genre = getPropertyFromAudioFile(@"genre", properties);
+				self.composer = getPropertyFromAudioFile(@"composer", properties);
+			}
         }
         self.valid = YES;
         AudioFileClose(audioFile);
@@ -102,6 +107,7 @@
 
     CFRelease(url);
 }
+
 
 
 @end
