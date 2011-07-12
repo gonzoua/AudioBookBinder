@@ -346,6 +346,12 @@
        toPasteboard:(NSPasteboard *)pboard 
 {    
 
+    // we have stale _draggedNodes, release them
+    if (_draggedNodes) {
+        [_draggedNodes release];
+        _draggedNodes = nil;
+    }
+    
     _draggedNodes = [items copy]; 
     
     // Provide data for our custom type, and simple NSStrings.    
@@ -387,9 +393,18 @@
                     break;
                 }
             }
-        
+            // only chapters could be dropped on root item
             if ((item == nil) && !draggingChapters) 
                 result = NSDragOperationNone;
+            else {
+                // prevent chapter from being dropped on itself
+                for (id audioItem in _draggedNodes) {
+                    if (audioItem == item) {
+                        result = NSDragOperationNone;
+                        break;
+                    }
+                }
+            }
         }
     }
     else
