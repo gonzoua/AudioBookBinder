@@ -346,9 +346,7 @@
        toPasteboard:(NSPasteboard *)pboard 
 {    
 
-    _draggedNodes = items; 
-    // Don't retain since this is just holding temporaral drag information, 
-    // and it is only used during a drag!  We could put this in the pboard actually.
+    _draggedNodes = [items copy]; 
     
     // Provide data for our custom type, and simple NSStrings.    
     [pboard declareTypes:[NSArray arrayWithObjects:SIMPLE_BPOARD_TYPE, NSStringPboardType, NSFilesPromisePboardType, nil] 
@@ -379,18 +377,28 @@
     //
     if (childIndex == NSOutlineViewDropOnItemIndex)
             result = NSDragOperationNone;
-    
-    if (_chapterMode) {
-        BOOL draggingChapters = YES;
-        for (id audioItem in _draggedNodes) {
-            if ([audioItem isKindOfClass:[AudioFile class]]) {
-                draggingChapters = NO;
-                break;
+
+    if ([info draggingSource] == outlineView) {
+        if (_chapterMode) {
+            BOOL draggingChapters = YES;
+            for (id audioItem in _draggedNodes) {
+                if ([audioItem isKindOfClass:[AudioFile class]]) {
+                    draggingChapters = NO;
+                    break;
+                }
             }
-        }
         
-        if ((item == nil) && !draggingChapters) 
-            result = NSDragOperationNone;
+            if ((item == nil) && !draggingChapters) 
+                result = NSDragOperationNone;
+        }
+    }
+    else
+    {
+        // we have stale _draggedNodes, release them
+        if (_draggedNodes) {
+            [_draggedNodes release];
+            _draggedNodes = nil;
+        }
     }
     
     return result;
@@ -451,6 +459,11 @@
                 newIndex++;
                 [newSelectedItems addObject:file];
             }
+        }
+        
+        if (_draggedNodes) {
+            [_draggedNodes release];
+            _draggedNodes = nil;
         }
     }
     else {
