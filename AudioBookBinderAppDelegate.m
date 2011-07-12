@@ -223,6 +223,23 @@ enum abb_form_fields {
     [[NSUserDefaults standardUserDefaults] setObject:cols forKey:ColumnsConfiguration];
 }
 
+- (void) updateGuiWithGuessedData {
+	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+	if ([author isEqualTo:@""] || (author == nil))
+	{
+		NSString *guessedAuthor = [fileList commonAuthor];
+		if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
+			[[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
+	}
+	if ([title isEqualTo:@""] || (title == nil))
+	{
+		NSString *guessedTitle = [fileList commonAlbum];
+		if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
+			[[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
+	}
+}
+
 - (IBAction) addFiles: (id)sender
 {
     int i; // Loop counter.
@@ -255,20 +272,7 @@ enum abb_form_fields {
         }
         if (tryGuess)
         {
-            NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-            NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-            if ([author isEqualTo:@""] || (author == nil))
-            {
-                NSString *guessedAuthor = [fileList commonAuthor];
-                if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
-                    [[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
-            }
-            if ([title isEqualTo:@""] || (title == nil))
-            {
-                NSString *guessedTitle = [fileList commonAlbum];
-                if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
-                    [[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
-            }
+			[self updateGuiWithGuessedData];
         }
         [fileListView reloadData];
     }    

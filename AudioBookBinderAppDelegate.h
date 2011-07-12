@@ -71,6 +71,10 @@
 
 - (BOOL) windowShouldClose:(NSNotification *)notification;
 - (void) addFileToiTunes:(NSString *)path;
+/*
+ * The following method is called to put the MetaData read from the added AudioFiles MetaData into the ui fields.
+ */
+- (void) updateGuiWithGuessedData;
 
 - (void) playFailed;
 // NSSoundDelegate methods
