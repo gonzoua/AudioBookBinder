@@ -83,7 +83,6 @@ enum abb_form_fields {
     [NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
     ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
     [NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
-
 }
 
 @synthesize validBitrates, canPlay;
@@ -116,6 +115,9 @@ enum abb_form_fields {
     [self updateValidBitrates:self];
     _playingFile = nil;
     
+    _appIcon = [NSImage imageNamed: @"NSApplicationIcon"];
+    _currentProgress = 0;
+
 #ifdef APP_STORE_BUILD     
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
@@ -410,7 +412,7 @@ enum abb_form_fields {
     
     NSArray *files = [fileList files];
     NSMutableArray *inputFiles = [[NSMutableArray alloc] init];
-    UInt64 estTotalDuration = 0;
+    UInt64 estVolumeDuration = 0;
     NSString *currentVolumeName = [outFile copy];
     NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
     NSArray *chapters = nil;
@@ -427,6 +429,11 @@ enum abb_form_fields {
     }
     
     int totalVolumes = 0;
+    _estTotalDuration = 0;
+    _currentDuration = 0;
+    _currentProgress = 0;
+    [self updateTotalProgress];
+
     BOOL onChapterBoundary = YES;
     for (AudioFile *file in files) {
         if (hasChapters) {
@@ -440,11 +447,11 @@ enum abb_form_fields {
         }
         
         if (maxVolumeDuration) {
-            if ((estTotalDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
+            if ((estVolumeDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
                 if ([inputFiles count] > 0) {
                     [_binder addVolume:currentVolumeName files:inputFiles];
                     [inputFiles removeAllObjects];
-                    estTotalDuration = 0;
+                    estVolumeDuration = 0;
                     totalVolumes++;
                     currentVolumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@",
                                          outFileBase, totalVolumes, outFileExt];
@@ -473,7 +480,8 @@ enum abb_form_fields {
         }
         onChapterBoundary = NO;
         [inputFiles addObject:file];
-        estTotalDuration += [file.duration intValue];
+        estVolumeDuration += [file.duration intValue];
+        _estTotalDuration += [file.duration intValue];
     }
     
     [_binder addVolume:currentVolumeName files:inputFiles];
@@ -592,6 +600,7 @@ enum abb_form_fields {
     }
     
     [NSApp endSheet:progressPanel];
+    [self resetTotalProgress];
     [progressPanel orderOut:nil];
     [self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
     [pool release];
@@ -616,6 +625,18 @@ enum abb_form_fields {
 {
     [fileProgress setMaxValue:(double)totalFrames];
     [fileProgress setDoubleValue:(double)handledFrames];
+    if (totalFrames > 0) {
+        UInt64 approxTotalDuration = _currentDuration + ([file.duration intValue]*handledFrames/totalFrames); 
+        if (_estTotalDuration > 0) {
+            UInt64 approxTotalProgress = approxTotalDuration*100/_estTotalDuration;
+            if (approxTotalProgress > 100)
+                approxTotalProgress = 100;
+            if (approxTotalProgress > _currentProgress) {
+                _currentProgress = approxTotalProgress;
+                [self updateTotalProgress];
+            }
+        }
+    }
 }
 
 -(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason
@@ -647,6 +668,16 @@ enum abb_form_fields {
     [fileProgress setDoubleValue:[fileProgress doubleValue]];
     file.valid = YES;
     file.duration = [[NSNumber alloc] initWithInt:milliseconds];
+    if (_estTotalDuration > 0) {
+        _currentDuration += [file.duration intValue];
+        UInt64 newTotalProgress = _currentDuration*100/_estTotalDuration;
+        if (newTotalProgress > 100)
+            newTotalProgress = 100;
+        if (newTotalProgress > _currentProgress) {
+            _currentProgress = newTotalProgress;
+            [self updateTotalProgress];
+        }
+    }
 }
 
 -(void) volumeReady:(NSString*)filename duration: (UInt32)seconds
@@ -827,6 +858,48 @@ enum abb_form_fields {
         [item setState:NSOffState];
     }
     
+}
+
+- (void) updateTotalProgress
+{
+    static NSImage *gFDPGradient = NULL;
+    
+    static const double kFDPProgressBarHeight = 6.0/32;
+    static const double kFDPProgressBarHeightInIcon = 8.0/32;
+    
+    if (gFDPGradient == nil)
+        gFDPGradient = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MiniProgressGradient" ofType:@"png"]];
+
+    NSImage *dockIcon = [_appIcon copyWithZone: nil];
+
+    [dockIcon lockFocus];
+    
+    double height = kFDPProgressBarHeightInIcon;
+    NSSize s = [dockIcon size];
+    NSRect bar = NSMakeRect(0, s.height * (height - kFDPProgressBarHeight / 2),
+                            s.width - 1, s.height * kFDPProgressBarHeight);
+    
+    [[NSColor whiteColor] set];
+    [NSBezierPath fillRect: bar];
+
+    NSRect done = bar;
+    done.size.width *= _currentProgress / 100.;
+
+    NSRect gradRect = NSZeroRect;
+    gradRect.size = [gFDPGradient size];
+    [gFDPGradient drawInRect: done fromRect: gradRect operation: NSCompositeCopy
+                    fraction: 1.0];
+    
+    [[NSColor blackColor] set];
+    [NSBezierPath strokeRect: bar];
+    [dockIcon unlockFocus];
+    [NSApp setApplicationIconImage:dockIcon];
+    [dockIcon release];
+}
+
+- (void) resetTotalProgress
+{
+    [NSApp setApplicationIconImage:_appIcon];
 }
 
 

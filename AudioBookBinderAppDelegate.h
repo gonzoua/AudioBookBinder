@@ -43,6 +43,11 @@
 #endif
     
     NSMutableArray *currentColumns;
+    
+    UInt64 _estTotalDuration;
+    UInt64 _currentDuration;
+    UInt64 _currentProgress;
+    NSImage *_appIcon;
 };
 
 @property (readwrite, retain) NSArray *validBitrates;
@@ -79,5 +84,9 @@
 - (void) playFailed;
 // NSSoundDelegate methods
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying;
+
+- (void)updateTotalProgress;
+- (void)resetTotalProgress;
+
 
 @end
