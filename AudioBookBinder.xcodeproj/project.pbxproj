@@ -528,8 +528,14 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /opt/local/include/;
-				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/opt/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib/,
+					/opt/local/lib/,
+				);
 				OTHER_CFLAGS = "-FSparkle.framework";
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -618,8 +624,14 @@
 				GCC_PREPROCESSOR_DEFINITIONS = APP_STORE_BUILD;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /opt/local/include/;
-				LIBRARY_SEARCH_PATHS = /opt/local/lib/;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/opt/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib/,
+					/opt/local/lib/,
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
