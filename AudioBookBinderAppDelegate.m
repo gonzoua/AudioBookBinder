@@ -862,22 +862,22 @@ enum abb_form_fields {
 
 - (void) updateTotalProgress
 {
-    static NSImage *gFDPGradient = NULL;
+    static NSImage *sProgressGradient = NULL;
     
-    static const double kFDPProgressBarHeight = 6.0/32;
-    static const double kFDPProgressBarHeightInIcon = 8.0/32;
+    static const double kProgressBarHeight = 6.0/32;
+    static const double kProgressBarHeightInIcon = 8.0/32;
     
-    if (gFDPGradient == nil)
-        gFDPGradient = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MiniProgressGradient" ofType:@"png"]];
+    if (sProgressGradient == nil)
+        sProgressGradient = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MiniProgressGradient" ofType:@"png"]];
 
     NSImage *dockIcon = [_appIcon copyWithZone: nil];
 
     [dockIcon lockFocus];
     
-    double height = kFDPProgressBarHeightInIcon;
+    double height = kProgressBarHeightInIcon;
     NSSize s = [dockIcon size];
-    NSRect bar = NSMakeRect(0, s.height * (height - kFDPProgressBarHeight / 2),
-                            s.width - 1, s.height * kFDPProgressBarHeight);
+    NSRect bar = NSMakeRect(0, s.height * (height - kProgressBarHeight / 2),
+                            s.width - 1, s.height * kProgressBarHeight);
     
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect: bar];
@@ -886,8 +886,8 @@ enum abb_form_fields {
     done.size.width *= _currentProgress / 100.;
 
     NSRect gradRect = NSZeroRect;
-    gradRect.size = [gFDPGradient size];
-    [gFDPGradient drawInRect: done fromRect: gradRect operation: NSCompositeCopy
+    gradRect.size = [sProgressGradient size];
+    [sProgressGradient drawInRect: done fromRect: gradRect operation: NSCompositeCopy
                     fraction: 1.0];
     
     [[NSColor blackColor] set];
