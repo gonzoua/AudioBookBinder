@@ -25,6 +25,7 @@
 //  SUCH DAMAGE.
 //
 
+#import <CoreServices/CoreServices.h>
 #import <AudioToolbox/AudioConverter.h>
 #import "AudioBinder.h"
 #import "AudioBinderVolume.h"
@@ -131,6 +132,16 @@ stringForOSStatus(OSStatus err)
     _sampleRate = DEFAULT_SAMPLE_RATE;
     _channels = 2;
     _bitrate = 0;
+    _bitrateSet = NO;
+
+    SInt32 major, minor, bugfix;
+    Gestalt(gestaltSystemVersionMajor, &major);
+    Gestalt(gestaltSystemVersionMinor, &minor);
+    Gestalt(gestaltSystemVersionBugFix, &bugfix);
+    if ((major == 10) && (minor == 7))
+        _isLion = YES;
+    else
+        _isLion = NO;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -394,9 +405,12 @@ stringForOSStatus(OSStatus err)
                 stringForOSStatus(status)];
         
         if (_bitrate > 0) {
-            if (![self setConverterBitrate]) {
-                [NSException raise:@"ConvertException" 
+            if (_isLion && !_bitrateSet) {
+                if (![self setConverterBitrate]) {
+                    [NSException raise:@"ConvertException" 
                         format:@"can't set output bit rate"]; 
+                }
+                _bitrateSet = YES;
             }
         }
         

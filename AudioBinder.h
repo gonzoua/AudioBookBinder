@@ -58,6 +58,8 @@
     int _channels;
     UInt32 _bitrate;
     NSMutableArray *_volumes;
+    BOOL _isLion;
+    BOOL _bitrateSet;
 }
 
 
