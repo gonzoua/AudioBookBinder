@@ -377,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION != AppStore ]; then\n  rm -Rf $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\n  cp -R Sparkle.framework $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/\nfi";
+			shellScript = "if [ $CONFIGURATION != AppStore ]; then\n  rm -Rf $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Sparkle.framework\n  mkdir -p $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/\n  cp -R Sparkle.framework $CONFIGURATION_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
