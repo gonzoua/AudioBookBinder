@@ -160,7 +160,7 @@
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
 
-    if (track) {
+    if (track && (tracksTotal > 1)) {
         short bytes[4];
         bytes[0] = bytes[3] = 0;
         bytes[1] = htons(track);
