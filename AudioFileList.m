@@ -756,5 +756,27 @@
     }
     return album;
 }
+
+- (void) removeAllFiles:(NSOutlineView*)outlineView;
+{
+    Chapter *newChapter = nil;
+
+    [self willChangeValueForKey:@"hasFiles"];
+    [_files removeAllObjects];
+    [_chapters removeAllObjects];
+    // this function is called before _chapterMode is changed by binding
+    if (_chapterMode) {
+        // put all files in one folder
+        newChapter = [[Chapter alloc] init];
+        newChapter.name = TEXT_CHAPTER;
+        [_chapters addObject:newChapter];
+    }
+    [outlineView deselectAll:self];
+    [outlineView reloadData];
+    if (_chapterMode)
+        [outlineView expandItem:newChapter];
+    [self didChangeValueForKey:@"hasFiles"];
+
+}
           
 @end

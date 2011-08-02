@@ -52,7 +52,7 @@ typedef struct
 
 - (NSString*) commonAuthor;
 - (NSString*) commonAlbum;
-
+- (void) removeAllFiles:(NSOutlineView*)outlineView;
 // NSOutlineView data source methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item;
@@ -64,4 +64,6 @@ typedef struct
 - (BOOL)deleteSelected:(NSOutlineView *)outlineView;
 - (BOOL)joinSelectedFiles:(NSOutlineView *)outlineView;
 - (BOOL)splitSelectedFiles: (NSOutlineView*)outlineView;
+
+
 @end

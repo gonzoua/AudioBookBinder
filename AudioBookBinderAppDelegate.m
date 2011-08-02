@@ -383,6 +383,14 @@ enum abb_form_fields {
     [fileList splitSelectedFiles:fileListView];
 }
 
+- (IBAction) resetToDefaults: (id)sender
+{
+    [[form cellAtIndex:ABBAuthor] setStringValue:@""];
+    [[form cellAtIndex:ABBTitle] setStringValue:@""];
+    [fileList removeAllFiles:fileListView];
+    [coverImageView resetImage];
+}
+
 - (void) bindingThreadIsDone:(id)sender
 {
     [bindButton setEnabled:TRUE];
