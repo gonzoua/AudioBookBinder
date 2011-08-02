@@ -209,6 +209,7 @@ enum abb_form_fields {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
     
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
+    [genresField setStringValue:@"Audiobooks"];
 }
 
 
@@ -387,6 +388,7 @@ enum abb_form_fields {
 {
     [[form cellAtIndex:ABBAuthor] setStringValue:@""];
     [[form cellAtIndex:ABBTitle] setStringValue:@""];
+    [genresField setStringValue:@"Audiobooks"];
     [fileList removeAllFiles:fileListView];
     [coverImageView resetImage];
 }
@@ -401,6 +403,7 @@ enum abb_form_fields {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSString *genre = [genresField stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
     UInt64 maxVolumeDuration = 0;
@@ -564,6 +567,7 @@ enum abb_form_fields {
                     else
                         mp4.title = title;
                     mp4.album = title;
+                    mp4.genre = genre;
                     if (coverImageFilename)        
                         [mp4 setCoverFile:coverImageFilename];
                     mp4.track = track;

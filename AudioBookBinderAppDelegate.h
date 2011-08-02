@@ -30,6 +30,8 @@
     IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
     IBOutlet NSButton *playButton;
+    IBOutlet NSButton *genresButton;
+    IBOutlet NSTextField *genresField;
     BOOL _playing;
     NSString *outFile;
     AudioBinder *_binder;
