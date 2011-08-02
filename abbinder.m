@@ -58,6 +58,7 @@ void usage(char *cmd)
     printf("\t\t\t    %%N - chapter number\n");
     printf("\t\t\t    %%a - artis (obtained from source file)\n");
     printf("\t\t\t    %%t - title (obtained from source file)\n");
+    printf("\t-g genre\tbook genre\n");
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
     printf("\t-l hours\t\tsplit audiobook to volumes max # hours long\n");    
@@ -102,6 +103,7 @@ int main (int argc, char * argv[]) {
     NSString *outFile = nil;
     NSString *inputFileList = nil;
     NSString *coverFile = nil;
+    NSString *bookGenre = nil;
     NSMutableArray *inputFilenames;
     NSMutableArray *inputFiles;
     NSError *error;
@@ -121,13 +123,16 @@ int main (int argc, char * argv[]) {
     NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:hi:l:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:g:hi:l:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
                 exit(0);
             case 'a':
                 bookAuthor = [NSString stringWithUTF8String:optarg];
+                break;
+            case 'g':
+                bookGenre = [NSString stringWithUTF8String:optarg];
                 break;
             case 't':
                 bookTitle = [NSString stringWithUTF8String:optarg];
@@ -446,6 +451,8 @@ int main (int argc, char * argv[]) {
         mp4.coverFile = coverFile;
         mp4.tracksTotal = totalTracks;
         mp4.track = track;
+        if (bookGenre != nil)
+            mp4.genre = bookGenre;
         if (totalTracks > 1)
             mp4.gaplessPlay = YES;
         [mp4 updateFile];
