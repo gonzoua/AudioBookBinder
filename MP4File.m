@@ -34,7 +34,7 @@
 
 @implementation MP4File
 
-@synthesize artist, album, title, coverFile;
+@synthesize artist, album, title, coverFile, genre;
 @synthesize track, tracksTotal, gaplessPlay;
 
 
@@ -47,6 +47,7 @@
     self.album = nil;
     self.title = nil;
     self.coverFile = nil;
+    self.genre = @"Audiobooks";
     
     track = tracksTotal = 0;
     gaplessPlay = NO;
@@ -73,6 +74,7 @@
     self.artist = nil;
     self.title = nil;
     self.coverFile = nil;
+    self.genre = nil;
     [super dealloc];
 }
 
@@ -181,8 +183,9 @@
         [data release];
     }
 
-    [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
-                                            value:[@"Audiobooks" dataUsingEncoding:NSUTF8StringEncoding] 
+    if (genre != nil)
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
+                                            value:[genre dataUsingEncoding:NSUTF8StringEncoding] 
                                              type:ITUNES_METADATA_STRING_CLASS]];
     
     if (coverFile != nil)
