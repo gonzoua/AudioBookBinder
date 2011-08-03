@@ -30,8 +30,9 @@
     IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
     IBOutlet NSButton *playButton;
-    IBOutlet NSButton *genresButton;
+    IBOutlet NSPopUpButton *genresButton;
     IBOutlet NSTextField *genresField;
+    NSMutableArray *knownGenres;
     BOOL _playing;
     NSString *outFile;
     AudioBinder *_binder;
@@ -68,6 +69,7 @@
 - (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
 - (IBAction) openChaptersHowTo: (id)sender;
+- (IBAction) genresButtonChanged: (id)sender;
 
 #ifndef APP_STORE_BUILD
 - (IBAction) checkForUpdates: (id)sender;

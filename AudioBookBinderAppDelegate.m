@@ -210,6 +210,15 @@ enum abb_form_fields {
     
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
     [genresField setStringValue:@"Audiobooks"];
+    knownGenres = [[NSMutableArray alloc] initWithObjects:@"Audiobooks", @"Thrillers", @"Mysteries", @"Romance", nil];
+    [genresButton removeAllItems];
+    [genresButton addItemsWithTitles:knownGenres];
+    [[genresButton menu] addItem:[NSMenuItem separatorItem]];
+    [genresButton addItemWithTitle:@"Edit genres"];
+    [[genresButton lastItem] setTag:-1];
+    [genresButton setTarget:self];
+    [genresButton setAction:@selector(genresButtonChanged:)];
+
 }
 
 
@@ -912,6 +921,15 @@ enum abb_form_fields {
 - (void) resetTotalProgress
 {
     [NSApp setApplicationIconImage:_appIcon];
+}
+
+- (IBAction) genresButtonChanged: (id)sender
+{
+    if ([genresButton selectedTag] == -1) {
+        NSLog(@"Menu....");
+    }
+    else
+        [genresField setStringValue:[[genresButton selectedItem] title]];
 }
 
 
