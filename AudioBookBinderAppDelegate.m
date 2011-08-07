@@ -210,7 +210,7 @@ enum abb_form_fields {
     
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
     [genresField setStringValue:@"Audiobooks"];
-    knownGenres = [[NSMutableArray alloc] initWithObjects:@"Audiobooks", @"Thrillers", @"Mysteries", @"Romance", nil];
+    knownGenres = [[NSMutableArray alloc] initWithObjects:@"Audiobooks", @"Thrillers", @"Mysteries", @"Milk", @"Milkmaid", @"Romance", nil];
     [genresButton removeAllItems];
     [genresButton addItemsWithTitles:knownGenres];
     [[genresButton menu] addItem:[NSMenuItem separatorItem]];
@@ -218,7 +218,8 @@ enum abb_form_fields {
     [[genresButton lastItem] setTag:-1];
     [genresButton setTarget:self];
     [genresButton setAction:@selector(genresButtonChanged:)];
-
+    autocompleting = NO;
+    [genresField setDelegate:self];
 }
 
 
@@ -926,11 +927,34 @@ enum abb_form_fields {
 - (IBAction) genresButtonChanged: (id)sender
 {
     if ([genresButton selectedTag] == -1) {
-        NSLog(@"Menu....");
+        [genresEditor makeKeyAndOrderFront:self];
     }
     else
         [genresField setStringValue:[[genresButton selectedItem] title]];
 }
 
+- (void) controlTextDidChange: (NSNotification *)genre {
+    if (!autocompleting) {
+        NSTextView * fieldEditor = [[genre userInfo] objectForKey:@"NSFieldEditor"];
+        autocompleting = YES;
+        [fieldEditor complete:nil];
+        autocompleting = NO;
+        NSLog(@"Did change %@", fieldEditor);        
+    }
+}
+
+- (NSArray *)control:(NSControl *)control textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
+{
+    NSMutableArray *genres = [NSMutableArray arrayWithCapacity:[knownGenres count]];
+
+    for (NSString *g in knownGenres) {
+        if([g compare:[textView string] options:NSCaseInsensitiveSearch range:charRange] == NSOrderedSame) {
+            [genres addObject:g];
+        }
+    }
+    *index = 0;
+
+    return genres;
+}
 
 @end

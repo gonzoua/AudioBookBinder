@@ -51,6 +51,7 @@
 		9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
 		9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
+		9FB9556D13EB9BBB00F2119C /* GenresEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9556C13EB9BBB00F2119C /* GenresEditorController.m */; };
 		9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */; };
 		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
 		9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9FFF519E12DC0D7000E3A54F /* audiobook.icns */; };
@@ -139,6 +140,8 @@
 		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
 		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
 		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = /opt/local/lib/libmp4v2.a; sourceTree = "<absolute>"; };
+		9FB9556B13EB9BBB00F2119C /* GenresEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenresEditorController.h; sourceTree = "<group>"; };
+		9FB9556C13EB9BBB00F2119C /* GenresEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenresEditorController.m; sourceTree = "<group>"; };
 		9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleDelegate.h; sourceTree = "<group>"; };
 		9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleDelegate.m; sourceTree = "<group>"; };
 		9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineView_Extension.h; sourceTree = "<group>"; };
@@ -228,6 +231,8 @@
 				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
 				9FAB14801161A51400A2F36A /* PrefsController.h */,
 				9FAB14811161A51400A2F36A /* PrefsController.m */,
+				9FB9556B13EB9BBB00F2119C /* GenresEditorController.h */,
+				9FB9556C13EB9BBB00F2119C /* GenresEditorController.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */,
 				9FA52DA011C2FFCE003FD879 /* Chapter.m in Sources */,
 				9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
+				9FB9556D13EB9BBB00F2119C /* GenresEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@
 @class SUUpdater;
 #endif
 
-@interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate, NSSoundDelegate> {
+@interface AudioBookBinderAppDelegate : NSObject <AudioBinderDelegate, NSSoundDelegate, NSTextFieldDelegate> {
     IBOutlet NSWindow *window;
     IBOutlet NSOutlineView *fileListView;
     IBOutlet NSForm *form;
@@ -32,7 +32,9 @@
     IBOutlet NSButton *playButton;
     IBOutlet NSPopUpButton *genresButton;
     IBOutlet NSTextField *genresField;
+    IBOutlet NSPanel *genresEditor;
     NSMutableArray *knownGenres;
+    BOOL autocompleting;
     BOOL _playing;
     NSString *outFile;
     AudioBinder *_binder;
