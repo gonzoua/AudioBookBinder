@@ -477,7 +477,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -495,7 +495,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Release;
 		};
@@ -661,7 +661,7 @@
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = AppStore;
 		};
