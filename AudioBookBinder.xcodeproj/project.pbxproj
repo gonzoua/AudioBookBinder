@@ -139,7 +139,7 @@
 		9FAB14811161A51400A2F36A /* PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefsController.m; sourceTree = "<group>"; };
 		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
 		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
-		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = /opt/local/lib/libmp4v2.a; sourceTree = "<absolute>"; };
+		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = "$(HOME)/opt/lib/libmp4v2.a"; sourceTree = "<absolute>"; };
 		9FB9556B13EB9BBB00F2119C /* GenresEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenresEditorController.h; sourceTree = "<group>"; };
 		9FB9556C13EB9BBB00F2119C /* GenresEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenresEditorController.m; sourceTree = "<group>"; };
 		9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleDelegate.h; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx10.7;
@@ -492,7 +492,7 @@
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx10.7;
@@ -510,12 +510,10 @@
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/local/include/,
-					/opt/local/include/,
+					"$(HOME)/opt/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/lib/,
-					/opt/local/lib/,
+					"$(HOME)/opt/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-FSparkle.framework";
@@ -535,12 +533,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/local/include/,
-					/opt/local/include/,
+					"$(HOME)/opt/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/lib/,
-					/opt/local/lib/,
+					"$(HOME)/opt/lib",
 				);
 				OTHER_CFLAGS = "-FSparkle.framework";
 				PREBINDING = NO;
@@ -569,7 +565,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -603,7 +599,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -631,12 +627,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/local/include/,
-					/opt/local/include/,
+					"$(HOME)/opt/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/lib/,
-					/opt/local/lib/,
+					"$(HOME)/opt/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -658,7 +652,7 @@
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx10.7;
@@ -683,7 +677,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					"$(HOME)/opt/lib",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
