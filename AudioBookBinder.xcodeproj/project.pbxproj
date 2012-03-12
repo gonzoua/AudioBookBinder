@@ -509,12 +509,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(HOME)/opt/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOME)/opt/lib",
-				);
+				HEADER_SEARCH_PATHS = "$(HOME)/opt/include";
+				LIBRARY_SEARCH_PATHS = "$(HOME)/opt/lib";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-FSparkle.framework";
 				OTHER_LDFLAGS = "";
@@ -532,12 +528,8 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(HOME)/opt/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOME)/opt/lib",
-				);
+				HEADER_SEARCH_PATHS = "$(HOME)/opt/include";
+				LIBRARY_SEARCH_PATHS = "$(HOME)/opt/lib";
 				OTHER_CFLAGS = "-FSparkle.framework";
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -577,7 +569,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -611,7 +603,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -626,12 +618,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = APP_STORE_BUILD;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(HOME)/opt/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(HOME)/opt/lib",
-				);
+				HEADER_SEARCH_PATHS = "$(HOME)/opt/include";
+				LIBRARY_SEARCH_PATHS = "$(HOME)/opt/lib";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -687,7 +675,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.7;
 				ZERO_LINK = NO;
 			};
 			name = AppStore;
