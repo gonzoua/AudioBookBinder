@@ -195,8 +195,9 @@ stringForOSStatus(OSStatus err)
             if (_canceled)
                 break;
         
-            _outBookLength += _outFileLength; 
         } 
+
+        _outBookLength += _outFileLength; 
         
         [self closeOutFile];
         

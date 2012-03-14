@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface GenresEditorController : NSWindowController {
 @private
     IBOutlet NSPanel *genresEditor;
