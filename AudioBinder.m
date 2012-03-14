@@ -462,7 +462,7 @@ stringForOSStatus(OSStatus err)
         } while(framesToRead > 0);
 
 
-        UInt32 duration = (_outFileLength - prevPos)*1000/_sampleRate;
+        UInt32 duration = framesConverted*1000/_sampleRate;
         [_delegate conversionFinished:inFile
                              duration:duration];
     }  
