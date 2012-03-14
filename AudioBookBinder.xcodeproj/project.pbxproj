@@ -51,7 +51,6 @@
 		9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
 		9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
-		9FB9556D13EB9BBB00F2119C /* GenresEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9556C13EB9BBB00F2119C /* GenresEditorController.m */; };
 		9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */; };
 		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
 		9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9FFF519E12DC0D7000E3A54F /* audiobook.icns */; };
@@ -401,7 +400,6 @@
 				9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */,
 				9FA52DA011C2FFCE003FD879 /* Chapter.m in Sources */,
 				9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
-				9FB9556D13EB9BBB00F2119C /* GenresEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
