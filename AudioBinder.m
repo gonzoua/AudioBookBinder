@@ -138,7 +138,7 @@ stringForOSStatus(OSStatus err)
     Gestalt(gestaltSystemVersionMajor, &major);
     Gestalt(gestaltSystemVersionMinor, &minor);
     Gestalt(gestaltSystemVersionBugFix, &bugfix);
-    if ((major == 10) && (minor == 7))
+    if ((major == 10) && (minor >= 7))
         _isLion = YES;
     else
         _isLion = NO;
