@@ -60,14 +60,10 @@
     if (file.valid) {
         [_files addObject:file];
         if (_chapterMode) {
-            Chapter *chapter = [_chapters lastObject];
-            
-            if (![chapter.name isEqualToString:file.name]) {
-                chapter = [[Chapter alloc] init];
-                chapter.name = file.name;
-                [_chapters addObject:chapter];
-            }
-            
+            Chapter *chapter = [[Chapter alloc] init];
+            chapter.name = file.name;
+            [_chapters addObject:chapter];
+
             [chapter addFile:file];
         }
     }
@@ -575,17 +571,21 @@
         return NO;
     
     Chapter *newChapter = [[Chapter alloc] init];
-    newChapter.name = TEXT_CHAPTER;
     Chapter *ch;
     
     id item = [[outlineView selectedItems] objectAtIndex:0];
     
     NSInteger chapterIndex;
     
-    if ([item isKindOfClass:[Chapter class]])
+    if ([item isKindOfClass:[Chapter class]]) {
         chapterIndex = [_chapters indexOfObject:item];
+        ch = (Chapter*)item;
+        newChapter.name = ch.name;
+    }
     else {
         AudioFile *file = item;
+        newChapter.name = file.name;
+
         for (ch in _chapters) {
             if ([ch containsFile:file]) {
                 break;
@@ -637,7 +637,7 @@
         int chapterIndex = [_chapters indexOfObject:ch]+1;
         for (AudioFile *file in [ch files]) {
             Chapter *newChapter = [[Chapter alloc] init];
-            newChapter.name = TEXT_CHAPTER;
+            newChapter.name = file.name;
             [newChapter addFile:file];
             [_chapters insertObject:newChapter atIndex:chapterIndex];
             chapterIndex++;
