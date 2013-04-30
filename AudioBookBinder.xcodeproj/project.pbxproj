@@ -95,15 +95,11 @@
 		9F11CC6111E3C99800D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F11CC6211E3C9B200D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		9F435FB713A334A100996613 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = it.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		9F435FB813A334A100996613 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
 		9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderVolume.m; sourceTree = "<group>"; };
 		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
-		9F695E6512EA7FF000E3B9ED /* Norwegian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Norwegian; path = Norwegian.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9F695E6612EA800B00E3B9ED /* Norwegian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Norwegian; path = Norwegian.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
 		9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuidoBookBinder.m; sourceTree = "<group>"; };
@@ -137,6 +133,10 @@
 		9FAB14801161A51400A2F36A /* PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefsController.h; sourceTree = "<group>"; };
 		9FAB14811161A51400A2F36A /* PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefsController.m; sourceTree = "<group>"; };
 		9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AudioBookBinder.entitlements; sourceTree = "<group>"; };
+		9FAD311B173086650067DF2F /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9FAD311C173086650067DF2F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9FAD311D173086B80067DF2F /* nb */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nb; path = nb.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9FAD311E173089920067DF2F /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
 		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
 		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = "$(HOME)/opt/lib/libmp4v2.a"; sourceTree = "<absolute>"; };
@@ -338,6 +338,8 @@
 				German,
 				Russian,
 				Norwegian,
+				it,
+				nb,
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* AudioBookBinder */;
 			projectDirPath = "";
@@ -434,8 +436,8 @@
 				9F9C32D711A750A600F3FBC4 /* Russian */,
 				9F11CC6111E3C99800D83B54 /* German */,
 				9FA0773E121E437C003DAC24 /* French */,
-				9F695E6612EA800B00E3B9ED /* Norwegian */,
-				9F435FB713A334A100996613 /* MainMenu.xib */,
+				9FAD311B173086650067DF2F /* it */,
+				9FAD311D173086B80067DF2F /* nb */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -447,8 +449,8 @@
 				9F78673D11A891940054ADF0 /* Russian */,
 				9F11CC6211E3C9B200D83B54 /* German */,
 				9FA0773F121E438F003DAC24 /* French */,
-				9F695E6512EA7FF000E3B9ED /* Norwegian */,
-				9F435FB813A334A100996613 /* Localizable.strings */,
+				9FAD311C173086650067DF2F /* it */,
+				9FAD311E173089920067DF2F /* nb */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
