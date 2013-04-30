@@ -108,9 +108,18 @@
 - (void) addFilesInDirectory:(NSString*)dirName
 {
     NSString *currentFile;
+    NSMutableArray *files = [[NSMutableArray alloc] init];
     NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:dirName];
     while ((currentFile = [dirEnum nextObject]))
     {
+        [files addObject:currentFile];
+    }
+
+    // Should be OK for most cases  
+    NSArray *orderedFiles = [files sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+
+
+    for (currentFile in orderedFiles) {
         NSString *currentPath = [dirName stringByAppendingPathComponent:currentFile];
         [self addFile:currentPath];
     }
@@ -494,7 +503,7 @@
         {
 			BOOL tryGuess = ![self hasFiles];
             //we have a list of file names in an NSData object
-            NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
+            NSArray *fileArray = [[paste propertyListForType:@"NSFilenamesPboardType"] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
             for (NSString *s in fileArray) {
                 BOOL isDir;
 

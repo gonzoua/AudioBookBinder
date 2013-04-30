@@ -315,7 +315,7 @@ enum abb_form_fields {
     
     if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
     {
-        NSArray *files = [openDlg filenames];
+        NSArray *files = [[openDlg filenames] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
         
         for( i = 0; i < [files count]; i++ )
         {
