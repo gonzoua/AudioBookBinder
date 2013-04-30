@@ -41,7 +41,13 @@
 #define TEXT_CANT_PLAY \
     NSLocalizedString(@"Failed to play: %@", nil)
 
+#define TEXT_AUDIOBOOKS \
+    NSLocalizedString(@"Audiobooks", nil)
+
+
 #define ColumnsConfiguration @"ColumnsConfiguration"
+
+
 
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO}, 
@@ -209,15 +215,56 @@ enum abb_form_fields {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
     
     [window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
-    [genresField setStringValue:@"Audiobooks"];
-    knownGenres = [[NSMutableArray alloc] initWithObjects:@"Audiobooks", @"Thrillers", @"Mysteries", @"Milk", @"Milkmaid", @"Romance", nil];
+    [genresField setStringValue:TEXT_AUDIOBOOKS];
+    knownGenres = [[NSMutableArray alloc] initWithObjects:@"Art",
+                   @"Biography",
+                   @"Business",
+                   @"Chick Lit",
+                   @"Children's",
+                   @"Christian",
+                   @"Classics",
+                   @"Comics",
+                   @"Contemporary",
+                   @"Cookbooks",
+                   @"Crime",
+                   @"Ebooks",
+                   @"Fantasy",
+                   @"Fiction",
+                   @"Gay And Lesbian",
+                   @"Historical Fiction",
+                   @"History",
+                   @"Horror",
+                   @"Humor And Comedy",
+                   @"Memoir",
+                   @"Music",
+                   @"Mystery",
+                   @"Non Fiction",
+                   @"Paranormal",
+                   @"Philosophy",
+                   @"Poetry",
+                   @"Psychology",
+                   @"Religion",
+                   @"Romance",
+                   @"Science",
+                   @"Science Fiction",
+                   @"Self Help",
+                   @"Suspense",
+                   @"Spirituality",
+                   @"Sports",
+                   @"Thriller",
+                   @"Travel",
+                   @"Young Adult",
+                   nil];
     [genresButton removeAllItems];
     [genresButton addItemsWithTitles:knownGenres];
+#ifdef notyet
     [[genresButton menu] addItem:[NSMenuItem separatorItem]];
     [genresButton addItemWithTitle:@"Edit genres"];
     [[genresButton lastItem] setTag:-1];
+#endif
     [genresButton setTarget:self];
     [genresButton setAction:@selector(genresButtonChanged:)];
+    
     autocompleting = NO;
     [genresField setDelegate:self];
 }
@@ -926,14 +973,12 @@ enum abb_form_fields {
 
 - (IBAction) genresButtonChanged: (id)sender
 {
-    if ([genresButton selectedTag] == -1) {
-        [genresEditor makeKeyAndOrderFront:self];
-    }
-    else
-        [genresField setStringValue:[[genresButton selectedItem] title]];
+
+    [genresField setStringValue:[[genresButton selectedItem] title]];
 }
 
 - (void) controlTextDidChange: (NSNotification *)genre {
+#ifdef notyet
     if (!autocompleting) {
         NSTextView * fieldEditor = [[genre userInfo] objectForKey:@"NSFieldEditor"];
         autocompleting = YES;
@@ -941,6 +986,7 @@ enum abb_form_fields {
         autocompleting = NO;
         NSLog(@"Did change %@", fieldEditor);        
     }
+#endif
 }
 
 - (NSArray *)control:(NSControl *)control textView:(NSTextView *)textView completions:(NSArray *)words forPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
