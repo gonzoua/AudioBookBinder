@@ -37,13 +37,6 @@
         _canPlay = NO;
         _sortAscending = YES;
         _sortKey = nil;
-        // create initial chapter if chapters are enabled
-        if (_chapterMode) {
-            Chapter *newChapter = [[Chapter alloc] init];
-            newChapter.name = TEXT_CHAPTER;
-            [_chapters removeAllObjects];
-            [_chapters addObject:newChapter];
-        }
     }
     return self;
 }
@@ -68,7 +61,14 @@
         [_files addObject:file];
         if (_chapterMode) {
             Chapter *chapter = [_chapters lastObject];
-            [chapter addFile:file];  
+            
+            if (![chapter.name isEqualToString:file.name]) {
+                chapter = [[Chapter alloc] init];
+                chapter.name = file.name;
+                [_chapters addObject:chapter];
+            }
+            
+            [chapter addFile:file];
         }
     }
     else
@@ -124,14 +124,16 @@
 {
     // this function is called before _chapterMode is changed by binding
     if (!_chapterMode) {
-        // put all files in one folder
-        Chapter *newChapter = [[Chapter alloc] init];
-        newChapter.name = TEXT_CHAPTER;
-        [_chapters removeAllObjects];
-        for (AudioFile *file in _files) {
-            [newChapter addFile:file];
+        if ([_files count]) {
+            // put all files in one folder
+            Chapter *newChapter = [[Chapter alloc] init];
+            newChapter.name = TEXT_CHAPTER;
+            [_chapters removeAllObjects];
+            for (AudioFile *file in _files) {
+                [newChapter addFile:file];
+            }
+            [_chapters addObject:newChapter];
         }
-        [_chapters addObject:newChapter];
         // change explicitely because we need to update outlineView in new mode
         _chapterMode = YES;
 
@@ -541,8 +543,7 @@
     for (id item in [outlineView selectedItems]) {
         if ([item isKindOfClass:[Chapter class]]) {
             Chapter *ch = item;
-            if ([_chapters count] > 1)
-                [_chapters removeObject:ch];
+            [_chapters removeObject:ch];
         }
         else {
             AudioFile *file = item;
@@ -764,13 +765,7 @@
     [self willChangeValueForKey:@"hasFiles"];
     [_files removeAllObjects];
     [_chapters removeAllObjects];
-    // this function is called before _chapterMode is changed by binding
-    if (_chapterMode) {
-        // put all files in one folder
-        newChapter = [[Chapter alloc] init];
-        newChapter.name = TEXT_CHAPTER;
-        [_chapters addObject:newChapter];
-    }
+
     [outlineView deselectAll:self];
     [outlineView reloadData];
     if (_chapterMode)
