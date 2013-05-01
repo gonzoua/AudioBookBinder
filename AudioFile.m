@@ -65,24 +65,25 @@
                 kAudioFilePropertyInfoDictionary, &size, &info);
             if ( status == noErr ) {
                 NSDictionary *properties = (NSDictionary *)info;
-                // NSLog(@"file properties: %@", properties);
+                // convert properties to CString and back to get rid of
+                // trailing zero bytes in NSString
                 
                 id obj = [properties objectForKey:@"artist"];
-                
-                if (obj) 
-                    self.artist = [obj copy];
+
+                if (obj)
+                    self.artist = [NSString stringWithUTF8String:[obj UTF8String]];
                 else
                     self.artist = @"";
 
                 obj = [properties objectForKey:@"title"];
                 if (obj) 
-                    self.name = [obj copy];
+                    self.name = [NSString stringWithUTF8String:[obj UTF8String]];
                 else
                     self.name = @"";
                 
                 obj = [properties objectForKey:@"album"];
                 if (obj) 
-                    self.album = [obj copy];
+                    self.album = [NSString stringWithUTF8String:[obj UTF8String]];
                 else
                     self.album = @"";
             }
