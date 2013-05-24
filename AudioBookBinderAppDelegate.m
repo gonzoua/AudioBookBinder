@@ -74,7 +74,7 @@ enum abb_form_fields {
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
-    [appDefaults setObject:[NSNumber numberWithInt:25] forKey:@"MaxVolumeSize"];
+    [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
     
     // for pop-up button Destination Folder
     NSString *homePath = NSHomeDirectory();
