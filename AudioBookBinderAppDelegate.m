@@ -44,6 +44,11 @@
 #define TEXT_AUDIOBOOKS \
     NSLocalizedString(@"Audiobooks", nil)
 
+#define TEXT_FILE_EXISTS NSLocalizedString(@"File exists", @"epub file exists")
+#define TEXT_FILE_OVERWRITE NSLocalizedString(@"File %@ already exists, replace?", @"epub file exists")
+#define TEXT_OVERWRITE NSLocalizedString(@"Replace", @"")
+#define TEXT_CANCEL NSLocalizedString(@"Cancel", @"")
+
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
@@ -408,7 +413,6 @@ enum abb_form_fields {
 
 - (IBAction) saveAsOk:(id)sender
 {
-    NSLog(@"saveAsOK");
     [NSApp endSheet:saveAsPanel];
     [saveAsPanel orderOut:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -424,13 +428,27 @@ enum abb_form_fields {
     }
     
     outFile = [[destPath stringByAppendingPathComponent:[saveAsFilename stringValue]] retain];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:outFile]) {
+        NSAlert *a = [[NSAlert alloc] init];
+        [a addButtonWithTitle:TEXT_OVERWRITE];
+        [a addButtonWithTitle:TEXT_CANCEL];
+    
+        [a setMessageText:TEXT_FILE_EXISTS];
+        [a setAlertStyle:NSWarningAlertStyle];
+        [a setInformativeText: [NSString stringWithFormat:TEXT_FILE_OVERWRITE, outFile]];
+        NSInteger result = [a runModal];
+        if (result == NSAlertSecondButtonReturn) {
+            return;
+        }
+    }
+    
     [bindButton setEnabled:FALSE];
     [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
 }
 
 - (IBAction) saveAsCancel:(id)sender
 {
-    NSLog(@"saveAsCancel");
+    
     [NSApp endSheet:saveAsPanel];
     [saveAsPanel orderOut:nil];
 }
