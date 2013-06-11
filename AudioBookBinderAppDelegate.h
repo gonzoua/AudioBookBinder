@@ -32,7 +32,9 @@
     IBOutlet NSButton *playButton;
     IBOutlet NSPopUpButton *genresButton;
     IBOutlet NSTextField *genresField;
-    IBOutlet NSPanel *genresEditor;
+    IBOutlet NSPanel *saveAsPanel;
+    IBOutlet NSTextField *saveAsFilename;
+
     NSMutableArray *knownGenres;
     BOOL autocompleting;
     BOOL _playing;
@@ -42,6 +44,7 @@
     NSSound *_sound;
     NSString *_playingFile;
     NSImage *_playImg, *_stopImg;
+    NSURL *_destURL;
     BOOL canPlay;
 #ifndef APP_STORE_BUILD
     IBOutlet SUUpdater *updater;
@@ -71,7 +74,9 @@
 - (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
 - (IBAction) openChaptersHowTo: (id)sender;
-- (IBAction) genresButtonChanged: (id)sender;
+
+- (IBAction) saveAsOk:(id)sender;
+- (IBAction) saveAsCancel:(id)sender;
 
 #ifndef APP_STORE_BUILD
 - (IBAction) checkForUpdates: (id)sender;

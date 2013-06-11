@@ -77,8 +77,20 @@ enum abb_form_fields {
     [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
     
     // for pop-up button Destination Folder
-    NSString *homePath = NSHomeDirectory();
-    [appDefaults setObject:homePath forKey:@"DestinationFolder"];
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSMusicDirectory,
+                                                         NSUserDomainMask,
+                                                         YES);
+    
+    NSString *musicPath;
+    if ([paths count])
+        musicPath = [paths objectAtIndex:0];
+    else // just use something
+        musicPath = NSHomeDirectory();
+    
+    [appDefaults setObject:musicPath forKey:@"DestinationFolder"];
+    
+
 #ifdef notyet
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
 #endif    
@@ -123,6 +135,7 @@ enum abb_form_fields {
     
     _appIcon = [NSImage imageNamed: @"NSApplicationIcon"];
     _currentProgress = 0;
+    _destURL = nil;
 
 #ifdef APP_STORE_BUILD     
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
@@ -349,7 +362,6 @@ enum abb_form_fields {
 
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-    NSSavePanel *savePanel;
     int choice;
     NSMutableString *filename = [[NSMutableString string] retain];
     
@@ -367,19 +379,20 @@ enum abb_form_fields {
         [filename setString:@"audiobook"];
     [filename appendString:@".m4b"];
     
-    savePanel = [NSSavePanel savePanel];
+#ifdef APP_STORE_BUILD
+    saveAsFilename.stringValue = filename;
+    [NSApp beginSheet:saveAsPanel modalForWindow:window
+        modalDelegate:self didEndSelector:NULL contextInfo:nil];
+#else
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setAccessoryView: nil];
     // [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"m4a", @"m4b", nil]];
     NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:@"DestinationFolder"];
-
-#ifdef notyet    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"DestinationiTunes"]) {
-        dir = [self _getiTunesMediaFolder];
-    }
-#endif
     
     choice = [savePanel runModalForDirectory:dir file:filename];
+    
     [filename release];
+
     /* if successful, save file under designated name */
     if (choice == NSOKButton)
     {
@@ -388,6 +401,38 @@ enum abb_form_fields {
 
         [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
     }
+
+#endif
+}
+
+
+- (IBAction) saveAsOk:(id)sender
+{
+    NSLog(@"saveAsOK");
+    [NSApp endSheet:saveAsPanel];
+    [saveAsPanel orderOut:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *destPath;
+    _destURL = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
+    if (_destURL == nil) {
+        // standard Music directory
+        destPath = [defaults stringForKey:@"DestinationFolder"];
+    }
+    else {
+        destPath = [_destURL path];
+        [_destURL startAccessingSecurityScopedResource];
+    }
+    
+    outFile = [[destPath stringByAppendingPathComponent:[saveAsFilename stringValue]] retain];
+    [bindButton setEnabled:FALSE];
+    [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
+}
+
+- (IBAction) saveAsCancel:(id)sender
+{
+    NSLog(@"saveAsCancel");
+    [NSApp endSheet:saveAsPanel];
+    [saveAsPanel orderOut:nil];
 }
 
 - (IBAction) setCover: (id)sender
@@ -452,6 +497,13 @@ enum abb_form_fields {
 
 - (void) bindingThreadIsDone:(id)sender
 {
+#ifdef APP_STORE_BUILD
+    if (_destURL) {
+        [_destURL startAccessingSecurityScopedResource];
+        [_destURL release];
+        _destURL = nil;
+    }
+#endif
     [bindButton setEnabled:TRUE];
 }
 

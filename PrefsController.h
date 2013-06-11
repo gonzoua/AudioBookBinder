@@ -16,6 +16,9 @@
 @interface PrefsController : NSWindowController {
     NSUserDefaults *_userDefaults;
     IBOutlet NSPopUpButton * _folderPopUp;
+    // HACK ALERT: dublicate all the changes on "save as" panel too 
+    IBOutlet NSPopUpButton * _saveAsFolderPopUp;
+
     
     IBOutlet NSTextField *updateLabel;
     IBOutlet NSButton *updateButton;
