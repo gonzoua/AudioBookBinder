@@ -46,6 +46,7 @@
     NSImage *_playImg, *_stopImg;
     NSURL *_destURL;
     BOOL canPlay;
+    BOOL _conversionResult;
 #ifndef APP_STORE_BUILD
     IBOutlet SUUpdater *updater;
 #endif

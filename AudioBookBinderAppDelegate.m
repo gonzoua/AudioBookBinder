@@ -16,7 +16,6 @@
 #import "AudioBinderVolume.h"
 #import "Chapter.h"
 #import "NSOutlineView_Extension.h"
-
 #import "Sparkle/SUUpdater.h"
 
 // localized strings
@@ -522,6 +521,17 @@ enum abb_form_fields {
         _destURL = nil;
     }
 #endif
+    
+    BOOL notificationCenterIsAvailable = (NSClassFromString(@"NSUserNotificationCenter")!=nil);
+    if (_conversionResult && notificationCenterIsAvailable) {
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = @"Audiobook is ready";
+        notification.subtitle = [outFile lastPathComponent];
+        notification.soundName = NSUserNotificationDefaultSoundName;
+    
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    }
+    
     [bindButton setEnabled:TRUE];
 }
 
@@ -539,7 +549,7 @@ enum abb_form_fields {
         maxVolumeDuration = hours * 3600;
     
     NSLog(@"maxVolumeDuration == %lld", maxVolumeDuration);
-    
+    _conversionResult = NO;
     [_binder reset];
     [_binder setDelegate:self];
     
@@ -639,7 +649,7 @@ enum abb_form_fields {
     [fileProgress setMaxValue:100.];
     [fileProgress setDoubleValue:0.]; 
     [fileProgress displayIfNeeded];
-    if (![_binder convert])
+    if (!(_conversionResult = [_binder convert]))
     {
         NSLog(@"Conversion failed");
     }        

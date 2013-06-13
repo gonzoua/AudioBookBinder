@@ -571,7 +571,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -607,7 +607,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.8;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -682,7 +682,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.8;
 				ZERO_LINK = NO;
 			};
 			name = AppStore;
