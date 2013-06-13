@@ -47,6 +47,7 @@
 #define TEXT_FILE_OVERWRITE NSLocalizedString(@"File %@ already exists, replace?", @"epub file exists")
 #define TEXT_OVERWRITE NSLocalizedString(@"Replace", @"")
 #define TEXT_CANCEL NSLocalizedString(@"Cancel", @"")
+#define TEXT_BOOK_IS_READY NSLocalizedString(@"Audiobook is ready", @"");
 
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
@@ -525,7 +526,7 @@ enum abb_form_fields {
     BOOL notificationCenterIsAvailable = (NSClassFromString(@"NSUserNotificationCenter")!=nil);
     if (_conversionResult && notificationCenterIsAvailable) {
         NSUserNotification *notification = [[NSUserNotification alloc] init];
-        notification.title = @"Audiobook is ready";
+        notification.title = TEXT_BOOK_IS_READY;
         notification.subtitle = [outFile lastPathComponent];
         notification.soundName = NSUserNotificationDefaultSoundName;
     
