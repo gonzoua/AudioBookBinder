@@ -61,7 +61,10 @@
         [_files addObject:file];
         if (_chapterMode) {
             Chapter *chapter = [[Chapter alloc] init];
-            chapter.name = file.name;
+            if ([file.name length] > 0)
+                chapter.name = file.name;
+            else
+                chapter.name = file.file;
             [_chapters addObject:chapter];
 
             [chapter addFile:file];
@@ -235,9 +238,12 @@
 
         if ([tableColumn.identifier isEqualToString:COLUMNID_FILE])
             objectValue = file.file;
-        else if ([tableColumn.identifier isEqualToString:COLUMNID_NAME])
-            objectValue = file.name;
-        else if ([tableColumn.identifier isEqualToString:COLUMNID_AUTHOR])
+        else if ([tableColumn.identifier isEqualToString:COLUMNID_NAME]) {
+            if ([file.name length] > 0)
+                objectValue = file.name;
+            else
+                objectValue = file.file;
+        } else if ([tableColumn.identifier isEqualToString:COLUMNID_AUTHOR])
             objectValue = file.artist;
         else if ([tableColumn.identifier isEqualToString:COLUMNID_ALBUM])
             objectValue = file.album;
@@ -593,7 +599,10 @@
     }
     else {
         AudioFile *file = item;
-        newChapter.name = file.name;
+        if ([file.name length] > 0)
+            newChapter.name = file.name;
+        else
+            newChapter.name = file.file;
 
         for (ch in _chapters) {
             if ([ch containsFile:file]) {
@@ -646,7 +655,10 @@
         int chapterIndex = [_chapters indexOfObject:ch]+1;
         for (AudioFile *file in [ch files]) {
             Chapter *newChapter = [[Chapter alloc] init];
-            newChapter.name = file.name;
+            if ([file.name length] > 0)
+                newChapter.name = file.name;
+            else
+                newChapter.name = file.file;
             [newChapter addFile:file];
             [_chapters insertObject:newChapter atIndex:chapterIndex];
             chapterIndex++;
