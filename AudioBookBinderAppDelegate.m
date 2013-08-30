@@ -52,8 +52,6 @@
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
-
-
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO}, 
     {COLUMNID_AUTHOR, @"Author", NO}, 
