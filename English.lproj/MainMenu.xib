@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
+		<string key="IBDocument.SystemVersion">12F37</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
@@ -622,6 +622,7 @@
 							<string key="NSFrame">{{13, 39}, {474, 368}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="929945333"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="164387637">
@@ -647,7 +648,7 @@
 																<string key="NSFrameSize">{418, 266}</string>
 																<reference key="NSSuperview" ref="823383498"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="369897762"/>
+																<reference key="NSNextKeyView" ref="998352342"/>
 																<bool key="NSEnabled">YES</bool>
 																<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -657,15 +658,13 @@
 																	<string key="NSFrameSize">{418, 17}</string>
 																	<reference key="NSSuperview" ref="369897762"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="534405198"/>
+																	<reference key="NSNextKeyView" ref="823383498"/>
 																	<reference key="NSTableView" ref="507439630"/>
 																</object>
-																<object class="_NSCornerView" key="NSCornerView" id="534405198">
-																	<reference key="NSNextResponder" ref="261625228"/>
+																<object class="_NSCornerView" key="NSCornerView">
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">-2147483392</int>
 																	<string key="NSFrame">{{224, 0}, {16, 17}}</string>
-																	<reference key="NSSuperview" ref="261625228"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="823383498"/>
 																</object>
 																<object class="NSMutableArray" key="NSTableColumns">
@@ -795,18 +794,16 @@
 														<reference key="NSBGColor" ref="768088071"/>
 														<int key="NScvFlags">4</int>
 													</object>
-													<reference ref="534405198"/>
 												</object>
 												<string key="NSFrame">{{17, 38}, {420, 285}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="823383498"/>
+												<reference key="NSNextKeyView" ref="369897762"/>
 												<int key="NSsFlags">133681</int>
 												<reference key="NSVScroller" ref="998352342"/>
 												<reference key="NSHScroller" ref="595255393"/>
 												<reference key="NSContentView" ref="823383498"/>
 												<reference key="NSHeaderClipView" ref="369897762"/>
-												<reference key="NSCornerView" ref="534405198"/>
 												<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 												<double key="NSMinMagnification">0.25</double>
 												<double key="NSMaxMagnification">4</double>
@@ -872,7 +869,6 @@
 												<string key="NSFrame">{{398, 6}, {39, 25}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="479991274"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="704116464">
 													<int key="NSCellFlags">67108864</int>
@@ -2010,7 +2006,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 									<reference key="NSMenu" ref="114404480"/>
 									<string key="NSTitle"/>
 									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<int key="NSState">1</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -4665,7 +4660,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1040</int>
+			<int key="maxID">1041</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4683,10 +4678,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>chapterModeWillChange:</string>
 							<string>checkForUpdates:</string>
 							<string>delFiles:</string>
+							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>openChaptersHowTo:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
+							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
@@ -4695,6 +4692,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4722,10 +4721,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>chapterModeWillChange:</string>
 							<string>checkForUpdates:</string>
 							<string>delFiles:</string>
+							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>openChaptersHowTo:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
+							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
@@ -4759,6 +4760,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">genresButtonChanged:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">joinFiles:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -4772,6 +4777,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">renumberChapters:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">resetToDefaults:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

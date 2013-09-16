@@ -49,6 +49,10 @@
 #define TEXT_CANCEL NSLocalizedString(@"Cancel", @"")
 #define TEXT_BOOK_IS_READY NSLocalizedString(@"Audiobook is ready", @"");
 
+#define TEXT_ACTION_REQUIRED NSLocalizedString(@"User action required", nil)
+
+#define TEXT_UPGRADE_HACK \
+NSLocalizedString(@"It seems you are upgrading from previous version of Audiobook Binder. This upgrade introduces change in configuration format that requires your action: please confirm destination folder for audiobook files. This is one-time operation.", nil)
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
@@ -66,11 +70,29 @@ enum abb_form_fields {
     ABBTitle,
 };
 
+static BOOL requiresUpgdateHack = NO;
+static BOOL hackChecked = NO;
+
+
 @implementation AudioBookBinderAppDelegate
 
 + (void) initialize
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+#ifdef APP_STORE_BUILD
+    // make sure it's ran only once
+    if (!hackChecked) {
+        NSString *dir = [defaults stringForKey:@"DestinationFolder"];
+        NSURL *url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
+    
+        if ((dir != nil) && (url == nil)) {
+            requiresUpgdateHack = YES;
+        }
+        hackChecked = YES;
+    }
+#endif
+    
     NSMutableDictionary *appDefaults = [NSMutableDictionary
                                         dictionaryWithObject:[NSNumber numberWithInt:2] forKey:@"Channels"];
     // for checkbox "add to itunes"
@@ -143,6 +165,38 @@ enum abb_form_fields {
 #ifdef APP_STORE_BUILD     
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
+    
+    if (requiresUpgdateHack) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *currentDest = [defaults stringForKey:@"DestinationFolder"];
+        while ((url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain]) == nil) {
+            
+            NSAlert *a = [[NSAlert alloc] init];
+            [a setMessageText:TEXT_ACTION_REQUIRED];
+
+            [a setInformativeText:TEXT_UPGRADE_HACK];
+            [a setAlertStyle:NSWarningAlertStyle];
+            
+            [a runModal];
+            
+            NSOpenPanel * panel = [NSOpenPanel openPanel];
+            
+            [panel setPrompt: NSLocalizedString(@"Select", nil)];
+            [panel setAllowsMultipleSelection: NO];
+            [panel setCanChooseFiles: NO];
+            [panel setCanChooseDirectories: YES];
+            [panel setCanCreateDirectories: YES];
+            [panel setDirectoryURL:[NSURL fileURLWithPath:currentDest]];
+            NSInteger result = [panel runModal];
+            if (result == NSOKButton)
+            {                
+                NSURL *folderURL = [panel URL];
+                NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+                [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+                [defaults synchronize];
+            }
+        }
+    }
 #else
     // XXX: hack to make autoupdates work
     [SUUpdater sharedUpdater];
