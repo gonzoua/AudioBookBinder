@@ -100,6 +100,7 @@ static BOOL hackChecked = NO;
     [appDefaults setObject:@"44100" forKey:@"SampleRate"];
     [appDefaults setObject:@"128000" forKey:@"Bitrate"];
     [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
+    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"SortAudioFiles"];
     
     // for pop-up button Destination Folder
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(
@@ -385,7 +386,13 @@ static BOOL hackChecked = NO;
     
     if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
     {
+        BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
         NSArray *files = [[openDlg filenames] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+
+        if (sortFiles)
+            files = [[openDlg filenames] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+        else
+            files = [openDlg filenames];
         
         for( i = 0; i < [files count]; i++ )
         {

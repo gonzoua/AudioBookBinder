@@ -119,7 +119,13 @@
     }
 
     // Should be OK for most cases  
-    NSArray *orderedFiles = [files sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+    BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
+
+    NSArray *orderedFiles;
+    if (sortFiles)
+        orderedFiles = [files sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+    else
+        orderedFiles = [NSArray arrayWithArray:files];
 
 
     for (currentFile in orderedFiles) {
@@ -509,7 +515,14 @@
         {
 			BOOL tryGuess = ![self hasFiles];
             //we have a list of file names in an NSData object
-            NSArray *fileArray = [[paste propertyListForType:@"NSFilenamesPboardType"] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+            NSArray *fileArray;
+            BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
+
+            if (sortFiles)
+                fileArray = [[paste propertyListForType:@"NSFilenamesPboardType"] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+            else
+                fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
+
             for (NSString *s in fileArray) {
                 BOOL isDir;
 
