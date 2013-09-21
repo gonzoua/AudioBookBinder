@@ -1,4 +1,6 @@
 = Command line utility: abbinder 
+As of 1.18 it's part of main bundler. Path to the utility is:
+    AudioBookBinder.app/Contents/MacOS/abbinder
 
 == Usage
 abbinder [-hsv] [-c 1|2] [-r samplerate] [-a author] [-t title] 
