@@ -26,7 +26,7 @@ for target in $INSTALL_TARGETS; do
     cp -R "$TARGET_BUILD_DIR/$target" "/Volumes/$VOLNAME/"
 done
 
-cp -R ChangeLog README "Chapters - HowTo.webloc" "/Volumes/$VOLNAME/"
+cp -R README "Chapters - HowTo.webloc" "/Volumes/$VOLNAME/"
 
 ls -la "/Volumes/$VOLNAME/"
 hdiutil detach "/Volumes/$VOLNAME"
