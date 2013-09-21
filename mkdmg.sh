@@ -3,7 +3,8 @@ set -e
 
 VOLNAME="Audiobook Binder"
 APPNAME=AudiobookBinder
-INSTALL_TARGETS="AudioBookBinder.app abbinder"
+INSTALL_TARGET="AudioBookBinder.app"
+INSTALL_SUBTARGET="abbinder"
 TARGET_BUILD_DIR=/Users/gonzo/Projects/AudioBookBinder/build/Release
 VERSION=`grep -A 1 CFBundleShortVersionString AudioBookBinder-Info.plist  | tail -1 | sed 's/[^0-9]*>//' | sed 's/<.*//'`
 
@@ -22,9 +23,8 @@ echo "Creating blank DMG"
 
 hdiutil create -size 15000k -volname "$VOLNAME" -attach -fs HFS+ "$TARGET_BUILD_DIR/${VOLNAME}_big.dmg"
 
-for target in $INSTALL_TARGETS; do
-    cp -R "$TARGET_BUILD_DIR/$target" "/Volumes/$VOLNAME/"
-done
+cp -R "$TARGET_BUILD_DIR/$INSTALL_TARGET" "/Volumes/$VOLNAME/"
+cp "$TARGET_BUILD_DIR/$INSTALL_SUBTARGET" "/Volumes/$VOLNAME/$INSTALL_TARGET/Contents/MacOS/"
 
 cp -R README "Chapters - HowTo.webloc" "/Volumes/$VOLNAME/"
 
