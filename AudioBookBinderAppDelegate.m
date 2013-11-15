@@ -85,7 +85,7 @@ static BOOL hackChecked = NO;
     if (!hackChecked) {
         NSString *dir = [defaults stringForKey:@"DestinationFolder"];
         NSURL *url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
-    
+
         if ((dir != nil) && (url == nil)) {
             requiresUpgdateHack = YES;
         }
@@ -195,6 +195,7 @@ static BOOL hackChecked = NO;
                 NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
                 [defaults setObject:data forKey: @"DestinationFolderBookmark"];
                 [defaults synchronize];
+                break;
             }
         }
     }
@@ -478,8 +479,33 @@ static BOOL hackChecked = NO;
     NSString *destPath;
     _destURL = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
     if (_destURL == nil) {
+#ifdef APP_STORE_BUILD
+        if (requiresUpgdateHack) {
+            NSString *currentDest = [defaults stringForKey:@"DestinationFolder"];
+            NSOpenPanel * panel = [NSOpenPanel openPanel];
+                
+            [panel setPrompt: NSLocalizedString(@"Select", nil)];
+            [panel setAllowsMultipleSelection: NO];
+            [panel setCanChooseFiles: NO];
+            [panel setCanChooseDirectories: YES];
+            [panel setCanCreateDirectories: YES];
+            [panel setDirectoryURL:[NSURL fileURLWithPath:currentDest]];
+            NSInteger result = [panel runModal];
+            if (result == NSOKButton)
+            {                
+                _destURL = [panel URL];
+                destPath = [_destURL path];
+
+            }
+            else
+                return;
+        }
+        else
+            destPath = [defaults stringForKey:@"DestinationFolder"];
+#else
         // standard Music directory
         destPath = [defaults stringForKey:@"DestinationFolder"];
+#endif
     }
     else {
         destPath = [_destURL path];
