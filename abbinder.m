@@ -47,7 +47,7 @@ int validRates[NUM_VALID_RATES] = { 8000, 11025, 12000, 16000, 22050,
 void usage(char *cmd)
 {
     printf("Usage: %s [-Aehqsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
-           "outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
+           "-o outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
     printf("\t-A\t\tadd audiobook to iTunes\n");
     printf("\t-b bitrate\tset bitrate (KBps)\n");
@@ -62,6 +62,7 @@ void usage(char *cmd)
     printf("\t-h\t\tshow this message\n");
     printf("\t-i file\t\tget input files list from file, \"-\" for standard input\n");
     printf("\t-l hours\t\tsplit audiobook to volumes max # hours long\n");    
+    printf("\t-o outfile\t\taudiobook output file\n");
     printf("\t-q\t\tquiet mode (no output)\n");
     printf("\t-r rate\t\tsample rate of audiobook. Default: 44100\n");
     printf("\t-s\t\tskip errors and go on with conversion\n");
@@ -123,7 +124,7 @@ int main (int argc, char * argv[]) {
     NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
     
     NSZombieEnabled = YES;
-    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:g:hi:l:qr:st:v")) != -1) {
+    while ((c = getopt(argc, argv, "a:Ab:c:C:eE:g:hi:l:o:qr:st:v")) != -1) {
         switch (c) {
             case 'h':
                 usage(argv[0]);
@@ -189,6 +190,9 @@ int main (int argc, char * argv[]) {
             case 'l':
                 maxVolumeDuration = atoi(optarg)*3600; // convert to seconds
                 break;
+            case 'o':
+                outFile = [NSString stringWithUTF8String:optarg];
+                break;
             default:
                 usage(argv[0]);
                 exit(1);
@@ -196,12 +200,7 @@ int main (int argc, char * argv[]) {
     }
     
     // Do we have output file et al?
-    if (optind < argc) 
-    {
-            outFile = [NSString stringWithUTF8String:argv[optind]];
-            optind++;
-    }
-    else
+    if (outFile == nil)
     {
         fprintf(stderr, "No output file specified\n");
         usage(argv[0]);
