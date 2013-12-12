@@ -333,11 +333,9 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
 				fr,
 				de,
 				ru,
-				Norwegian,
 				it,
 				nb,
 			);
