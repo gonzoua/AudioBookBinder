@@ -92,8 +92,8 @@
 		9F02CE64101FF8D900AE315D /* ABLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLog.h; sourceTree = "<group>"; };
 		9F02CE65101FF8D900AE315D /* ABLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABLog.m; sourceTree = "<group>"; };
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		9F11CC6111E3C99800D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		9F11CC6211E3C9B200D83B54 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F11CC6111E3C99800D83B54 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9F11CC6211E3C9B200D83B54 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 				English,
 				Japanese,
 				French,
-				German,
+				de,
 				ru,
 				Norwegian,
 				it,
@@ -434,7 +434,7 @@
 			children = (
 				9F6FA3D7111BBBC20047728F /* English */,
 				9F9C32D711A750A600F3FBC4 /* ru */,
-				9F11CC6111E3C99800D83B54 /* German */,
+				9F11CC6111E3C99800D83B54 /* de */,
 				9FA0773E121E437C003DAC24 /* French */,
 				9FAD311B173086650067DF2F /* it */,
 				9FAD311D173086B80067DF2F /* nb */,
@@ -447,7 +447,7 @@
 			children = (
 				9F78673911A88F470054ADF0 /* English */,
 				9F78673D11A891940054ADF0 /* ru */,
-				9F11CC6211E3C9B200D83B54 /* German */,
+				9F11CC6211E3C9B200D83B54 /* de */,
 				9FA0773F121E438F003DAC24 /* French */,
 				9FAD311C173086650067DF2F /* it */,
 				9FAD311E173089920067DF2F /* nb */,
