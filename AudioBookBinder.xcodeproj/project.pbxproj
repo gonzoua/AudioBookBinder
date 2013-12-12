@@ -103,7 +103,7 @@
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
 		9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuidoBookBinder.m; sourceTree = "<group>"; };
-		9F6FA3D7111BBBC20047728F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9F6FA3D7111BBBC20047728F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookBinderAppDelegate.h; sourceTree = "<group>"; };
 		9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinderAppDelegate.m; sourceTree = "<group>"; };
 		9F6FA40F111D161A0047728F /* AudioFileList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileList.h; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		9F7829D2129F8C6000763A5B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9F782A2C129F941900763A5B /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
 		9F782A2D129F941900763A5B /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stop.png; sourceTree = "<group>"; };
-		9F78673911A88F470054ADF0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F78673911A88F470054ADF0 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F78673D11A891940054ADF0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
@@ -332,7 +332,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
+				en,
 				fr,
 				de,
 				ru,
@@ -430,7 +430,7 @@
 		9F6FA3D6111BBBC20047728F /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9F6FA3D7111BBBC20047728F /* English */,
+				9F6FA3D7111BBBC20047728F /* en */,
 				9F9C32D711A750A600F3FBC4 /* ru */,
 				9F11CC6111E3C99800D83B54 /* de */,
 				9FA0773E121E437C003DAC24 /* fr */,
@@ -443,7 +443,7 @@
 		9F78673B11A88F660054ADF0 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9F78673911A88F470054ADF0 /* English */,
+				9F78673911A88F470054ADF0 /* en */,
 				9F78673D11A891940054ADF0 /* ru */,
 				9F11CC6211E3C9B200D83B54 /* de */,
 				9FA0773F121E438F003DAC24 /* fr */,
