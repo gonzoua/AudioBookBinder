@@ -115,13 +115,13 @@
 		9F782A2C129F941900763A5B /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
 		9F782A2D129F941900763A5B /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stop.png; sourceTree = "<group>"; };
 		9F78673911A88F470054ADF0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9F78673D11A891940054ADF0 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Russian; path = Russian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F78673D11A891940054ADF0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
 		9F86C0CE1023D99300E65B00 /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4Atom.m; sourceTree = "<group>"; };
 		9F86C0D01023DAC000E65B00 /* MP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4File.h; sourceTree = "<group>"; };
 		9F86C0D11023DAC000E65B00 /* MP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4File.m; sourceTree = "<group>"; };
-		9F9C32D711A750A600F3FBC4 /* Russian */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Russian; path = Russian.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9F9C32D711A750A600F3FBC4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9FA0773E121E437C003DAC24 /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = French.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9FA0773F121E438F003DAC24 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9FA52D9D11C2FFCE003FD879 /* Chapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
@@ -336,7 +336,7 @@
 				Japanese,
 				French,
 				German,
-				Russian,
+				ru,
 				Norwegian,
 				it,
 				nb,
@@ -433,7 +433,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F6FA3D7111BBBC20047728F /* English */,
-				9F9C32D711A750A600F3FBC4 /* Russian */,
+				9F9C32D711A750A600F3FBC4 /* ru */,
 				9F11CC6111E3C99800D83B54 /* German */,
 				9FA0773E121E437C003DAC24 /* French */,
 				9FAD311B173086650067DF2F /* it */,
@@ -446,7 +446,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F78673911A88F470054ADF0 /* English */,
-				9F78673D11A891940054ADF0 /* Russian */,
+				9F78673D11A891940054ADF0 /* ru */,
 				9F11CC6211E3C9B200D83B54 /* German */,
 				9FA0773F121E438F003DAC24 /* French */,
 				9FAD311C173086650067DF2F /* it */,
