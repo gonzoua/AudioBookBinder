@@ -44,6 +44,10 @@ NSLocalizedString(@"It seems you are upgrading from previous version of Audioboo
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
 #define KVO_CONTEXT_CANPLAY_CHANGED @"CanPlayChanged"
+#define KVO_CONTEXT_COMMONAUTHOR_CHANGED @"CommonAuthorChanged"
+#define KVO_CONTEXT_COMMONALBUM_CHANGED @"CommonAlbumChanged"
+
+
 
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO},
@@ -105,13 +109,19 @@ enum abb_form_fields {
     _currentProgress = 0;
     _destURL = nil;
     
-    //this begins the observing
     [fileList addObserver:self
         forKeyPath:@"canPlay"
            options:0
            context:KVO_CONTEXT_CANPLAY_CHANGED];
 
-    
+    [fileList addObserver:self
+               forKeyPath:@"commonAuthor"
+                  options:0
+                  context:KVO_CONTEXT_COMMONAUTHOR_CHANGED];
+    [fileList addObserver:self
+               forKeyPath:@"commonAlbum"
+                  options:0
+                  context:KVO_CONTEXT_COMMONALBUM_CHANGED];
 }
 
 - (void)awakeFromNib {
@@ -264,22 +274,7 @@ enum abb_form_fields {
     [[NSUserDefaults standardUserDefaults] setObject:cols forKey:ColumnsConfiguration];
 }
 
-- (void) updateGuiWithGuessedData {
-	NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-	NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-	if ([author isEqualTo:@""] || (author == nil))
-	{
-		NSString *guessedAuthor = [fileList commonAuthor];
-		if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
-			[[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
-	}
-	if ([title isEqualTo:@""] || (title == nil))
-	{
-		NSString *guessedTitle = [fileList commonAlbum];
-		if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
-			[[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
-	}
-}
+
 
 - (IBAction) addFiles: (id)sender
 {
@@ -1019,7 +1014,23 @@ enum abb_form_fields {
         
         self.canPlay = fileList.canPlay;
     }
+    else if (context == KVO_CONTEXT_COMMONAUTHOR_CHANGED) {
+        NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+        if ([author isEqualTo:@""] || (author == nil))
+        {
+            NSString *guessedAuthor = [fileList commonAuthor];
+            if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
+                [[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
+        }    }
+    else if (context == KVO_CONTEXT_COMMONALBUM_CHANGED) {
+        NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+        if ([title isEqualTo:@""] || (title == nil))
+        {
+            NSString *guessedTitle = [fileList commonAlbum];
+            if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
+                [[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
+        }
+    }
 }
-
 
 @end

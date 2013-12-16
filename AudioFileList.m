@@ -513,7 +513,6 @@
         
         if ([desiredType isEqualToString:NSFilenamesPboardType])
         {
-			BOOL tryGuess = ![self hasFiles];
             //we have a list of file names in an NSData object
             NSArray *fileArray;
             BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
@@ -535,12 +534,9 @@
                         [self addFile:s];
                 }
             }
-			if (tryGuess) 
-			{
-                NSLog(@"TODO: updateGuiWithGuessedData");
-			}
+            
+            [self tryGuessingAuthorAndAlbum];
         }
-        
     }
     [outlineView reloadData];
     // Reselect old items.
@@ -762,29 +758,7 @@
     
 }
 
-- (NSString *)commonAuthor
-{
-    if ([_files count] == 0)
-        return nil;
-    NSString *author = [[_files objectAtIndex:0] artist]; 
-    for (AudioFile *f in _files) {
-        if (![author isEqualToString:f.artist])
-            return nil;
-    }
-    return author;
-}
 
-- (NSString *)commonAlbum
-{
-    if ([_files count] == 0)
-        return nil;
-    NSString *album = [[_files objectAtIndex:0] album]; 
-    for (AudioFile *f in _files) {
-        if (![album isEqualToString:f.album])
-            return nil;
-    }
-    return album;
-}
 
 - (void) removeAllFiles:(NSOutlineView*)outlineView;
 {
@@ -801,5 +775,34 @@
     [self didChangeValueForKey:@"hasFiles"];
 
 }
-          
+
+- (void)tryGuessingAuthorAndAlbum
+{
+    if ([_files count] == 0) {
+        self.commonAlbum = nil;
+        self.commonAuthor = nil;
+    }
+    else {
+        NSString *author = [[_files objectAtIndex:0] artist];
+        NSString *album = [[_files objectAtIndex:0] album];
+
+        for (AudioFile *f in _files) {
+            if (![author isEqualToString:f.artist]) {
+                author = nil;
+                break;
+            }
+        }
+        
+        for (AudioFile *f in _files) {
+            if (![album isEqualToString:f.album]) {
+                album = nil;
+                break;
+            }
+        }
+        
+        self.commonAlbum = album;
+        self.commonAuthor = author;
+    }
+}
+
 @end

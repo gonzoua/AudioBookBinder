@@ -36,7 +36,8 @@ typedef struct
 @property (readonly) BOOL hasFiles;
 @property BOOL chapterMode;
 @property BOOL canPlay;
-
+@property (copy) NSString* commonAuthor;
+@property (copy) NSString* commonAlbum;
 
 // class methods
 - (id) init;
@@ -51,8 +52,6 @@ typedef struct
 - (void) switchChapterMode;
 - (void) renumberChapters;
 
-- (NSString*) commonAuthor;
-- (NSString*) commonAlbum;
 - (void) removeAllFiles:(NSOutlineView*)outlineView;
 // NSOutlineView data source methods
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
