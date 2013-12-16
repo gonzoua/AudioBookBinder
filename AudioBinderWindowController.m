@@ -470,7 +470,7 @@ enum abb_form_fields {
     }
 }
 
-- (IBAction) chapterModeWillChange: (id)sender
+- (IBAction) toggleChapters: (id)sender
 {
     [fileList switchChapterMode];
     [fileListView reloadData];
