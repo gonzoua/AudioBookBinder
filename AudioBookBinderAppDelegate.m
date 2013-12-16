@@ -119,11 +119,7 @@ static BOOL hackChecked = NO;
     [SUUpdater sharedUpdater];
 #endif
     
-    AudioBinderWindowController *controller = [[[AudioBinderWindowController alloc] initWithWindowNibName:@"AudioBinderWindow"] retain];
-
-    [controller showWindow:self];
-
-    [[controller window] makeMainWindow];
+    [self newAudiobookWindow:nil];
 }
 
 - (void)openChaptersHowTo:(id)sender
@@ -180,6 +176,16 @@ static BOOL hackChecked = NO;
 {
     [NSApp setApplicationIconImage:_appIcon];
 }
+
+- (IBAction) newAudiobookWindow: (id)sender
+{
+    AudioBinderWindowController *controller = [[[AudioBinderWindowController alloc] initWithWindowNibName:@"AudioBinderWindow"] retain];
+    
+    [controller showWindow:self];
+    
+    [[controller window] makeMainWindow];
+}
+
 
 
 @end

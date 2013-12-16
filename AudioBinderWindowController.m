@@ -30,6 +30,7 @@
 #define TEXT_MAXDURATION_VIOLATED NSLocalizedString(@"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)", nil)
 #define TEXT_FAILED_TO_PLAY     NSLocalizedString(@"Failed to play", nil)
 #define TEXT_CANT_PLAY          NSLocalizedString(@"Failed to play: %@", nil)
+#define TEXT_AUDIOBOOK          NSLocalizedString(@"Audiobook", nil)
 #define TEXT_AUDIOBOOKS         NSLocalizedString(@"Audiobooks", nil)
 #define TEXT_FILE_EXISTS        NSLocalizedString(@"File exists", @"epub file exists")
 #define TEXT_FILE_OVERWRITE     NSLocalizedString(@"File %@ already exists, replace?", @"epub file exists")
@@ -46,8 +47,6 @@ NSLocalizedString(@"It seems you are upgrading from previous version of Audioboo
 #define KVO_CONTEXT_CANPLAY_CHANGED @"CanPlayChanged"
 #define KVO_CONTEXT_COMMONAUTHOR_CHANGED @"CommonAuthorChanged"
 #define KVO_CONTEXT_COMMONALBUM_CHANGED @"CommonAlbumChanged"
-
-
 
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO},
@@ -122,6 +121,8 @@ enum abb_form_fields {
                forKeyPath:@"commonAlbum"
                   options:0
                   context:KVO_CONTEXT_COMMONALBUM_CHANGED];
+
+    [self updateWindowTitle];
 }
 
 - (void)awakeFromNib {
@@ -273,8 +274,6 @@ enum abb_form_fields {
     }
     [[NSUserDefaults standardUserDefaults] setObject:cols forKey:ColumnsConfiguration];
 }
-
-
 
 - (IBAction) addFiles: (id)sender
 {
@@ -1031,6 +1030,28 @@ enum abb_form_fields {
                 [[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
         }
     }
+}
+
+- (void)updateWindowTitle
+{
+    NSString *author = [[[form cellAtIndex:ABBAuthor] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *title = [[[form cellAtIndex:ABBTitle] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (([author length] == 0) && ([title length] == 0))
+    {
+        [self.window setTitle:TEXT_AUDIOBOOK];
+    }
+    else {
+        NSString *winTitle = [NSString stringWithFormat:@"%@ - %@", title, author];
+        [self.window setTitle:winTitle];
+    }
+}
+
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
+    if (control == form) {
+        [self updateWindowTitle];
+    }
+
+    return YES;
 }
 
 @end

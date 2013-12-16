@@ -26,6 +26,8 @@
 + (void) initialize;
 
 - (IBAction) openChaptersHowTo: (id)sender;
+- (IBAction) newAudiobookWindow: (id)sender;
+
 
 
 #ifndef APP_STORE_BUILD
