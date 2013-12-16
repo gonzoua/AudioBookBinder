@@ -29,13 +29,14 @@ typedef struct
     NSString *_topDir;
     NSArray *_draggedNodes;
     BOOL _chapterMode;
-    BOOL _canPlay;
     BOOL _sortAscending;
     NSString *_sortKey;
 }
 
 @property (readonly) BOOL hasFiles;
 @property BOOL chapterMode;
+@property BOOL canPlay;
+
 
 // class methods
 - (id) init;

@@ -43,6 +43,8 @@ NSLocalizedString(@"It seems you are upgrading from previous version of Audioboo
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
+#define KVO_CONTEXT_CANPLAY_CHANGED @"CanPlayChanged"
+
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO},
     {COLUMNID_AUTHOR, @"Author", NO},
@@ -102,6 +104,13 @@ enum abb_form_fields {
     _playingFile = nil;
     _currentProgress = 0;
     _destURL = nil;
+    
+    //this begins the observing
+    [fileList addObserver:self
+        forKeyPath:@"canPlay"
+           options:0
+           context:KVO_CONTEXT_CANPLAY_CHANGED];
+
     
 }
 
@@ -928,13 +937,6 @@ enum abb_form_fields {
     [alert runModal];
 }
 
-- (void)setCanPlay:(BOOL)b
-{
-    if (_sound == nil) {
-        [playButton setEnabled:b];
-    }
-    canPlay = b;
-}
 
 
 - (void)contextMenuSelected:(id)sender
@@ -1000,5 +1002,24 @@ enum abb_form_fields {
     
     return genres;
 }
+
+
+//whenever an observed key path changes, this method will be called
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context;
+{
+    //use the context to make sure this is a change in the address,
+    //because we may also be observing other things
+    if(context == KVO_CONTEXT_CANPLAY_CHANGED){
+        if (_sound == nil) {
+            [playButton setEnabled:fileList.canPlay];
+        }
+        
+        self.canPlay = fileList.canPlay;
+    }
+}
+
 
 @end

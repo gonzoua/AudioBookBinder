@@ -713,18 +713,15 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-    BOOL canPlay = NO;
+    BOOL playable = NO;
     NSOutlineView *view = [notification object];
     if ([[view selectedItems] count] == 1) {    
         id item = [[view selectedItems] objectAtIndex:0];
         if ([item isKindOfClass:[AudioFile class]])
-            canPlay = YES;
+            playable = YES;
     }
     
-    // do not spam AppDelegate
-    if (_canPlay != canPlay) {
-        NSLog(@"TODO: setCanPlay");
-    }
+    self.canPlay = playable;
 }
 
 
