@@ -537,8 +537,7 @@
             }
 			if (tryGuess) 
 			{
-				AudioBookBinderAppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
-				[appDelegate updateGuiWithGuessedData];
+                NSLog(@"TODO: updateGuiWithGuessedData");
 			}
         }
         
@@ -724,9 +723,7 @@
     
     // do not spam AppDelegate
     if (_canPlay != canPlay) {
-        AudioBookBinderAppDelegate *appDelegate = [[NSApplication sharedApplication] delegate];
-        _canPlay = canPlay;
-        [appDelegate setCanPlay:_canPlay];
+        NSLog(@"TODO: setCanPlay");
     }
 }
 

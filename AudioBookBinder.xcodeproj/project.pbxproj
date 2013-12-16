@@ -15,6 +15,8 @@
 		9F02CE4C101EBB9600AE315D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
 		9F02CE66101FF8D900AE315D /* ABLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABLog.m */; };
 		9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
+		9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */; };
+		9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
 		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
 		9F61BE3811FBBC8D00654B3B /* AudioBinderVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */; };
 		9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
@@ -94,6 +96,14 @@
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		9F11CC6111E3C99800D83B54 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F11CC6211E3C9B200D83B54 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderWindowController.h; sourceTree = "<group>"; };
+		9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderWindowController.m; sourceTree = "<group>"; };
+		9F1FFD5F185E7955005EF748 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD61185E7A23005EF748 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD62185E7A24005EF748 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD63185E7A26005EF748 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD64185E7A27005EF748 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD65185E7A28005EF748 /* nb */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nb; path = nb.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
@@ -230,6 +240,8 @@
 				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
 				9FAB14801161A51400A2F36A /* PrefsController.h */,
 				9FAB14811161A51400A2F36A /* PrefsController.m */,
+				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
+				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -261,6 +273,7 @@
 			children = (
 				9F776EC613CD6D5D004569F4 /* MiniProgressGradient.png */,
 				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
+				9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */,
 				9FFF519E12DC0D7000E3A54F /* audiobook.icns */,
 				9F782A2C129F941900763A5B /* Play.png */,
 				9F782A2D129F941900763A5B /* Stop.png */,
@@ -362,6 +375,7 @@
 				9F782A2F129F941900763A5B /* Stop.png in Resources */,
 				9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */,
 				9F776EC713CD6D5D004569F4 /* MiniProgressGradient.png in Resources */,
+				9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,12 +435,26 @@
 				9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */,
 				9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */,
 				9F61BE3B11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
+				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F1FFD5F185E7955005EF748 /* en */,
+				9F1FFD61185E7A23005EF748 /* ru */,
+				9F1FFD62185E7A24005EF748 /* de */,
+				9F1FFD63185E7A26005EF748 /* fr */,
+				9F1FFD64185E7A27005EF748 /* it */,
+				9F1FFD65185E7A28005EF748 /* nb */,
+			);
+			name = AudioBinderWindow.xib;
+			sourceTree = "<group>";
+		};
 		9F6FA3D6111BBBC20047728F /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
