@@ -76,8 +76,6 @@ static BOOL hackChecked = NO;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
  
-    _appIcon = [NSImage imageNamed: @"NSApplicationIcon"];
-
 #ifdef APP_STORE_BUILD     
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
@@ -134,49 +132,6 @@ static BOOL hackChecked = NO;
 #endif
 
 }
-
-- (void) updateTotalProgress
-{
-    static NSImage *sProgressGradient = NULL;
-    
-    static const double kProgressBarHeight = 6.0/32;
-    static const double kProgressBarHeightInIcon = 8.0/32;
-    
-    if (sProgressGradient == nil)
-        sProgressGradient = [[NSImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MiniProgressGradient" ofType:@"png"]];
-
-    NSImage *dockIcon = [_appIcon copyWithZone: nil];
-
-    [dockIcon lockFocus];
-    
-    double height = kProgressBarHeightInIcon;
-    NSSize s = [dockIcon size];
-    NSRect bar = NSMakeRect(0, s.height * (height - kProgressBarHeight / 2),
-                            s.width - 1, s.height * kProgressBarHeight);
-    
-    [[NSColor whiteColor] set];
-    [NSBezierPath fillRect: bar];
-
-    NSRect done = bar;
-    done.size.width *= 0; // XXX: _currentProgress / 100.;
-
-    NSRect gradRect = NSZeroRect;
-    gradRect.size = [sProgressGradient size];
-    [sProgressGradient drawInRect: done fromRect: gradRect operation: NSCompositeCopy
-                    fraction: 1.0];
-    
-    [[NSColor blackColor] set];
-    [NSBezierPath strokeRect: bar];
-    [dockIcon unlockFocus];
-    [NSApp setApplicationIconImage:dockIcon];
-    [dockIcon release];
-}
-
-- (void) resetTotalProgress
-{
-    [NSApp setApplicationIconImage:_appIcon];
-}
-
 - (IBAction) newAudiobookWindow: (id)sender
 {
     AudioBinderWindowController *controller = [[[AudioBinderWindowController alloc] initWithWindowNibName:@"AudioBinderWindow"] retain];

@@ -19,7 +19,6 @@
     IBOutlet SUUpdater *updater;
 #endif
     
-    NSImage *_appIcon;
 };
 
 
@@ -28,14 +27,8 @@
 - (IBAction) openChaptersHowTo: (id)sender;
 - (IBAction) newAudiobookWindow: (id)sender;
 
-
-
 #ifndef APP_STORE_BUILD
 - (IBAction) checkForUpdates: (id)sender;
 #endif
-
-- (void)updateTotalProgress;
-- (void)resetTotalProgress;
-
 
 @end

@@ -41,14 +41,16 @@
     BOOL _conversionResult;
     
     NSMutableArray *currentColumns;
-    
-    UInt64 _estTotalDuration;
-    UInt64 _currentDuration;
-    UInt64 _currentProgress;
+
+    NSUInteger _currentFileProgress;
+    NSUInteger _totalBookProgress;
+    NSUInteger _totalBookDuration;
 }
 
 @property (readwrite, retain) NSArray *validBitrates;
 @property (readwrite, assign) BOOL canPlay;
+
+@property (atomic, assign) NSUInteger currentProgress;
 
 - (IBAction) addFiles: (id)sender;
 - (IBAction) delFiles: (id)sender;

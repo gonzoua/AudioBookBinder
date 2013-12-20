@@ -18,6 +18,7 @@
 #import "AudioBinderVolume.h"
 #import "Chapter.h"
 #import "NSOutlineView_Extension.h"
+#import "StatsManager.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  NSLocalizedString(@"Audiofile conversion failed", nil)
@@ -105,8 +106,10 @@ enum abb_form_fields {
     [playButton setEnabled:NO];
     [self updateValidBitrates:self];
     _playingFile = nil;
-    _currentProgress = 0;
     _destURL = nil;
+    _totalBookProgress = 0;
+    _totalBookDuration = 0;
+    _currentFileProgress = 0;
     
     [fileList addObserver:self
         forKeyPath:@"canPlay"
@@ -566,11 +569,12 @@ enum abb_form_fields {
     }
     
     int totalVolumes = 0;
-    _estTotalDuration = 0;
-    _currentDuration = 0;
+    _currentFileProgress = 0;
+    _totalBookDuration = 0;
+    _totalBookProgress = 0;
     _currentProgress = 0;
-    
-    NSLog(@"TODO: updateTotalProgress");
+
+    [[StatsManager sharedInstance] updateConverter:self];
     
     BOOL onChapterBoundary = YES;
     for (AudioFile *file in files) {
@@ -619,7 +623,7 @@ enum abb_form_fields {
         onChapterBoundary = NO;
         [inputFiles addObject:file];
         estVolumeDuration += [file.duration intValue];
-        _estTotalDuration += [file.duration intValue];
+        _totalBookDuration += [file.duration intValue];
     }
     
     [_binder addVolume:currentVolumeName files:inputFiles];
@@ -739,7 +743,7 @@ enum abb_form_fields {
     }
     
     [NSApp endSheet:progressPanel];
-    NSLog(@"TODO: resetTotalProgress");
+    [[StatsManager sharedInstance] removeConverter:self];
     [progressPanel orderOut:nil];
     [self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
     [pool release];
@@ -760,21 +764,24 @@ enum abb_form_fields {
     [fileProgress setDoubleValue:0];
 }
 
+- (void)recalculateProgress
+{
+    NSUInteger newProgress = 0;
+    if (_totalBookDuration > 0)
+        newProgress = floor((_currentFileProgress + _totalBookProgress)*100./_totalBookDuration);
+    if (newProgress != _currentProgress) {
+        _currentProgress = newProgress;
+        [[StatsManager sharedInstance] updateConverter:self];
+    }
+}
+
 -(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
     [fileProgress setMaxValue:(double)totalFrames];
     [fileProgress setDoubleValue:(double)handledFrames];
     if (totalFrames > 0) {
-        UInt64 approxTotalDuration = _currentDuration + ([file.duration intValue]*handledFrames/totalFrames);
-        if (_estTotalDuration > 0) {
-            UInt64 approxTotalProgress = approxTotalDuration*100/_estTotalDuration;
-            if (approxTotalProgress > 100)
-                approxTotalProgress = 100;
-            if (approxTotalProgress > _currentProgress) {
-                _currentProgress = approxTotalProgress;
-                NSLog(@"TODO: updateTotalProgress");
-            }
-        }
+        _currentFileProgress = [file.duration intValue]*handledFrames/totalFrames;
+        [self recalculateProgress];
     }
 }
 
@@ -807,15 +814,10 @@ enum abb_form_fields {
     [fileProgress setDoubleValue:[fileProgress doubleValue]];
     file.valid = YES;
     file.duration = [[NSNumber alloc] initWithInt:milliseconds];
-    if (_estTotalDuration > 0) {
-        _currentDuration += [file.duration intValue];
-        UInt64 newTotalProgress = _currentDuration*100/_estTotalDuration;
-        if (newTotalProgress > 100)
-            newTotalProgress = 100;
-        if (newTotalProgress > _currentProgress) {
-            _currentProgress = newTotalProgress;
-            NSLog(@"TODO: updateTotalProgress");
-        }
+    if (_totalBookDuration > 0) {
+        _totalBookProgress += [file.duration intValue];
+        _currentFileProgress = 0;
+        [self recalculateProgress];
     }
 }
 
@@ -1053,5 +1055,11 @@ enum abb_form_fields {
 
     return YES;
 }
+
+- (NSUInteger) totalBookProgress {
+    return _currentFileProgress + _totalBookProgress;
+}
+
+
 
 @end

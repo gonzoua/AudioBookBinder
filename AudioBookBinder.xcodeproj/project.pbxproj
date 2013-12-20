@@ -17,6 +17,7 @@
 		9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
 		9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */; };
 		9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
+		9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD671862A27D005EF748 /* StatsManager.m */; };
 		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
 		9F61BE3811FBBC8D00654B3B /* AudioBinderVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */; };
 		9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
@@ -104,6 +105,8 @@
 		9F1FFD63185E7A26005EF748 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
 		9F1FFD64185E7A27005EF748 /* it */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = it; path = it.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
 		9F1FFD65185E7A28005EF748 /* nb */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = nb; path = nb.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
+		9F1FFD661862A27D005EF748 /* StatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsManager.h; sourceTree = "<group>"; };
+		9F1FFD671862A27D005EF748 /* StatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsManager.m; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 				9FAB14811161A51400A2F36A /* PrefsController.m */,
 				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
 				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
+				9F1FFD661862A27D005EF748 /* StatsManager.h */,
+				9F1FFD671862A27D005EF748 /* StatsManager.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -436,6 +441,7 @@
 				9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */,
 				9F61BE3B11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
 				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
+				9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
