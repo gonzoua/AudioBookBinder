@@ -34,7 +34,7 @@
         id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChaptersEnabled"];
         if (modeObj != nil)
             _chapterMode = [modeObj boolValue];
-        _canPlay = NO;
+        self.canPlay = NO;
         _sortAscending = YES;
         _sortKey = nil;
     }

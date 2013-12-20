@@ -38,16 +38,16 @@
 #define TEXT_OVERWRITE          NSLocalizedString(@"Replace", @"")
 #define TEXT_CANCEL             NSLocalizedString(@"Cancel", @"")
 #define TEXT_BOOK_IS_READY      NSLocalizedString(@"Audiobook is ready", @"");
-#define TEXT_ACTION_REQUIRED    NSLocalizedString(@"User action required", nil)
-
-#define TEXT_UPGRADE_HACK \
-NSLocalizedString(@"It seems you are upgrading from previous version of Audiobook Binder. This upgrade introduces change in configuration format that requires your action: please confirm destination folder for audiobook files. This is one-time operation.", nil)
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
 #define KVO_CONTEXT_CANPLAY_CHANGED @"CanPlayChanged"
 #define KVO_CONTEXT_COMMONAUTHOR_CHANGED @"CommonAuthorChanged"
 #define KVO_CONTEXT_COMMONALBUM_CHANGED @"CommonAlbumChanged"
+
+#ifdef APP_STORE_BUILD
+extern BOOL requiresUpdateHack;
+#endif
 
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO},
@@ -352,7 +352,7 @@ enum abb_form_fields {
     
 #ifdef APP_STORE_BUILD
     saveAsFilename.stringValue = filename;
-    [NSApp beginSheet:saveAsPanel modalForWindow:window
+    [NSApp beginSheet:saveAsPanel modalForWindow:self.window
         modalDelegate:self didEndSelector:NULL contextInfo:nil];
 #else
     NSSavePanel *savePanel = [NSSavePanel savePanel];
@@ -386,7 +386,7 @@ enum abb_form_fields {
     _destURL = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
     if (_destURL == nil) {
 #ifdef APP_STORE_BUILD
-        if (requiresUpgdateHack) {
+        if (requiresUpdateHack) {
             NSString *currentDest = [defaults stringForKey:@"DestinationFolder"];
             NSOpenPanel * panel = [NSOpenPanel openPanel];
             
@@ -572,7 +572,7 @@ enum abb_form_fields {
     _currentFileProgress = 0;
     _totalBookDuration = 0;
     _totalBookProgress = 0;
-    _currentProgress = 0;
+    self.currentProgress = 0;
 
     [[StatsManager sharedInstance] updateConverter:self];
     
@@ -769,8 +769,8 @@ enum abb_form_fields {
     NSUInteger newProgress = 0;
     if (_totalBookDuration > 0)
         newProgress = floor((_currentFileProgress + _totalBookProgress)*100./_totalBookDuration);
-    if (newProgress != _currentProgress) {
-        _currentProgress = newProgress;
+    if (newProgress != self.currentProgress) {
+        self.currentProgress = newProgress;
         [[StatsManager sharedInstance] updateConverter:self];
     }
 }

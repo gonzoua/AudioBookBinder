@@ -9,7 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "AudioBinderWindowController.h"
 
-@interface StatsManager : NSObject
+@interface StatsManager : NSObject {
+    NSMutableArray *converters;
+    NSLock *lock;
+    NSImage *appIcon;
+}
+
 + (StatsManager*)sharedInstance;
 
 - (void)updateConverter:(id)converter;

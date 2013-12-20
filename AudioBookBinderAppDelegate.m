@@ -12,8 +12,13 @@
 #import "Sparkle/SUUpdater.h"
 #import "AudioBinderWindowController.h"
 
+#define TEXT_ACTION_REQUIRED    NSLocalizedString(@"User action required", nil)
+
+#define TEXT_UPGRADE_HACK \
+NSLocalizedString(@"It seems you are upgrading from previous version of Audiobook Binder. This upgrade introduces change in configuration format that requires your action: please confirm destination folder for audiobook files. This is one-time operation.", nil)
+
 #ifdef APP_STORE_BUILD
-static BOOL requiresUpdateHack = NO;
+BOOL requiresUpdateHack = NO;
 static BOOL hackChecked = NO;
 #endif
 
@@ -75,8 +80,8 @@ static BOOL hackChecked = NO;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
- 
-#ifdef APP_STORE_BUILD     
+#ifdef APP_STORE_BUILD
+    NSURL *url;
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
     

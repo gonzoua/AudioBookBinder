@@ -10,11 +10,7 @@
 
 #define MAX_BARS 5
 
-@implementation StatsManager {
-    NSMutableArray *converters;
-    NSLock *lock;
-    NSImage *appIcon;
-}
+@implementation StatsManager
 
 - (id)init {
     self = [super init];
