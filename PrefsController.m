@@ -106,7 +106,7 @@
         if (len == 25)
             return @"--";
         else
-            return [NSString stringWithFormat:@"%d", len];
+            return [NSString stringWithFormat:@"%ld", (long)len];
 	}
 	
     return @"";
