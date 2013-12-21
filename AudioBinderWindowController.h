@@ -39,6 +39,7 @@
     NSString *_playingFile;
     NSImage *_playImg, *_stopImg;
     BOOL canPlay;
+    NSUInteger currentProgress;
     BOOL _conversionResult;
     
     NSMutableArray *currentColumns;
@@ -69,7 +70,6 @@
 - (IBAction) saveAsCancel:(id)sender;
 - (IBAction) folderSheetShow: (id) sender;
 
-- (void) addFileToiTunes:(NSString *)path;
 /*
  * The following method is called to put the MetaData read from the added AudioFiles MetaData into the ui fields.
  */

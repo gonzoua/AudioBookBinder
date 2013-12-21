@@ -68,7 +68,8 @@ enum abb_form_fields {
 
 @implementation AudioBinderWindowController
 
-@synthesize validBitrates, canPlay;
+@synthesize validBitrates, canPlay, currentProgress;
+
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -284,8 +285,6 @@ enum abb_form_fields {
 
 - (IBAction) addFiles: (id)sender
 {
-    int i; // Loop counter.
-    
     // Create the File Open Dialog class.
     NSOpenPanel *openDlg = [NSOpenPanel openPanel];
     
@@ -298,16 +297,16 @@ enum abb_form_fields {
     if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
     {
         BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
-        NSArray *files = [[openDlg filenames] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+        NSArray *urls;
         
         if (sortFiles)
-            files = [[openDlg filenames] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];
+            urls = [[openDlg URLs] sortedArrayUsingComparator:^(id a, id b) {return [[a path] compare:[b path]];}];
         else
-            files = [openDlg filenames];
+            urls = [openDlg URLs];
         
-        for( i = 0; i < [files count]; i++ )
+        for(NSURL *url in urls)
         {
-            NSString* fileName = [files objectAtIndex:i];
+            NSString* fileName = [url path];
             BOOL isDir;
             if ([[NSFileManager defaultManager] fileExistsAtPath:fileName isDirectory:&isDir])
             {
@@ -337,7 +336,6 @@ enum abb_form_fields {
     
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-    int choice;
     NSMutableString *filename = [[NSMutableString string] retain];
     
     if (![author isEqualToString:@""])
