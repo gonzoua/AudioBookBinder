@@ -126,9 +126,11 @@ enum abb_form_fields {
                   context:KVO_CONTEXT_COMMONALBUM_CHANGED];
 
     [self updateWindowTitle];
+    [self setupColumns];
+    [self setupGenres];
 }
 
-- (void)awakeFromNib {
+- (void)setupColumns {
     int idx;
     // build table header context menu
     NSArray *cols = [[NSUserDefaults standardUserDefaults] arrayForKey:ColumnsConfiguration];
@@ -210,6 +212,9 @@ enum abb_form_fields {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTableColumns) name:NSOutlineViewColumnDidResizeNotification object:fileListView];
     
     // [self.window setFrameAutosaveName:@"AudioBookbinderWindow"];  // Specify the autosave name for the window.
+}
+
+- (void) setupGenres {
     [genresField setStringValue:TEXT_AUDIOBOOKS];
     knownGenres = [[NSMutableArray alloc] initWithObjects:@"Art",
                    @"Biography",
@@ -263,7 +268,6 @@ enum abb_form_fields {
     autocompleting = NO;
     [genresField setDelegate:self];
 }
-
 
 - (void)saveTableColumns {
     NSMutableArray *cols = [NSMutableArray array];
