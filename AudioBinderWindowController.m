@@ -291,10 +291,8 @@ enum abb_form_fields {
     [openDlg setCanChooseFiles:YES];
     [openDlg setCanChooseDirectories:YES];
     [openDlg setAllowsMultipleSelection:YES];
-    
-    BOOL tryGuess = ![fileList hasFiles];
-    
-    if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
+
+    if ( [openDlg runModal] == NSOKButton )
     {
         BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
         NSArray *urls;
@@ -317,10 +315,7 @@ enum abb_form_fields {
                     [fileList addFile:fileName];
             }
         }
-        if (tryGuess)
-        {
-			[self updateGuiWithGuessedData];
-        }
+
         [fileListView reloadData];
     }
 }
@@ -455,11 +450,11 @@ enum abb_form_fields {
     [openDlg setCanChooseDirectories:NO];
     [openDlg setAllowsMultipleSelection:NO];
     
-    if ( [openDlg runModalForDirectory:nil file:nil] == NSOKButton )
+    if ( [openDlg runModal] == NSOKButton )
     {
-        NSArray *files = [openDlg filenames];
+        NSURL *url = [openDlg URL];
         
-        NSString* fileName = [files objectAtIndex:0];
+        NSString* fileName = [url path];
         BOOL isDir;
         if ([[NSFileManager defaultManager] fileExistsAtPath:fileName isDirectory:&isDir])
         {
@@ -1075,16 +1070,17 @@ enum abb_form_fields {
     [panel setCanCreateDirectories: YES];
     [panel beginSheetModalForWindow:saveAsPanel completionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton) {
+            NSURL *folderURL = [panel URL];
+
 #ifdef APP_STORE_BUILD
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-            NSURL *folderURL = [panel URL];
             NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
             [defaults setObject:data forKey: @"DestinationFolderBookmark"];
             // Menu item is bound to DestinationFolder key so let AppStore
             // build set it as well
 #endif
-            NSString * folder = [[panel filenames] objectAtIndex:0];
+            NSString * folder = [folderURL path];
             [defaults setObject:folder forKey: @"DestinationFolder"];
         }
         [saveAsFolderPopUp selectItemAtIndex:0];
