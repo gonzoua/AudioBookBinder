@@ -23,6 +23,10 @@
 
 @implementation AudioFileList
 
+@synthesize canPlay = _canPlay;
+@synthesize commonAuthor = _commonAuthor;
+@synthesize commonAlbum = _commonAlbum;
+
 - (id) init
 {
     if ((self = [super init])) 

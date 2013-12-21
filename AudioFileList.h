@@ -31,6 +31,9 @@ typedef struct
     BOOL _chapterMode;
     BOOL _sortAscending;
     NSString *_sortKey;
+    BOOL _canPlay;
+    NSString *_commonAuthor;
+    NSString *_commonAlbum;
 }
 
 @property (readonly) BOOL hasFiles;
