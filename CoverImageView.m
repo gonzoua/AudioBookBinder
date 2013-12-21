@@ -10,8 +10,6 @@
 
 @implementation CoverImageView
 
-@synthesize coverImageFilename;
-
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -67,7 +65,7 @@
 {
     NSString *ext;
 	char ext_temp;
-	unsigned int ch;
+    int ch;
         
     // we care only about filename. If image was brough by dragging 
     // picture - it's converted to PNG
@@ -92,6 +90,11 @@
 {
     return [coverImage retain];
 }
+
+- (NSString*) coverImageFilename {
+    return [coverImageFilename retain];
+}
+
 
 - (void) setCoverImageFilename:(NSString *)imagePath
 {
