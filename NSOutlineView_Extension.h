@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol ExtendedNSOutlineViewDelegate <NSOutlineViewDelegate>
+
+- (void) delKeyDown:(id)sender;
+
+@end
+
 @interface NSOutlineView (MyExtensions)
 
 - (NSArray *)selectedItems;

@@ -70,7 +70,7 @@
     }
     
     if (isDeleteKey)
-        [self.delegate delKeyDown:self];
+        [(id)self.delegate delKeyDown:self];
     else if (isCollapseKey)
         [self doCollapse];
     else if (isExpandKey)

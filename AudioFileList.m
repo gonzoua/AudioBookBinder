@@ -8,7 +8,6 @@
 
 #import "AudioFileList.h"
 #import "AudioFile.h"
-#include "NSOutlineView_Extension.h"
 #import "Chapter.h"
 #import "AudioBookBinderAppDelegate.h"
 

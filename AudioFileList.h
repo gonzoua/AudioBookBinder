@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AudioFile.h"
+#import "NSOutlineView_Extension.h"
 
 // the name should be the same as properties in AudioFile
 #define COLUMNID_NAME           @"name"
@@ -23,7 +24,7 @@ typedef struct
     BOOL enabled;
 } column_t;
 
-@interface AudioFileList : NSObject<NSOutlineViewDataSource, NSOutlineViewDelegate> {
+@interface AudioFileList : NSObject<NSOutlineViewDataSource, ExtendedNSOutlineViewDelegate> {
     NSMutableArray *_files;
     NSMutableArray *_chapters;
     NSString *_topDir;
