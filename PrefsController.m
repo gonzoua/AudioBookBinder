@@ -16,10 +16,6 @@
 - (void) awakeFromNib
 {
     [_folderPopUp selectItemAtIndex:0];
-#ifdef notyet    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [_folderPopUp selectItemAtIndex: [defaults boolForKey: @"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];
-#endif
     
 #ifdef APP_STORE_BUILD    
     [updateLabel setHidden:YES];
