@@ -26,6 +26,7 @@
     IBOutlet NSTextField *genresField;
     IBOutlet NSPanel *saveAsPanel;
     IBOutlet NSTextField *saveAsFilename;
+    IBOutlet NSPopUpButton *saveAsFolderPopUp;
     
     NSURL *_destURL;
     NSMutableArray *knownGenres;
@@ -66,6 +67,7 @@
 
 - (IBAction) saveAsOk:(id)sender;
 - (IBAction) saveAsCancel:(id)sender;
+- (IBAction) folderSheetShow: (id) sender;
 
 - (void) addFileToiTunes:(NSString *)path;
 /*

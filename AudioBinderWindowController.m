@@ -1062,4 +1062,32 @@ enum abb_form_fields {
 
 
 
+- (IBAction)folderSheetShow: (id) sender
+{
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
+    
+    [panel setPrompt: NSLocalizedString(@"Select", "Preferences -> Open panel prompt")];
+    [panel setAllowsMultipleSelection: NO];
+    [panel setCanChooseFiles: NO];
+    [panel setCanChooseDirectories: YES];
+    [panel setCanCreateDirectories: YES];
+    [panel beginSheetModalForWindow:saveAsPanel completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+#ifdef APP_STORE_BUILD
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+            NSURL *folderURL = [panel URL];
+            NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+            [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+            // Menu item is bound to DestinationFolder key so let AppStore
+            // build set it as well
+#endif
+            NSString * folder = [[panel filenames] objectAtIndex:0];
+            [defaults setObject:folder forKey: @"DestinationFolder"];
+        }
+        [saveAsFolderPopUp selectItemAtIndex:0];
+
+    }];
+}
+
 @end

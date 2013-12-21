@@ -32,6 +32,7 @@
 			<string>NSTableHeaderView</string>
 			<string>NSTextField</string>
 			<string>NSTextFieldCell</string>
+			<string>NSUserDefaultsController</string>
 			<string>NSView</string>
 			<string>NSWindowTemplate</string>
 		</object>
@@ -727,23 +728,22 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
-								<object class="NSMenuItem" key="NSMenuItem" id="303611953">
-									<reference key="NSMenu" ref="114404480"/>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<int key="NSState">1</int>
-									<reference key="NSOnImage" ref="339273745"/>
-									<reference key="NSMixedImage" ref="669441016"/>
-									<string key="NSAction">_popUpItemAction:</string>
-									<reference key="NSTarget" ref="282954428"/>
-								</object>
+								<nil key="NSMenuItem"/>
 								<bool key="NSMenuItemRespectAlignment">YES</bool>
 								<object class="NSMenu" key="NSMenu" id="114404480">
 									<string key="NSTitle">OtherViews</string>
 									<object class="NSMutableArray" key="NSMenuItems">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference ref="303611953"/>
+										<object class="NSMenuItem" id="303611953">
+											<reference key="NSMenu" ref="114404480"/>
+											<string key="NSTitle"/>
+											<string key="NSKeyEquiv"/>
+											<int key="NSMnemonicLoc">2147483647</int>
+											<reference key="NSOnImage" ref="339273745"/>
+											<reference key="NSMixedImage" ref="669441016"/>
+											<string key="NSAction">_popUpItemAction:</string>
+											<reference key="NSTarget" ref="282954428"/>
+										</object>
 										<object class="NSMenuItem" id="546089402">
 											<reference key="NSMenu" ref="114404480"/>
 											<bool key="NSIsDisabled">YES</bool>
@@ -770,6 +770,7 @@
 									</object>
 									<reference key="NSMenuFont" ref="217545718"/>
 								</object>
+								<int key="NSSelectedIndex">-1</int>
 								<int key="NSPreferredEdge">1</int>
 								<bool key="NSUsesItemFromMenu">YES</bool>
 								<bool key="NSAltersState">YES</bool>
@@ -897,6 +898,9 @@
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
+			</object>
+			<object class="NSUserDefaultsController" id="336348601">
+				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1079,6 +1083,22 @@
 					<int key="connectionID">1076</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">folderSheetShow:</string>
+						<reference key="source" ref="1021"/>
+						<reference key="destination" ref="943198908"/>
+					</object>
+					<int key="connectionID">1084</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">saveAsFolderPopUp</string>
+						<reference key="source" ref="1021"/>
+						<reference key="destination" ref="1018506282"/>
+					</object>
+					<int key="connectionID">1085</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="338053813"/>
@@ -1101,6 +1121,47 @@
 						</object>
 					</object>
 					<int key="connectionID">788</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">image: values.DestinationFolder</string>
+						<reference key="source" ref="303611953"/>
+						<reference key="destination" ref="336348601"/>
+						<object class="NSNibBindingConnector" key="connector" id="37861264">
+							<reference key="NSSource" ref="303611953"/>
+							<reference key="NSDestination" ref="336348601"/>
+							<string key="NSLabel">image: values.DestinationFolder</string>
+							<string key="NSBinding">image</string>
+							<string key="NSKeyPath">values.DestinationFolder</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">ExpandedPathToIconTransformer</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1080</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">title: values.DestinationFolder</string>
+						<reference key="source" ref="303611953"/>
+						<reference key="destination" ref="336348601"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="303611953"/>
+							<reference key="NSDestination" ref="336348601"/>
+							<string key="NSLabel">title: values.DestinationFolder</string>
+							<string key="NSBinding">title</string>
+							<string key="NSKeyPath">values.DestinationFolder</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">ExpandedPathToPathTransformer</string>
+							</object>
+							<reference key="NSPreviousConnector" ref="37861264"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1083</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1600,6 +1661,11 @@
 						<reference key="object" ref="837467285"/>
 						<reference key="parent" ref="565277845"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1077</int>
+						<reference key="object" ref="336348601"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1628,6 +1694,7 @@
 					<string>1031.IBPluginDependency</string>
 					<string>1032.IBPluginDependency</string>
 					<string>1033.IBPluginDependency</string>
+					<string>1077.IBPluginDependency</string>
 					<string>371.IBPluginDependency</string>
 					<string>371.IBWindowTemplateEditedContentRect</string>
 					<string>371.NSWindowTemplate.visibleAtLaunch</string>
@@ -1688,6 +1755,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="NO"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1778,7 +1846,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1076</int>
+			<int key="maxID">1085</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1794,9 +1862,12 @@
 							<string>bind:</string>
 							<string>cancel:</string>
 							<string>delFiles:</string>
+							<string>folderSheetShow:</string>
+							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
+							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
@@ -1806,6 +1877,9 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1829,9 +1903,12 @@
 							<string>bind:</string>
 							<string>cancel:</string>
 							<string>delFiles:</string>
+							<string>folderSheetShow:</string>
+							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
+							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
@@ -1858,6 +1935,14 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">folderSheetShow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">genresButtonChanged:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">joinFiles:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -1867,6 +1952,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">renumberChapters:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">resetToDefaults:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1911,6 +2000,7 @@
 							<string>playButton</string>
 							<string>progressPanel</string>
 							<string>saveAsFilename</string>
+							<string>saveAsFolderPopUp</string>
 							<string>saveAsPanel</string>
 							<string>tabs</string>
 						</object>
@@ -1928,6 +2018,7 @@
 							<string>NSButton</string>
 							<string>NSPanel</string>
 							<string>NSTextField</string>
+							<string>NSPopUpButton</string>
 							<string>NSPanel</string>
 							<string>NSTabView</string>
 						</object>
@@ -1948,6 +2039,7 @@
 							<string>playButton</string>
 							<string>progressPanel</string>
 							<string>saveAsFilename</string>
+							<string>saveAsFolderPopUp</string>
 							<string>saveAsPanel</string>
 							<string>tabs</string>
 						</object>
@@ -2000,6 +2092,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">saveAsFilename</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">saveAsFolderPopUp</string>
+								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">saveAsPanel</string>
