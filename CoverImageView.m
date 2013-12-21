@@ -247,11 +247,12 @@
     else {
         NSRect viewSize = [self bounds];
         NSSize imageSize = [scaledImage size];
+        NSRect imageRect = NSMakeRect(0, 0, imageSize.width, imageSize.height);
         NSPoint orig;
         orig.x = (viewSize.size.width - imageSize.width) / 2;
         orig.y = (viewSize.size.height - imageSize.height) / 2;
         
-        [scaledImage compositeToPoint:orig operation:NSCompositeSourceOver];
+        [scaledImage drawAtPoint:orig fromRect:imageRect operation:NSCompositeSourceOver fraction:1.0];
     }
     
 }
