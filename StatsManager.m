@@ -17,7 +17,6 @@
     if (self) {
         converters = [[NSMutableArray alloc] init];
         lock = [[NSLock alloc] init];
-        self.currentProgress = -1;
         appIcon = [NSImage imageNamed: @"NSApplicationIcon"];
     }
     

@@ -20,6 +20,4 @@
 - (void)updateConverter:(id)converter;
 - (void)removeConverter:(id)converter;
 
-@property (atomic, assign) NSInteger currentProgress;
-
 @end
