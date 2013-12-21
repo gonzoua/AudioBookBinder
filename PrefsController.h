@@ -26,6 +26,4 @@
 
 // Prefs panel delegates
 - (void) folderSheetShow: (id) sender;
-- (void) folderSheetClosed: (NSOpenPanel *) openPanel returnCode: (int) code contextInfo: (void *) info;
-- (void) destinationiTunes: (id) sender;
 @end

@@ -39,52 +39,25 @@
     [panel setCanChooseDirectories: YES];
     [panel setCanCreateDirectories: YES];
     
-    [panel beginSheetForDirectory: nil file: nil types: nil
-                   modalForWindow: [self window] modalDelegate: self didEndSelector:
-     @selector(folderSheetClosed:returnCode:contextInfo:) contextInfo: nil];
-}
+    [panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL *folderURL = [panel URL];
 
-- (void) folderSheetClosed: (NSOpenPanel *) openPanel returnCode: (int) code contextInfo: (void *) info
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (code == NSOKButton)
-    {
-        [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
-        [_saveAsFolderPopUp selectItemAtIndex:DESTINATION_FOLDER];
-        
 #ifdef APP_STORE_BUILD
-        NSURL *folderURL = [openPanel URL];
-        NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
-        [defaults setObject:data forKey: @"DestinationFolderBookmark"];
-        // Menu item is bound to DestinationFolder key so let AppStore
-        // build set it as well
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+            [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+            // Menu item is bound to DestinationFolder key so let AppStore
+            // build set it as well
 #endif
-        NSString * folder = [[openPanel filenames] objectAtIndex:0];
-        [defaults setObject:folder forKey: @"DestinationFolder"];
-        
-#ifdef notyet
-        [defaults setBool:NO forKey: @"DestinationiTunes"];
-#endif
-    }
-    else
-    {
-        //reset if cancelled
+            NSString * folder = [folderURL path];
+            [defaults setObject:folder forKey: @"DestinationFolder"];
+        }
         [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
         [_saveAsFolderPopUp selectItemAtIndex:DESTINATION_FOLDER];
-
-#ifdef notyet
-         [defaults boolForKey:@"DestinationiTunes"] ? DESTINATION_ITUNES : DESTINATION_FOLDER];    
-#endif
-    }
+    }];
 }
-
-- (void) destinationiTunes: (id) sender
-{
-    [[NSUserDefaults standardUserDefaults] 
-     setBool:([_folderPopUp indexOfSelectedItem] == DESTINATION_ITUNES ? YES : NO)
-          forKey: @"DestinationiTunes"];
-}
-
 
 @end
 
