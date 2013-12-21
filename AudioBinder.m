@@ -97,9 +97,9 @@ stringForOSStatus(OSStatus err)
     }
     const char *errDescr = isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusErrorString(err);
     if ((errDescr != nil) && (strlen(errDescr) > 0))
-        descString = [[NSString alloc] initWithFormat:@"err#%08x (%s)", err, errDescr];
+        descString = [[NSString alloc] initWithFormat:@"err#%08lx (%s)", (long)err, errDescr];
     else
-        descString = [[NSString alloc] initWithFormat:@"err#%08x ", err];
+        descString = [[NSString alloc] initWithFormat:@"err#%08lx ", (long)err];
 
     [descString autorelease];
     
@@ -423,7 +423,6 @@ stringForOSStatus(OSStatus err)
         bufferList.mBuffers[0].mData = audioBuffer;
         bufferList.mBuffers[0].mDataByteSize = AUDIO_BUFFER_SIZE;
                 
-        SInt64 prevPos = _outFileLength;
         do {
             
             framesToRead = 
