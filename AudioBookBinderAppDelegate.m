@@ -9,8 +9,10 @@
 #import "AudioBookBinderAppDelegate.h"
 #import "ExpandedPathToPathTransformer.h"
 #import "ExpandedPathToIconTransformer.h"
-#import "Sparkle/SUUpdater.h"
 #import "AudioBinderWindowController.h"
+#import "ConfigNames.h"
+
+#import "Sparkle/SUUpdater.h"
 
 #define TEXT_ACTION_REQUIRED    NSLocalizedString(@"User action required", nil)
 
@@ -31,8 +33,8 @@ static BOOL hackChecked = NO;
 #ifdef APP_STORE_BUILD
     // make sure it's ran only once
     if (!hackChecked) {
-        NSString *dir = [defaults stringForKey:@"DestinationFolder"];
-        NSURL *url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
+        NSString *dir = [defaults stringForKey:kConfigDestinationFolder];
+        NSURL *url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
 
         if ((dir != nil) && (url == nil)) {
             requiresUpdateHack = YES;
@@ -42,13 +44,13 @@ static BOOL hackChecked = NO;
 #endif
     
     NSMutableDictionary *appDefaults = [NSMutableDictionary
-                                        dictionaryWithObject:[NSNumber numberWithInt:2] forKey:@"Channels"];
+                                        dictionaryWithObject:[NSNumber numberWithInt:2] forKey:kConfigChannels];
     // for checkbox "add to itunes"
-    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"AddToiTunes"];
-    [appDefaults setObject:@"44100" forKey:@"SampleRate"];
-    [appDefaults setObject:@"128000" forKey:@"Bitrate"];
-    [appDefaults setObject:[NSNumber numberWithInt:12] forKey:@"MaxVolumeSize"];
-    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"SortAudioFiles"];
+    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:kConfigAddToITunes];
+    [appDefaults setObject:@"44100" forKey:kConfigSampleRate];
+    [appDefaults setObject:@"128000" forKey:kConfigBitrate];
+    [appDefaults setObject:[NSNumber numberWithInt:12] forKey:kConfigMaxVolumeSize];
+    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:kConfigSortAudioFiles];
     
     // for pop-up button Destination Folder
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(
@@ -62,12 +64,9 @@ static BOOL hackChecked = NO;
     else // just use something
         musicPath = NSHomeDirectory();
     
-    [appDefaults setObject:musicPath forKey:@"DestinationFolder"];
+    [appDefaults setObject:musicPath forKey:kConfigDestinationFolder];
     
 
-#ifdef notyet
-    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:@"DestinationiTunes"];
-#endif    
     [defaults registerDefaults:appDefaults];    
     
     //set custom value transformers    
@@ -87,8 +86,8 @@ static BOOL hackChecked = NO;
     
     if (requiresUpdateHack) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *currentDest = [defaults stringForKey:@"DestinationFolder"];
-        while ((url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain]) == nil) {
+        NSString *currentDest = [defaults stringForKey:kConfigDestinationFolder];
+        while ((url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain]) == nil) {
             
             NSAlert *a = [[NSAlert alloc] init];
             [a setMessageText:TEXT_ACTION_REQUIRED];
@@ -111,7 +110,7 @@ static BOOL hackChecked = NO;
             {                
                 NSURL *folderURL = [panel URL];
                 NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
-                [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+                [defaults setObject:data forKey:kConfigDestinationFolderBookmark];
                 [defaults synchronize];
                 break;
             }

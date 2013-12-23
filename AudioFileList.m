@@ -10,6 +10,7 @@
 #import "AudioFile.h"
 #import "Chapter.h"
 #import "AudioBookBinderAppDelegate.h"
+#import "ConfigNames.h"
 
 // It is best to #define strings to avoid making typing errors
 #define SIMPLE_BPOARD_TYPE           @"MyCustomOutlineViewPboardType"
@@ -34,7 +35,7 @@
         _chapters = [[[NSMutableArray alloc] init] retain];
         _topDir = nil;
         _chapterMode = YES;
-        id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChaptersEnabled"];
+        id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigChaptersEnabled];
         if (modeObj != nil)
             _chapterMode = [modeObj boolValue];
         self.canPlay = NO;
@@ -122,7 +123,7 @@
     }
 
     // Should be OK for most cases  
-    BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
+    BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:kConfigSortAudioFiles];
 
     NSArray *orderedFiles;
     if (sortFiles)
@@ -165,7 +166,7 @@
         // change explicitely because we need to update outlineView in new mode
         _chapterMode = NO;
     }
-    [[NSUserDefaults standardUserDefaults] setBool:_chapterMode forKey:@"ChaptersEnabled"];
+    [[NSUserDefaults standardUserDefaults] setBool:_chapterMode forKey:kConfigChaptersEnabled];
 }
 
 - (void) renumberChapters
@@ -518,7 +519,7 @@
         {
             //we have a list of file names in an NSData object
             NSArray *fileArray;
-            BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
+            BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:kConfigSortAudioFiles];
 
             if (sortFiles)
                 fileArray = [[paste propertyListForType:@"NSFilenamesPboardType"] sortedArrayUsingComparator:^(id a, id b) {return [a compare:b];}];

@@ -19,6 +19,7 @@
 #import "Chapter.h"
 #import "NSOutlineView_Extension.h"
 #import "StatsManager.h"
+#import "ConfigNames.h"
 
 // localized strings
 #define TEXT_CONVERSION_FAILED  NSLocalizedString(@"Audiofile conversion failed", nil)
@@ -294,7 +295,7 @@ enum abb_form_fields {
 
     if ( [openDlg runModal] == NSOKButton )
     {
-        BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"SortAudioFiles"];
+        BOOL sortFiles = [[NSUserDefaults standardUserDefaults] boolForKey:kConfigSortAudioFiles];
         NSArray *urls;
         
         if (sortFiles)
@@ -355,7 +356,7 @@ enum abb_form_fields {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setAccessoryView: nil];
     // [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"m4a", @"m4b", nil]];
-    NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:@"DestinationFolder"];
+    NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:kDestinationFolder];
     
     choice = [savePanel runModalForDirectory:dir file:filename];
     
@@ -380,11 +381,11 @@ enum abb_form_fields {
     [saveAsPanel orderOut:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *destPath;
-    _destURL = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:@"DestinationFolderBookmark"] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
+    _destURL = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
     if (_destURL == nil) {
 #ifdef APP_STORE_BUILD
         if (requiresUpdateHack) {
-            NSString *currentDest = [defaults stringForKey:@"DestinationFolder"];
+            NSString *currentDest = [defaults stringForKey:kConfigDestinationFolder];
             NSOpenPanel * panel = [NSOpenPanel openPanel];
             
             [panel setPrompt: NSLocalizedString(@"Select", nil)];
@@ -404,10 +405,10 @@ enum abb_form_fields {
                 return;
         }
         else
-            destPath = [defaults stringForKey:@"DestinationFolder"];
+            destPath = [defaults stringForKey:kConfigDestinationFolder];
 #else
         // standard Music directory
-        destPath = [defaults stringForKey:@"DestinationFolder"];
+        destPath = [defaults stringForKey:kDestinationFolder];
 #endif
     }
     else {
@@ -533,7 +534,7 @@ enum abb_form_fields {
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
     UInt64 maxVolumeDuration = 0;
-    NSInteger hours = [[NSUserDefaults standardUserDefaults] integerForKey:@"MaxVolumeSize"];
+    NSInteger hours = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigMaxVolumeSize];
     if ((hours > 0) && (hours < 25))
         maxVolumeDuration = hours * 3600;
     
@@ -630,9 +631,9 @@ enum abb_form_fields {
     [self fixupBitrate];
     // setup channels/samplerate
     
-    _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channels"];
-    _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:@"SampleRate"];
-    _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"Bitrate"];
+    _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
+    _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
+    _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
     
     [NSApp beginSheet:progressPanel modalForWindow:self.window
         modalDelegate:self didEndSelector:NULL contextInfo:nil];
@@ -721,7 +722,7 @@ enum abb_form_fields {
                     
                 }
                 
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AddToiTunes"]) {
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
                     
                     [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
                     for(AudioBinderVolume *volume in volumes)
@@ -854,8 +855,8 @@ enum abb_form_fields {
     AudioBinder *tmpBinder = [[AudioBinder alloc] init];
     
     // setup channels/samplerate
-    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channels"];
-    tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:@"SampleRate"];
+    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
+    tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
     self.validBitrates = [tmpBinder validBitrates];
     [self fixupBitrate];
     
@@ -864,7 +865,7 @@ enum abb_form_fields {
 
 - (void) fixupBitrate
 {
-    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:@"Bitrate"];
+    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
     int newBitrate;
     int distance = bitrate;
     
@@ -876,7 +877,7 @@ enum abb_form_fields {
     }
     
     if (newBitrate != bitrate) {
-        [[NSUserDefaults standardUserDefaults] setInteger:newBitrate forKey:@"Bitrate"];
+        [[NSUserDefaults standardUserDefaults] setInteger:newBitrate forKey:kConfigBitrate];
     }
 }
 
@@ -1076,12 +1077,12 @@ enum abb_form_fields {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
             NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
-            [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+            [defaults setObject:data forKey:kConfigDestinationFolderBookmark];
             // Menu item is bound to DestinationFolder key so let AppStore
             // build set it as well
 #endif
             NSString * folder = [folderURL path];
-            [defaults setObject:folder forKey: @"DestinationFolder"];
+            [defaults setObject:folder forKey:kConfigDestinationFolder];
         }
         [saveAsFolderPopUp selectItemAtIndex:0];
 

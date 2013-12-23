@@ -7,7 +7,10 @@
 //
 
 #import "PrefsController.h"
+#import "ConfigNames.h"
+
 #import "Sparkle/SUUpdater.h"
+
 #define DESTINATION_FOLDER 0
 #define DESTINATION_ITUNES 2
 
@@ -43,12 +46,12 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             
             NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
-            [defaults setObject:data forKey: @"DestinationFolderBookmark"];
+            [defaults setObject:data forKey:kConfigDestinationFolderBookmark];
             // Menu item is bound to DestinationFolder key so let AppStore
             // build set it as well
 #endif
             NSString * folder = [folderURL path];
-            [defaults setObject:folder forKey: @"DestinationFolder"];
+            [defaults setObject:folder forKey:kConfigDestinationFolder];
         }
         [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
         [_saveAsFolderPopUp selectItemAtIndex:DESTINATION_FOLDER];
