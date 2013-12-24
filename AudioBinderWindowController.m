@@ -69,7 +69,7 @@ enum abb_form_fields {
 
 @implementation AudioBinderWindowController
 
-@synthesize validBitrates, canPlay, currentProgress;
+@synthesize canPlay, currentProgress;
 
 
 - (id)initWithWindow:(NSWindow *)window
@@ -106,7 +106,6 @@ enum abb_form_fields {
     
     [playButton setImage:_playImg] ;
     [playButton setEnabled:NO];
-    [self updateValidBitrates:self];
     _playingFile = nil;
     _destURL = nil;
     _totalBookProgress = 0;
@@ -628,7 +627,6 @@ enum abb_form_fields {
     [volumeChapters addObject:curChapters];
     
     // make sure that at this point we have valid bitrate in settings
-    [self fixupBitrate];
     // setup channels/samplerate
     
     _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
@@ -848,39 +846,6 @@ enum abb_form_fields {
     returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
     [scriptObject release];
 }
-
-- (IBAction) updateValidBitrates: (id)sender
-{
-    // Initialize samplerate/channels -> avail bitrates
-    AudioBinder *tmpBinder = [[AudioBinder alloc] init];
-    
-    // setup channels/samplerate
-    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
-    tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
-    self.validBitrates = [tmpBinder validBitrates];
-    [self fixupBitrate];
-    
-    [tmpBinder release];
-}
-
-- (void) fixupBitrate
-{
-    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
-    int newBitrate;
-    int distance = bitrate;
-    
-    for (NSNumber *n in validBitrates) {
-        if (abs([n integerValue] - bitrate) < distance) {
-            distance = abs([n integerValue] - bitrate);
-            newBitrate = [n integerValue];
-        }
-    }
-    
-    if (newBitrate != bitrate) {
-        [[NSUserDefaults standardUserDefaults] setInteger:newBitrate forKey:kConfigBitrate];
-    }
-}
-
 
 - (IBAction) playStop: (id)sender
 {

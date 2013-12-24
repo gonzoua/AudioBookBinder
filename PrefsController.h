@@ -14,16 +14,20 @@
 @end
 
 @interface PrefsController : NSWindowController {
-    NSUserDefaults *_userDefaults;
+    NSArray *validBitrates;
     IBOutlet NSPopUpButton * _folderPopUp;
     // HACK ALERT: dublicate all the changes on "save as" panel too 
     IBOutlet NSPopUpButton * _saveAsFolderPopUp;
-
     
     IBOutlet NSTextField *updateLabel;
     IBOutlet NSButton *updateButton;
 }
 
+@property (readwrite, retain) NSArray *validBitrates;
+
 // Prefs panel delegates
 - (void) folderSheetShow: (id) sender;
+
+- (void) updateValidBitrates;
+- (void) fixupBitrate;
 @end

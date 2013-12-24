@@ -34,7 +34,6 @@
     BOOL _playing;
     NSString *outFile;
     AudioBinder *_binder;
-    NSArray *validBitrates;
     NSSound *_sound;
     NSString *_playingFile;
     NSImage *_playImg, *_stopImg;
@@ -49,7 +48,6 @@
     NSUInteger _totalBookDuration;
 }
 
-@property (readwrite, retain) NSArray *validBitrates;
 @property (readwrite, assign) BOOL canPlay;
 
 @property (atomic, assign) NSUInteger currentProgress;
@@ -63,7 +61,6 @@
 - (IBAction) joinFiles: (id)sender;
 - (IBAction) splitFiles: (id)sender;
 - (IBAction) renumberChapters: (id)sender;
-- (IBAction) updateValidBitrates: (id)sender;
 - (IBAction) playStop: (id)sender;
 
 - (IBAction) saveAsOk:(id)sender;

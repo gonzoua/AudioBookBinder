@@ -21,7 +21,6 @@
     
 };
 
-
 + (void) initialize;
 
 - (IBAction) openChaptersHowTo: (id)sender;

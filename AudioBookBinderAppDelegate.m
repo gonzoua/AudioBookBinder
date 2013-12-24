@@ -145,6 +145,4 @@ static BOOL hackChecked = NO;
     [[controller window] makeMainWindow];
 }
 
-
-
 @end

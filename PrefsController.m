@@ -7,6 +7,7 @@
 //
 
 #import "PrefsController.h"
+#import "AudioBinder.h"
 #import "ConfigNames.h"
 
 #import "Sparkle/SUUpdater.h"
@@ -14,7 +15,11 @@
 #define DESTINATION_FOLDER 0
 #define DESTINATION_ITUNES 2
 
+#define KVO_CONTEXT_BITRATES_AFFECTED   @"BitratesChanged"
+
 @implementation PrefsController
+
+@synthesize validBitrates;
 
 - (void) awakeFromNib
 {
@@ -26,6 +31,18 @@
 #else
     [updateButton bind:@"value" toObject:[SUUpdater sharedUpdater] withKeyPath:@"automaticallyChecksForUpdates" options:nil];
 #endif
+
+    [self updateValidBitrates];
+    
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+               forKeyPath:kConfigChannels
+                  options:0
+                  context:KVO_CONTEXT_BITRATES_AFFECTED];
+    
+    [[NSUserDefaults standardUserDefaults] addObserver:self
+                                            forKeyPath:kConfigSampleRate
+                                               options:0
+                                               context:KVO_CONTEXT_BITRATES_AFFECTED];
 }    
 
 - (void) folderSheetShow: (id) sender
@@ -58,6 +75,50 @@
     }];
 }
 
+
+- (void) updateValidBitrates
+{
+    // Initialize samplerate/channels -> avail bitrates
+    AudioBinder *tmpBinder = [[AudioBinder alloc] init];
+    
+    // setup channels/samplerate
+    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
+    tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
+    self.validBitrates = [tmpBinder validBitrates];
+    [self fixupBitrate];
+    
+    [tmpBinder release];
+}
+
+- (void) fixupBitrate
+{
+    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
+    int newBitrate;
+    int distance = bitrate;
+    
+    for (NSNumber *n in validBitrates) {
+        if (abs([n integerValue] - bitrate) < distance) {
+            distance = abs([n integerValue] - bitrate);
+            newBitrate = [n integerValue];
+        }
+    }
+    
+    if (newBitrate != bitrate) {
+        [[NSUserDefaults standardUserDefaults] setInteger:newBitrate forKey:kConfigBitrate];
+    }
+}
+
+//whenever an observed key path changes, this method will be called
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context;
+{
+    if (context == KVO_CONTEXT_BITRATES_AFFECTED) {
+        [self updateValidBitrates];
+    }
+}
+
 @end
 
 
@@ -83,4 +144,5 @@
 	
     return @"";
 }
+
 @end
