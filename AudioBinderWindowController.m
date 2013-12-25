@@ -38,7 +38,7 @@
 #define TEXT_FILE_OVERWRITE     NSLocalizedString(@"File %@ already exists, replace?", @"epub file exists")
 #define TEXT_OVERWRITE          NSLocalizedString(@"Replace", @"")
 #define TEXT_CANCEL             NSLocalizedString(@"Cancel", @"")
-#define TEXT_BOOK_IS_READY      NSLocalizedString(@"Audiobook is ready", @"");
+#define TEXT_BOOK_IS_READY      NSLocalizedString(@"Audiobook is ready", @"")
 
 #define ColumnsConfiguration @"ColumnsConfiguration"
 
@@ -97,6 +97,7 @@ enum abb_form_fields {
     
     _binder = [[[AudioBinder alloc] init] retain];
     _playing = NO;
+    _converting = NO;
     NSString* img = [[NSBundle mainBundle] pathForResource:@"Play" ofType:@"png"];
     NSURL* url = [NSURL fileURLWithPath:img];
     _playImg = [[NSImage alloc] initWithContentsOfURL:url];
@@ -366,7 +367,7 @@ enum abb_form_fields {
     {
         [bindButton setEnabled:FALSE];
         outFile = [[savePanel filename] retain];
-        
+        _converting = YES;
         [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
     }
     
@@ -431,6 +432,7 @@ enum abb_form_fields {
     }
     
     [bindButton setEnabled:FALSE];
+    _converting = YES;
     [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
 }
 
@@ -503,6 +505,7 @@ enum abb_form_fields {
 
 - (void) bindingThreadIsDone:(id)sender
 {
+    _converting = NO;
 #ifdef APP_STORE_BUILD
     if (_destURL) {
         [_destURL startAccessingSecurityScopedResource];

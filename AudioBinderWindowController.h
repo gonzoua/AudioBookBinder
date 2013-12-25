@@ -46,6 +46,7 @@
     NSUInteger _currentFileProgress;
     NSUInteger _totalBookProgress;
     NSUInteger _totalBookDuration;
+    BOOL _converting;
 }
 
 @property (readwrite, assign) BOOL canPlay;

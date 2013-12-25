@@ -211,16 +211,16 @@
 							<string key="NSTitle">File</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSMenuItem" id="954307185">
+								<object class="NSMenuItem" id="266534643">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">New Audiobook</string>
-									<string key="NSKeyEquiv">N</string>
+									<string key="NSKeyEquiv">n</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="794277014">
+								<object class="NSMenuItem" id="602912376">
 									<reference key="NSMenu" ref="720053764"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -476,7 +476,7 @@
 								<object class="NSMenuItem" id="1046855294">
 									<reference key="NSMenu" ref="682542517"/>
 									<string key="NSTitle">Renumber</string>
-									<string key="NSKeyEquiv">n</string>
+									<string key="NSKeyEquiv">N</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -1663,7 +1663,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">newAudiobookWindow:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="954307185"/>
+						<reference key="destination" ref="266534643"/>
 					</object>
 					<int key="connectionID">1064</int>
 				</object>
@@ -1817,7 +1817,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="label">contentValues: validBitrates</string>
 						<reference key="source" ref="593625155"/>
 						<reference key="destination" ref="341631139"/>
-						<object class="NSNibBindingConnector" key="connector" id="691387341">
+						<object class="NSNibBindingConnector" key="connector" id="532786732">
 							<reference key="NSSource" ref="593625155"/>
 							<reference key="NSDestination" ref="341631139"/>
 							<string key="NSLabel">contentValues: validBitrates</string>
@@ -1839,7 +1839,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string key="NSLabel">selectedValue: values.Bitrate</string>
 							<string key="NSBinding">selectedValue</string>
 							<string key="NSKeyPath">values.Bitrate</string>
-							<reference key="NSPreviousConnector" ref="691387341"/>
+							<reference key="NSPreviousConnector" ref="532786732"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
@@ -2145,8 +2145,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="722745758"/>
 							<reference ref="708754028"/>
 							<reference ref="724214841"/>
-							<reference ref="954307185"/>
-							<reference ref="794277014"/>
+							<reference ref="266534643"/>
+							<reference ref="602912376"/>
 						</object>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -2736,12 +2736,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1062</int>
-						<reference key="object" ref="954307185"/>
+						<reference key="object" ref="266534643"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1063</int>
-						<reference key="object" ref="794277014"/>
+						<reference key="object" ref="602912376"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 				</object>
@@ -3354,17 +3354,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">PrefsController</string>
 					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">updateValidBitrates:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">updateValidBitrates:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">updateValidBitrates:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
