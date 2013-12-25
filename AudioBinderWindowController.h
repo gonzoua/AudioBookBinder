@@ -11,7 +11,7 @@
 #import "AudioBinder.h"
 #import "CoverImageView.h"
 
-@interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate> {
+@interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate, NSWindowDelegate> {
     IBOutlet NSOutlineView *fileListView;
     IBOutlet NSForm *form;
     IBOutlet NSButton *bindButton;

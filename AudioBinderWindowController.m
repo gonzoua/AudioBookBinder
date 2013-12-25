@@ -76,9 +76,15 @@ enum abb_form_fields {
 {
     self = [super initWithWindow:window];
     if (self) {
+        [self updateWindowTitle];
     }
     
     return self;
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+    [self updateWindowTitle];
 }
 
 - (void)windowDidLoad
@@ -130,6 +136,7 @@ enum abb_form_fields {
     [self updateWindowTitle];
     [self setupColumns];
     [self setupGenres];
+    [self.window setDelegate:self];
 }
 
 - (void)setupColumns {
@@ -328,8 +335,7 @@ enum abb_form_fields {
 }
 
 - (IBAction) bind: (id)sender
-{
-    
+{    
     NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
     NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
     NSMutableString *filename = [[NSMutableString string] retain];
@@ -1004,14 +1010,20 @@ enum abb_form_fields {
 {
     NSString *author = [[[form cellAtIndex:ABBAuthor] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *title = [[[form cellAtIndex:ABBTitle] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSString *windowTitle = nil;
+    
     if (([author length] == 0) && ([title length] == 0))
     {
-        [self.window setTitle:TEXT_AUDIOBOOK];
+        windowTitle = TEXT_AUDIOBOOK;
     }
     else {
-        NSString *winTitle = [NSString stringWithFormat:@"%@ - %@", title, author];
-        [self.window setTitle:winTitle];
+        windowTitle = [NSString stringWithFormat:@"%@ - %@", title, author];
     }
+    // do not update if it hasn't been changed
+    if (![windowTitle isEqualToString:self.window.title])
+        [self.window setTitle:windowTitle];
+
 }
 
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
