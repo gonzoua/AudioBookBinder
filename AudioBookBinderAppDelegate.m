@@ -145,4 +145,13 @@ static BOOL hackChecked = NO;
     [[controller window] makeMainWindow];
 }
 
+- (BOOL) applicationShouldHandleReopen:(NSApplication *)theApplication
+                     hasVisibleWindows:(BOOL)flag
+{
+    if (!flag)
+        [self newAudiobookWindow:nil];
+    
+    return YES;
+}
+
 @end
