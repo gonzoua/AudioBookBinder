@@ -166,7 +166,6 @@
         // change explicitely because we need to update outlineView in new mode
         _chapterMode = NO;
     }
-    [[NSUserDefaults standardUserDefaults] setBool:_chapterMode forKey:kConfigChaptersEnabled];
 }
 
 - (void) renumberChapters

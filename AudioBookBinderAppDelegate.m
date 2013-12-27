@@ -51,6 +51,7 @@ static BOOL hackChecked = NO;
     [appDefaults setObject:@"128000" forKey:kConfigBitrate];
     [appDefaults setObject:[NSNumber numberWithInt:12] forKey:kConfigMaxVolumeSize];
     [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:kConfigSortAudioFiles];
+    [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:kConfigChaptersEnabled];
     
     // for pop-up button Destination Folder
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(
