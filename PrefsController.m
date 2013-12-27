@@ -58,9 +58,8 @@
     [panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton) {
             NSURL *folderURL = [panel URL];
-
-#ifdef APP_STORE_BUILD
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+#ifdef APP_STORE_BUILD
             
             NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
             [defaults setObject:data forKey:kConfigDestinationFolderBookmark];

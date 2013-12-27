@@ -362,9 +362,9 @@ enum abb_form_fields {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setAccessoryView: nil];
     // [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"m4a", @"m4b", nil]];
-    NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:kDestinationFolder];
+    NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:kConfigDestinationFolder];
     
-    choice = [savePanel runModalForDirectory:dir file:filename];
+    NSInteger choice = [savePanel runModalForDirectory:dir file:filename];
     
     [filename release];
     
@@ -414,7 +414,7 @@ enum abb_form_fields {
             destPath = [defaults stringForKey:kConfigDestinationFolder];
 #else
         // standard Music directory
-        destPath = [defaults stringForKey:kDestinationFolder];
+        destPath = [defaults stringForKey:kConfigDestinationFolder];
 #endif
     }
     else {
@@ -1052,9 +1052,9 @@ enum abb_form_fields {
     [panel beginSheetModalForWindow:saveAsPanel completionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton) {
             NSURL *folderURL = [panel URL];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
 #ifdef APP_STORE_BUILD
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
             NSData* data = [folderURL bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
             [defaults setObject:data forKey:kConfigDestinationFolderBookmark];
