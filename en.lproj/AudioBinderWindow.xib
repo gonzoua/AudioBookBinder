@@ -164,7 +164,6 @@
 							<string key="NSFrame">{{13, 39}, {474, 368}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="929945333"/>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTabViewItem" id="164387637">
@@ -187,10 +186,10 @@
 															<object class="NSOutlineView" id="507439630">
 																<reference key="NSNextResponder" ref="823383498"/>
 																<int key="NSvFlags">274</int>
-																<string key="NSFrameSize">{418, 266}</string>
+																<string key="NSFrameSize">{418, 262}</string>
 																<reference key="NSSuperview" ref="823383498"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="998352342"/>
+																<reference key="NSNextKeyView" ref="369897762"/>
 																<bool key="NSEnabled">YES</bool>
 																<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -213,7 +212,7 @@
 																	<bool key="EncodedWithXMLCoder">YES</bool>
 																	<object class="NSTableColumn" id="737979113">
 																		<string key="NSIdentifier">NameColumn</string>
-																		<double key="NSWidth">414</double>
+																		<double key="NSWidth">415</double>
 																		<double key="NSMinWidth">16</double>
 																		<double key="NSMaxWidth">1000</double>
 																		<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -288,7 +287,7 @@
 																<int key="NSTableViewGroupRowStyle">1</int>
 															</object>
 														</object>
-														<string key="NSFrame">{{1, 18}, {418, 266}}</string>
+														<string key="NSFrame">{{1, 18}, {418, 262}}</string>
 														<reference key="NSSuperview" ref="261625228"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="507439630"/>
@@ -337,10 +336,10 @@
 														<int key="NScvFlags">4</int>
 													</object>
 												</object>
-												<string key="NSFrame">{{17, 38}, {420, 285}}</string>
+												<string key="NSFrame">{{17, 38}, {420, 281}}</string>
 												<reference key="NSSuperview" ref="929945333"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="369897762"/>
+												<reference key="NSNextKeyView" ref="823383498"/>
 												<int key="NSsFlags">133681</int>
 												<reference key="NSVScroller" ref="998352342"/>
 												<reference key="NSHScroller" ref="595255393"/>
@@ -485,7 +484,6 @@
 							<string key="NSFrame">{{167, 11}, {165, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="391240539">
 								<int key="NSCellFlags">-2080374784</int>
@@ -665,7 +663,6 @@
 							<string key="NSFrame">{{166, 19}, {111, 23}}</string>
 							<reference key="NSSuperview" ref="562170382"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="690972382">
 								<int key="NSCellFlags">-2080374784</int>
@@ -728,22 +725,23 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
-								<nil key="NSMenuItem"/>
+								<object class="NSMenuItem" key="NSMenuItem" id="303611953">
+									<reference key="NSMenu" ref="114404480"/>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<int key="NSState">1</int>
+									<reference key="NSOnImage" ref="339273745"/>
+									<reference key="NSMixedImage" ref="669441016"/>
+									<string key="NSAction">_popUpItemAction:</string>
+									<reference key="NSTarget" ref="282954428"/>
+								</object>
 								<bool key="NSMenuItemRespectAlignment">YES</bool>
 								<object class="NSMenu" key="NSMenu" id="114404480">
 									<string key="NSTitle">OtherViews</string>
 									<object class="NSMutableArray" key="NSMenuItems">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<object class="NSMenuItem" id="303611953">
-											<reference key="NSMenu" ref="114404480"/>
-											<string key="NSTitle"/>
-											<string key="NSKeyEquiv"/>
-											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="339273745"/>
-											<reference key="NSMixedImage" ref="669441016"/>
-											<string key="NSAction">_popUpItemAction:</string>
-											<reference key="NSTarget" ref="282954428"/>
-										</object>
+										<reference ref="303611953"/>
 										<object class="NSMenuItem" id="546089402">
 											<reference key="NSMenu" ref="114404480"/>
 											<bool key="NSIsDisabled">YES</bool>
@@ -822,7 +820,6 @@
 							<string key="NSFrame">{{292, 3}, {94, 32}}</string>
 							<reference key="NSSuperview" ref="789658865"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="732101916">
@@ -1863,23 +1860,17 @@
 							<string>cancel:</string>
 							<string>delFiles:</string>
 							<string>folderSheetShow:</string>
-							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
-							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
 							<string>splitFiles:</string>
 							<string>toggleChapters:</string>
-							<string>updateValidBitrates:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1904,17 +1895,14 @@
 							<string>cancel:</string>
 							<string>delFiles:</string>
 							<string>folderSheetShow:</string>
-							<string>genresButtonChanged:</string>
 							<string>joinFiles:</string>
 							<string>playStop:</string>
 							<string>renumberChapters:</string>
-							<string>resetToDefaults:</string>
 							<string>saveAsCancel:</string>
 							<string>saveAsOk:</string>
 							<string>setCover:</string>
 							<string>splitFiles:</string>
 							<string>toggleChapters:</string>
-							<string>updateValidBitrates:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1939,10 +1927,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">genresButtonChanged:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">joinFiles:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -1952,10 +1936,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">renumberChapters:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">resetToDefaults:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1976,10 +1956,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">toggleChapters:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">updateValidBitrates:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
