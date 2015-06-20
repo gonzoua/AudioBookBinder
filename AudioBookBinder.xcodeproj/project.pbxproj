@@ -344,6 +344,11 @@
 			isa = PBXProject;
 			attributes = {
 				ORGANIZATIONNAME = "Bluezbox Software";
+				TargetAttributes = {
+					9F6FA205111918F10047728F = {
+						DevelopmentTeam = LUGH554YTG;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "AudioBookBinder" */;
 			compatibilityVersion = "Xcode 3.1";
@@ -507,7 +512,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -525,7 +530,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
@@ -548,7 +553,7 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -566,7 +571,7 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
@@ -593,6 +598,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Sparkle,
@@ -603,7 +609,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -629,6 +635,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Sparkle,
@@ -639,7 +646,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -661,7 +668,7 @@
 				PREBINDING = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.9;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = AppStore;
@@ -680,7 +687,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = AppStore;
 		};
@@ -706,6 +713,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -714,7 +722,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				ZERO_LINK = NO;
 			};
 			name = AppStore;
