@@ -341,13 +341,15 @@ enum abb_form_fields {
     NSMutableString *filename = [[NSMutableString string] retain];
     
     if (![author isEqualToString:@""])
-        [filename appendString:[author stringByReplacingOccurrencesOfString:@"/" withString:@" "]];
+        [filename appendString:
+            [[author stringByReplacingOccurrencesOfString:@"/" withString:@" "]  stringByReplacingOccurrencesOfString:@":" withString:@" -"]];
     
     if (![title isEqualToString:@""]) {
         if (![filename isEqualToString:@""])
             [filename appendString:@" - "];
         
-        [filename appendString:[title stringByReplacingOccurrencesOfString:@"/" withString:@" "]];
+        [filename appendString:
+            [[title stringByReplacingOccurrencesOfString:@"/" withString:@" "] stringByReplacingOccurrencesOfString:@":" withString:@" -"]];
     }
     
     if ([filename isEqualToString:@""])
