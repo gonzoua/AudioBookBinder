@@ -366,7 +366,9 @@ enum abb_form_fields {
     // [savePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"m4a", @"m4b", nil]];
     NSString *dir = [[NSUserDefaults standardUserDefaults] stringForKey:kConfigDestinationFolder];
     
-    NSInteger choice = [savePanel runModalForDirectory:dir file:filename];
+    [savePanel setDirectoryURL:[NSURL fileURLWithPath:dir]];
+    [savePanel setNameFieldStringValue:filename];
+    NSInteger choice = [savePanel runModal];
     
     [filename release];
     
@@ -374,7 +376,7 @@ enum abb_form_fields {
     if (choice == NSOKButton)
     {
         [bindButton setEnabled:FALSE];
-        outFile = [[savePanel filename] retain];
+        outFile = [[[savePanel URL] path] retain];
         _converting = YES;
         [NSThread detachNewThreadSelector:@selector(bindToFileThread:) toTarget:self withObject:nil];
     }
