@@ -98,7 +98,7 @@
             [result addObjectsFromArray:[ch files]];
     }
     else {
-        result = [[NSArray arrayWithArray:_files] retain];
+        result = [[NSMutableArray arrayWithArray:_files] retain];
     }
     
     return result;
