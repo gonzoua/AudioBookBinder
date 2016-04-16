@@ -346,7 +346,7 @@
 				ORGANIZATIONNAME = "Bluezbox Software";
 				TargetAttributes = {
 					9F6FA205111918F10047728F = {
-						DevelopmentTeam = LUGH554YTG;
+						DevelopmentTeam = 4C952B9WX8;
 					};
 				};
 			};
@@ -512,7 +512,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -530,7 +530,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -581,6 +581,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = AudioBookBinder.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -609,7 +610,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.9;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -619,6 +621,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = AudioBookBinder.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -646,7 +649,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.9;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -687,7 +691,7 @@
 					"$(HOME)/opt/lib",
 				);
 				PRODUCT_NAME = abbinder;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = AppStore;
 		};
@@ -697,6 +701,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = AudioBookBinder.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -722,7 +727,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = AudioBookBinder;
-				SDKROOT = macosx10.9;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = AppStore;
