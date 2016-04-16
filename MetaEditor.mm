@@ -15,7 +15,6 @@ extern "C" {
 #import "Chapter.h"
 
 using namespace std;
-const double CHAPTERTIMESCALE = 1000.0;
 
 extern "C" int setBookInfo(const char *mp4, const char *author, const char *title)
 {
