@@ -131,7 +131,6 @@
     coverImage = [image copy];
    
     NSImageRep *rep = [[coverImage representations] objectAtIndex:0]; 
-    [coverImage setScalesWhenResized:YES]; 
     [coverImage setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])]; 
     
     NSSize origSize = NSMakeSize([rep pixelsWide], [rep pixelsHigh]);
