@@ -96,8 +96,8 @@
     int distance = bitrate;
     
     for (NSNumber *n in validBitrates) {
-        if (abs([n integerValue] - bitrate) < distance) {
-            distance = abs([n integerValue] - bitrate);
+        if (labs([n integerValue] - bitrate) < distance) {
+            distance = labs([n integerValue] - bitrate);
             newBitrate = [n integerValue];
         }
     }
