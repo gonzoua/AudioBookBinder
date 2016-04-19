@@ -250,7 +250,7 @@ stringForOSStatus(OSStatus err)
     outputFormat.mFormatID = kAudioFormatMPEG4AAC;
     outputFormat.mChannelsPerFrame = _channels;
    
-    status = ExtAudioFileCreateWithURL((CFURLRef)url, 
+    status = ExtAudioFileCreateWithURL((__bridge CFURLRef)url,
                                    kAudioFileMPEG4Type, &outputFormat, 
                                    NULL, kAudioFileFlags_EraseFile, &_outAudioFile);
     
@@ -294,7 +294,7 @@ stringForOSStatus(OSStatus err)
     @try {
 
         id url = [NSURL fileURLWithPath:inFile.filePath];
-        status = ExtAudioFileOpenURL((CFURLRef)url, &inAudioFile);
+        status = ExtAudioFileOpenURL((__bridge CFURLRef)url, &inAudioFile);
         if (status != noErr)
             [NSException raise:@"ConvertException" 
                 format:@"ExtAudioFileOpenURL failed: %@", 
@@ -511,7 +511,7 @@ stringForOSStatus(OSStatus err)
     outputFormat.mChannelsPerFrame = _channels;
     
     id url = [NSURL fileURLWithPath:file];
-    status = ExtAudioFileCreateWithURL((CFURLRef)url,
+    status = ExtAudioFileCreateWithURL((__bridge CFURLRef)url,
                                    kAudioFileMPEG4Type, &outputFormat, 
                                    NULL, kAudioFileFlags_EraseFile, &tmpAudioFile);
     

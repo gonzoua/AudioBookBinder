@@ -64,7 +64,7 @@
             status = AudioFileGetProperty(audioFile, 
                 kAudioFilePropertyInfoDictionary, &size, &info);
             if ( status == noErr ) {
-                NSDictionary *properties = (NSDictionary *)info;
+                NSDictionary *properties = [NSDictionary dictionaryWithDictionary:(__bridge NSDictionary*)info];
                 // convert properties to CString and back to get rid of
                 // trailing zero bytes in NSString
                 

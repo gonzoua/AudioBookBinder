@@ -19,8 +19,8 @@
 
 typedef struct 
 {
-    NSString *id;
-    NSString *title;
+    __unsafe_unretained NSString *id;
+    __unsafe_unretained NSString *title;
     BOOL enabled;
 } column_t;
 
