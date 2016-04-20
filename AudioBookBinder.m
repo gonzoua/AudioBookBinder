@@ -49,7 +49,6 @@ void usage(char *cmd)
 
 int main (int argc, char * argv[]) {
     int c;
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     AudioBinder *binder = [[AudioBinder alloc] init];
     NSString *bookAuthor = nil;
     NSString *bookTitle = nil;
@@ -177,6 +176,5 @@ int main (int argc, char * argv[]) {
         printf("done\n");
     }
 
-    [pool drain];
     return 0;
 }

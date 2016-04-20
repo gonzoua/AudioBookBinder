@@ -97,7 +97,6 @@ NSString *makeChapterName(NSString *format, int chapterNum, AudioFile *file)
 
 int main (int argc, char * argv[]) {
     int c, i;
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     AudioBinder *binder = [[AudioBinder alloc] init];
     NSString *bookAuthor = nil;
     NSString *bookTitle = nil;
@@ -508,6 +507,5 @@ int main (int argc, char * argv[]) {
     if (!quiet)
         printf("done\n");
     
-    [pool drain];
     return 0;
 }
