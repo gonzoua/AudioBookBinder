@@ -77,6 +77,15 @@ static BOOL hackChecked = NO;
     [NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
 }
 
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        windowControllers = [NSMutableArray new];
+    }
+    
+    return self;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
@@ -144,6 +153,7 @@ static BOOL hackChecked = NO;
     [controller showWindow:self];
     
     [[controller window] makeMainWindow];
+    [windowControllers addObject:controller];
 }
 
 - (BOOL) applicationShouldHandleReopen:(NSApplication *)theApplication

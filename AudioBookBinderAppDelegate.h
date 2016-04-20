@@ -19,6 +19,8 @@
     IBOutlet SUUpdater *updater;
 #endif
     
+    NSMutableArray *windowControllers;
+    
 };
 
 + (void) initialize;
