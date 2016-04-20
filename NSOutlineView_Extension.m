@@ -42,7 +42,6 @@
     
     [self selectRowIndexes:newSelection byExtendingSelection:NO];
     
-    [newSelection release];
 }
 
 - (void)keyDown:(NSEvent*)event_ {
@@ -97,7 +96,6 @@
     for(id item in items)
         [self expandItem:item];
     
-    [items release];
 }
 
 - (void)doCollapse
@@ -137,7 +135,6 @@
                 [self collapseItem:item];
             [self setSelectedItems:items];
         }
-        [items release];
     }
 }
 

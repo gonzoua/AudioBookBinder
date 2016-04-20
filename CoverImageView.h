@@ -19,8 +19,8 @@
     BOOL highlighted;
 }
 
-@property (readwrite, retain) NSImage *coverImage;
-@property (readwrite, retain) NSString *coverImageFilename;
+@property (readwrite, strong) NSImage *coverImage;
+@property (readwrite, strong) NSString *coverImageFilename;
 
 - (void) dealloc;
 - (void) drawStringCenteredIn: (NSRect) bounds;

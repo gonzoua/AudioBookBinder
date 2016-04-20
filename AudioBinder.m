@@ -101,7 +101,6 @@ stringForOSStatus(OSStatus err)
     else
         descString = [[NSString alloc] initWithFormat:@"err#%08lx ", (long)err];
 
-    [descString autorelease];
     
     return descString;
 }
@@ -494,7 +493,7 @@ stringForOSStatus(OSStatus err)
     OSStatus status;
     ExtAudioFileRef tmpAudioFile;
     AudioConverterRef outConverter;
-    NSMutableArray *validBitrates = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *validBitrates = [[NSMutableArray alloc] init];
     UInt32 size;
     
     AudioStreamBasicDescription outputFormat, pcmFormat;  

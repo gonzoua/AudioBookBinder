@@ -31,8 +31,8 @@
 {
     if ((self = [super init])) 
     {
-        _files = [[[NSMutableArray alloc] init] retain];
-        _chapters = [[[NSMutableArray alloc] init] retain];
+        _files = [[NSMutableArray alloc] init];
+        _chapters = [[NSMutableArray alloc] init];
         _topDir = nil;
         _chapterMode = YES;
         id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigChaptersEnabled];
@@ -45,13 +45,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_files release];
-    [_topDir release];
-    [_chapters release];
-    [super dealloc];
-}
 
 @synthesize chapterMode = _chapterMode;
 
@@ -75,7 +68,7 @@
         }
     }
     else
-        [file release];
+        ;
     
     [self didChangeValueForKey:@"hasFiles"];
 }
@@ -84,7 +77,7 @@
 {
     NSArray *result;
 
-    result = [[NSArray arrayWithArray:_chapters] retain];
+    result = [NSArray arrayWithArray:_chapters];
     
     return result;
 }
@@ -98,7 +91,7 @@
             [result addObjectsFromArray:[ch files]];
     }
     else {
-        result = [[NSMutableArray arrayWithArray:_files] retain];
+        result = [NSMutableArray arrayWithArray:_files];
     }
     
     return result;
@@ -265,11 +258,11 @@
             int seconds = duration % 60;
             
             if (hours > 0)
-                objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
-                                hours, minutes, seconds] retain];
+                objectValue = [NSString stringWithFormat:@"%d:%02d:%02d",
+                                hours, minutes, seconds];
             else
-                objectValue = [[NSString stringWithFormat:@"%d:%02d",
-                                minutes, seconds] retain];
+                objectValue = [NSString stringWithFormat:@"%d:%02d",
+                                minutes, seconds];
         }
         else
             objectValue = @"";
@@ -289,11 +282,11 @@
             int seconds = duration % 60;
             
             if (hours > 0)
-                objectValue = [[NSString stringWithFormat:@"%d:%02d:%02d",
-                                hours, minutes, seconds] retain];
+                objectValue = [NSString stringWithFormat:@"%d:%02d:%02d",
+                                hours, minutes, seconds];
             else
-                objectValue = [[NSString stringWithFormat:@"%d:%02d",
-                                minutes, seconds] retain];
+                objectValue = [NSString stringWithFormat:@"%d:%02d",
+                                minutes, seconds];
             return objectValue;
         }
         else
@@ -370,7 +363,6 @@
 
     // we have stale _draggedNodes, release them
     if (_draggedNodes) {
-        [_draggedNodes release];
         _draggedNodes = nil;
     }
     
@@ -433,7 +425,6 @@
     {
         // we have stale _draggedNodes, release them
         if (_draggedNodes) {
-            [_draggedNodes release];
             _draggedNodes = nil;
         }
     }
@@ -499,7 +490,6 @@
         }
         
         if (_draggedNodes) {
-            [_draggedNodes release];
             _draggedNodes = nil;
         }
     }
@@ -684,7 +674,6 @@
         [outlineView expandItem:item];
     if ([newChapters count])
         [outlineView setSelectedItem:[newChapters objectAtIndex:0]];
-    [newChapters release];
     return YES;
 }
 
@@ -750,7 +739,6 @@
     }
     else
         [_files sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    [sortDescriptor release];
     [outlineView setIndicatorImage:(_sortAscending ?
                                     [NSImage imageNamed:@"NSAscendingSortIndicator"] :
                                     [NSImage imageNamed:@"NSDescendingSortIndicator"])

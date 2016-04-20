@@ -79,7 +79,6 @@
     
     [dockIcon unlockFocus];
     [NSApp setApplicationIconImage:dockIcon];
-    [dockIcon release];
 }
 
 - (void)updateConverter:(id)converter {

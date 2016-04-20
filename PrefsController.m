@@ -86,7 +86,6 @@
     self.validBitrates = [tmpBinder validBitrates];
     [self fixupBitrate];
     
-    [tmpBinder release];
 }
 
 - (void) fixupBitrate

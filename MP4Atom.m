@@ -36,7 +36,7 @@
 
 -(id) initWithName: (NSString*)atom andLength:(UInt32)len;
 {
-    [super init];
+    if (!(self = [super init])) return nil;
 
     self.offset = 0;
     self.name = atom;
@@ -48,7 +48,7 @@
 -(id) initWithHeaderData: (NSData*)data andOffset: (UInt64)off
 {
     UInt32 lLength;
-    [super init];
+    if (!(self = [super init])) return nil;
 
     self.offset = off;
     NSRange range;
@@ -63,16 +63,10 @@
     NSString *lName = [[NSString alloc] initWithData:[data subdataWithRange:range]
                                             encoding:NSMacOSRomanStringEncoding];
     self.name = lName;
-    [lName release];
     
     return self;
 }
 
--(void) dealloc
-{
-    self.name = nil;
-    [super dealloc];
-}
 
 -(NSData*)encode
 {

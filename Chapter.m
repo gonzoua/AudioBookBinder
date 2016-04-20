@@ -23,12 +23,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [name release];
-    [files release];
-    [super dealloc];
-}
 
 - (id)copy
 {

@@ -40,7 +40,7 @@
 
 -(id) initWithFileName: (NSString*)fileName
 {
-    [super init];
+    if (!(self = [super init])) return nil;
     
     _fh = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
     self.artist = nil;
@@ -69,14 +69,6 @@
     return self;
 }
 
--(void) dealloc
-{
-    self.artist = nil;
-    self.title = nil;
-    self.coverFile = nil;
-    self.genre = nil;
-    [super dealloc];
-}
 
 -(id) findAtom: (NSString*)atomName
 {
@@ -171,7 +163,6 @@
         [newAtomsData appendData:[self encodeMetaDataAtom:@"trkn" 
                                                 value:data
                                                  type:ITUNES_METADATA_IMPLICIT_CLASS]];
-        [data release];
     }
     
     if (gaplessPlay) {        
@@ -180,7 +171,6 @@
         [newAtomsData appendData:[self encodeMetaDataAtom:@"pgap" 
                                                     value:data
                                                      type:ITUNES_METADATA_UINT8_CLASS]];
-        [data release];
     }
 
     if (genre != nil)
@@ -340,29 +330,29 @@
  */
 -(void) reserveSpace:(UInt64)size at:(UInt64)offset
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    UInt64 end = [_fh seekToEndOfFile];
+    @autoreleasepool {
+        UInt64 end = [_fh seekToEndOfFile];
 
 #if 0
-    NSLog(@"size: %lld, start offset: %lld, file size: %lld", 
-            size, offset, end);
+        NSLog(@"size: %lld, start offset: %lld, file size: %lld", 
+                size, offset, end);
 #endif
-    do {
-        UInt64 bufferSize = MIN(end - offset, TMP_BUFFER_SIZE);
-        [_fh seekToFileOffset:(end - bufferSize)];
-        NSData *buffer = [_fh readDataOfLength:bufferSize];
-        if ([buffer length] == 0)
-            break;
-        [_fh seekToFileOffset:(end - [buffer length]) + size];
+        do {
+            UInt64 bufferSize = MIN(end - offset, TMP_BUFFER_SIZE);
+            [_fh seekToFileOffset:(end - bufferSize)];
+            NSData *buffer = [_fh readDataOfLength:bufferSize];
+            if ([buffer length] == 0)
+                break;
+            [_fh seekToFileOffset:(end - [buffer length]) + size];
 #if 0
-        NSLog(@"from: %lld, to: %lld, %lld bytes", (end - bufferSize),
-              (end - [buffer length]) + size, [buffer length]);
+            NSLog(@"from: %lld, to: %lld, %lld bytes", (end - bufferSize),
+                  (end - [buffer length]) + size, [buffer length]);
 #endif
-        [_fh writeData:buffer];
-        end -= [buffer length];
-    } while(end > offset);
+            [_fh writeData:buffer];
+            end -= [buffer length];
+        } while(end > offset);
 
-    [pool release];
+    }
 }
 
 /*
@@ -397,7 +387,6 @@
 
     [_fh seekToFileOffset:[stcoAtom offset]+12]; // size, tag and vesrion/flags
     [_fh writeData:fixedTable];
-    [fixedTable release];
 }
 
 @end

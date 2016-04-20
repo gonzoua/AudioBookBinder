@@ -29,15 +29,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    self.filePath = nil;
-    self.file = nil;
-    self.artist = nil;
-    self.name = nil;
-    self.album = nil;
-    [super dealloc];
-}
 
 @synthesize filePath, file, duration, valid, artist, name, album;
 

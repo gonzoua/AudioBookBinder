@@ -23,7 +23,7 @@
     IBOutlet NSButton *updateButton;
 }
 
-@property (readwrite, retain) NSArray *validBitrates;
+@property (readwrite, strong) NSArray *validBitrates;
 
 // Prefs panel delegates
 - (void) folderSheetShow: (id) sender;

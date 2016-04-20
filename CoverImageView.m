@@ -15,8 +15,8 @@
     if (self) {
         coverImage = nil;
         highlighted = NO;
-        highlightedColor = [[NSColor blackColor] retain];
-        normalColor = [[NSColor colorWithCalibratedWhite:0.4 alpha:1] retain];
+        highlightedColor = [NSColor blackColor];
+        normalColor = [NSColor colorWithCalibratedWhite:0.4 alpha:1];
         [self prepareAttributes];
         string = NSLocalizedString(@"⌘ + I\nor\nDrag Image Here", nil);
         [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, 
@@ -27,10 +27,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [attributes release];
-    [super dealloc];
-}
 
 - (void) prepareAttributes {
     attributes = [[NSMutableDictionary alloc] init];
@@ -42,10 +38,9 @@
         [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [centeredStyle setAlignment:NSCenterTextAlignment];
 
-    [attributes setObject:[[centeredStyle copy] autorelease]
+    [attributes setObject:[centeredStyle copy]
                    forKey:NSParagraphStyleAttributeName];
 
-    [centeredStyle release];
     
 }
 
@@ -88,38 +83,34 @@
 
 - (NSImage *) coverImage
 {
-    return [coverImage retain];
+    return coverImage;
 }
 
 - (NSString*) coverImageFilename {
-    return [coverImageFilename retain];
+    return coverImageFilename;
 }
 
 
 - (void) setCoverImageFilename:(NSString *)imagePath
 {
     if (coverImageFilename) {
-        [coverImageFilename release];
         coverImageFilename = nil;
     }
     
     if (imagePath) {
         NSImage *img = [[NSImage alloc] initWithContentsOfFile:imagePath]; 
         self.coverImage = img;
-        [img release];
         // invalid image, do not set image path
         if (img == nil)
             return;
     
-        coverImageFilename = [imagePath retain];
+        coverImageFilename = imagePath;
     }
 }
 
 
 - (void) setCoverImage:(NSImage *)image
 {
-    [coverImage release];
-    [scaledImage release];
     
     if (image == nil)
     {
@@ -146,7 +137,7 @@
             scaledSize.width = origSize.width * ITUNES_COVER_SIZE/origSize.height;                
         }
 
-        scaledImage = [[[NSImage alloc] initWithSize:scaledSize] retain];
+        scaledImage = [[NSImage alloc] initWithSize:scaledSize];
         
         // Composite image appropriately
         [scaledImage lockFocus];
@@ -330,7 +321,6 @@
             //we have TIFF bitmap data in the NSData object
             newImage = [[NSImage alloc] initWithData:carriedData];
             self.coverImage = newImage;
-            [newImage release];
             if (newImage == nil)
                 return NO;
         }

@@ -46,7 +46,6 @@
     printf("%s\n", [formattedString UTF8String]); 
 #endif
     
-    [formattedString release];
 }
 
 @end

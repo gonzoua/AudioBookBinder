@@ -71,9 +71,9 @@ static BOOL hackChecked = NO;
     [defaults registerDefaults:appDefaults];    
     
     //set custom value transformers    
-    ExpandedPathToPathTransformer * pathTransformer = [[[ExpandedPathToPathTransformer alloc] init] autorelease];
+    ExpandedPathToPathTransformer * pathTransformer = [[ExpandedPathToPathTransformer alloc] init];
     [NSValueTransformer setValueTransformer: pathTransformer forName: @"ExpandedPathToPathTransformer"];
-    ExpandedPathToIconTransformer * iconTransformer = [[[ExpandedPathToIconTransformer alloc] init] autorelease];
+    ExpandedPathToIconTransformer * iconTransformer = [[ExpandedPathToIconTransformer alloc] init];
     [NSValueTransformer setValueTransformer: iconTransformer forName: @"ExpandedPathToIconTransformer"];
 }
 
@@ -139,7 +139,7 @@ static BOOL hackChecked = NO;
 }
 - (IBAction) newAudiobookWindow: (id)sender
 {
-    AudioBinderWindowController *controller = [[[AudioBinderWindowController alloc] initWithWindowNibName:@"AudioBinderWindow"] retain];
+    AudioBinderWindowController *controller = [[AudioBinderWindowController alloc] initWithWindowNibName:@"AudioBinderWindow"];
     
     [controller showWindow:self];
     
