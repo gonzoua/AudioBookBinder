@@ -75,6 +75,7 @@ enum abb_form_fields {
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
+
     if (self) {
         [self updateWindowTitle];
     }
@@ -87,10 +88,18 @@ enum abb_form_fields {
     [self updateWindowTitle];
 }
 
+- (void)dealloc
+{
+    [fileList removeObserver:self forKeyPath:@"canPlay"];
+    [fileList removeObserver:self forKeyPath:@"commonAuthor"];
+    [fileList removeObserver:self forKeyPath:@"commonAlbum"];
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
+    fileList = [[AudioFileList alloc] init];
     [fileListView setDataSource:fileList];
     [fileListView setDelegate:fileList];
     [fileListView setAllowsMultipleSelection:YES];
@@ -138,6 +147,12 @@ enum abb_form_fields {
     [self setupGenres];
     [self.window setDelegate:self];
 }
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    NSLog(@"Will close");
+}
+
 
 - (void)setupColumns {
     int idx;
@@ -336,8 +351,8 @@ enum abb_form_fields {
 
 - (IBAction) bind: (id)sender
 {    
-    NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-    NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSString *author = [authorField stringValue];
+    NSString *title = [titleField stringValue];
     NSMutableString *filename = [NSMutableString string];
     
     if (![author isEqualToString:@""])
@@ -505,8 +520,8 @@ enum abb_form_fields {
 
 - (IBAction) resetToDefaults: (id)sender
 {
-    [[form cellAtIndex:ABBAuthor] setStringValue:@""];
-    [[form cellAtIndex:ABBTitle] setStringValue:@""];
+    [authorField setStringValue:@""];
+    [titleField setStringValue:@""];
     [genresField setStringValue:@"Audiobooks"];
     [fileList removeAllFiles:fileListView];
     [coverImageView resetImage];
@@ -538,8 +553,8 @@ enum abb_form_fields {
 
 - (void)bindToFileThread:(id)object
 {
-    NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-    NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSString *author = [authorField stringValue];
+    NSString *title = [titleField stringValue];
     NSString *genre = [genresField stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
@@ -982,28 +997,33 @@ enum abb_form_fields {
         self.canPlay = fileList.canPlay;
     }
     else if (context == KVO_CONTEXT_COMMONAUTHOR_CHANGED) {
-        NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+        NSString *author = [authorField stringValue];
         if ([author isEqualTo:@""] || (author == nil))
         {
             NSString *guessedAuthor = [fileList commonAuthor];
             if ((guessedAuthor != nil) && !([guessedAuthor isEqualToString:@""]))
-                [[form cellAtIndex:ABBAuthor] setStringValue:guessedAuthor];
-        }    }
+                [authorField setStringValue:guessedAuthor];
+        }
+        [self updateWindowTitle];
+    }
     else if (context == KVO_CONTEXT_COMMONALBUM_CHANGED) {
-        NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+        NSString *title = [titleField stringValue];
+
         if ([title isEqualTo:@""] || (title == nil))
         {
             NSString *guessedTitle = [fileList commonAlbum];
+
             if ((guessedTitle != nil) && !([guessedTitle isEqualToString:@""]))
-                [[form cellAtIndex:ABBTitle] setStringValue:guessedTitle];
+                [titleField setStringValue:guessedTitle];
         }
+        [self updateWindowTitle];
     }
 }
 
 - (void)updateWindowTitle
 {
-    NSString *author = [[[form cellAtIndex:ABBAuthor] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSString *title = [[[form cellAtIndex:ABBTitle] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *author = [[authorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *title = [[titleField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     NSString *windowTitle = nil;
     
@@ -1021,7 +1041,7 @@ enum abb_form_fields {
 }
 
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
-    if (control == form) {
+    if ((control == authorField) || (control == titleField)) {
         [self updateWindowTitle];
     }
 

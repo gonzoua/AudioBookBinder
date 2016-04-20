@@ -12,16 +12,17 @@
 #import "CoverImageView.h"
 
 @interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate, NSWindowDelegate> {
+    
     IBOutlet NSOutlineView *fileListView;
-    IBOutlet NSForm *form;
     IBOutlet NSButton *bindButton;
     IBOutlet NSProgressIndicator *fileProgress;
     IBOutlet NSPanel *progressPanel;
     IBOutlet NSTextField *currentFile;
     IBOutlet NSTabView *tabs;
-    IBOutlet AudioFileList *fileList;
     IBOutlet CoverImageView *coverImageView;
     IBOutlet NSButton *playButton;
+    IBOutlet NSTextField *authorField;
+    IBOutlet NSTextField *titleField;
     IBOutlet NSPopUpButton *genresButton;
     IBOutlet NSTextField *genresField;
     IBOutlet NSPanel *saveAsPanel;
@@ -40,6 +41,7 @@
     BOOL canPlay;
     NSUInteger currentProgress;
     BOOL _conversionResult;
+    AudioFileList *fileList;
     
     NSMutableArray *currentColumns;
 
