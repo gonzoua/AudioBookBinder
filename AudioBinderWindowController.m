@@ -538,221 +538,219 @@ enum abb_form_fields {
 
 - (void)bindToFileThread:(id)object
 {
-    @autoreleasepool {
-        NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
-        NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
-        NSString *genre = [genresField stringValue];
-        NSString *coverImageFilename = nil;
-        NSImage *coverImage = coverImageView.coverImage;
-        UInt64 maxVolumeDuration = 0;
-        NSInteger hours = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigMaxVolumeSize];
-        if ((hours > 0) && (hours < 25))
-            maxVolumeDuration = hours * 3600;
-        
-        NSLog(@"maxVolumeDuration == %lld", maxVolumeDuration);
-        _conversionResult = NO;
-        [_binder reset];
-        [_binder setDelegate:self];
-        
-        // split output filename to base and extension in order to get
-        // filenames for consecutive volume files
-        NSString *outFileBase = [outFile stringByDeletingPathExtension];
-        NSString *outFileExt = [outFile pathExtension];
-        
-        NSArray *files = [fileList files];
-        NSMutableArray *inputFiles = [[NSMutableArray alloc] init];
-        UInt64 estVolumeDuration = 0;
-        NSString *currentVolumeName = [outFile copy];
-        NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
-        NSArray *chapters = nil;
-        NSMutableArray *curChapters = [[NSMutableArray alloc] init];
-        Chapter *curChapter = nil;
-        int chapterIdx = 0;
-        BOOL hasChapters = [fileList chapterMode];
-        
+    NSString *author = [[form cellAtIndex:ABBAuthor] stringValue];
+    NSString *title = [[form cellAtIndex:ABBTitle] stringValue];
+    NSString *genre = [genresField stringValue];
+    NSString *coverImageFilename = nil;
+    NSImage *coverImage = coverImageView.coverImage;
+    UInt64 maxVolumeDuration = 0;
+    NSInteger hours = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigMaxVolumeSize];
+    if ((hours > 0) && (hours < 25))
+        maxVolumeDuration = hours * 3600;
+    
+    NSLog(@"maxVolumeDuration == %lld", maxVolumeDuration);
+    _conversionResult = NO;
+    [_binder reset];
+    [_binder setDelegate:self];
+    
+    // split output filename to base and extension in order to get
+    // filenames for consecutive volume files
+    NSString *outFileBase = [outFile stringByDeletingPathExtension];
+    NSString *outFileExt = [outFile pathExtension];
+    
+    NSArray *files = [fileList files];
+    NSMutableArray *inputFiles = [[NSMutableArray alloc] init];
+    UInt64 estVolumeDuration = 0;
+    NSString *currentVolumeName = [outFile copy];
+    NSMutableArray *volumeChapters = [[NSMutableArray alloc] init];
+    NSArray *chapters = nil;
+    NSMutableArray *curChapters = [[NSMutableArray alloc] init];
+    Chapter *curChapter = nil;
+    int chapterIdx = 0;
+    BOOL hasChapters = [fileList chapterMode];
+    
+    if (hasChapters) {
+        chapters = [fileList chapters];
+        curChapter = [[chapters objectAtIndex:chapterIdx] copy];
+        chapterIdx++;
+        [curChapters addObject:curChapter];
+    }
+    
+    int totalVolumes = 0;
+    _currentFileProgress = 0;
+    _totalBookDuration = 0;
+    _totalBookProgress = 0;
+    self.currentProgress = 0;
+
+    [[StatsManager sharedInstance] updateConverter:self];
+    
+    BOOL onChapterBoundary = YES;
+    for (AudioFile *file in files) {
         if (hasChapters) {
-            chapters = [fileList chapters];
-            curChapter = [[chapters objectAtIndex:chapterIdx] copy];
-            chapterIdx++;
-            [curChapters addObject:curChapter];
+            if (![curChapter containsFile:file]) {
+                NSLog(@"%@ -> next chapter", file.filePath);
+                curChapter = [[chapters objectAtIndex:chapterIdx] copy];
+                chapterIdx++;
+                onChapterBoundary = YES;
+                [curChapters addObject:curChapter];
+            }
         }
         
-        int totalVolumes = 0;
-        _currentFileProgress = 0;
-        _totalBookDuration = 0;
-        _totalBookProgress = 0;
-        self.currentProgress = 0;
-
-        [[StatsManager sharedInstance] updateConverter:self];
-        
-        BOOL onChapterBoundary = YES;
-        for (AudioFile *file in files) {
-            if (hasChapters) {
-                if (![curChapter containsFile:file]) {
-                    NSLog(@"%@ -> next chapter", file.filePath);
-                    curChapter = [[chapters objectAtIndex:chapterIdx] copy];
-                    chapterIdx++;
-                    onChapterBoundary = YES;
-                    [curChapters addObject:curChapter];
+        if (maxVolumeDuration) {
+            if ((estVolumeDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
+                if ([inputFiles count] > 0) {
+                    [_binder addVolume:currentVolumeName files:inputFiles];
+                    [inputFiles removeAllObjects];
+                    estVolumeDuration = 0;
+                    totalVolumes++;
+                    currentVolumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@",
+                                         outFileBase, totalVolumes, outFileExt];
+                    if (hasChapters) {
+                        [volumeChapters addObject:curChapters];
+                        if (!onChapterBoundary) {
+                            curChapter = [curChapter splitAtFile:file];
+                            NSLog(@"Splitting chapter %@ on file %@", curChapter.name, file.filePath);
+                        }
+                        curChapters = [[NSMutableArray alloc] init];
+                        [curChapters addObject:curChapter];
+                    }
+                }
+                else {
+                    NSAlert *alert = [[NSAlert alloc] init];
+                    NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED,
+                                     [file.filePath UTF8String], [file.duration intValue]/1000, maxVolumeDuration];
+                    [alert addButtonWithTitle:@"OK"];
+                    [alert setMessageText:TEXT_CANT_SPLIT];
+                    [alert setInformativeText:msg];
+                    [alert setAlertStyle:NSWarningAlertStyle];
+                    [alert runModal];
+                    return;
                 }
             }
-            
-            if (maxVolumeDuration) {
-                if ((estVolumeDuration + [file.duration intValue]) > maxVolumeDuration*1000) {
-                    if ([inputFiles count] > 0) {
-                        [_binder addVolume:currentVolumeName files:inputFiles];
-                        [inputFiles removeAllObjects];
-                        estVolumeDuration = 0;
-                        totalVolumes++;
-                        currentVolumeName = [[NSString alloc] initWithFormat:@"%@-%d.%@",
-                                             outFileBase, totalVolumes, outFileExt];
-                        if (hasChapters) {
-                            [volumeChapters addObject:curChapters];
-                            if (!onChapterBoundary) {
-                                curChapter = [curChapter splitAtFile:file];
-                                NSLog(@"Splitting chapter %@ on file %@", curChapter.name, file.filePath);
-                            }
-                            curChapters = [[NSMutableArray alloc] init];
-                            [curChapters addObject:curChapter];
+        }
+        onChapterBoundary = NO;
+        [inputFiles addObject:file];
+        estVolumeDuration += [file.duration intValue];
+        _totalBookDuration += [file.duration intValue];
+    }
+    
+    [_binder addVolume:currentVolumeName files:inputFiles];
+    [volumeChapters addObject:curChapters];
+    
+    // make sure that at this point we have valid bitrate in settings
+    // setup channels/samplerate
+    
+    _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
+    _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
+    _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
+    
+    [NSApp beginSheet:progressPanel modalForWindow:self.window
+        modalDelegate:self didEndSelector:NULL contextInfo:nil];
+    
+    [fileProgress setMaxValue:100.];
+    [fileProgress setDoubleValue:0.];
+    [fileProgress displayIfNeeded];
+    if (!(_conversionResult = [_binder convert]))
+    {
+        NSLog(@"Conversion failed");
+    }
+    
+    else
+    {
+        if (![author isEqualToString:@""] ||
+            ![title isEqualToString:@""] || (coverImage != nil))
+        {
+            NSLog(@"Adding metadata, it may take a while...");
+            @try {
+                [currentFile setStringValue:TEXT_ADDING_TAGS];
+                BOOL temporaryFile = NO;
+                if ([coverImageView haveCover]) {
+                    if ([coverImageView shouldConvert]) {
+                        NSString *tempFileTemplate =
+                        [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
+                        const char *tempFileTemplateCString =
+                        [tempFileTemplate fileSystemRepresentation];
+                        char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
+                        strcpy(tempFileNameCString, tempFileTemplateCString);
+                        if (mktemp(tempFileNameCString)) {
+                            coverImageFilename = [NSString stringWithCString:tempFileNameCString encoding:NSUTF8StringEncoding];
+                            NSData *imgData = [coverImage TIFFRepresentation];
+                            NSDictionary *dict = [[NSDictionary alloc] init];
+                            [[[NSBitmapImageRep imageRepWithData:imgData]
+                              representationUsingType:NSPNGFileType properties:dict]
+                             writeToFile:coverImageFilename atomically:YES];
+                            temporaryFile = YES;
+                        }
+                        else {
+                            NSLog(@"Failed to generate tmp filename");
                         }
                     }
                     else {
-                        NSAlert *alert = [[NSAlert alloc] init];
-                        NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED,
-                                         [file.filePath UTF8String], [file.duration intValue]/1000, maxVolumeDuration];
-                        [alert addButtonWithTitle:@"OK"];
-                        [alert setMessageText:TEXT_CANT_SPLIT];
-                        [alert setInformativeText:msg];
-                        [alert setAlertStyle:NSWarningAlertStyle];
-                        [alert runModal];
-                        return;
+                        coverImageFilename = coverImageView.coverImageFilename;
                     }
                 }
-            }
-            onChapterBoundary = NO;
-            [inputFiles addObject:file];
-            estVolumeDuration += [file.duration intValue];
-            _totalBookDuration += [file.duration intValue];
-        }
-        
-        [_binder addVolume:currentVolumeName files:inputFiles];
-        [volumeChapters addObject:curChapters];
-        
-        // make sure that at this point we have valid bitrate in settings
-        // setup channels/samplerate
-        
-        _binder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
-        _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
-        _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
-        
-        [NSApp beginSheet:progressPanel modalForWindow:self.window
-            modalDelegate:self didEndSelector:NULL contextInfo:nil];
-        
-        [fileProgress setMaxValue:100.];
-        [fileProgress setDoubleValue:0.];
-        [fileProgress displayIfNeeded];
-        if (!(_conversionResult = [_binder convert]))
-        {
-            NSLog(@"Conversion failed");
-        }
-        
-        else
-        {
-            if (![author isEqualToString:@""] ||
-                ![title isEqualToString:@""] || (coverImage != nil))
-            {
-                NSLog(@"Adding metadata, it may take a while...");
-                @try {
-                    [currentFile setStringValue:TEXT_ADDING_TAGS];
-                    BOOL temporaryFile = NO;
-                    if ([coverImageView haveCover]) {
-                        if ([coverImageView shouldConvert]) {
-                            NSString *tempFileTemplate =
-                            [NSTemporaryDirectory() stringByAppendingPathComponent:@"coverimg.XXXXXX"];
-                            const char *tempFileTemplateCString =
-                            [tempFileTemplate fileSystemRepresentation];
-                            char *tempFileNameCString = (char *)malloc(strlen(tempFileTemplateCString) + 1);
-                            strcpy(tempFileNameCString, tempFileTemplateCString);
-                            if (mktemp(tempFileNameCString)) {
-                                coverImageFilename = [NSString stringWithCString:tempFileNameCString encoding:NSUTF8StringEncoding];
-                                NSData *imgData = [coverImage TIFFRepresentation];
-                                NSDictionary *dict = [[NSDictionary alloc] init];
-                                [[[NSBitmapImageRep imageRepWithData:imgData]
-                                  representationUsingType:NSPNGFileType properties:dict]
-                                 writeToFile:coverImageFilename atomically:YES];
-                                temporaryFile = YES;
-                            }
-                            else {
-                                NSLog(@"Failed to generate tmp filename");
-                            }
-                        }
-                        else {
-                            coverImageFilename = coverImageView.coverImageFilename;
-                        }
+                
+                
+                int track = 1;
+                NSArray *volumes = [_binder volumes];
+                for (AudioBinderVolume *v in volumes) {
+                    NSString *volumeName = v.filename;
+                    MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
+                    mp4.artist = author;
+                    if ([volumes count] > 1) {
+                        mp4.title = [NSString stringWithFormat:@"%@ #%02d", title, track];
+                        mp4.gaplessPlay = YES;
                     }
-                    
-                    
-                    int track = 1;
-                    NSArray *volumes = [_binder volumes];
+                    else
+                        mp4.title = title;
+                    mp4.album = title;
+                    mp4.genre = genre;
+                    if (coverImageFilename)
+                        [mp4 setCoverFile:coverImageFilename];
+                    mp4.track = track;
+                    mp4.tracksTotal = [volumes count];
+                    [mp4 updateFile];
+                    track ++;
+                }
+                
+                if ((coverImageFilename != nil) && temporaryFile) {
+                    NSLog(@"Unlink %@", coverImageFilename);
+                    [[NSFileManager defaultManager] removeItemAtPath:coverImageFilename
+                                                               error:nil];
+                }
+                
+                if ([fileList chapterMode]) {
+                    [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
+                    int idx = 0;
                     for (AudioBinderVolume *v in volumes) {
-                        NSString *volumeName = v.filename;
-                        MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
-                        mp4.artist = author;
-                        if ([volumes count] > 1) {
-                            mp4.title = [NSString stringWithFormat:@"%@ #%02d", title, track];
-                            mp4.gaplessPlay = YES;
-                        }
-                        else
-                            mp4.title = title;
-                        mp4.album = title;
-                        mp4.genre = genre;
-                        if (coverImageFilename)
-                            [mp4 setCoverFile:coverImageFilename];
-                        mp4.track = track;
-                        mp4.tracksTotal = [volumes count];
-                        [mp4 updateFile];
-                        track ++;
+                        addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
+                        idx++;
                     }
-                    
-                    if ((coverImageFilename != nil) && temporaryFile) {
-                        NSLog(@"Unlink %@", coverImageFilename);
-                        [[NSFileManager defaultManager] removeItemAtPath:coverImageFilename
-                                                                   error:nil];
-                    }
-                    
-                    if ([fileList chapterMode]) {
-                        [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
-                        int idx = 0;
-                        for (AudioBinderVolume *v in volumes) {
-                            addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
-                            idx++;
-                        }
-                        
-                    }
-                    
-                    if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
-                        
-                        [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
-                        for(AudioBinderVolume *volume in volumes)
-                            [self addFileToiTunes:volume.filename];
-                    }
-                    
-                    [currentFile setStringValue:@"Done"];
                     
                 }
-                @catch (NSException *e) {
-                    NSLog(@"Something went wrong");
+                
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
+                    
+                    [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
+                    for(AudioBinderVolume *volume in volumes)
+                        [self addFileToiTunes:volume.filename];
                 }
+                
+                [currentFile setStringValue:@"Done"];
+                
             }
-            
-            // write chapters
+            @catch (NSException *e) {
+                NSLog(@"Something went wrong");
+            }
         }
         
-        [NSApp endSheet:progressPanel];
-        [[StatsManager sharedInstance] removeConverter:self];
-        [progressPanel orderOut:nil];
-        [self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
+        // write chapters
     }
+    
+    [NSApp endSheet:progressPanel];
+    [[StatsManager sharedInstance] removeConverter:self];
+    [progressPanel orderOut:nil];
+    [self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
 }
 
 //

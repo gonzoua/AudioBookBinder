@@ -330,29 +330,26 @@
  */
 -(void) reserveSpace:(UInt64)size at:(UInt64)offset
 {
-    @autoreleasepool {
-        UInt64 end = [_fh seekToEndOfFile];
+    UInt64 end = [_fh seekToEndOfFile];
 
 #if 0
-        NSLog(@"size: %lld, start offset: %lld, file size: %lld", 
-                size, offset, end);
+    NSLog(@"size: %lld, start offset: %lld, file size: %lld", 
+            size, offset, end);
 #endif
-        do {
-            UInt64 bufferSize = MIN(end - offset, TMP_BUFFER_SIZE);
-            [_fh seekToFileOffset:(end - bufferSize)];
-            NSData *buffer = [_fh readDataOfLength:bufferSize];
-            if ([buffer length] == 0)
-                break;
-            [_fh seekToFileOffset:(end - [buffer length]) + size];
+    do {
+        UInt64 bufferSize = MIN(end - offset, TMP_BUFFER_SIZE);
+        [_fh seekToFileOffset:(end - bufferSize)];
+        NSData *buffer = [_fh readDataOfLength:bufferSize];
+        if ([buffer length] == 0)
+            break;
+        [_fh seekToFileOffset:(end - [buffer length]) + size];
 #if 0
-            NSLog(@"from: %lld, to: %lld, %lld bytes", (end - bufferSize),
-                  (end - [buffer length]) + size, [buffer length]);
+        NSLog(@"from: %lld, to: %lld, %lld bytes", (end - bufferSize),
+              (end - [buffer length]) + size, [buffer length]);
 #endif
-            [_fh writeData:buffer];
-            end -= [buffer length];
-        } while(end > offset);
-
-    }
+        [_fh writeData:buffer];
+        end -= [buffer length];
+    } while(end > offset);
 }
 
 /*
