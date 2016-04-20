@@ -28,7 +28,6 @@
 
 
 - (id) initWithPath:(NSString*)path;
-- (void) dealloc;
 
 // private function
 - (void) updateInfo;

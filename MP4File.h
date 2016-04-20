@@ -48,7 +48,6 @@
 @property (readwrite, assign) unsigned short track, tracksTotal;
 @property (readwrite, assign) BOOL gaplessPlay;
 
--(void) dealloc;
 -(id) initWithFileName: (NSString*)fileName;
 -(id) findAtom: (NSString*)atomName;
 -(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value type:(UInt32)type;

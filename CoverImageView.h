@@ -22,7 +22,6 @@
 @property (readwrite, strong) NSImage *coverImage;
 @property (readwrite, strong) NSString *coverImageFilename;
 
-- (void) dealloc;
 - (void) drawStringCenteredIn: (NSRect) bounds;
 - (void) prepareAttributes;
 - (void) resetImage;

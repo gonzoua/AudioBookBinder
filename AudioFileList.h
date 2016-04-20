@@ -45,7 +45,6 @@ typedef struct
 
 // class methods
 - (id) init;
-- (void) dealloc;
 
 - (void) addFile:(NSString*)fileName;
 - (void) addFilesInDirectory:(NSString*)dirName;

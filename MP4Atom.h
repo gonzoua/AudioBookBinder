@@ -42,7 +42,7 @@
 @property(readwrite, copy) NSString *name;
 @property(readwrite, assign) UInt32 length;
 @property(readwrite, assign) UInt64 offset;
--(void) dealloc;
+
 -(id) initWithName:(NSString*)atom andLength:(UInt32)length;
 -(id) initWithHeaderData:(NSData*)data andOffset: (UInt64)offset;
 -(NSData*) encode;
