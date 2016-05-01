@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -27,12 +27,13 @@
 
 #import "MP4Atom.h"
 
+@interface MP4Atom() {
+    NSArray *children;
+}
+
+@end
 
 @implementation MP4Atom
-
-@synthesize length;
-@synthesize offset;
-@synthesize name;
 
 -(id) initWithName: (NSString*)atom andLength:(UInt32)len;
 {
@@ -76,7 +77,7 @@
     } hdr;
 
     hdr.beLength = htonl(self.length);
-    NSAssert([name getCString:hdr.name maxLength:5 encoding:NSMacOSRomanStringEncoding],
+    NSAssert([self.name getCString:hdr.name maxLength:5 encoding:NSMacOSRomanStringEncoding],
             @"Failed to convert tag name");
     NSData *data = [NSData dataWithBytes:&hdr length:8];
     return data;

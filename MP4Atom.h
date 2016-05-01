@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -32,16 +32,11 @@
 #define ITUNES_METADATA_IMAGE_CLASS     0x0e
 #define ITUNES_METADATA_UINT8_CLASS     0x15
 
-@interface MP4Atom : NSObject {
-    NSString *name;
-    UInt32 length;
-    NSArray *children;
-    UInt64 offset;
-}
+@interface MP4Atom : NSObject
 
-@property(readwrite, copy) NSString *name;
-@property(readwrite, assign) UInt32 length;
-@property(readwrite, assign) UInt64 offset;
+@property (copy) NSString *name;
+@property (assign) UInt32 length;
+@property (assign) UInt64 offset;
 
 -(id) initWithName:(NSString*)atom andLength:(UInt32)length;
 -(id) initWithHeaderData:(NSData*)data andOffset: (UInt64)offset;
