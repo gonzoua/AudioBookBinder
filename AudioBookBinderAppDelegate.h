@@ -12,7 +12,7 @@
 @class SUUpdater;
 #endif
 
-@interface AudioBookBinderAppDelegate : NSObject {
+@interface AudioBookBinderAppDelegate : NSObject<NSWindowDelegate> {
     IBOutlet NSMenu *applicationMenu;
 
 #ifndef APP_STORE_BUILD

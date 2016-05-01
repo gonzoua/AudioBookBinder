@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Bluezbox Software. All rights reserved.
 //
 
+#import "AudioBookBinderAppDelegate.h"
 #import "AudioBinderWindowController.h"
 #import "Chapter.h"
 #import "AudioBinderVolume.h"
@@ -83,11 +84,6 @@ enum abb_form_fields {
     return self;
 }
 
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-    [self updateWindowTitle];
-}
-
 - (void)dealloc
 {
     [fileList removeObserver:self forKeyPath:@"canPlay"];
@@ -145,14 +141,10 @@ enum abb_form_fields {
     [self updateWindowTitle];
     [self setupColumns];
     [self setupGenres];
-    [self.window setDelegate:self];
+    
+    AudioBookBinderAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+    [self.window setDelegate:delegate];
 }
-
-- (void)windowWillClose:(NSNotification *)notification
-{
-    NSLog(@"Will close");
-}
-
 
 - (void)setupColumns {
     int idx;

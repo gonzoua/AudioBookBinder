@@ -165,4 +165,34 @@ static BOOL hackChecked = NO;
     return YES;
 }
 
+// Window delegate part
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+    AudioBinderWindowController *controller = nil;
+    for (AudioBinderWindowController *c in windowControllers) {
+        if (c.window == notification.object) {
+            controller = c;
+            break;
+        }
+    }
+    
+    if (controller)
+        [windowControllers removeObject:controller];
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+    AudioBinderWindowController *controller = nil;
+    for (AudioBinderWindowController *c in windowControllers) {
+        if (c.window == notification.object) {
+            controller = c;
+            break;
+        }
+    }
+    
+    if (controller)
+        [controller updateWindowTitle];
+}
+
 @end

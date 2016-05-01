@@ -11,7 +11,7 @@
 #import "AudioBinder.h"
 #import "CoverImageView.h"
 
-@interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate, NSWindowDelegate> {
+@interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate> {
     
     IBOutlet NSOutlineView *fileListView;
     IBOutlet NSButton *bindButton;
@@ -70,7 +70,8 @@
 - (IBAction) saveAsCancel:(id)sender;
 - (IBAction) folderSheetShow: (id) sender;
 
-- (void) playFailed;
+- (void)playFailed;
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying;
+- (void)updateWindowTitle;
 
 @end
