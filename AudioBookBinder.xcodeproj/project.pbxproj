@@ -215,6 +215,8 @@
 				9F02CE11101EA8B100AE315D /* AudioBinder.m */,
 				9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */,
 				9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */,
+				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
+				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
 				32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */,
 				9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */,
 				9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */,
@@ -243,8 +245,6 @@
 				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
 				9FAB14801161A51400A2F36A /* PrefsController.h */,
 				9FAB14811161A51400A2F36A /* PrefsController.m */,
-				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
-				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
 				9F1FFD661862A27D005EF748 /* StatsManager.h */,
 				9F1FFD671862A27D005EF748 /* StatsManager.m */,
 			);
