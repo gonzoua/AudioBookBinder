@@ -40,12 +40,6 @@
 @property (assign) BOOL gaplessPlay;
 
 -(id) initWithFileName: (NSString*)fileName;
--(id) findAtom: (NSString*)atomName;
--(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value type:(UInt32)type;
 -(BOOL) updateFile;
--(NSData*) encodeHDLRAtom;
--(void) reserveSpace:(UInt64)size at:(UInt64)offset;
--(void) fixSTCOAtomBy:(UInt64)shift;
--(void) fixupAtom: (MP4Atom*)atom;
 
 @end

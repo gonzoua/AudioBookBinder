@@ -35,6 +35,14 @@
 @interface MP4File() {
     NSFileHandle *_fh;
 }
+
+-(id) findAtom: (NSString*)atomName;
+-(NSData*) encodeMetaDataAtom: (NSString*)name value:(NSData*)value type:(UInt32)type;
+-(NSData*) encodeHDLRAtom;
+-(void) reserveSpace:(UInt64)size at:(UInt64)offset;
+-(void) fixSTCOAtomBy:(UInt64)shift;
+-(void) fixupAtom: (MP4Atom*)atom;
+
 @end
 
 @implementation MP4File
