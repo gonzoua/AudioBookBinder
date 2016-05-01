@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -29,24 +29,15 @@
 
 @class MP4Atom;
 
-@interface MP4File : NSObject {
-    NSFileHandle *_fh;
-    NSString *artist;
-    NSString *title;
-    NSString *album;
-    NSString *coverFile;
-    NSString *genre;
-    unsigned short track, tracksTotal;
-    BOOL gaplessPlay;
-}
+@interface MP4File : NSObject
 
-@property (readwrite, copy) NSString *artist;
-@property (readwrite, copy) NSString *album;
-@property (readwrite, copy) NSString *title;
-@property (readwrite, copy) NSString *coverFile;
-@property (readwrite, copy) NSString *genre;
-@property (readwrite, assign) unsigned short track, tracksTotal;
-@property (readwrite, assign) BOOL gaplessPlay;
+@property (copy) NSString *artist;
+@property (copy) NSString *album;
+@property (copy) NSString *title;
+@property (copy) NSString *coverFile;
+@property (copy) NSString *genre;
+@property (assign) unsigned short track, tracksTotal;
+@property (assign) BOOL gaplessPlay;
 
 -(id) initWithFileName: (NSString*)fileName;
 -(id) findAtom: (NSString*)atomName;

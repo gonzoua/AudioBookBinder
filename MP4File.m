@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -29,14 +29,15 @@
 #import "MP4Atom.h"
 #import "MP4File.h"
 
-// 4M seems to be reasonable buffer
+// 16M seems to be reasonable buffer
 #define TMP_BUFFER_SIZE 16*1024*1024
 
+@interface MP4File() {
+    NSFileHandle *_fh;
+}
+@end
+
 @implementation MP4File
-
-@synthesize artist, album, title, coverFile, genre;
-@synthesize track, tracksTotal, gaplessPlay;
-
 
 -(id) initWithFileName: (NSString*)fileName
 {
@@ -49,8 +50,8 @@
     self.coverFile = nil;
     self.genre = @"Audiobooks";
     
-    track = tracksTotal = 0;
-    gaplessPlay = NO;
+    self.track = self.tracksTotal = 0;
+    self.gaplessPlay = NO;
 
     UInt64 pos = 0;
     NSData *buffer;
@@ -139,33 +140,33 @@
     haveIlstAtom = (ilstAtom != nil);
     
     NSMutableData *newAtomsData = [[NSMutableData alloc] init];
-    if (title != nil)
+    if (self.title != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©nam" 
-                                                value:[title dataUsingEncoding:NSUTF8StringEncoding]
+                                                value:[self.title dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
-    if (album != nil)
+    if (self.album != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©alb" 
-                                                value:[album dataUsingEncoding:NSUTF8StringEncoding] 
+                                                value:[self.album dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];    
-    if (artist != nil)
+    if (self.artist != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©ART" 
-                                                value:[artist dataUsingEncoding:NSUTF8StringEncoding] 
+                                                value:[self.artist dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
 
-    if (track && (tracksTotal > 1)) {
+    if (self.track && (self.tracksTotal > 1)) {
         short bytes[4];
         bytes[0] = bytes[3] = 0;
-        bytes[1] = htons(track);
-        bytes[2] = htons(tracksTotal);
+        bytes[1] = htons(self.track);
+        bytes[2] = htons(self.tracksTotal);
         NSData * data = [[NSData alloc] initWithBytes:bytes length:8];
         [newAtomsData appendData:[self encodeMetaDataAtom:@"trkn" 
                                                 value:data
                                                  type:ITUNES_METADATA_IMPLICIT_CLASS]];
     }
     
-    if (gaplessPlay) {        
+    if (self.gaplessPlay) {
         char pgap = 1;
         NSData * data = [[NSData alloc] initWithBytes:&pgap length:1];
         [newAtomsData appendData:[self encodeMetaDataAtom:@"pgap" 
@@ -173,14 +174,14 @@
                                                      type:ITUNES_METADATA_UINT8_CLASS]];
     }
 
-    if (genre != nil)
+    if (self.genre != nil)
         [newAtomsData appendData:[self encodeMetaDataAtom:@"©gen" 
-                                            value:[genre dataUsingEncoding:NSUTF8StringEncoding] 
+                                            value:[self.genre dataUsingEncoding:NSUTF8StringEncoding]
                                              type:ITUNES_METADATA_STRING_CLASS]];
     
-    if (coverFile != nil)
+    if (self.coverFile != nil)
     {
-        NSData *fileData = [NSData dataWithContentsOfFile:coverFile];
+        NSData *fileData = [NSData dataWithContentsOfFile:self.coverFile];
         if (fileData)
             [newAtomsData appendData:[self encodeMetaDataAtom:@"covr" 
                                                 value:fileData 
