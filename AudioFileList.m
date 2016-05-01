@@ -88,7 +88,7 @@
     if (_chapterMode) {
         result = [[NSMutableArray alloc] init];
         for (Chapter *ch in _chapters)
-            [result addObjectsFromArray:[ch files]];
+            [result addObjectsFromArray:ch.files];
     }
     else {
         result = [NSMutableArray arrayWithArray:_files];
