@@ -607,17 +607,13 @@ stringForOSStatus(OSStatus err)
                                      kExtAudioFileProperty_AudioConverter, 
                                      &size, &outConverter);
     
-    if(status != noErr) {
-        // ABLog(@"can't get AudioConverter: %@", stringForOSStatus(status)); 
+    if(status != noErr)
         return NO;
-    }
     
     status = AudioConverterSetProperty(outConverter, kAudioConverterEncodeBitRate, 
                                        sizeof(_bitrate), &_bitrate);
-    if(status != noErr) {
-        // ABLog(@"can't set requested bit rate: %@", stringForOSStatus(status)); 
+    if(status != noErr)
         return NO;
-    }
     
     return YES;
     
