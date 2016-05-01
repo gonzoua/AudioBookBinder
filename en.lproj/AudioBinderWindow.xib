@@ -156,7 +156,7 @@
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="969">
-                        <rect key="frame" x="83" y="409" width="369" height="22"/>
+                        <rect key="frame" x="20" y="409" width="432" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="970">
                             <font key="font" metaFont="systemBold"/>
@@ -165,9 +165,9 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="xbf-HI-fF2">
-                        <rect key="frame" x="83" y="439" width="397" height="22"/>
+                        <rect key="frame" x="20" y="439" width="460" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Yjn-Z2-lnl">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Title" drawsBackground="YES" id="Yjn-Z2-lnl">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -177,9 +177,9 @@
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" id="MA1-CA-N7X">
-                        <rect key="frame" x="83" y="469" width="397" height="22"/>
+                        <rect key="frame" x="20" y="469" width="460" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="pRl-ER-gLx">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Author" drawsBackground="YES" id="pRl-ER-gLx">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -187,33 +187,6 @@
                         <connections>
                             <outlet property="delegate" destination="-2" id="idg-4V-ZyC"/>
                         </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="971">
-                        <rect key="frame" x="32" y="412" width="38" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Genre" id="972">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="JZc-nm-AGT">
-                        <rect key="frame" x="32" y="472" width="45" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Author" id="t0V-Ed-HEz">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="4T0-dg-dDi">
-                        <rect key="frame" x="32" y="442" width="38" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Title" id="Sd1-ZF-rBl">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" id="963">
                         <rect key="frame" x="453" y="406" width="25" height="26"/>
