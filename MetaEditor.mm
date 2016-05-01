@@ -1,41 +1,39 @@
-/*
- *  MetaEditor.cpp
- *  AudioBookBinder
- *
- *  Created by Oleksandr Tymoshenko on 10-06-09.
- *  Copyright 2010 Bluezbox Software. All rights reserved.
- *
- */
+//
+//  Copyright (c) 2010-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  All rights reserved.
+// 
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions
+//  are met:
+//  1. Redistributions of source code must retain the above copyright
+//     notice unmodified, this list of conditions, and the following
+//     disclaimer.
+//  2. Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in the
+//     documentation and/or other materials provided with the distribution.
+// 
+//  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+//  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+//  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+//  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+//  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+//  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+//  SUCH DAMAGE.
+//
 
 extern "C" {
 #include "MetaEditor.h"
 };
+
 #include <vector>
 #include <mp4v2/mp4v2.h>
 #import "Chapter.h"
 
 using namespace std;
-
-extern "C" int setBookInfo(const char *mp4, const char *author, const char *title)
-{
-    MP4FileHandle h = MP4Modify( mp4 );
-    fprintf( stderr, "Begin\n");
-    if ( h == MP4_INVALID_FILE_HANDLE ) {
-        fprintf( stderr, "Could not open '%s'... aborting\n", mp4 );
-        return -1;
-    }
-    /* Read out the existing metadata */
-    const MP4Tags* mdata = MP4TagsAlloc();
-    MP4TagsFetch(mdata, h);
-    MP4TagsSetArtist(mdata, author);
-    /* Write out all tag modifications, free and close */
-    MP4TagsStore( mdata, h );
-    MP4TagsFree( mdata );
-    MP4Close( h ); 
-    fprintf( stderr, "Done\n");
-    
-    return 0;
-}
 
 int addChapters(const char *mp4, NSArray *chapters)
 { 
