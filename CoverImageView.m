@@ -1,19 +1,50 @@
 //
-//  CoverImageView.m
-//  AudioBookBinder
-//
-//  Created by Oleksandr Tymoshenko on 10-05-07.
-//  Copyright 2010 Bluezbox Software. All rights reserved.
+//  Copyright (c) 2010-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  All rights reserved.
+// 
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions
+//  are met:
+//  1. Redistributions of source code must retain the above copyright
+//     notice unmodified, this list of conditions, and the following
+//     disclaimer.
+//  2. Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in the
+//     documentation and/or other materials provided with the distribution.
+// 
+//  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+//  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+//  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+//  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+//  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+//  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+//  SUCH DAMAGE.
 //
 
 #import "CoverImageView.h"
+
+@interface CoverImageView() {
+    NSMutableDictionary *attributes;
+    NSString *string;
+    NSColor *highlightedColor, *normalColor;
+    BOOL highlighted;
+    NSImage  *scaledImage;
+}
+
+- (void) drawStringCenteredIn: (NSRect) bounds;
+- (void) prepareAttributes;
+@end
 
 @implementation CoverImageView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        coverImage = nil;
+        self.coverImage = nil;
         highlighted = NO;
         highlightedColor = [NSColor blackColor];
         normalColor = [NSColor colorWithCalibratedWhite:0.4 alpha:1];
@@ -21,7 +52,7 @@
         string = NSLocalizedString(@"⌘ + I\nor\nDrag Image Here", nil);
         [self registerForDraggedTypes:[NSArray arrayWithObjects:NSTIFFPboardType, 
                                        NSFilenamesPboardType, nil]];
-        coverImageFilename = nil;
+        self.coverImageFilename = nil;
 
     }
     return self;
@@ -53,7 +84,7 @@
 - (BOOL) haveCover
 {
     
-    return (coverImage != nil);
+    return (self.coverImage != nil);
 }
 
 - (BOOL) shouldConvert
@@ -64,13 +95,13 @@
         
     // we care only about filename. If image was brough by dragging 
     // picture - it's converted to PNG
-    if (coverImageFilename == nil)
+    if (self.coverImageFilename == nil)
         return YES;
     
-    for (ch = [coverImageFilename length]; 
-         ((ext_temp = [coverImageFilename characterAtIndex:(ch - 1)]) != '.') && (ch >= 0); ch--)
+    for (ch = [self.coverImageFilename length]; 
+         ((ext_temp = [self.coverImageFilename characterAtIndex:(ch - 1)]) != '.') && (ch >= 0); ch--)
 		;
-	ext = [[coverImageFilename lowercaseString] substringFromIndex:ch];
+	ext = [[self.coverImageFilename lowercaseString] substringFromIndex:ch];
     
 
 	if ([ext isEqualToString:@"jpg"] || [ext isEqualToString:@"jpeg"])
@@ -81,20 +112,11 @@
 		return YES;
 }
 
-- (NSImage *) coverImage
-{
-    return coverImage;
-}
-
-- (NSString*) coverImageFilename {
-    return coverImageFilename;
-}
-
 
 - (void) setCoverImageFilename:(NSString *)imagePath
 {
-    if (coverImageFilename) {
-        coverImageFilename = nil;
+    if (_coverImageFilename) {
+        _coverImageFilename = nil;
     }
     
     if (imagePath) {
@@ -104,7 +126,7 @@
         if (img == nil)
             return;
     
-        coverImageFilename = imagePath;
+        _coverImageFilename = imagePath;
     }
 }
 
@@ -114,15 +136,15 @@
     
     if (image == nil)
     {
-        coverImage = nil;
+        _coverImage = nil;
         scaledImage = nil;
         return;
     }
     
-    coverImage = [image copy];
+    _coverImage = [image copy];
    
-    NSImageRep *rep = [[coverImage representations] objectAtIndex:0]; 
-    [coverImage setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])]; 
+    NSImageRep *rep = [[self.coverImage representations] objectAtIndex:0]; 
+    [_coverImage setSize:NSMakeSize([rep pixelsWide], [rep pixelsHigh])];
     
     NSSize origSize = NSMakeSize([rep pixelsWide], [rep pixelsHigh]);
     
@@ -142,14 +164,14 @@
         // Composite image appropriately
         [scaledImage lockFocus];
         [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-        [coverImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height) 
+        [_coverImage drawInRect:NSMakeRect(0, 0, scaledSize.width, scaledSize.height)
                     fromRect:NSMakeRect(0, 0, origSize.width, origSize.height)
                    operation:NSCompositeSourceOver 
                     fraction:1.0];
         [scaledImage unlockFocus];
     }
     else {
-        scaledImage = [coverImage copy];
+        scaledImage = [self.coverImage copy];
     }
 
     [self setNeedsDisplay:YES];
@@ -335,7 +357,7 @@
             
             self.coverImageFilename = path;
             
-            if (coverImageFilename == nil)
+            if (self.coverImageFilename == nil)
                 return NO;
         }
         else
