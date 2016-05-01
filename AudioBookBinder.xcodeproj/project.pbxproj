@@ -31,7 +31,7 @@
 		9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
 		9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
 		9F6FA3A711191A5D0047728F /* ABLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABLog.m */; };
-		9F6FA3BE11191AEA0047728F /* AuidoBookBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */; };
+		9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */; };
 		9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6FA3D6111BBBC20047728F /* MainMenu.xib */; };
 		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
 		9F6FA411111D161A0047728F /* AudioFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA410111D161A0047728F /* AudioFileList.m */; };
@@ -115,7 +115,7 @@
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
-		9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuidoBookBinder.m; sourceTree = "<group>"; };
+		9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinder.m; sourceTree = "<group>"; };
 		9F6FA3D7111BBBC20047728F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookBinderAppDelegate.h; sourceTree = "<group>"; };
 		9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinderAppDelegate.m; sourceTree = "<group>"; };
@@ -218,13 +218,13 @@
 				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
 				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
 				32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */,
+				9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */,
 				9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */,
 				9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */,
 				9F6FA4A7111E56090047728F /* AudioFile.h */,
 				9F6FA4A8111E56090047728F /* AudioFile.m */,
 				9F6FA40F111D161A0047728F /* AudioFileList.h */,
 				9F6FA410111D161A0047728F /* AudioFileList.m */,
-				9F6FA3BD11191AEA0047728F /* AuidoBookBinder.m */,
 				9FA52D9D11C2FFCE003FD879 /* Chapter.h */,
 				9FA52D9E11C2FFCE003FD879 /* Chapter.m */,
 				9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */,
@@ -434,7 +434,7 @@
 				9F6FA3A711191A5D0047728F /* ABLog.m in Sources */,
 				9F6FA21711191A020047728F /* MP4Atom.m in Sources */,
 				9F6FA21811191A020047728F /* MP4File.m in Sources */,
-				9F6FA3BE11191AEA0047728F /* AuidoBookBinder.m in Sources */,
+				9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */,
 				9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */,
 				9F6FA411111D161A0047728F /* AudioFileList.m in Sources */,
 				9F6FA4A9111E56090047728F /* AudioFile.m in Sources */,
