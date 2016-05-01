@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,15 @@
 
 #import "ConsoleDelegate.h"
 #import "ABLog.h"
+
+@interface ConsoleDelegate() {
+    BOOL _verbose;
+    BOOL _istty;
+    BOOL _quiet;
+    BOOL _skipErrors;
+}
+
+@end
 
 @implementation ConsoleDelegate
 
