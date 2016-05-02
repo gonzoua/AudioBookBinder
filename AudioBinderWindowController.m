@@ -51,6 +51,13 @@
 extern BOOL requiresUpdateHack;
 #endif
 
+typedef struct 
+{
+    __unsafe_unretained NSString *id;
+    __unsafe_unretained NSString *title;
+    BOOL enabled;
+} column_t;
+
 column_t columnDefs[] = {
     {COLUMNID_FILE, @"File", NO},
     {COLUMNID_AUTHOR, @"Author", NO},

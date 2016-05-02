@@ -1,9 +1,28 @@
 //
-//  AudioFileList.m
-//  AudioBookBinder
-//
-//  Created by Oleksandr Tymoshenko on 10-02-05.
-//  Copyright 2010 Bluezbox Software. All rights reserved.
+//  Copyright (c) 2010-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  All rights reserved.
+// 
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions
+//  are met:
+//  1. Redistributions of source code must retain the above copyright
+//     notice unmodified, this list of conditions, and the following
+//     disclaimer.
+//  2. Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in the
+//     documentation and/or other materials provided with the distribution.
+// 
+//  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+//  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+//  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+//  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+//  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+//  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+//  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+//  SUCH DAMAGE.
 //
 
 #import "AudioFileList.h"
@@ -21,11 +40,17 @@
 #define TEXT_CHAPTER_N  \
     NSLocalizedString(@"Chapter %d", nil)
 
-@implementation AudioFileList
+@interface AudioFileList() {
+    NSMutableArray *_files;
+    NSMutableArray *_chapters;
+    NSString *_topDir;
+    NSArray *_draggedNodes;
+    BOOL _sortAscending;
+    NSString *_sortKey;
+}
+@end
 
-@synthesize canPlay = _canPlay;
-@synthesize commonAuthor = _commonAuthor;
-@synthesize commonAlbum = _commonAlbum;
+@implementation AudioFileList
 
 - (id) init
 {
@@ -34,19 +59,16 @@
         _files = [[NSMutableArray alloc] init];
         _chapters = [[NSMutableArray alloc] init];
         _topDir = nil;
-        _chapterMode = YES;
+        self.chapterMode = YES;
         id modeObj = [[NSUserDefaults standardUserDefaults] objectForKey:kConfigChaptersEnabled];
         if (modeObj != nil)
-            _chapterMode = [modeObj boolValue];
+            self.chapterMode = [modeObj boolValue];
         self.canPlay = NO;
         _sortAscending = YES;
         _sortKey = nil;
     }
     return self;
 }
-
-
-@synthesize chapterMode = _chapterMode;
 
 - (void) addFile:(NSString*)fileName
 {
