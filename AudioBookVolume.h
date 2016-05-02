@@ -28,7 +28,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface AudioBinderVolume : NSObject {
+@interface AudioBookVolume : NSObject {
     NSString *filename;
     NSMutableArray *inputFiles;
 }

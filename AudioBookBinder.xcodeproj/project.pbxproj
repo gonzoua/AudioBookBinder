@@ -19,9 +19,9 @@
 		9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
 		9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD671862A27D005EF748 /* StatsManager.m */; };
 		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
-		9F61BE3811FBBC8D00654B3B /* AudioBinderVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */; };
-		9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
-		9F61BE3B11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */; };
+		9F61BE3811FBBC8D00654B3B /* AudioBookVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */; };
+		9F61BE3A11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
+		9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
 		9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F62872B1194D502000D3A05 /* CoverImageView.m */; };
 		9F6FA21611191A020047728F /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
 		9F6FA21711191A020047728F /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
@@ -67,7 +67,7 @@
 			dstSubfolderSpec = 0;
 			files = (
 				8DD76F9F0486AA7600D96B5E /* AudioBookBinder.1 in CopyFiles */,
-				9F61BE3811FBBC8D00654B3B /* AudioBinderVolume.h in CopyFiles */,
+				9F61BE3811FBBC8D00654B3B /* AudioBookVolume.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -109,8 +109,8 @@
 		9F1FFD671862A27D005EF748 /* StatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsManager.m; sourceTree = "<group>"; };
 		9F3A5BEF12F4D04600528495 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
-		9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderVolume.h; sourceTree = "<group>"; };
-		9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderVolume.m; sourceTree = "<group>"; };
+		9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookVolume.h; sourceTree = "<group>"; };
+		9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookVolume.m; sourceTree = "<group>"; };
 		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,14 +213,14 @@
 				9F02CE65101FF8D900AE315D /* ABLog.m */,
 				9F02CE10101EA8B100AE315D /* AudioBinder.h */,
 				9F02CE11101EA8B100AE315D /* AudioBinder.m */,
-				9F61BE3611FBBC8D00654B3B /* AudioBinderVolume.h */,
-				9F61BE3711FBBC8D00654B3B /* AudioBinderVolume.m */,
 				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
 				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
 				32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */,
 				9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */,
 				9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */,
 				9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */,
+				9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */,
+				9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */,
 				9F6FA4A7111E56090047728F /* AudioFile.h */,
 				9F6FA4A8111E56090047728F /* AudioFile.m */,
 				9F6FA40F111D161A0047728F /* AudioFileList.h */,
@@ -422,7 +422,7 @@
 				9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */,
 				9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */,
 				9FA52DA011C2FFCE003FD879 /* Chapter.m in Sources */,
-				9F61BE3A11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
+				9F61BE3A11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,7 +445,7 @@
 				9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */,
 				9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */,
 				9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */,
-				9F61BE3B11FBBC8D00654B3B /* AudioBinderVolume.m in Sources */,
+				9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
 				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
 				9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */,
 			);

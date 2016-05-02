@@ -25,10 +25,10 @@
 //  SUCH DAMAGE.
 //
 
-#import "AudioBinderVolume.h"
+#import "AudioBookVolume.h"
 
 
-@implementation AudioBinderVolume
+@implementation AudioBookVolume
 @synthesize filename, inputFiles;
 
 - (id)initWithName:(NSString*)name files:(NSArray*)files

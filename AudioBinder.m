@@ -28,7 +28,7 @@
 #import <CoreServices/CoreServices.h>
 #import <AudioToolbox/AudioConverter.h>
 #import "AudioBinder.h"
-#import "AudioBinderVolume.h"
+#import "AudioBookVolume.h"
 
 #include "ABLog.h"
 
@@ -150,7 +150,7 @@ stringForOSStatus(OSStatus err)
 
 -(void) addVolume:(NSString*)filename files:(NSArray*)files
 {
-    AudioBinderVolume *volume = [[AudioBinderVolume alloc] initWithName:filename files:files];
+    AudioBookVolume *volume = [[AudioBookVolume alloc] initWithName:filename files:files];
     [_volumes addObject:volume];
 }
 
@@ -159,7 +159,7 @@ stringForOSStatus(OSStatus err)
     BOOL failed = NO;
     NSFileManager *fm;
     int filesConverted = 0;
-    for (AudioBinderVolume *v in _volumes) {
+    for (AudioBookVolume *v in _volumes) {
     
         if ([v.inputFiles count] == 0)
         {
@@ -209,7 +209,7 @@ stringForOSStatus(OSStatus err)
     if (failed || _canceled)
     {
         fm = [NSFileManager defaultManager];
-        for (AudioBinderVolume *v in _volumes) 
+        for (AudioBookVolume *v in _volumes) 
             [fm removeItemAtPath:v.filename error:nil];
     }
        

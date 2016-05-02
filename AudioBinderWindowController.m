@@ -26,8 +26,8 @@
 //
 
 #import "AudioBinder.h"
-#import "AudioBinderVolume.h"
-#import "AudioBinderVolume.h"
+#import "AudioBookVolume.h"
+#import "AudioBookVolume.h"
 #import "AudioBinderWindowController.h"
 #import "AudioBookBinderAppDelegate.h"
 #import "AudioFile.h"
@@ -745,7 +745,7 @@ enum abb_form_fields {
                 
                 int track = 1;
                 NSArray *volumes = [_binder volumes];
-                for (AudioBinderVolume *v in volumes) {
+                for (AudioBookVolume *v in volumes) {
                     NSString *volumeName = v.filename;
                     MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
                     mp4.artist = author;
@@ -774,7 +774,7 @@ enum abb_form_fields {
                 if ([fileList chapterMode]) {
                     [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
                     int idx = 0;
-                    for (AudioBinderVolume *v in volumes) {
+                    for (AudioBookVolume *v in volumes) {
                         addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
                         idx++;
                     }
@@ -784,7 +784,7 @@ enum abb_form_fields {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
                     
                     [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
-                    for(AudioBinderVolume *volume in volumes)
+                    for(AudioBookVolume *volume in volumes)
                         [self addFileToiTunes:volume.filename];
                 }
                 

@@ -31,7 +31,7 @@
 #include <getopt.h>
 
 #import "AudioBinder.h"
-#import "AudioBinderVolume.h"
+#import "AudioBookVolume.h"
 #import "ABLog.h"
 #import "ConsoleDelegate.h"
 #import "AudioFile.h"
@@ -437,7 +437,7 @@ int main (int argc, char * argv[]) {
     }
     
     int track = 1;
-    for (AudioBinderVolume *v in volumes) {
+    for (AudioBookVolume *v in volumes) {
         NSString *volumeName = v.filename;
         MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
         mp4.artist = bookAuthor;
@@ -467,7 +467,7 @@ int main (int argc, char * argv[]) {
             fflush(stdout);
         }
         int idx = 0;
-        for (AudioBinderVolume *v in volumes) {
+        for (AudioBookVolume *v in volumes) {
             addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
             idx++;
         }
@@ -481,7 +481,7 @@ int main (int argc, char * argv[]) {
     }
     
     if (addToiTunes) {
-        for (AudioBinderVolume *v in volumes) {
+        for (AudioBookVolume *v in volumes) {
             NSString *volume = v.filename;
             NSDictionary* errorDict;
             NSAppleEventDescriptor* returnDescriptor = NULL;
