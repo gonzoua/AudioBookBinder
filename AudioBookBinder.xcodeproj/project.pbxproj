@@ -153,6 +153,7 @@
 		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
 		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
 		9FB4DE3911C0610F007B3DDE /* libmp4v2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmp4v2.a; path = "$(HOME)/opt/lib/libmp4v2.a"; sourceTree = "<absolute>"; };
+		9FB964F21CD81F9A0028268F /* ConfigNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigNames.h; sourceTree = "<group>"; };
 		9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleDelegate.h; sourceTree = "<group>"; };
 		9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleDelegate.m; sourceTree = "<group>"; };
 		9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineView_Extension.h; sourceTree = "<group>"; };
@@ -227,6 +228,7 @@
 				9F6FA410111D161A0047728F /* AudioFileList.m */,
 				9FA52D9D11C2FFCE003FD879 /* Chapter.h */,
 				9FA52D9E11C2FFCE003FD879 /* Chapter.m */,
+				9FB964F21CD81F9A0028268F /* ConfigNames.h */,
 				9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */,
 				9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */,
 				9F62872A1194D502000D3A05 /* CoverImageView.h */,
