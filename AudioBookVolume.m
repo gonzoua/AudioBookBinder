@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, 2010, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -27,23 +27,19 @@
 
 #import "AudioBookVolume.h"
 
-
 @implementation AudioBookVolume
-@synthesize filename, inputFiles;
 
 - (id)initWithName:(NSString*)name files:(NSArray*)files
 {
-    filename = nil;
-    inputFiles = nil;
+    _filename = nil;
+    _inputFiles = nil;
     
     if (self = [super init]) {
-        filename = [[NSString alloc] initWithString:name];
-        inputFiles = [[NSMutableArray alloc] initWithArray:files];
+       _filename = [[NSString alloc] initWithString:name];
+       _inputFiles = [[NSArray alloc] initWithArray:files];
     }
     
     return self;
 }
-
-
 
 @end

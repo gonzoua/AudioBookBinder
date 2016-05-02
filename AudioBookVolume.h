@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, 2010, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -27,14 +27,10 @@
 
 #import <Foundation/Foundation.h>
 
-
-@interface AudioBookVolume : NSObject {
-    NSString *filename;
-    NSMutableArray *inputFiles;
-}
+@interface AudioBookVolume : NSObject
 
 @property (readonly) NSString *filename;
-@property (readonly) NSMutableArray *inputFiles;
+@property (readonly) NSArray *inputFiles;
 
 - (id)initWithName:(NSString*)name files:(NSArray*)files;
 
