@@ -98,6 +98,7 @@
                 else
                     self.album = @"";
             }
+            CFRelease(info);
         }
         self.valid = YES;
         AudioFileClose(audioFile);
