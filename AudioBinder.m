@@ -422,7 +422,6 @@ stringForOSStatus(OSStatus err)
         
         audioBuffer = malloc(AUDIO_BUFFER_SIZE);
         NSAssert(audioBuffer != NULL, @"malloc failed");
-        audioBuffer = malloc(AUDIO_BUFFER_SIZE);
         bufferList.mNumberBuffers = 1;
         bufferList.mBuffers[0].mNumberChannels = pcmFormat.mChannelsPerFrame;
         bufferList.mBuffers[0].mData = audioBuffer;
