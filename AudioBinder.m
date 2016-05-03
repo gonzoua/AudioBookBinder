@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -27,14 +27,13 @@
 
 #import <CoreServices/CoreServices.h>
 #import <AudioToolbox/AudioConverter.h>
+
 #import "AudioBinder.h"
 #import "AudioBookVolume.h"
-
-#include "ABLog.h"
+#import "ABLog.h"
 
 // 1M seems to be sane buffer size nowadays
 #define AUDIO_BUFFER_SIZE 1*1024*1024
-
 
 // Helper function
 static NSString * 
@@ -95,22 +94,29 @@ stringForOSStatus(OSStatus err)
             errStr = nil;
             break;
     }
+
     const char *errDescr = isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusErrorString(err);
     if ((errDescr != nil) && (strlen(errDescr) > 0))
         descString = [[NSString alloc] initWithFormat:@"err#%08lx (%s)", (long)err, errDescr];
     else
         descString = [[NSString alloc] initWithFormat:@"err#%08lx ", (long)err];
-
     
     return descString;
 }
 
+@interface AudioBinder() {
+    ExtAudioFileRef _outAudioFile;
+    SInt64 _outFileLength;
+    SInt64 _outBookLength;
+    id _delegate;
+    BOOL _canceled;
+    BOOL _isLion;
+    BOOL _bitrateSet;
+}
+@end
+
 @implementation AudioBinder
 
-@synthesize channels = _channels;
-@synthesize sampleRate = _sampleRate;
-@synthesize bitrate = _bitrate;
-@synthesize volumes = _volumes;
 -(id)init
 {
     if ((self = [super init])) {

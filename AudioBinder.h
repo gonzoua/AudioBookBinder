@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -26,9 +26,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <AudioToolbox/AudioFormat.h>
+#import <AudioToolbox/ExtendedAudioFile.h>
 
-#include <AudioToolbox/AudioFormat.h>
-#include <AudioToolbox/ExtendedAudioFile.h>
 #import "AudioFile.h"
 
 #define DEFAULT_SAMPLE_RATE 44100.f
@@ -48,25 +48,13 @@
 @end
 
 
-@interface AudioBinder : NSObject {
-    ExtAudioFileRef _outAudioFile;
-    SInt64 _outFileLength;
-    SInt64 _outBookLength;
-    id _delegate;
-    BOOL _canceled;
-    float _sampleRate;
-    int _channels;
-    UInt32 _bitrate;
-    NSMutableArray *_volumes;
-    BOOL _isLion;
-    BOOL _bitrateSet;
-}
-
+@interface AudioBinder : NSObject
 
 @property (assign) int channels;
 @property (assign) float sampleRate;
 @property (assign) UInt32 bitrate;
 @property (readonly) NSMutableArray *volumes;
+
 -(id) init;
 -(void) reset;
 -(void) setDelegate: (id <AudioBinderDelegate>)delegate;
@@ -78,4 +66,5 @@
 -(void) cancel;
 -(BOOL) setConverterBitrate;
 -(NSArray*) validBitrates;
+
 @end
