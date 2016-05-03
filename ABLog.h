@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2009, Oleksandr Tymoshenko <gonzo@bluezbox.com>
+//  Copyright (c) 2009-2016 Oleksandr Tymoshenko <gonzo@bluezbox.com>
 //  All rights reserved.
 // 
 //  Redistribution and use in source and binary forms, with or without
@@ -24,6 +24,7 @@
 //  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 //  SUCH DAMAGE.
 //
+
 
 #import <Cocoa/Cocoa.h>
 
