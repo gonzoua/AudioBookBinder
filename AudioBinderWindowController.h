@@ -49,7 +49,6 @@
     IBOutlet NSPopUpButton *saveAsFolderPopUp;
 }
 
-@property (readwrite, assign) BOOL canPlay;
 @property (atomic, assign) NSUInteger currentProgress;
 
 - (IBAction) addFiles: (id)sender;

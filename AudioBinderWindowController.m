@@ -927,7 +927,7 @@ enum abb_form_fields {
         if (![_sound play]) {
             [playButton setImage:_playImg] ;
             _sound = nil;
-            [playButton setEnabled:self.canPlay];
+            [playButton setEnabled:fileList.canPlay];
             [self playFailed];
         }
     }
@@ -937,7 +937,7 @@ enum abb_form_fields {
 {
     [playButton setImage:_playImg] ;
     _sound = nil;
-    [playButton setEnabled:self.canPlay];
+    [playButton setEnabled:fileList.canPlay];
 }
 
 - (void) playFailed
@@ -1030,8 +1030,6 @@ enum abb_form_fields {
         if (_sound == nil) {
             [playButton setEnabled:fileList.canPlay];
         }
-        
-        self.canPlay = fileList.canPlay;
     }
     else if (context == KVO_CONTEXT_COMMONAUTHOR_CHANGED) {
         NSString *author = [authorField stringValue];
