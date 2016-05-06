@@ -577,6 +577,11 @@
     for (id item in [outlineView selectedItems]) {
         if ([item isKindOfClass:[Chapter class]]) {
             Chapter *ch = item;
+
+            for (AudioFile *file in [ch files]) {
+                [_files removeObject:file];
+            }
+
             [_chapters removeObject:ch];
         }
         else {
@@ -733,8 +738,6 @@
     
     self.canPlay = playable;
 }
-
-
 
 - (void)      outlineView:(NSOutlineView *) outlineView
     didClickTableColumn:(NSTableColumn *) tableColumn 
