@@ -63,6 +63,7 @@
 #define ColumnsConfiguration                @"ColumnsConfiguration"
 
 #define KVO_CONTEXT_CANPLAY_CHANGED         @"CanPlayChanged"
+#define KVO_CONTEXT_HASFILES_CHANGED        @"HasFilesChanged"
 #define KVO_CONTEXT_COMMONAUTHOR_CHANGED    @"CommonAuthorChanged"
 #define KVO_CONTEXT_COMMONALBUM_CHANGED     @"CommonAlbumChanged"
 
@@ -131,6 +132,7 @@ enum abb_form_fields {
 
 - (void)dealloc
 {
+    [fileList removeObserver:self forKeyPath:@"hasFiles"];
     [fileList removeObserver:self forKeyPath:@"canPlay"];
     [fileList removeObserver:self forKeyPath:@"commonAuthor"];
     [fileList removeObserver:self forKeyPath:@"commonAlbum"];
@@ -173,7 +175,10 @@ enum abb_form_fields {
         forKeyPath:@"canPlay"
            options:0
            context:KVO_CONTEXT_CANPLAY_CHANGED];
-
+    [fileList addObserver:self
+        forKeyPath:@"hasFiles"
+           options:0
+           context:KVO_CONTEXT_HASFILES_CHANGED];
     [fileList addObserver:self
                forKeyPath:@"commonAuthor"
                   options:0
@@ -186,6 +191,7 @@ enum abb_form_fields {
     [self updateWindowTitle];
     [self setupColumns];
     [self setupGenres];
+    [bindButton setEnabled:FALSE];
     
     AudioBookBinderAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
     [self.window setDelegate:delegate];
@@ -1030,6 +1036,9 @@ enum abb_form_fields {
         if (_sound == nil) {
             [playButton setEnabled:fileList.canPlay];
         }
+    }
+    else if(context == KVO_CONTEXT_HASFILES_CHANGED){
+        [bindButton setEnabled:fileList.hasFiles];
     }
     else if (context == KVO_CONTEXT_COMMONAUTHOR_CHANGED) {
         NSString *author = [authorField stringValue];
