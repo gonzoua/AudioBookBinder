@@ -38,7 +38,7 @@
 
 @interface AudioFileList : NSObject<NSOutlineViewDataSource, ExtendedNSOutlineViewDelegate> 
 
-@property (readonly, getter=hasFile) BOOL hasFiles;
+@property (readonly, getter=hasFiles) BOOL hasFiles;
 @property BOOL chapterMode;
 @property BOOL canPlay;
 @property (copy) NSString* commonAuthor;
