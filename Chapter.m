@@ -61,6 +61,11 @@
     return [self.files containsObject:file];
 }
 
+- (NSUInteger) indexOfFile:(AudioFile*)file
+{
+    return [self.files indexOfObject:file];
+}
+
 - (int) totalFiles
 {
     return [self.files count];

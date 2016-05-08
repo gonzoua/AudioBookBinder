@@ -37,6 +37,7 @@
 - (void) addFile:(AudioFile *)file;
 - (void) addFiles:(NSArray *)newFiles;
 - (BOOL) containsFile:(AudioFile*)file;
+- (NSUInteger) indexOfFile:(AudioFile*)file;
 - (AudioFile*) fileAtIndex:(NSInteger)index;
 - (void) removeFile:(AudioFile*)file;
 - (void) insertFile:(AudioFile*)file atIndex:(NSInteger)index;

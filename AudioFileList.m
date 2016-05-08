@@ -474,6 +474,11 @@
                         [_chapters removeObject:audioItem];
                     }
                     else {
+                        if ([dropChapter containsFile:audioItem]) {
+                            NSUInteger idx = [dropChapter indexOfFile:audioItem];
+                            if (idx <= childIndex)
+                                childIndex--;
+                        }
                         [self orphanFile:audioItem];
                         [dropChapter insertFile:audioItem atIndex:childIndex];
                         childIndex++;
