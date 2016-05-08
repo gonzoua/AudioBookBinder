@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface QueueController : NSWindowController
+@interface QueueController : NSWindowController<NSTableViewDataSource>
 
 @end

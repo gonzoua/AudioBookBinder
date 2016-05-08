@@ -21,4 +21,15 @@
     [self.window setExcludedFromWindowsMenu:YES];
 }
 
+// NSTableViewDataSource
+- (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView
+{
+    return 3;
+}
+
+- (id) tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    return @"XXX";
+}
+
 @end
