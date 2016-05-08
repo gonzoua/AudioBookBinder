@@ -36,5 +36,6 @@
 #ifndef APP_STORE_BUILD
 - (IBAction) checkForUpdates: (id)sender;
 #endif
+- (IBAction)showQueueWindow: (id)sender;
 
 @end

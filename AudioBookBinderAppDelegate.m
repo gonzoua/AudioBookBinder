@@ -30,6 +30,7 @@
 #import "ExpandedPathToPathTransformer.h"
 #import "ExpandedPathToIconTransformer.h"
 #import "AudioBinderWindowController.h"
+#import "QueueController.h"
 #import "ConfigNames.h"
 
 #ifndef APP_STORE_BUILD
@@ -54,6 +55,7 @@ static BOOL hackChecked = NO;
 #endif
     
     NSMutableArray *windowControllers;
+    QueueController *queueController;
 }
 
 @end
@@ -164,6 +166,7 @@ static BOOL hackChecked = NO;
     // XXX: hack to make autoupdates work
     [SUUpdater sharedUpdater];
 #endif
+    queueController = [[QueueController alloc] initWithWindowNibName:@"QueueWindow"];
     
     [self newAudiobookWindow:nil];
 }
@@ -227,6 +230,11 @@ static BOOL hackChecked = NO;
     
     if (controller)
         [controller updateWindowTitle];
+}
+
+- (IBAction)showQueueWindow: (id)sender
+{
+    [queueController showWindow:nil];
 }
 
 @end

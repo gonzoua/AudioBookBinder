@@ -23,6 +23,8 @@
 		9F61BE3A11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
 		9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
 		9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F62872B1194D502000D3A05 /* CoverImageView.m */; };
+		9F6440161CDFE14100DABC17 /* QueueController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6440141CDFE14100DABC17 /* QueueController.m */; };
+		9F6440171CDFE14100DABC17 /* QueueWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6440151CDFE14100DABC17 /* QueueWindow.xib */; };
 		9F6FA21611191A020047728F /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
 		9F6FA21711191A020047728F /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
 		9F6FA21811191A020047728F /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
@@ -113,6 +115,9 @@
 		9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookVolume.m; sourceTree = "<group>"; };
 		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
 		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
+		9F6440131CDFE14100DABC17 /* QueueController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueController.h; sourceTree = "<group>"; };
+		9F6440141CDFE14100DABC17 /* QueueController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueController.m; sourceTree = "<group>"; };
+		9F6440151CDFE14100DABC17 /* QueueWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueueWindow.xib; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
 		9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinder.m; sourceTree = "<group>"; };
@@ -247,6 +252,9 @@
 				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
 				9FAB14801161A51400A2F36A /* PrefsController.h */,
 				9FAB14811161A51400A2F36A /* PrefsController.m */,
+				9F6440131CDFE14100DABC17 /* QueueController.h */,
+				9F6440141CDFE14100DABC17 /* QueueController.m */,
+				9F6440151CDFE14100DABC17 /* QueueWindow.xib */,
 				9F1FFD661862A27D005EF748 /* StatsManager.h */,
 				9F1FFD671862A27D005EF748 /* StatsManager.m */,
 			);
@@ -385,6 +393,7 @@
 				9F455945116AF4FB00BA501C /* Credits.rtf in Resources */,
 				9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */,
 				9F782A2E129F941900763A5B /* Play.png in Resources */,
+				9F6440171CDFE14100DABC17 /* QueueWindow.xib in Resources */,
 				9F782A2F129F941900763A5B /* Stop.png in Resources */,
 				9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */,
 				9F776EC713CD6D5D004569F4 /* MiniProgressGradient.png in Resources */,
@@ -450,6 +459,7 @@
 				9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
 				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
 				9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */,
+				9F6440161CDFE14100DABC17 /* QueueController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
