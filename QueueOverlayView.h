@@ -25,30 +25,8 @@
 //  SUCH DAMAGE.
 //
 
-#import "QueueController.h"
+#import <Cocoa/Cocoa.h>
 
-@interface QueueController ()
-
-@end
-
-@implementation QueueController
-
-- (void)windowDidLoad {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [self.window setExcludedFromWindowsMenu:YES];
-}
-
-// NSTableViewDataSource
-- (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView
-{
-    return 3;
-}
-
-- (id) tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    return @"XXX";
-}
+@interface QueueOverlayView : NSView
 
 @end

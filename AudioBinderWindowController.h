@@ -30,6 +30,7 @@
 #import "AudioFileList.h"
 #import "AudioBinder.h"
 #import "CoverImageView.h"
+#import "QueueOverlayView.h"
 
 @interface AudioBinderWindowController : NSWindowController<NSSoundDelegate, NSTextFieldDelegate, AudioBinderDelegate> {
     IBOutlet NSOutlineView *fileListView;
@@ -55,6 +56,7 @@
 - (IBAction) delFiles: (id)sender;
 - (IBAction) setCover: (id)sender;
 - (IBAction) bind: (id)sender;
+- (IBAction) toggleQueue: (id)sender;
 - (IBAction) cancel: (id)sender;
 - (IBAction) toggleChapters: (id)sender;
 - (IBAction) joinFiles: (id)sender;

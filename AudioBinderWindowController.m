@@ -41,6 +41,8 @@
 #import "NSOutlineView_Extension.h"
 #import "StatsManager.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 // localized strings
 #define TEXT_CONVERSION_FAILED  NSLocalizedString(@"Audiofile conversion failed", nil)
 #define TEXT_BINDING_FAILED     NSLocalizedString(@"Audiobook binding failed", nil)
@@ -103,6 +105,7 @@ enum abb_form_fields {
     NSImage *_playImg, *_stopImg;
     BOOL _conversionResult;
     AudioFileList *fileList;
+    QueueOverlayView *_queueOverlay;
     
     NSMutableArray *currentColumns;
 
@@ -110,6 +113,7 @@ enum abb_form_fields {
     NSUInteger _totalBookProgress;
     NSUInteger _totalBookDuration;
     BOOL _converting;
+    BOOL _enqueued;
 }
 
 - (void)playFailed;
@@ -156,6 +160,7 @@ enum abb_form_fields {
     _binder = [[AudioBinder alloc] init];
     _playing = NO;
     _converting = NO;
+    _enqueued = NO;
     NSString* img = [[NSBundle mainBundle] pathForResource:@"Play" ofType:@"png"];
     NSURL* url = [NSURL fileURLWithPath:img];
     _playImg = [[NSImage alloc] initWithContentsOfURL:url];
@@ -195,6 +200,8 @@ enum abb_form_fields {
     
     AudioBookBinderAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
     [self.window setDelegate:delegate];
+    
+    _queueOverlay = [[QueueOverlayView alloc] init];
 }
 
 - (void)setupColumns {
@@ -1125,6 +1132,19 @@ enum abb_form_fields {
         [saveAsFolderPopUp selectItemAtIndex:0];
 
     }];
+}
+
+- (IBAction) toggleQueue: (id)sender
+{
+    _enqueued = !_enqueued;
+    if (_enqueued) {
+        [_queueOverlay setFrame:self.window.contentView.frame];
+        [self.window.contentView addSubview:_queueOverlay positioned:NSWindowAbove relativeTo:nil];
+        [_queueOverlay becomeFirstResponder];
+    }
+    else {
+        [_queueOverlay removeFromSuperview];
+    }
 }
 
 @end

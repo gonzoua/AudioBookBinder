@@ -25,30 +25,35 @@
 //  SUCH DAMAGE.
 //
 
-#import "QueueController.h"
+#import "QueueOverlayView.h"
 
-@interface QueueController ()
+#import <QuartzCore/QuartzCore.h>
 
-@end
+@implementation QueueOverlayView
 
-@implementation QueueController
-
-- (void)windowDidLoad {
-    [super windowDidLoad];
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        CATextLayer *viewLayer = [CATextLayer layer];
+        viewLayer.string = @"Queued";
+        viewLayer.contentsScale = 2;
+        viewLayer.alignmentMode = @"center";
+        [viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.4)]; //RGB plus Alpha Channel
+        [self setWantsLayer:YES]; // view's backing store is using a Core Animation Layer
+        [self setLayer:viewLayer];
+    }
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [self.window setExcludedFromWindowsMenu:YES];
+    return self;
 }
 
-// NSTableViewDataSource
-- (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView
+- (BOOL)acceptsFirstResponder
 {
-    return 3;
+
+    return YES;
 }
 
-- (id) tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    return @"XXX";
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
 }
 
 @end

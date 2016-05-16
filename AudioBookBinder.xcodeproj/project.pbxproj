@@ -57,6 +57,8 @@
 		9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */; };
+		9FD5D3651CEA5146008B74AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD5D3641CEA5146008B74AF /* QuartzCore.framework */; };
+		9FD5D3681CEA549E008B74AF /* QueueOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */; };
 		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
 		9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9FFF519E12DC0D7000E3A54F /* audiobook.icns */; };
 /* End PBXBuildFile section */
@@ -161,6 +163,9 @@
 		9FB964F21CD81F9A0028268F /* ConfigNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigNames.h; sourceTree = "<group>"; };
 		9FBCBF44102A6A2C0067AE9F /* ConsoleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleDelegate.h; sourceTree = "<group>"; };
 		9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleDelegate.m; sourceTree = "<group>"; };
+		9FD5D3641CEA5146008B74AF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9FD5D3661CEA549E008B74AF /* QueueOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueOverlayView.h; sourceTree = "<group>"; };
+		9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueOverlayView.m; sourceTree = "<group>"; };
 		9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineView_Extension.h; sourceTree = "<group>"; };
 		9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOutlineView_Extension.m; sourceTree = "<group>"; };
 		9FFF519E12DC0D7000E3A54F /* audiobook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = audiobook.icns; sourceTree = "<group>"; };
@@ -184,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FD5D3651CEA5146008B74AF /* QuartzCore.framework in Frameworks */,
 				9F6FA3A011191A4D0047728F /* Foundation.framework in Frameworks */,
 				9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */,
 				9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */,
@@ -199,6 +205,7 @@
 		08FB7794FE84155DC02AAC07 /* AudioBookBinder */ = {
 			isa = PBXGroup;
 			children = (
+				9FD5D3641CEA5146008B74AF /* QuartzCore.framework */,
 				9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */,
 				9F95911E11658523001C2433 /* Resources */,
 				08FB7795FE84155DC02AAC07 /* Source */,
@@ -257,6 +264,8 @@
 				9F6440151CDFE14100DABC17 /* QueueWindow.xib */,
 				9F1FFD661862A27D005EF748 /* StatsManager.h */,
 				9F1FFD671862A27D005EF748 /* StatsManager.m */,
+				9FD5D3661CEA549E008B74AF /* QueueOverlayView.h */,
+				9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -456,6 +465,7 @@
 				9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */,
 				9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */,
 				9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */,
+				9FD5D3681CEA549E008B74AF /* QueueOverlayView.m in Sources */,
 				9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
 				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
 				9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */,
