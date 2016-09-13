@@ -55,7 +55,6 @@ static BOOL hackChecked = NO;
 #endif
     
     NSMutableArray *windowControllers;
-    QueueController *queueController;
 }
 
 @end
@@ -166,7 +165,7 @@ static BOOL hackChecked = NO;
     // XXX: hack to make autoupdates work
     [SUUpdater sharedUpdater];
 #endif
-    queueController = [[QueueController alloc] initWithWindowNibName:@"QueueWindow"];
+    self.queueController = [[QueueController alloc] initWithWindowNibName:@"QueueWindow"];
     
     [self newAudiobookWindow:nil];
 }
@@ -234,7 +233,7 @@ static BOOL hackChecked = NO;
 
 - (IBAction)showQueueWindow: (id)sender
 {
-    [queueController showWindow:nil];
+    [self.queueController showWindow:nil];
 }
 
 @end

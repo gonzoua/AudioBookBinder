@@ -28,8 +28,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class QueueController;
+
 @interface AudioBookBinderAppDelegate : NSObject<NSWindowDelegate>
 
+@property (retain) QueueController *queueController;
+    
 + (void) initialize;
 - (IBAction) openChaptersHowTo: (id)sender;
 - (IBAction) newAudiobookWindow: (id)sender;
