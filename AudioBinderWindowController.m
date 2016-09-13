@@ -1078,6 +1078,7 @@ enum abb_form_fields {
 {
     self.author = [[authorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.title = [[titleField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.actor = [[actorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     self.windowTitle = nil;
     NSString *title;
@@ -1101,12 +1102,8 @@ enum abb_form_fields {
 }
 
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
-    if ((control == authorField) || (control == titleField)) {
+    if ((control == authorField) || (control == titleField) || (control == actorField)) {
         [self updateWindowTitle];
-    }
-
-    if (control == actorField) {
-        self.actor = [[actorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
 
     return YES;
