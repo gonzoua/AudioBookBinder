@@ -1,0 +1,56 @@
+/* Class = "NSWindow"; title = "AudiobookBinder"; ObjectID = "371"; */
+"371.title" = "AudiobookBinder";
+
+/* Class = "NSWindow"; title = "Converting..."; ObjectID = "596"; */
+"596.title" = "Конвертация...";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "607"; */
+"607.title" = "Отменить";
+
+/* Class = "NSTabViewItem"; label = "Files"; ObjectID = "770"; */
+"770.label" = "Файлы";
+
+/* Class = "NSTabViewItem"; label = "Cover"; ObjectID = "771"; */
+"771.label" = "Обложка";
+
+/* Class = "NSButtonCell"; title = "Bind"; ObjectID = "778"; */
+"778.title" = "Конвертировать";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "786"; */
+"786.title" = "Text Cell";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "965"; */
+"965.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Item"; ObjectID = "975"; */
+"975.title" = "Item";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1002"; */
+"1002.title" = "Window";
+
+/* Class = "NSTextFieldCell"; title = "Destination Folder:"; ObjectID = "1006"; */
+"1006.title" = "Папка:";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "1008"; */
+"1008.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Other..."; ObjectID = "1011"; */
+"1011.title" = "Other...";
+
+/* Class = "NSTextFieldCell"; title = "Filename:"; ObjectID = "1018"; */
+"1018.title" = "Файл:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "1029"; */
+"1029.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "1033"; */
+"1033.title" = "Отменить";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Title"; ObjectID = "Yjn-Z2-lnl"; */
+"Yjn-Z2-lnl.placeholderString" = "Название";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Author"; ObjectID = "pRl-ER-gLx"; */
+"pRl-ER-gLx.placeholderString" = "Автор";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Reader"; ObjectID = "AiJ-TY-VAV"; */
+"AiJ-TY-VAV.placeholderString" = "Чтец";

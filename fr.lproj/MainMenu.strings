@@ -1,0 +1,237 @@
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "5"; */
+"5.title" = "Tout mettre au premier plan";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "19"; */
+"19.title" = "Fenêtre";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "23"; */
+"23.title" = "Placer dans le Dock";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "24"; */
+"24.title" = "Fenêtre";
+
+/* Class = "NSMenu"; title = "AMainMenu"; ObjectID = "29"; */
+"29.title" = "AMainMenu";
+
+/* Class = "NSMenuItem"; title = "Audiobook Binder"; ObjectID = "56"; */
+"56.title" = "Audiobook Binder";
+
+/* Class = "NSMenu"; title = "Audiobook Binder"; ObjectID = "57"; */
+"57.title" = "Audiobook Binder";
+
+/* Class = "NSMenuItem"; title = "About AudioBookBinder"; ObjectID = "58"; */
+"58.title" = "A propos d'AudioBookBinder";
+
+/* Class = "NSMenuItem"; title = "Add Files"; ObjectID = "72"; */
+"72.title" = "Ajouter des fichiers";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "73"; */
+"73.title" = "Fermer";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
+"81.title" = "Fichier";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "83"; */
+"83.title" = "Fichier";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "129"; */
+"129.title" = "Préférences…";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "130"; */
+"130.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "131"; */
+"131.title" = "Services";
+
+/* Class = "NSMenuItem"; title = "Hide AudioBookBinder"; ObjectID = "134"; */
+"134.title" = "Masquer AudioBookBinder";
+
+/* Class = "NSMenuItem"; title = "Quit AudioBookBinder"; ObjectID = "136"; */
+"136.title" = "Quitter AudioBookBinder";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "145"; */
+"145.title" = "Masquer les autres";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "150"; */
+"150.title" = "Tout afficher";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "239"; */
+"239.title" = "Réduire/agrandir";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "490"; */
+"490.title" = "Aide";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "491"; */
+"491.title" = "Aide";
+
+/* Class = "NSMenuItem"; title = "Audiobook Binder Help"; ObjectID = "492"; */
+"492.title" = "Aide d'Audiobook Binder";
+
+/* Class = "NSWindow"; title = "Preferences"; ObjectID = "611"; */
+"611.title" = "Préférences";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "620"; */
+"620.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Other..."; ObjectID = "623"; */
+"623.title" = "Autre...";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "626"; */
+"626.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "629"; */
+"629.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "8000"; ObjectID = "630"; */
+"630.title" = "8000";
+
+/* Class = "NSMenuItem"; title = "11025"; ObjectID = "632"; */
+"632.title" = "11025";
+
+/* Class = "NSButtonCell"; title = "Mono"; ObjectID = "634"; */
+"634.title" = "Mono";
+
+/* Class = "NSButtonCell"; title = "Stereo"; ObjectID = "635"; */
+"635.title" = "Stéréo";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "636"; */
+"636.title" = "Radio";
+
+/* Class = "NSTextFieldCell"; title = "Destination Folder:"; ObjectID = "638"; */
+"638.title" = "Dossier de destination";
+
+/* Class = "NSTextFieldCell"; title = "Add to iTunes Library:"; ObjectID = "640"; */
+"640.title" = "Ajouter à iTunes";
+
+/* Class = "NSTextFieldCell"; title = "Sample Rate:"; ObjectID = "642"; */
+"642.title" = "Fréquence d'échantillonnage:";
+
+/* Class = "NSTextFieldCell"; title = "Channels:"; ObjectID = "644"; */
+"644.title" = "Canaux:";
+
+/* Class = "NSMenuItem"; title = "12000"; ObjectID = "701"; */
+"701.title" = "12000";
+
+/* Class = "NSMenuItem"; title = "16000"; ObjectID = "702"; */
+"702.title" = "16000";
+
+/* Class = "NSMenuItem"; title = "22050"; ObjectID = "703"; */
+"703.title" = "22050";
+
+/* Class = "NSMenuItem"; title = "24000"; ObjectID = "704"; */
+"704.title" = "24000";
+
+/* Class = "NSMenuItem"; title = "32000"; ObjectID = "705"; */
+"705.title" = "32000";
+
+/* Class = "NSMenuItem"; title = "44100"; ObjectID = "706"; */
+"706.title" = "44100";
+
+/* Class = "NSMenuItem"; title = "48000"; ObjectID = "707"; */
+"707.title" = "48000";
+
+/* Class = "NSMenuItem"; title = "Make Audiobook"; ObjectID = "733"; */
+"733.title" = "Construire le livre audio";
+
+/* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "737"; */
+"737.title" = "Vérification des mises à jour...";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "739"; */
+"739.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Check for Update:"; ObjectID = "743"; */
+"743.title" = "Vérifier les mises à jour:";
+
+/* Class = "NSButtonCell"; title = "Automatically check weekly"; ObjectID = "745"; */
+"745.title" = "Chaque semaine";
+
+/* Class = "NSMenuItem"; title = "Set Cover"; ObjectID = "798"; */
+"798.title" = "Définir l'illustration";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "801"; */
+"801.title" = "Edition";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "802"; */
+"802.title" = "Edition";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "803"; */
+"803.title" = "Supprimer";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "804"; */
+"804.title" = "Tout sélectionner";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "805"; */
+"805.title" = "Rétablir";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "807"; */
+"807.title" = "Couper";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "808"; */
+"808.title" = "Coller";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "809"; */
+"809.title" = "Copier";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "811"; */
+"811.title" = "Rétablir";
+
+/* Class = "NSMenuItem"; title = "Chapters"; ObjectID = "862"; */
+"862.title" = "Chapitres";
+
+/* Class = "NSMenu"; title = "Chapters"; ObjectID = "863"; */
+"863.title" = "Chapitres";
+
+/* Class = "NSMenuItem"; title = "Join Files"; ObjectID = "864"; */
+"864.title" = "Joindre des fichiers";
+
+/* Class = "NSMenuItem"; title = "Enable Chapters"; ObjectID = "865"; */
+"865.title" = "Activer le chapitrage";
+
+/* Class = "NSMenuItem"; title = "Split Files"; ObjectID = "869"; */
+"869.title" = "Découper les fichiers";
+
+/* Class = "NSMenuItem"; title = "Renumber"; ObjectID = "873"; */
+"873.title" = "Renuméroter";
+
+/* Class = "NSTextFieldCell"; title = "Bitrate:"; ObjectID = "897"; */
+"897.title" = "Bitrate:";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "902"; */
+"902.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "903"; */
+"903.title" = "Item 1";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "904"; */
+"904.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "905"; */
+"905.title" = "Item 3";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "917"; */
+"917.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Max Volume Length:"; ObjectID = "919"; */
+"919.title" = "Durée max. sur le volume:";
+
+/* Class = "NSTextFieldCell"; title = " hr."; ObjectID = "929"; */
+"929.title" = " hr.";
+
+/* Class = "NSTextFieldCell"; title = "12"; ObjectID = "932"; */
+"932.title" = "12";
+
+/* Class = "NSMenuItem"; title = "Chapters HowTo"; ObjectID = "944"; */
+"944.title" = "Chapitres HowTo";
+
+/* Class = "NSMenuItem"; title = "Reset"; ObjectID = "959"; */
+"959.title" = "Rétablir";
+
+/* Class = "NSTextFieldCell"; title = "Sort Audio Files When Adding:"; ObjectID = "1045"; */
+"1045.title" = "Trier les fichiers audio:";
+
+/* Class = "NSMenuItem"; title = "New Audiobook"; ObjectID = "1062"; */
+"1062.title" = "Nouveau livre audio";
+
+/* Class = "NSTextFieldCell"; title = "Enable Chapters:"; ObjectID = "1072"; */
+"1072.title" = "Activer le chapitrage:";
+
