@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AudioBinderWindowController">
             <connections>
+                <outlet property="actorField" destination="xPB-Ao-JCx" id="WqL-lt-yW6"/>
                 <outlet property="authorField" destination="MA1-CA-N7X" id="tzx-Ms-wtc"/>
                 <outlet property="bindButton" destination="777" id="1057"/>
                 <outlet property="coverImageView" destination="793" id="1058"/>
@@ -38,24 +39,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tabView initialItem="770" id="769">
-                        <rect key="frame" x="13" y="39" width="474" height="368"/>
+                        <rect key="frame" x="13" y="39" width="474" height="336"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Files" identifier="1" id="770">
                                 <view key="view" id="773">
-                                    <rect key="frame" x="10" y="33" width="454" height="322"/>
+                                    <rect key="frame" x="10" y="33" width="454" height="290"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="774">
-                                            <rect key="frame" x="17" y="38" width="420" height="281"/>
+                                            <rect key="frame" x="17" y="38" width="420" height="249"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="9dZ-Za-yec">
-                                                <rect key="frame" x="1" y="24" width="418" height="256"/>
+                                                <rect key="frame" x="1" y="1" width="418" height="247"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" autosaveColumns="NO" headerView="952" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="785" id="781" userLabel="Outline View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="418" height="19"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="418" height="224"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -132,7 +133,7 @@
                             </tabViewItem>
                             <tabViewItem label="Cover" identifier="2" id="771">
                                 <view key="view" id="772">
-                                    <rect key="frame" x="10" y="33" width="454" height="322"/>
+                                    <rect key="frame" x="10" y="33" width="454" height="290"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <customView focusRingType="exterior" id="793" customClass="CoverImageView">
@@ -203,6 +204,18 @@
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
+                    <textField verticalHuggingPriority="750" id="xPB-Ao-JCx">
+                        <rect key="frame" x="20" y="377" width="460" height="22"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Reader" drawsBackground="YES" id="AiJ-TY-VAV">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="rG5-ZY-r2v"/>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
         </window>

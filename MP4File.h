@@ -32,6 +32,7 @@
 @interface MP4File : NSObject
 
 @property (copy) NSString *artist;
+@property (copy) NSString *albumArtist;
 @property (copy) NSString *album;
 @property (copy) NSString *title;
 @property (copy) NSString *coverFile;

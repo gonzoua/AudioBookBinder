@@ -573,6 +573,7 @@ enum abb_form_fields {
 {
     [authorField setStringValue:@""];
     [titleField setStringValue:@""];
+    [actorField setStringValue:@""];
     [genresField setStringValue:@"Audiobooks"];
     [fileList removeAllFiles:fileListView];
     [coverImageView resetImage];
@@ -606,6 +607,7 @@ enum abb_form_fields {
 {
     NSString *author = [authorField stringValue];
     NSString *title = [titleField stringValue];
+    NSString *actor = [actorField stringValue];
     NSString *genre = [genresField stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
@@ -769,6 +771,7 @@ enum abb_form_fields {
                     }
                     else
                         mp4.title = title;
+                    mp4.albumArtist = self.actor;
                     mp4.album = title;
                     mp4.genre = genre;
                     if (coverImageFilename)
@@ -1101,6 +1104,10 @@ enum abb_form_fields {
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     if ((control == authorField) || (control == titleField)) {
         [self updateWindowTitle];
+    }
+
+    if (control == actorField) {
+        self.actor = [[actorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
 
     return YES;

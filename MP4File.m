@@ -53,6 +53,7 @@
     
     _fh = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
     self.artist = nil;
+    self.albumArtist = nil;
     self.album = nil;
     self.title = nil;
     self.coverFile = nil;
@@ -162,6 +163,10 @@
                                                 value:[self.artist dataUsingEncoding:NSUTF8StringEncoding]
                                                  type:ITUNES_METADATA_STRING_CLASS]];
 
+    if (self.albumArtist != nil)
+        [newAtomsData appendData:[self encodeMetaDataAtom:@"aART" 
+                                                value:[self.albumArtist dataUsingEncoding:NSUTF8StringEncoding]
+                                                 type:ITUNES_METADATA_STRING_CLASS]];
 
     if (self.track && (self.tracksTotal > 1)) {
         short bytes[4];

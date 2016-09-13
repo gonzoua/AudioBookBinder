@@ -43,6 +43,7 @@
     IBOutlet NSButton *playButton;
     IBOutlet NSTextField *authorField;
     IBOutlet NSTextField *titleField;
+    IBOutlet NSTextField *actorField;
     IBOutlet NSPopUpButton *genresButton;
     IBOutlet NSTextField *genresField;
     IBOutlet NSPanel *saveAsPanel;
@@ -53,6 +54,7 @@
 @property (atomic, assign) NSUInteger currentProgress;
 @property (retain) NSString *author;
 @property (retain) NSString *title;
+@property (retain) NSString *actor;
 @property (retain) NSString *windowTitle;
 
 
