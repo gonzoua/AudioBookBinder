@@ -51,6 +51,10 @@
 }
 
 @property (atomic, assign) NSUInteger currentProgress;
+@property (retain) NSString *author;
+@property (retain) NSString *title;
+@property (retain) NSString *windowTitle;
+
 
 - (IBAction) addFiles: (id)sender;
 - (IBAction) delFiles: (id)sender;

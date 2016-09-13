@@ -40,6 +40,7 @@
 #import "MetaEditor.h"
 #import "NSOutlineView_Extension.h"
 #import "StatsManager.h"
+#import "QueueController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -105,7 +106,7 @@ enum abb_form_fields {
     NSImage *_playImg, *_stopImg;
     BOOL _conversionResult;
     AudioFileList *fileList;
-    QueueOverlayView *_queueOverlay;
+    // QueueOverlayView *_queueOverlay;
     
     NSMutableArray *currentColumns;
 
@@ -201,7 +202,7 @@ enum abb_form_fields {
     AudioBookBinderAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
     [self.window setDelegate:delegate];
     
-    _queueOverlay = [[QueueOverlayView alloc] init];
+    // _queueOverlay = [[QueueOverlayView alloc] init];
 }
 
 - (void)setupColumns {
@@ -1073,21 +1074,27 @@ enum abb_form_fields {
 
 - (void)updateWindowTitle
 {
-    NSString *author = [[authorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    NSString *title = [[titleField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.author = [[authorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.title = [[titleField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSString *windowTitle = nil;
+    self.windowTitle = nil;
+    NSString *title;
     
-    if (([author length] == 0) && ([title length] == 0))
+    if (([self.author length] == 0) && ([self.title length] == 0))
     {
-        windowTitle = TEXT_AUDIOBOOK;
+        title = TEXT_AUDIOBOOK;
     }
     else {
-        windowTitle = [NSString stringWithFormat:@"%@ - %@", title, author];
+        title = [NSString stringWithFormat:@"%@ - %@", self.title, self.author];
     }
+    
+    if (_enqueued)
+        title = [NSString stringWithFormat:@"[QUEUED] %@", title];
+    self.windowTitle = title;
+    
     // do not update if it hasn't been changed
-    if (![windowTitle isEqualToString:self.window.title])
-        [self.window setTitle:windowTitle];
+    if (![self.windowTitle isEqualToString:self.window.title])
+        [self.window setTitle:self.windowTitle];
 
 }
 
@@ -1102,8 +1109,6 @@ enum abb_form_fields {
 - (NSUInteger) totalBookProgress {
     return _currentFileProgress + _totalBookProgress;
 }
-
-
 
 - (IBAction)folderSheetShow: (id) sender
 {
@@ -1136,15 +1141,20 @@ enum abb_form_fields {
 
 - (IBAction) toggleQueue: (id)sender
 {
+    AudioBookBinderAppDelegate *delegate = [[NSApplication sharedApplication] delegate];
+
     _enqueued = !_enqueued;
     if (_enqueued) {
-        [_queueOverlay setFrame:self.window.contentView.frame];
-        [self.window.contentView addSubview:_queueOverlay positioned:NSWindowAbove relativeTo:nil];
-        [_queueOverlay becomeFirstResponder];
+        [delegate.queueController addBookWindowController:self];
+        // [_queueOverlay setFrame:self.window.contentView.frame];
+        // [self.window.contentView addSubview:_queueOverlay positioned:NSWindowAbove relativeTo:nil];
+        // [_queueOverlay becomeFirstResponder];
     }
     else {
-        [_queueOverlay removeFromSuperview];
+        // [_queueOverlay removeFromSuperview];
+        [delegate.queueController removeBookWindowController:self];
     }
+    [self updateWindowTitle];
 }
 
 @end
