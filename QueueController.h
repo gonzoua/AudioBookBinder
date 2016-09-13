@@ -27,6 +27,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface QueueController : NSWindowController<NSTableViewDataSource>
+@class AudioBinderWindowController;
+
+@interface QueueController : NSWindowController<NSTableViewDataSource, NSTableViewDelegate>
+- (void)addBookWindowController:(AudioBinderWindowController*)controller;
+- (void)removeBookWindowController:(AudioBinderWindowController*)controller;
+@end
+
+@interface QueueItemCell : NSCell
+
+@property (nonatomic) NSString* audiobook;
+@property (nonatomic) NSProgressIndicator* progressBar;
 
 @end
