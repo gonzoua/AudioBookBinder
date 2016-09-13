@@ -607,7 +607,6 @@ enum abb_form_fields {
 {
     NSString *author = [authorField stringValue];
     NSString *title = [titleField stringValue];
-    NSString *actor = [actorField stringValue];
     NSString *genre = [genresField stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
