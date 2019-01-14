@@ -95,7 +95,8 @@ stringForOSStatus(OSStatus err)
             break;
     }
 
-    const char *errDescr = isOSType ? (errStr ? errStr : osTypeRepr) : GetMacOSStatusErrorString(err);
+    NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
+    const char *errDescr = isOSType ? (errStr ? errStr : osTypeRepr) : [error.description cStringUsingEncoding:NSUTF8StringEncoding];
     if ((errDescr != nil) && (strlen(errDescr) > 0))
         descString = [[NSString alloc] initWithFormat:@"err#%08lx (%s)", (long)err, errDescr];
     else
