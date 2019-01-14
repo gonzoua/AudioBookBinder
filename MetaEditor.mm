@@ -29,14 +29,17 @@ extern "C" {
 #include "MetaEditor.h"
 };
 
-#include <vector>
 #include <mp4v2/mp4v2.h>
 #import "Chapter.h"
 
 using namespace std;
 
 int addChapters(const char *mp4, NSArray *chapters)
-{ 
+{
+    NSUInteger numChapters = [chapters count];
+    if (numChapters == 0)
+        return (0);
+    
     MP4FileHandle h = MP4Modify( mp4 );
     
     if( h == MP4_INVALID_FILE_HANDLE )
@@ -61,18 +64,20 @@ int addChapters(const char *mp4, NSArray *chapters)
     MP4Duration trackDuration = MP4GetTrackDuration( h, refTrackId ); 
     uint32_t trackTimeScale = MP4GetTrackTimeScale( h, refTrackId );
     trackDuration /= trackTimeScale;
-    vector<MP4Chapter_t> mp4chapters;
+    MP4Chapter_t *mp4chapters;
     
+    mp4chapters = (MP4Chapter_t*)malloc(numChapters * sizeof(MP4Chapter_t));
+    int i = 0;
     for (Chapter *chapter in chapters) {
-        MP4Chapter_t chap;
-        chap.duration = [chapter totalDuration];
-        strncpy(chap.title, 
-                [chapter.name UTF8String], sizeof(chap.title)-1);
+        MP4Chapter_t *chap = &mp4chapters[i];
+        memset(chap, 0, sizeof(*chap));
+        chap->duration = [chapter totalDuration];
+        strncpy(chap->title,
+                [chapter.name UTF8String], sizeof(chap->title)-1);
         
-        mp4chapters.push_back( chap );
     }
     
-    MP4SetChapters(h, &mp4chapters[0], mp4chapters.size(), MP4ChapterTypeQt);
+    MP4SetChapters(h, mp4chapters, (int)numChapters, MP4ChapterTypeQt);
     MP4Close(h);
     
     return 0;
