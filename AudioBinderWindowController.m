@@ -603,6 +603,18 @@ enum abb_form_fields {
     [bindButton setEnabled:TRUE];
 }
 
+- (void) showProgressPanel: (id) sender
+{
+    [NSApp beginSheet:progressPanel modalForWindow:self.window
+        modalDelegate:self didEndSelector:NULL contextInfo:nil];
+}
+
+- (void) hideProgressPanel: (id) sender
+{
+    [NSApp endSheet:progressPanel];
+    [progressPanel orderOut:nil];
+}
+
 - (void)bindToFileThread:(id)object
 {
     NSString *author = [authorField stringValue];
@@ -711,9 +723,8 @@ enum abb_form_fields {
     _binder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
     _binder.bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
     
-    [NSApp beginSheet:progressPanel modalForWindow:self.window
-        modalDelegate:self didEndSelector:NULL contextInfo:nil];
-    
+    [self performSelectorOnMainThread:@selector(showProgressPanel:) withObject:nil waitUntilDone:NO];
+
     [fileProgress setMaxValue:100.];
     [fileProgress setDoubleValue:0.];
     [fileProgress displayIfNeeded];
@@ -814,10 +825,9 @@ enum abb_form_fields {
         
         // write chapters
     }
-    
-    [NSApp endSheet:progressPanel];
+
     [[StatsManager sharedInstance] removeConverter:self];
-    [progressPanel orderOut:nil];
+       [self performSelectorOnMainThread:@selector(hideProgressPanel:) withObject:nil waitUntilDone:NO];
     [self performSelectorOnMainThread:@selector(bindingThreadIsDone:) withObject:nil waitUntilDone:NO];
 }
 
