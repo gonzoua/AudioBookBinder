@@ -69,7 +69,7 @@ static BOOL hackChecked = NO;
     // make sure it's ran only once
     if (!hackChecked) {
         NSString *dir = [defaults stringForKey:kConfigDestinationFolder];
-        NSURL *url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain];
+        NSURL *url = [NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil];
 
         if ((dir != nil) && (url == nil)) {
             requiresUpdateHack = YES;
@@ -132,7 +132,7 @@ static BOOL hackChecked = NO;
     if (requiresUpdateHack) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *currentDest = [defaults stringForKey:kConfigDestinationFolder];
-        while ((url = [[NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil] retain]) == nil) {
+        while ((url = [NSURL URLByResolvingBookmarkData:[defaults objectForKey:kConfigDestinationFolderBookmark] options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:nil]) == nil) {
             
             NSAlert *a = [[NSAlert alloc] init];
             [a setMessageText:TEXT_ACTION_REQUIRED];

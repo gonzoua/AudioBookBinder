@@ -586,7 +586,6 @@ enum abb_form_fields {
 #ifdef APP_STORE_BUILD
     if (_destURL) {
         [_destURL startAccessingSecurityScopedResource];
-        [_destURL release];
         _destURL = nil;
     }
 #endif
