@@ -13,7 +13,7 @@
 		9F02CE12101EA8B100AE315D /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
 		9F02CE19101EABCD00AE315D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE18101EABCD00AE315D /* AudioToolbox.framework */; };
 		9F02CE4C101EBB9600AE315D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
-		9F02CE66101FF8D900AE315D /* ABLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABLog.m */; };
+		9F02CE66101FF8D900AE315D /* ABBLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABBLog.m */; };
 		9F02D007102161FD00AE315D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
 		9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */; };
 		9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
@@ -33,7 +33,7 @@
 		9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE18101EABCD00AE315D /* AudioToolbox.framework */; };
 		9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
 		9F6FA3A311191A4D0047728F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02D006102161FD00AE315D /* QTKit.framework */; };
-		9F6FA3A711191A5D0047728F /* ABLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABLog.m */; };
+		9F6FA3A711191A5D0047728F /* ABBLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABBLog.m */; };
 		9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */; };
 		9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6FA3D6111BBBC20047728F /* MainMenu.xib */; };
 		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
@@ -97,8 +97,8 @@
 		9F02CE11101EA8B100AE315D /* AudioBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinder.m; sourceTree = "<group>"; };
 		9F02CE18101EABCD00AE315D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		9F02CE4B101EBB9600AE315D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		9F02CE64101FF8D900AE315D /* ABLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLog.h; sourceTree = "<group>"; };
-		9F02CE65101FF8D900AE315D /* ABLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABLog.m; sourceTree = "<group>"; };
+		9F02CE64101FF8D900AE315D /* ABBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABBLog.h; sourceTree = "<group>"; };
+		9F02CE65101FF8D900AE315D /* ABBLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABBLog.m; sourceTree = "<group>"; };
 		9F02D006102161FD00AE315D /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderWindowController.h; sourceTree = "<group>"; };
 		9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderWindowController.m; sourceTree = "<group>"; };
@@ -232,8 +232,8 @@
 			isa = PBXGroup;
 			children = (
 				08FB7796FE84155DC02AAC07 /* abbinder.m */,
-				9F02CE64101FF8D900AE315D /* ABLog.h */,
-				9F02CE65101FF8D900AE315D /* ABLog.m */,
+				9F02CE64101FF8D900AE315D /* ABBLog.h */,
+				9F02CE65101FF8D900AE315D /* ABBLog.m */,
 				9F02CE10101EA8B100AE315D /* AudioBinder.h */,
 				9F02CE11101EA8B100AE315D /* AudioBinder.m */,
 				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
@@ -459,7 +459,7 @@
 			files = (
 				8DD76F9A0486AA7600D96B5E /* abbinder.m in Sources */,
 				9F02CE12101EA8B100AE315D /* AudioBinder.m in Sources */,
-				9F02CE66101FF8D900AE315D /* ABLog.m in Sources */,
+				9F02CE66101FF8D900AE315D /* ABBLog.m in Sources */,
 				9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */,
 				9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */,
 				9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */,
@@ -475,7 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F6FA21611191A020047728F /* AudioBinder.m in Sources */,
-				9F6FA3A711191A5D0047728F /* ABLog.m in Sources */,
+				9F6FA3A711191A5D0047728F /* ABBLog.m in Sources */,
 				9F6FA21711191A020047728F /* MP4Atom.m in Sources */,
 				9F6FA21811191A020047728F /* MP4File.m in Sources */,
 				9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */,

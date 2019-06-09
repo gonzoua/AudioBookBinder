@@ -25,17 +25,26 @@
 //  SUCH DAMAGE.
 //
 
+#import "ABBLog.h"
 
-#import <Cocoa/Cocoa.h>
+@implementation ABBLog
 
-#define ABLog(s, ...) [ABLog format:(s), ##__VA_ARGS__]
++ (void)format: (NSString*)format, ...
+{
+    va_list      listOfArguments;
+    NSString    *formattedString;
+    
+    va_start(listOfArguments, format);
+    formattedString = [[NSString alloc] initWithFormat:format 
+                                             arguments:listOfArguments];
+    va_end(listOfArguments);
 
-//
-// Class is inteded to be used both for command line tool
-// where NSLogs is not appropriate and for GUI tool
-//
-@interface ABLog : NSObject {
-
+#ifdef USE_NSLOG
+    NSLog(@"%@", formattedString);
+#else
+    printf("%s\n", [formattedString UTF8String]); 
+#endif
+    
 }
-+ (void)format: (NSString*)format, ...;
+
 @end

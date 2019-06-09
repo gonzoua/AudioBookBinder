@@ -32,7 +32,7 @@
 
 #import "AudioBinder.h"
 #import "AudioBookVolume.h"
-#import "ABLog.h"
+#import "ABBLog.h"
 #import "ConsoleDelegate.h"
 #import "AudioFile.h"
 #import "MP4File.h"
@@ -250,7 +250,7 @@ int main (int argc, char * argv[]) {
                                         error:&error];
         
         if (listContent == nil) {
-            ABLog(@"Error reading file at %@\n%@", 
+            ABBLog(@"Error reading file at %@\n%@", 
                   inputFileList, [error localizedFailureReason]);
             usage(argv[0]);
             exit(1);
@@ -328,7 +328,7 @@ int main (int argc, char * argv[]) {
             NSString *chapterName = [path substringWithRange:NSMakeRange(1, len-2)];
             curChapter = [[Chapter alloc] init];
             if (verbose) {
-                ABLog(@"Chapter marker detected: '%@'", chapterName);
+                ABBLog(@"Chapter marker detected: '%@'", chapterName);
             }
             curChapter.name = chapterName;
             [currentChapters addObject:curChapter];
@@ -425,7 +425,7 @@ int main (int argc, char * argv[]) {
 
     if (![binder convert])
     {
-        ABLog(@"Conversion failed");
+        ABBLog(@"Conversion failed");
         exit(255);
     }
     

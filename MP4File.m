@@ -25,7 +25,7 @@
 //  SUCH DAMAGE.
 //
 
-#import "ABLog.h"
+#import "ABBLog.h"
 #import "MP4Atom.h"
 #import "MP4File.h"
 

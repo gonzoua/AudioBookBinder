@@ -30,7 +30,7 @@
 
 #import "AudioBinder.h"
 #import "AudioBookVolume.h"
-#import "ABLog.h"
+#import "ABBLog.h"
 
 // 1M seems to be sane buffer size nowadays
 #define AUDIO_BUFFER_SIZE 1*1024*1024
@@ -170,14 +170,14 @@ stringForOSStatus(OSStatus err)
     
         if ([v.inputFiles count] == 0)
         {
-            ABLog(@"No input files");
+            ABBLog(@"No input files");
             [_delegate volumeFailed:v.filename reason:@"No input files"];
             return NO;
         }
 
         if ([self openOutFile:v.filename] == NO)
         {
-            ABLog(@"Can't open output file");
+            ABBLog(@"Can't open output file");
             [_delegate volumeFailed:v.filename reason:@"Can't create output file"];
             return NO;
         }
@@ -244,7 +244,7 @@ stringForOSStatus(OSStatus err)
         if (![[NSFileManager defaultManager] removeItemAtPath:outFile 
                                                       error:nil])
         {
-            ABLog(@"Can't remove file %@", outFile);
+            ABBLog(@"Can't remove file %@", outFile);
             return NO;
         }
     }    
@@ -262,7 +262,7 @@ stringForOSStatus(OSStatus err)
     
     if (status != noErr)
     {
-        ABLog(@"Can't create output file %@: %@", 
+        ABBLog(@"Can't create output file %@: %@", 
               outFile, stringForOSStatus(status));
         return NO;
     }

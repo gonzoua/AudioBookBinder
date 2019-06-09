@@ -26,7 +26,7 @@
 //
 
 #import "ConsoleDelegate.h"
-#import "ABLog.h"
+#import "ABBLog.h"
 
 @interface ConsoleDelegate() {
     BOOL _verbose;
