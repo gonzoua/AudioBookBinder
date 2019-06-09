@@ -291,21 +291,18 @@
         //we have a list of file names in an NSData object
         NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
         if ([fileArray count] > 1) {
-            NSLog(@"multiple files");
             return NSDragOperationNone;
         }
     }
     
     highlighted = YES;
     [self setNeedsDisplay:YES];
-    NSLog(@"draggingEntered: %d", highlighted);
 
     return NSDragOperationGeneric;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-    NSLog(@"draggingExited:");
     highlighted = NO;
     [self setNeedsDisplay:YES];
 }
@@ -317,7 +314,6 @@
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSLog(@"performDragOperation");
     NSPasteboard *paste = [sender draggingPasteboard];
     //gets the dragging-specific pasteboard from the sender
     NSArray *types = [NSArray arrayWithObjects:NSTIFFPboardType, 
@@ -374,7 +370,6 @@
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSLog(@"concludeDragOperation:");
     highlighted = NO;
     [self setNeedsDisplay:YES];
 }
