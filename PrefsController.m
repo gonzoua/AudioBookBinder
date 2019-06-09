@@ -100,8 +100,8 @@
             NSString * folder = [folderURL path];
             [defaults setObject:folder forKey:kConfigDestinationFolder];
         }
-        [_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
-        [_saveAsFolderPopUp selectItemAtIndex:DESTINATION_FOLDER];
+        [self->_folderPopUp selectItemAtIndex:DESTINATION_FOLDER];
+        [self->_saveAsFolderPopUp selectItemAtIndex:DESTINATION_FOLDER];
     }];
 }
 

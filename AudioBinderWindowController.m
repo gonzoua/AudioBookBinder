@@ -722,8 +722,7 @@ enum abb_form_fields {
     
     [self performSelectorOnMainThread:@selector(showProgressPanel:) withObject:nil waitUntilDone:NO];
 
-    [fileProgress setMaxValue:100.];
-    [fileProgress setDoubleValue:0.];
+    [self updateProgress:0 total:100];
     [fileProgress displayIfNeeded];
     if (!(_conversionResult = [_binder convert]))
     {
@@ -737,7 +736,7 @@ enum abb_form_fields {
         {
             NSLog(@"Adding metadata, it may take a while...");
             @try {
-                [currentFile setStringValue:TEXT_ADDING_TAGS];
+                [self updateProgressString:TEXT_ADDING_TAGS];
                 BOOL temporaryFile = NO;
                 if ([coverImageView haveCover]) {
                     if ([coverImageView shouldConvert]) {
@@ -796,7 +795,7 @@ enum abb_form_fields {
                 }
                 
                 if ([fileList chapterMode]) {
-                    [currentFile setStringValue:TEXT_ADDING_CHAPTERS];
+                    [self updateProgressString:TEXT_ADDING_CHAPTERS];
                     int idx = 0;
                     for (AudioBookVolume *v in volumes) {
                         addChapters([v.filename UTF8String], [volumeChapters objectAtIndex:idx]);
@@ -807,12 +806,12 @@ enum abb_form_fields {
                 
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
                     
-                    [currentFile setStringValue:TEXT_ADDING_TO_ITUNES];
+                    [self updateProgressString:TEXT_ADDING_TO_ITUNES];
                     for(AudioBookVolume *volume in volumes)
                         [self addFileToiTunes:volume.filename];
                 }
                 
-                [currentFile setStringValue:@"Done"];
+                [self updateProgressString:@"Done"];
                 
             }
             @catch (NSException *e) {
@@ -837,10 +836,9 @@ enum abb_form_fields {
                  length: (UInt64)frames
 
 {
-    [currentFile setStringValue:[NSString stringWithFormat:TEXT_CONVERTING,
+    [self updateProgressString:[NSString stringWithFormat:TEXT_CONVERTING,
                                  [file filePath]]];
-    [fileProgress setMaxValue:(double)frames];
-    [fileProgress setDoubleValue:0];
+    [self updateProgress:0 total:frames];
 }
 
 - (void)recalculateProgress
@@ -854,10 +852,26 @@ enum abb_form_fields {
     }
 }
 
+- (void) updateProgressString: (NSString*)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->currentFile setStringValue:message];
+    });
+}
+
+- (void) updateProgress: (double)handledFrames total:(double)totalFrames
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->fileProgress setMaxValue:(double)totalFrames];
+        [self->fileProgress setDoubleValue:(double)handledFrames];
+    });
+}
+
 -(void) updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
-    [fileProgress setMaxValue:(double)totalFrames];
-    [fileProgress setDoubleValue:(double)handledFrames];
+
+    [self updateProgress:handledFrames total:totalFrames];
+
     if (totalFrames > 0) {
         _currentFileProgress = [file.duration intValue]*handledFrames/totalFrames;
         [self recalculateProgress];
