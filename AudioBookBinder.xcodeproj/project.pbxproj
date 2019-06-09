@@ -58,6 +58,7 @@
 		9FB4DE3A11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FB4DE3B11C0610F007B3DDE /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4DE3911C0610F007B3DDE /* libmp4v2.a */; };
 		9FBCBF46102A6A2C0067AE9F /* ConsoleDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBCBF45102A6A2C0067AE9F /* ConsoleDelegate.m */; };
+		9FC46A2E22ADB97D003F57C7 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
 		9FD5D3651CEA5146008B74AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD5D3641CEA5146008B74AF /* QuartzCore.framework */; };
 		9FD5D3681CEA549E008B74AF /* QueueOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */; };
 		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
@@ -413,6 +414,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FC46A2E22ADB97D003F57C7 /* AudioBinderWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
