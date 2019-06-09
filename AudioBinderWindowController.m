@@ -617,9 +617,6 @@ enum abb_form_fields {
 
 - (void)bindToFileThread:(id)object
 {
-    NSString *author = [authorField stringValue];
-    NSString *title = [titleField stringValue];
-    NSString *genre = [genresField stringValue];
     NSString *coverImageFilename = nil;
     NSImage *coverImage = coverImageView.coverImage;
     UInt64 maxVolumeDuration = 0;
@@ -735,8 +732,8 @@ enum abb_form_fields {
     
     else
     {
-        if (![author isEqualToString:@""] ||
-            ![title isEqualToString:@""] || (coverImage != nil))
+        if (![self.author isEqualToString:@""] ||
+            ![self.title isEqualToString:@""] || (coverImage != nil))
         {
             NSLog(@"Adding metadata, it may take a while...");
             @try {
@@ -774,16 +771,16 @@ enum abb_form_fields {
                 for (AudioBookVolume *v in volumes) {
                     NSString *volumeName = v.filename;
                     MP4File *mp4 = [[MP4File alloc] initWithFileName:volumeName];
-                    mp4.artist = author;
+                    mp4.artist = self.author;
                     if ([volumes count] > 1) {
-                        mp4.title = [NSString stringWithFormat:@"%@ #%02d", title, track];
+                        mp4.title = [NSString stringWithFormat:@"%@ #%02d", self.title, track];
                         mp4.gaplessPlay = YES;
                     }
                     else
-                        mp4.title = title;
+                        mp4.title = self.title;
                     mp4.albumArtist = self.actor;
-                    mp4.album = title;
-                    mp4.genre = genre;
+                    mp4.album = self.title;
+                    mp4.genre = self.genre;
                     if (coverImageFilename)
                         [mp4 setCoverFile:coverImageFilename];
                     mp4.track = track;
@@ -1089,6 +1086,7 @@ enum abb_form_fields {
     self.author = [[authorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.title = [[titleField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.actor = [[actorField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.genre = [[genresField stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     self.windowTitle = nil;
     NSString *title;

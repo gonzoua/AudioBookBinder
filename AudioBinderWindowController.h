@@ -55,6 +55,7 @@
 @property (retain) NSString *author;
 @property (retain) NSString *title;
 @property (retain) NSString *actor;
+@property (retain) NSString *genre;
 @property (retain) NSString *windowTitle;
 
 
