@@ -52,5 +52,5 @@
 /* Class = "NSTextFieldCell"; placeholderString = "Author"; ObjectID = "pRl-ER-gLx"; */
 "pRl-ER-gLx.placeholderString" = "Автор";
 
-/* Class = "NSTextFieldCell"; placeholderString = "Reader"; ObjectID = "AiJ-TY-VAV"; */
+/* Class = "NSTextFieldCell"; placeholderString = "Narrator"; ObjectID = "AiJ-TY-VAV"; */
 "AiJ-TY-VAV.placeholderString" = "Чтец";
