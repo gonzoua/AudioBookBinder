@@ -63,6 +63,7 @@ int addChapters(const char *mp4, NSArray *chapters)
 
     MP4Duration trackDuration = MP4GetTrackDuration( h, refTrackId ); 
     uint32_t trackTimeScale = MP4GetTrackTimeScale( h, refTrackId );
+
     trackDuration /= trackTimeScale;
     MP4Chapter_t *mp4chapters;
     
@@ -74,7 +75,7 @@ int addChapters(const char *mp4, NSArray *chapters)
         chap->duration = [chapter totalDuration];
         strncpy(chap->title,
                 [chapter.name UTF8String], sizeof(chap->title)-1);
-        
+        i++;
     }
     
     MP4SetChapters(h, mp4chapters, (int)numChapters, MP4ChapterTypeQt);
