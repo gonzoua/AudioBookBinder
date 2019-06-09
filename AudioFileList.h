@@ -49,6 +49,7 @@
 
 - (void) addFile:(NSString*)fileName;
 - (void) addFilesInDirectory:(NSString*)dirName;
+- (void)tryGuessingAuthorAndAlbum;
 - (NSArray*) files;
 - (NSArray*) chapters;
 - (void) orphanFile:(AudioFile*)file;

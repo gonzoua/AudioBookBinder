@@ -387,9 +387,10 @@ enum abb_form_fields {
                     [fileList addFilesInDirectory:fileName];
                 else
                     [fileList addFile:fileName];
+
             }
         }
-
+        [fileList tryGuessingAuthorAndAlbum];
         [fileListView reloadData];
     }
 }
