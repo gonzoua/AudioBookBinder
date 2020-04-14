@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: Dauer (%2$d sec) ist länger als maximale Banddauer (%3$lld sec.)";
+"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: Dauer (%2$d sec) ist länger als maximale Dateilänge (%3$lld sec.)";
 
 /* No comment provided by engineer. */
 "Adding artist/title tags" = "Autor/Titel Informationen hinzufügen";
@@ -47,7 +47,7 @@
 "Failed to play: %@" = "Wiedergabe gescheitert: %@";
 
 /* No comment provided by engineer. */
-"Failed to split audiobook into volumes" = "Aufteilen des Hörbuchs auf Bänder fehlgeschlagen";
+"Failed to split audiobook into volumes" = "Aufteilen des Hörbuchs in mehrere Dateien fehlgeschlagen";
 
 /* (No Commment) */
 "File" = "Ablage";
