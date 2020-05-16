@@ -111,7 +111,6 @@ stringForOSStatus(OSStatus err)
     SInt64 _outBookLength;
     id _delegate;
     BOOL _canceled;
-    BOOL _isLion;
     BOOL _bitrateSet;
 }
 @end
@@ -139,15 +138,6 @@ stringForOSStatus(OSStatus err)
     _channels = 2;
     _bitrate = 0;
     _bitrateSet = NO;
-
-    SInt32 major, minor, bugfix;
-    Gestalt(gestaltSystemVersionMajor, &major);
-    Gestalt(gestaltSystemVersionMinor, &minor);
-    Gestalt(gestaltSystemVersionBugFix, &bugfix);
-    if ((major == 10) && (minor >= 7))
-        _isLion = YES;
-    else
-        _isLion = NO;
 }
 
 -(void)setDelegate: (id<AudioBinderDelegate>)delegate
@@ -412,7 +402,7 @@ stringForOSStatus(OSStatus err)
                 stringForOSStatus(status)];
         
         if (_bitrate > 0) {
-            if (_isLion && !_bitrateSet) {
+            if (!_bitrateSet) {
                 if (![self setConverterBitrate]) {
                     [NSException raise:@"ConvertException" 
                         format:@"can't set output bit rate"]; 
