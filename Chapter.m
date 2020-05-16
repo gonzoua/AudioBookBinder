@@ -66,7 +66,7 @@
     return [self.files indexOfObject:file];
 }
 
-- (int) totalFiles
+- (NSUInteger) totalFiles
 {
     return [self.files count];
 }

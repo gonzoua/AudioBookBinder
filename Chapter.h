@@ -41,7 +41,7 @@
 - (AudioFile*) fileAtIndex:(NSInteger)index;
 - (void) removeFile:(AudioFile*)file;
 - (void) insertFile:(AudioFile*)file atIndex:(NSInteger)index;
-- (int) totalFiles;
+- (NSUInteger) totalFiles;
 - (Chapter*) splitAtFile:(AudioFile*)file;
 - (UInt32) totalDuration;
 - (void) sortUsingDecriptor:(NSSortDescriptor*)descriptor;

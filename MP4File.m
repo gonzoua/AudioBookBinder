@@ -201,7 +201,7 @@
                                                  type:ITUNES_METADATA_IMAGE_CLASS]];
     }
     
-    UInt32 additionalLength = [newAtomsData length];
+    UInt32 additionalLength = (UInt32)[newAtomsData length];
  
     if (ilstAtom)
     {
@@ -296,8 +296,8 @@
                          type:(UInt32)type
                         
 {
-    UInt32 dataAtomSize = 
-            [value length] + 
+    UInt32 dataAtomSize =
+            (UInt32)[value length] + 
             4 + 4 + 4 + 4;
     UInt32 atomSize = dataAtomSize + 4 + 4;
     MP4Atom *atom = [[MP4Atom alloc] initWithName:name andLength:atomSize];

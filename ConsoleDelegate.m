@@ -69,7 +69,7 @@
 -(void)updateStatus: (AudioFile *)file handled:(UInt64)handledFrames total:(UInt64)totalFrames
 {
     if (!_quiet && _istty) {
-        unsigned int percent = handledFrames * 100 / totalFrames;
+        UInt64 percent = handledFrames * 100 / totalFrames;
         // got to the beginning of the line
         printf("\r");
         printf("%s: [%3d%%] %lld/%lld", 

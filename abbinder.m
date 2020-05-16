@@ -70,7 +70,7 @@ void usage(char *cmd)
     
 }
 
-NSString *makeChapterName(NSString *format, int chapterNum, AudioFile *file)
+NSString *makeChapterName(NSString *format, NSUInteger chapterNum, AudioFile *file)
 {
 
     NSString *numStr = [[NSString stringWithFormat:@"%d", chapterNum + 1] retain];
@@ -287,7 +287,7 @@ int main (int argc, char * argv[]) {
     
     // check if we have chapter markers in file list
     for (NSString *path in inputFilenames) { 
-        int len = [path length];
+        NSUInteger len = [path length];
         if (len == 0)
             continue;
         
@@ -316,7 +316,7 @@ int main (int argc, char * argv[]) {
     int totalVolumes = 0;
     Chapter *curChapter = [[Chapter alloc] init];
     for (NSString *path in inputFilenames) { 
-        int len = [path length];
+        NSUInteger len = [path length];
         
         if (len == 0)
             continue;
@@ -429,7 +429,7 @@ int main (int argc, char * argv[]) {
     }
     
     NSArray *volumes = [binder volumes];
-    int totalTracks = [volumes count];
+    NSUInteger totalTracks = [volumes count];
     if (!quiet) {
         printf("Adding metadata, it may take a while...");
         fflush(stdout);
