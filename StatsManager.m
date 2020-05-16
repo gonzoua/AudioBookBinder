@@ -76,8 +76,8 @@
     
     [dockIcon lockFocus];
     CGFloat yoff = 0;
-    int bars = MIN(MAX_BARS, [converters count]);
-    for (int i = bars - 1; i >=0 ; i--) {
+    NSUInteger bars = MIN(MAX_BARS, [converters count]);
+    for (int i = (int)bars - 1; i >=0 ; i--) {
         double height = kProgressBarHeightInIcon;
         NSSize s = [dockIcon size];
         NSRect bar = NSMakeRect(0, yoff + s.height * (height - kProgressBarHeight / 2),

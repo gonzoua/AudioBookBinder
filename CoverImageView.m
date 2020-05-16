@@ -91,7 +91,7 @@
 {
     NSString *ext;
 	char ext_temp;
-    int ch;
+    NSUInteger ch;
         
     // we care only about filename. If image was brough by dragging 
     // picture - it's converted to PNG

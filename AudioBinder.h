@@ -50,7 +50,7 @@
 
 @interface AudioBinder : NSObject
 
-@property (assign) int channels;
+@property (assign) UInt32 channels;
 @property (assign) float sampleRate;
 @property (assign) UInt32 bitrate;
 @property (readonly) NSMutableArray *volumes;

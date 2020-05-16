@@ -685,7 +685,7 @@
         if (![item isKindOfClass:[Chapter class]])
             continue;
         Chapter *ch = item;
-        int chapterIndex = [_chapters indexOfObject:ch]+1;
+        NSUInteger chapterIndex = [_chapters indexOfObject:ch]+1;
         for (AudioFile *file in [ch files]) {
             Chapter *newChapter = [[Chapter alloc] init];
             if ([file.name length] > 0)

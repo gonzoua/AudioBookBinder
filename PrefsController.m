@@ -112,7 +112,7 @@
     AudioBinder *tmpBinder = [[AudioBinder alloc] init];
     
     // setup channels/samplerate
-    tmpBinder.channels = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
+    tmpBinder.channels = (UInt32)[[NSUserDefaults standardUserDefaults] integerForKey:kConfigChannels];
     tmpBinder.sampleRate = [[NSUserDefaults standardUserDefaults] floatForKey:kConfigSampleRate];
     self.validBitrates = [[NSArray alloc] initWithArray:[tmpBinder validBitrates] copyItems:YES];
     [self fixupBitrate];
@@ -120,9 +120,9 @@
 
 - (void) fixupBitrate
 {
-    int bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
-    int newBitrate;
-    int distance = bitrate;
+    NSInteger bitrate = [[NSUserDefaults standardUserDefaults] integerForKey:kConfigBitrate];
+    NSInteger newBitrate;
+    NSInteger distance = bitrate;
     
     for (NSNumber *n in self.validBitrates) {
         if (labs([n integerValue] - bitrate) < distance) {
