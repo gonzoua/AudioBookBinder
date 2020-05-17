@@ -59,7 +59,9 @@
 - (void)updateProgress
 {
     if ([converters count] == 0) {
-        [NSApp setApplicationIconImage:appIcon];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [NSApp setApplicationIconImage:self->appIcon];
+        });
 
         return;
     }
@@ -101,7 +103,9 @@
     }
     
     [dockIcon unlockFocus];
-    [NSApp setApplicationIconImage:dockIcon];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp setApplicationIconImage:dockIcon];
+    });
 }
 
 - (void)updateConverter:(id)converter {

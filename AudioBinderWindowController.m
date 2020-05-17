@@ -692,14 +692,16 @@ enum abb_form_fields {
                     }
                 }
                 else {
-                    NSAlert *alert = [[NSAlert alloc] init];
-                    NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED,
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSAlert *alert = [[NSAlert alloc] init];
+                        NSString *msg = [NSString stringWithFormat:TEXT_MAXDURATION_VIOLATED,
                                      [file.filePath UTF8String], [file.duration intValue]/1000, maxVolumeDuration];
-                    [alert addButtonWithTitle:@"OK"];
-                    [alert setMessageText:TEXT_CANT_SPLIT];
-                    [alert setInformativeText:msg];
-                    [alert setAlertStyle:NSWarningAlertStyle];
-                    [alert runModal];
+                        [alert addButtonWithTitle:@"OK"];
+                        [alert setMessageText:TEXT_CANT_SPLIT];
+                        [alert setInformativeText:msg];
+                        [alert setAlertStyle:NSWarningAlertStyle];
+                        [alert runModal];
+                    });
                     return;
                 }
             }
@@ -723,7 +725,9 @@ enum abb_form_fields {
     [self performSelectorOnMainThread:@selector(showProgressPanel:) withObject:nil waitUntilDone:NO];
 
     [self updateProgress:0 total:100];
-    [fileProgress displayIfNeeded];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->fileProgress displayIfNeeded];
+    });
     if (!(_conversionResult = [_binder convert]))
     {
         NSLog(@"Conversion failed");
@@ -881,30 +885,36 @@ enum abb_form_fields {
 -(BOOL) continueFailedConversion:(AudioFile*)file reason:(NSString*)reason
 {
     
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:TEXT_CONVERSION_FAILED];
-    [alert setInformativeText:reason];
-    [alert setAlertStyle:NSWarningAlertStyle];
-    [alert runModal];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:TEXT_CONVERSION_FAILED];
+        [alert setInformativeText:reason];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    });
     return NO;
 }
 
 -(void) volumeFailed:(NSString*)filename reason:(NSString*)reason
 {
     
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    [alert setMessageText:TEXT_BINDING_FAILED];
-    [alert setInformativeText:reason];
-    [alert setAlertStyle:NSWarningAlertStyle];
-    [alert runModal];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:TEXT_BINDING_FAILED];
+        [alert setInformativeText:reason];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    });
 }
 
 
 -(void) conversionFinished:(AudioFile*)file duration:(UInt32)milliseconds
 {
-    [fileProgress setDoubleValue:[fileProgress doubleValue]];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self->fileProgress setDoubleValue:[self->fileProgress doubleValue]];
+    });
     file.valid = YES;
     file.duration = [[NSNumber alloc] initWithInt:milliseconds];
     if (_totalBookDuration > 0) {
