@@ -781,7 +781,7 @@ enum abb_form_fields {
                     }
                     else
                         mp4.title = self.title;
-                    mp4.albumArtist = self.actor;
+                    mp4.narrator = self.actor;
                     mp4.album = self.title;
                     mp4.genre = self.genre;
                     if (coverImageFilename)
