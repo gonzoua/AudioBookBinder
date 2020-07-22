@@ -81,14 +81,7 @@
         if (_chapterMode) {
             Chapter *chapter = [[Chapter alloc] init];
             if ([file.name length] > 0)
-                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\.\\w+$"
-                                                                                       options:0
-                                                                                         error:NULL];
-                chapter.name = [regex stringByReplacingMatchesInString:file.name
-                                                               options:0
-                                                                 range:NSMakeRange(0, [file.name length])
-                                                          withTemplate:@"$2$1"];
-
+                chapter.name = file.name;
             else
                 chapter.name = file.file;
             [_chapters addObject:chapter];
