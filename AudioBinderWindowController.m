@@ -52,7 +52,7 @@
 #define TEXT_ADDING_TO_ITUNES   NSLocalizedString(@"Adding file to iTunes", nil)
 #define TEXT_CONVERTING         NSLocalizedString(@"Converting %@", nil)
 #define TEXT_CANT_SPLIT         NSLocalizedString(@"Failed to split audiobook into volumes", nil)
-#define TEXT_MAXDURATION_VIOLATED NSLocalizedString(@"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)", nil)
+#define TEXT_MAXDURATION_VIOLATED NSLocalizedString(@"%s: duration (%d sec) is larger than the maximum volume duration (%lld sec.)", nil)
 #define TEXT_FAILED_TO_PLAY     NSLocalizedString(@"Failed to play", nil)
 #define TEXT_CANT_PLAY          NSLocalizedString(@"Failed to play: %@", nil)
 #define TEXT_AUDIOBOOK          NSLocalizedString(@"Audiobook", nil)

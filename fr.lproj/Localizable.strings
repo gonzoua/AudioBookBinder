@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: durée (%2$d sec) plus grande que la durée max. (%3$lld sec.)";
+"%s: duration (%d sec) is larger than the maximum volume duration (%lld sec.)" = "%1$s: durée (%2$d sec) plus grande que la durée max. (%3$lld sec.)";
 
 /* No comment provided by engineer. */
 "Adding artist/title tags" = "Ajout des tags pour l'auteur et le titre";

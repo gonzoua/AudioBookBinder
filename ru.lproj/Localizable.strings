@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"%s: duration (%d sec) is larger then max. volume duration (%lld sec.)" = "%1$s: продолжительность (%2$d сек.) больше чем макс. продолжительность одного файла (%3$lld сек.)";
+"%s: duration (%d sec) is larger than the maximum volume duration (%lld sec.)" = "%1$s: продолжительность (%2$d сек.) больше чем макс. продолжительность одного файла (%3$lld сек.)";
 
 /* No comment provided by engineer. */
 "Adding artist/title tags" = "Добавляется информация об авторе/названии";

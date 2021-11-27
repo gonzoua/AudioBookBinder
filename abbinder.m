@@ -351,7 +351,7 @@ int main (int argc, char * argv[]) {
                     curChapter = c;
                 }
                 else {
-                    fprintf(stderr, "%s: duration (%d sec) is larger then max. volume duration (%lld sec.)\n", 
+                    fprintf(stderr, "%s: duration (%d sec) is larger than the maximum volume duration (%lld sec.)\n",
                             [path UTF8String], [file.duration intValue]/1000, maxVolumeDuration);
                     exit(1);
                 }
