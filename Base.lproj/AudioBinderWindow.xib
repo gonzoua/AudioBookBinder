@@ -264,7 +264,7 @@
                     </userDefinedRuntimeAttribute>
                 </userDefinedRuntimeAttributes>
             </view>
-            <point key="canvasLocation" x="-35" y="750"/>
+            <point key="canvasLocation" x="139" y="407"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" visibleAtLaunch="NO" animationBehavior="default" id="1002" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
@@ -365,7 +365,7 @@ Gw
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="78" y="541"/>
+            <point key="canvasLocation" x="139" y="127"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="1077"/>
     </objects>
