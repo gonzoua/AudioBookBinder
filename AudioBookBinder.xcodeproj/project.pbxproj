@@ -206,6 +206,23 @@
 		9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9FFF519E12DC0D7000E3A54F /* audiobook.icns */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9F4D516F2930885D00EC5662 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F4D502F2930600600EC5662;
+			remoteInfo = mp4v2;
+		};
+		9F4D51712930886400EC5662 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F4D502F2930600600EC5662;
+			remoteInfo = mp4v2;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F9E0486AA7600D96B5E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -927,6 +944,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9F4D51722930886400EC5662 /* PBXTargetDependency */,
 			);
 			name = abbinder;
 			productInstallPath = "$(HOME)/bin";
@@ -963,6 +981,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9F4D51702930885D00EC5662 /* PBXTargetDependency */,
 			);
 			name = AudioBookBinder;
 			productName = AudioBookBinder;
@@ -1191,6 +1210,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9F4D51702930885D00EC5662 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F4D502F2930600600EC5662 /* mp4v2 */;
+			targetProxy = 9F4D516F2930885D00EC5662 /* PBXContainerItemProxy */;
+		};
+		9F4D51722930886400EC5662 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F4D502F2930600600EC5662 /* mp4v2 */;
+			targetProxy = 9F4D51712930886400EC5662 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */ = {
