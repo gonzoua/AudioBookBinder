@@ -48,7 +48,6 @@ void usage(char *cmd)
     printf("Usage: %s [-Aehqsv] [-c 1|2] [-r samplerate] [-a author] [-t title] [-i filelist] "
            "-o outfile [@chapter_1@ infile @chapter_2@ ...]\n", cmd);
     printf("\t-a author\tset book author\n");
-    printf("\t-A\t\tadd audiobook to iTunes\n");
     printf("\t-b bitrate\tset bitrate (KBps)\n");
     printf("\t-c 1|2\t\tnumber of channels in audiobook. Default: 2\n");
     printf("\t-C file.png\tcover image\n");
@@ -115,7 +114,6 @@ int main (int argc, char * argv[]) {
     int bitrate = 0;
     BOOL withChapters = NO;
     BOOL eachFileIsChapter = NO;
-    BOOL addToiTunes = NO;
     UInt64 maxVolumeDuration = 0;
     NSString *chapterNameFormat;
     NSMutableArray *currentChapters = [[NSMutableArray alloc] init];
@@ -181,9 +179,6 @@ int main (int argc, char * argv[]) {
                     fprintf(stderr, "Invalid bitrate: %s", optarg);
                     exit(1);
                 }
-                break;
-            case 'A':
-                addToiTunes = YES;
                 break;
             case 'l':
                 maxVolumeDuration = atoi(optarg)*3600; // convert to seconds
@@ -474,35 +469,6 @@ int main (int argc, char * argv[]) {
             printf("done\n");
     }
     
-    if (!quiet) {
-        printf("Adding audiobook to iTunes, it may take a while...");
-        fflush(stdout);
-    }
-    
-    if (addToiTunes) {
-        for (AudioBookVolume *v in volumes) {
-            NSString *volume = v.filename;
-            NSDictionary* errorDict;
-            NSAppleEventDescriptor* returnDescriptor = NULL;
-            NSString *path;
-            if ([volume isAbsolutePath])
-                path = [NSString stringWithString:volume];
-            else
-                path  = [[[NSFileManager defaultManager] currentDirectoryPath]
-                                   stringByAppendingPathComponent:volume];
-            NSString *source = [NSString stringWithFormat:
-                                @"\
-                                tell application \"iTunes\"\n\
-                                add POSIX file \"%@\"\n\
-                                end tell", path, nil];
-            
-            NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:source];
-            
-            returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
-            [scriptObject release];
-        }
-    }
-
     if (!quiet)
         printf("done\n");
     

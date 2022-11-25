@@ -49,7 +49,6 @@
 #define TEXT_BINDING_FAILED     NSLocalizedString(@"Audiobook binding failed", nil)
 #define TEXT_ADDING_TAGS        NSLocalizedString(@"Adding artist/title tags", nil)
 #define TEXT_ADDING_CHAPTERS    NSLocalizedString(@"Adding chapter markers", nil)
-#define TEXT_ADDING_TO_ITUNES   NSLocalizedString(@"Adding file to iTunes", nil)
 #define TEXT_CONVERTING         NSLocalizedString(@"Converting %@", nil)
 #define TEXT_CANT_SPLIT         NSLocalizedString(@"Failed to split audiobook into volumes", nil)
 #define TEXT_MAXDURATION_VIOLATED NSLocalizedString(@"%s: duration (%d sec) is larger than the maximum volume duration (%lld sec.)", nil)
@@ -808,13 +807,6 @@ enum abb_form_fields {
                     
                 }
                 
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kConfigAddToITunes]) {
-                    
-                    [self updateProgressString:TEXT_ADDING_TO_ITUNES];
-                    for(AudioBookVolume *volume in volumes)
-                        [self addFileToiTunes:volume.filename];
-                }
-                
                 [self updateProgressString:@"Done"];
                 
             }
@@ -935,22 +927,6 @@ enum abb_form_fields {
 - (IBAction) cancel: (id)sender
 {
     [_binder cancel];
-}
-
-- (void) addFileToiTunes: (NSString*)path
-{
-    NSDictionary* errorDict;
-    NSAppleEventDescriptor* returnDescriptor = NULL;
-    
-    NSString *source = [NSString stringWithFormat:
-                        @"\
-                        tell application \"iTunes\"\n\
-                        add POSIX file \"%@\"\n\
-                        end tell", path, nil];
-    
-    NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:source];
-    
-    returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
 }
 
 - (IBAction) playStop: (id)sender
