@@ -29,8 +29,6 @@
 #import "AudioBinder.h"
 #import "ConfigNames.h"
 
-#import "Sparkle/SUUpdater.h"
-
 #define DESTINATION_FOLDER 0
 #define DESTINATION_ITUNES 2
 
@@ -51,15 +49,8 @@
 {
     [_folderPopUp selectItemAtIndex:0];
     
-#ifdef APP_STORE_BUILD    
     [updateLabel setHidden:YES];
     [updateButton setHidden:YES];
-#else
-    [updateButton bind:@"value"
-              toObject:[SUUpdater sharedUpdater]
-           withKeyPath:@"automaticallyChecksForUpdates"
-               options:nil];
-#endif
 
     [self updateValidBitrates];
     

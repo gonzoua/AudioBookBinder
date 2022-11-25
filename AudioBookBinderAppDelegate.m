@@ -33,27 +33,17 @@
 #import "QueueController.h"
 #import "ConfigNames.h"
 
-#ifndef APP_STORE_BUILD
-#import "Sparkle/SUUpdater.h"
-#endif
-
 #define TEXT_ACTION_REQUIRED    NSLocalizedString(@"User action required", nil)
 
 #define TEXT_UPGRADE_HACK \
 NSLocalizedString(@"It seems you are upgrading from previous version of Audiobook Binder. This upgrade introduces change in configuration format that requires your action: please confirm destination folder for audiobook files. This is one-time operation.", nil)
 
-#ifdef APP_STORE_BUILD
 BOOL requiresUpdateHack = NO;
 static BOOL hackChecked = NO;
-#endif
 
 @interface AudioBookBinderAppDelegate() {
     IBOutlet NSMenu *applicationMenu;
 
-#ifndef APP_STORE_BUILD
-    IBOutlet SUUpdater *updater;
-#endif
-    
     NSMutableArray *windowControllers;
 }
 
@@ -65,7 +55,6 @@ static BOOL hackChecked = NO;
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-#ifdef APP_STORE_BUILD
     // make sure it's ran only once
     if (!hackChecked) {
         NSString *dir = [defaults stringForKey:kConfigDestinationFolder];
@@ -76,7 +65,6 @@ static BOOL hackChecked = NO;
         }
         hackChecked = YES;
     }
-#endif
     
     NSMutableDictionary *appDefaults = [NSMutableDictionary
                                         dictionaryWithObject:[NSNumber numberWithInt:2] forKey:kConfigChannels];
@@ -124,7 +112,6 @@ static BOOL hackChecked = NO;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-#ifdef APP_STORE_BUILD
     NSURL *url;
     NSMenu *firstSubmenu = [[applicationMenu itemAtIndex:0] submenu];
     [firstSubmenu removeItemAtIndex:1];
@@ -161,10 +148,6 @@ static BOOL hackChecked = NO;
             }
         }
     }
-#else
-    // XXX: hack to make autoupdates work
-    [SUUpdater sharedUpdater];
-#endif
     self.queueController = [[QueueController alloc] initWithWindowNibName:@"QueueWindow"];
     
     [self newAudiobookWindow:nil];
@@ -177,9 +160,6 @@ static BOOL hackChecked = NO;
 
 - (void) checkForUpdates:(id)sender
 {
-#ifndef APP_STORE_BUILD
-    [[SUUpdater sharedUpdater] checkForUpdates:sender];
-#endif
 
 }
 - (IBAction) newAudiobookWindow: (id)sender
