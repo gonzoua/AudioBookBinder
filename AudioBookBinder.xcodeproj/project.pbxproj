@@ -574,6 +574,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 			};
@@ -595,6 +596,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 			};
@@ -715,6 +717,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -757,6 +760,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -834,6 +838,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 			};
@@ -865,6 +870,7 @@
 					"$(inherited)",
 					"$(HOME)/opt/lib",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
