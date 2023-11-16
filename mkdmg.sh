@@ -5,7 +5,7 @@ VOLNAME="Audiobook Binder"
 APPNAME=AudiobookBinder
 INSTALL_TARGET="AudioBookBinder.app"
 INSTALL_SUBTARGET="abbinder"
-TARGET_BUILD_DIR=/Users/gonzo/Projects/AudioBookBinder/build/Release
+TARGET_BUILD_DIR=build/Release
 VERSION=`grep -A 1 CFBundleShortVersionString AudioBookBinder-Info.plist  | tail -1 | sed 's/[^0-9]*>//' | sed 's/<.*//'`
 
 rm -Rf build
