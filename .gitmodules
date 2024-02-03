@@ -1,0 +1,4 @@
+[submodule "third_party/mp4v2"]
+        path = third_party/mp4v2
+        url = https://github.com/enzo1982/mp4v2.git
+        branch = main
