@@ -1,24 +1,82 @@
-name: "Build iOS app"
+name: "Create release"
 
 on:
-  # manual trigger but change to any supported event
-  # see addl: https://www.andrewhoog.com/post/how-to-build-react-native-android-app-with-github-actions/#3-run-build-workflow
-  workflow_dispatch:
-    branches: [main]
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build_with_signing:
     runs-on: macos-latest
     steps:
-      # this was more debug as was curious what came pre-installed
-      # GitHub shares this online, e.g. https://github.com/actions/runner-images/blob/macOS-12/20230224.1/images/macos/macos-12-Readme.md
-      - name: check Xcode version
-        run: /usr/bin/xcodebuild -version
+      - name: set release version
+        id: step_one
+        run: |
+          echo "release_version=${GITHUB_REF_NAME/v/}" >> "$GITHUB_ENV"
 
       - name: checkout repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: install the Apple certificate and provisioning profile
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
 
       - name: build targets
         run: |
-          /usr/bin/xcodebuild -target abbinder -target AudioBookBinder
+          defaults write $PWD/AudioBookBinder-Info CFBundleShortVersionString $release_version
+          defaults write $PWD/AudioBookBinder-Info CFBundleVersion $release_version
+          plutil -convert xml1 AudioBookBinder-Info.plist
+          /usr/bin/xcodebuild -configuration Release -alltargets CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO
 
+      - name: sign and notarize image
+        env:
+          ASC_KEY_BASE64: ${{ secrets.ASC_KEY_BASE64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER: ${{ secrets.ASC_ISSUER }}
+        run: |
+          IDENTITY=$(security find-identity -v -p codesigning | head -1 | awk '{print $2}')
+
+          rm -rf dist
+          mkdir dist
+          cp -r build/Release/abbinder build/Release/AudioBookBinder.app dist/
+          codesign --force --timestamp --options=runtime --sign $IDENTITY dist/AudioBookBinder.app
+          codesign --force --timestamp --options=runtime --sign $IDENTITY dist/abbinder
+
+          hdiutil create -srcFolder dist -volname "Audiobook Binder" -o AudioBookBinder.dmg
+          codesign --force --timestamp --options=runtime --sign $IDENTITY AudioBookBinder.dmg
+
+          echo -n "$ASC_KEY_BASE64" | base64 --decode -o key.p8
+          xcrun notarytool submit --wait --timeout 5m --key-id "$ASC_KEY_ID" --key key.p8 --issuer "$ASC_ISSUER" AudiobookBinder.dmg
+          xcrun stapler staple AudiobookBinder.dmg
+          mv AudiobookBinder.dmg AudiobookBinder-${release_version}.dmg
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: ${{ env.release_version }}
+          draft: true
+          files: |
+            AudiobookBinder*.dmg
