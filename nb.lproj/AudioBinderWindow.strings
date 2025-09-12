@@ -47,10 +47,10 @@
 "1033.title" = "Cancel";
 
 /* Class = "NSTextFieldCell"; placeholderString = "Title"; ObjectID = "Yjn-Z2-lnl"; */
-"Yjn-Z2-lnl.placeholderString" = "Forfatter";
+"Yjn-Z2-lnl.placeholderString" = "Tittel";
 
 /* Class = "NSTextFieldCell"; placeholderString = "Author"; ObjectID = "pRl-ER-gLx"; */
-"pRl-ER-gLx.placeholderString" = "Autor";
+"pRl-ER-gLx.placeholderString" = "Forfatter";
 
 /* Class = "NSTextFieldCell"; placeholderString = "Narrator"; ObjectID = "AiJ-TY-VAV"; */
 "AiJ-TY-VAV.placeholderString" = "Forteller";
