@@ -7,16 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F8A00022A00000000AB1234 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9F8A00012A00000000AB1234 /* Localizable.xcstrings */; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
-		8DD76F9F0486AA7600D96B5E /* AudioBookBinder.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* AudioBookBinder.1 */; };
-		9F02CE12101EA8B100AE315D /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
 		9F02CE19101EABCD00AE315D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE18101EABCD00AE315D /* AudioToolbox.framework */; };
 		9F02CE4C101EBB9600AE315D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
-		9F02CE66101FF8D900AE315D /* ABBLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABBLog.m */; };
-		9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */; };
 		9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
-		9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FFD671862A27D005EF748 /* StatsManager.m */; };
+		9F305A4A304CE3FE00B13DBB /* MP4Atom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305A48304CE3FE00B13DBB /* MP4Atom.swift */; };
+		9F305A4B304CE3FE00B13DBB /* MP4File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305A49304CE3FE00B13DBB /* MP4File.swift */; };
+		9F305A4C304CE3FE00B13DBB /* MP4Atom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305A48304CE3FE00B13DBB /* MP4Atom.swift */; };
+		9F305A4D304CE3FE00B13DBB /* MP4File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305A49304CE3FE00B13DBB /* MP4File.swift */; };
 		9F3E99E6303B8E79007711A0 /* abbinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3E99E5303B8E79007711A0 /* abbinder.swift */; };
+		9F42911D304D159300AF88E7 /* AudioBookVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911B304D159300AF88E7 /* AudioBookVolume.swift */; };
+		9F42911E304D159300AF88E7 /* AudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911C304D159300AF88E7 /* AudioFile.swift */; };
+		9F42911F304D159300AF88E7 /* AudioBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911A304D159300AF88E7 /* AudioBinder.swift */; };
+		9F429120304D159300AF88E7 /* AudioBookVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911B304D159300AF88E7 /* AudioBookVolume.swift */; };
+		9F429121304D159300AF88E7 /* AudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911C304D159300AF88E7 /* AudioFile.swift */; };
+		9F429122304D159300AF88E7 /* AudioBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F42911A304D159300AF88E7 /* AudioBinder.swift */; };
+		9F429124304D15C800AF88E7 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F429123304D15C800AF88E7 /* Chapter.swift */; };
+		9F429125304D15C800AF88E7 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F429123304D15C800AF88E7 /* Chapter.swift */; };
+		9F429127304D18EF00AF88E7 /* MetaEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F429126304D18EF00AF88E7 /* MetaEditor.swift */; };
+		9F429128304D18EF00AF88E7 /* MetaEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F429126304D18EF00AF88E7 /* MetaEditor.swift */; };
 		9F455945116AF4FB00BA501C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9F455944116AF4FB00BA501C /* Credits.rtf */; };
 		9F4D50D72930608C00EC5662 /* descriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D50382930608B00EC5662 /* descriptors.cpp */; };
 		9F4D50D82930608C00EC5662 /* atom_damr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D50392930608B00EC5662 /* atom_damr.cpp */; };
@@ -161,47 +171,27 @@
 		9F4D516B2930608C00EC5662 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F4D50D62930608B00EC5662 /* platform.h */; };
 		9F4D516D2930708C00EC5662 /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4D50302930600600EC5662 /* libmp4v2.a */; };
 		9F4D516E2930709300EC5662 /* libmp4v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4D50302930600600EC5662 /* libmp4v2.a */; };
-		9F61BE3811FBBC8D00654B3B /* AudioBookVolume.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */; };
-		9F61BE3A11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
-		9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */; };
-		9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F62872B1194D502000D3A05 /* CoverImageView.m */; };
-		9F6440161CDFE14100DABC17 /* QueueController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6440141CDFE14100DABC17 /* QueueController.m */; };
-		9F6440171CDFE14100DABC17 /* QueueWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6440151CDFE14100DABC17 /* QueueWindow.xib */; };
-		9F695F0E1D87ACFD000C9493 /* AudioBookBinder-InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F695F101D87ACFD000C9493 /* AudioBookBinder-InfoPlist.strings */; };
-		9F6FA21611191A020047728F /* AudioBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE11101EA8B100AE315D /* AudioBinder.m */; };
-		9F6FA21711191A020047728F /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
-		9F6FA21811191A020047728F /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
 		9F6FA3A011191A4D0047728F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE18101EABCD00AE315D /* AudioToolbox.framework */; };
 		9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F02CE4B101EBB9600AE315D /* CoreServices.framework */; };
-		9F6FA3A711191A5D0047728F /* ABBLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F02CE65101FF8D900AE315D /* ABBLog.m */; };
-		9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */; };
 		9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6FA3D6111BBBC20047728F /* MainMenu.xib */; };
-		9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */; };
-		9F6FA411111D161A0047728F /* AudioFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA410111D161A0047728F /* AudioFileList.m */; };
-		9F6FA4A9111E56090047728F /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
 		9F776EC713CD6D5D004569F4 /* MiniProgressGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F776EC613CD6D5D004569F4 /* MiniProgressGradient.png */; };
 		9F7829D3129F8C6000763A5B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7829D2129F8C6000763A5B /* AppKit.framework */; };
 		9F782A2E129F941900763A5B /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2C129F941900763A5B /* Play.png */; };
 		9F782A2F129F941900763A5B /* Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F782A2D129F941900763A5B /* Stop.png */; };
-		9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F78673B11A88F660054ADF0 /* Localizable.strings */; };
-		9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */; };
-		9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0CE1023D99300E65B00 /* MP4Atom.m */; };
-		9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86C0D11023DAC000E65B00 /* MP4File.m */; };
 		9F9DCD20303BCA660020BCB3 /* ConsoleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9DCD1E303B97AA0020BCB3 /* ConsoleDelegate.swift */; };
 		9F9DCD23303BE04A0020BCB3 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9DCD22303BE04A0020BCB3 /* ArgumentParser */; };
-		9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FA4A8111E56090047728F /* AudioFile.m */; };
-		9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA52D9E11C2FFCE003FD879 /* Chapter.m */; };
-		9FA52DA011C2FFCE003FD879 /* Chapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA52D9E11C2FFCE003FD879 /* Chapter.m */; };
-		9FAB146D11619F9F00A2F36A /* ExpandedPathToIconTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */; };
-		9FAB146E11619F9F00A2F36A /* ExpandedPathToPathTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */; };
-		9FAB14821161A51400A2F36A /* PrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAB14811161A51400A2F36A /* PrefsController.m */; };
-		9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
-		9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */; };
-		9FC46A2E22ADB97D003F57C7 /* AudioBinderWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */; };
-		9FD5D3651CEA5146008B74AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD5D3641CEA5146008B74AF /* QuartzCore.framework */; };
-		9FD5D3681CEA549E008B74AF /* QueueOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */; };
-		9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */; };
+		9FE7D4483053CFFD0036C5FF /* ABBLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4473053CFFD0036C5FF /* ABBLog.swift */; };
+		9FE7D44A3053CFFF0036C5FF /* ExpandedPathToPathTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4493053CFFF0036C5FF /* ExpandedPathToPathTransformer.swift */; };
+		9FE7D44C3053D0020036C5FF /* ExpandedPathToIconTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D44B3053D0020036C5FF /* ExpandedPathToIconTransformer.swift */; };
+		9FE7D44E3053D0040036C5FF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D44D3053D0040036C5FF /* main.swift */; };
+		9FE7D4503053D01A0036C5FF /* NSOutlineViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D44F3053D01A0036C5FF /* NSOutlineViewExtension.swift */; };
+		9FE7D4523053D0260036C5FF /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4513053D0260036C5FF /* StatsManager.swift */; };
+		9FE7D4543053D0350036C5FF /* PrefsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4533053D0350036C5FF /* PrefsController.swift */; };
+		9FE7D4563053D0410036C5FF /* AudioBookBinderAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4553053D0410036C5FF /* AudioBookBinderAppDelegate.swift */; };
+		9FE7D4583053D0610036C5FF /* CoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4573053D0610036C5FF /* CoverImageView.swift */; };
+		9FE7D45A3053D0A30036C5FF /* AudioFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D4593053D0A30036C5FF /* AudioFileList.swift */; };
+		9FE7D45C3053D1180036C5FF /* AudioBinderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7D45B3053D1180036C5FF /* AudioBinderWindowController.swift */; };
 		9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9FFF519E12DC0D7000E3A54F /* audiobook.icns */; };
 /* End PBXBuildFile section */
 
@@ -229,8 +219,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				8DD76F9F0486AA7600D96B5E /* AudioBookBinder.1 in CopyFiles */,
-				9F61BE3811FBBC8D00654B3B /* AudioBookVolume.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -247,21 +235,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F8A00012A00000000AB1234 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookBinder_Prefix.pch; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* abbinder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = abbinder; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F02CE10101EA8B100AE315D /* AudioBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinder.h; sourceTree = "<group>"; };
-		9F02CE11101EA8B100AE315D /* AudioBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinder.m; sourceTree = "<group>"; };
 		9F02CE18101EABCD00AE315D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		9F02CE4B101EBB9600AE315D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		9F02CE64101FF8D900AE315D /* ABBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABBLog.h; sourceTree = "<group>"; };
-		9F02CE65101FF8D900AE315D /* ABBLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABBLog.m; sourceTree = "<group>"; };
-		9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBinderWindowController.h; sourceTree = "<group>"; };
-		9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBinderWindowController.m; sourceTree = "<group>"; };
-		9F1FFD661862A27D005EF748 /* StatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsManager.h; sourceTree = "<group>"; };
-		9F1FFD671862A27D005EF748 /* StatsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsManager.m; sourceTree = "<group>"; };
+		9F305A48304CE3FE00B13DBB /* MP4Atom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Atom.swift; sourceTree = "<group>"; };
+		9F305A49304CE3FE00B13DBB /* MP4File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4File.swift; sourceTree = "<group>"; };
+		9F305A4E304CE40300B13DBB /* AudioBookBinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioBookBinder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F3E99E5303B8E79007711A0 /* abbinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = abbinder.swift; sourceTree = "<group>"; };
 		9F3E99E7303B8E7C007711A0 /* abbinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "abbinder-Bridging-Header.h"; sourceTree = "<group>"; };
+		9F42911A304D159300AF88E7 /* AudioBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBinder.swift; sourceTree = "<group>"; };
+		9F42911B304D159300AF88E7 /* AudioBookVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBookVolume.swift; sourceTree = "<group>"; };
+		9F42911C304D159300AF88E7 /* AudioFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFile.swift; sourceTree = "<group>"; };
+		9F429123304D15C800AF88E7 /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		9F429126304D18EF00AF88E7 /* MetaEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaEditor.swift; sourceTree = "<group>"; };
 		9F455944116AF4FB00BA501C /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9F4D50302930600600EC5662 /* libmp4v2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmp4v2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F4D50382930608B00EC5662 /* descriptors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = descriptors.cpp; sourceTree = "<group>"; };
@@ -406,72 +394,36 @@
 		9F4D50D42930608B00EC5662 /* platform_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_posix.h; sourceTree = "<group>"; };
 		9F4D50D52930608B00EC5662 /* impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = impl.h; sourceTree = "<group>"; };
 		9F4D50D62930608B00EC5662 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookVolume.h; sourceTree = "<group>"; };
-		9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookVolume.m; sourceTree = "<group>"; };
-		9F62872A1194D502000D3A05 /* CoverImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverImageView.h; sourceTree = "<group>"; };
-		9F62872B1194D502000D3A05 /* CoverImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverImageView.m; sourceTree = "<group>"; };
-		9F6440131CDFE14100DABC17 /* QueueController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueController.h; sourceTree = "<group>"; };
-		9F6440141CDFE14100DABC17 /* QueueController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueController.m; sourceTree = "<group>"; };
-		9F6440151CDFE14100DABC17 /* QueueWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueueWindow.xib; sourceTree = "<group>"; };
 		9F695F091D87ACC0000C9493 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9F695F0A1D87ACC0000C9493 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AudioBinderWindow.xib; sourceTree = "<group>"; };
-		9F695F1A1D87AD1F000C9493 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = "Base.lproj/AudioBookBinder-InfoPlist.strings"; sourceTree = "<group>"; };
 		9F695F1C1D87AE18000C9493 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		9F695F1D1D87AE18000C9493 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = "nb.lproj/AudioBookBinder-InfoPlist.strings"; sourceTree = "<group>"; };
 		9F695F231D87AE19000C9493 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/AudioBinderWindow.strings; sourceTree = "<group>"; };
-		9F695F241D87AE19000C9493 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F695F251D87AE41000C9493 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		9F695F261D87AE42000C9493 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "it.lproj/AudioBookBinder-InfoPlist.strings"; sourceTree = "<group>"; };
 		9F695F2C1D87AE42000C9493 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/AudioBinderWindow.strings; sourceTree = "<group>"; };
-		9F695F2D1D87AE43000C9493 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F695F2E1D87AE56000C9493 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		9F695F2F1D87AE56000C9493 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/AudioBookBinder-InfoPlist.strings"; sourceTree = "<group>"; };
 		9F695F351D87AE57000C9493 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AudioBinderWindow.strings; sourceTree = "<group>"; };
-		9F695F361D87AE57000C9493 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F695F371D87AE75000C9493 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		9F695F381D87AE76000C9493 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/AudioBookBinder-InfoPlist.strings"; sourceTree = "<group>"; };
 		9F695F3E1D87AE77000C9493 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AudioBinderWindow.strings; sourceTree = "<group>"; };
-		9F695F3F1D87AE77000C9493 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F6FA206111918F10047728F /* AudioBookBinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioBookBinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioBookBinder-Info.plist"; sourceTree = "<group>"; };
-		9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinder.m; sourceTree = "<group>"; };
-		9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBookBinderAppDelegate.h; sourceTree = "<group>"; };
-		9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBookBinderAppDelegate.m; sourceTree = "<group>"; };
-		9F6FA40F111D161A0047728F /* AudioFileList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileList.h; sourceTree = "<group>"; };
-		9F6FA410111D161A0047728F /* AudioFileList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileList.m; sourceTree = "<group>"; };
-		9F6FA4A7111E56090047728F /* AudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFile.h; sourceTree = "<group>"; };
-		9F6FA4A8111E56090047728F /* AudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFile.m; sourceTree = "<group>"; };
-		9F75A2B61D87808B00FD5697 /* AudioBookBinder-appstore.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "AudioBookBinder-appstore.entitlements"; sourceTree = "<group>"; };
 		9F776EC613CD6D5D004569F4 /* MiniProgressGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MiniProgressGradient.png; sourceTree = "<group>"; };
 		9F7829D2129F8C6000763A5B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9F782A2C129F941900763A5B /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
 		9F782A2D129F941900763A5B /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Stop.png; sourceTree = "<group>"; };
-		9F78673911A88F470054ADF0 /* en */ = {isa = PBXFileReference; fileEncoding = 2483028224; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
-		9F86C0CD1023D99300E65B00 /* MP4Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4Atom.h; sourceTree = "<group>"; };
-		9F86C0CE1023D99300E65B00 /* MP4Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4Atom.m; sourceTree = "<group>"; };
-		9F86C0D01023DAC000E65B00 /* MP4File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MP4File.h; sourceTree = "<group>"; };
-		9F86C0D11023DAC000E65B00 /* MP4File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MP4File.m; sourceTree = "<group>"; };
 		9F9DCD1E303B97AA0020BCB3 /* ConsoleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDelegate.swift; sourceTree = "<group>"; };
-		9FA52D9D11C2FFCE003FD879 /* Chapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chapter.h; sourceTree = "<group>"; };
-		9FA52D9E11C2FFCE003FD879 /* Chapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chapter.m; sourceTree = "<group>"; };
-		9FAB146911619F9F00A2F36A /* ExpandedPathToIconTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToIconTransformer.h; sourceTree = "<group>"; };
-		9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedPathToIconTransformer.m; sourceTree = "<group>"; };
-		9FAB146B11619F9F00A2F36A /* ExpandedPathToPathTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandedPathToPathTransformer.h; sourceTree = "<group>"; };
-		9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandedPathToPathTransformer.m; sourceTree = "<group>"; };
-		9FAB14801161A51400A2F36A /* PrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefsController.h; sourceTree = "<group>"; };
-		9FAB14811161A51400A2F36A /* PrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrefsController.m; sourceTree = "<group>"; };
-		9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AudioBookBinder.entitlements; sourceTree = "<group>"; };
-		9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaEditor.h; sourceTree = "<group>"; };
-		9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetaEditor.mm; sourceTree = "<group>"; };
-		9FB964F21CD81F9A0028268F /* ConfigNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigNames.h; sourceTree = "<group>"; };
-		9FD5D3641CEA5146008B74AF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		9FD5D3661CEA549E008B74AF /* QueueOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueOverlayView.h; sourceTree = "<group>"; };
-		9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueOverlayView.m; sourceTree = "<group>"; };
-		9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSOutlineView_Extension.h; sourceTree = "<group>"; };
-		9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSOutlineView_Extension.m; sourceTree = "<group>"; };
+		9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioBookBinder.entitlements; sourceTree = "<group>"; };
+		9FE7D4473053CFFD0036C5FF /* ABBLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABBLog.swift; sourceTree = "<group>"; };
+		9FE7D4493053CFFF0036C5FF /* ExpandedPathToPathTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPathToPathTransformer.swift; sourceTree = "<group>"; };
+		9FE7D44B3053D0020036C5FF /* ExpandedPathToIconTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPathToIconTransformer.swift; sourceTree = "<group>"; };
+		9FE7D44D3053D0040036C5FF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		9FE7D44F3053D01A0036C5FF /* NSOutlineViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSOutlineViewExtension.swift; sourceTree = "<group>"; };
+		9FE7D4513053D0260036C5FF /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
+		9FE7D4533053D0350036C5FF /* PrefsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsController.swift; sourceTree = "<group>"; };
+		9FE7D4553053D0410036C5FF /* AudioBookBinderAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBookBinderAppDelegate.swift; sourceTree = "<group>"; };
+		9FE7D4573053D0610036C5FF /* CoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverImageView.swift; sourceTree = "<group>"; };
+		9FE7D4593053D0A30036C5FF /* AudioFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileList.swift; sourceTree = "<group>"; };
+		9FE7D45B3053D1180036C5FF /* AudioBinderWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBinderWindowController.swift; sourceTree = "<group>"; };
 		9FFF519E12DC0D7000E3A54F /* audiobook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = audiobook.icns; sourceTree = "<group>"; };
-		C6859EA3029092ED04C91782 /* AudioBookBinder.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AudioBookBinder.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,7 +451,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F4D516D2930708C00EC5662 /* libmp4v2.a in Frameworks */,
-				9FD5D3651CEA5146008B74AF /* QuartzCore.framework in Frameworks */,
 				9F6FA3A011191A4D0047728F /* Foundation.framework in Frameworks */,
 				9F6FA3A111191A4D0047728F /* AudioToolbox.framework in Frameworks */,
 				9F6FA3A211191A4D0047728F /* CoreServices.framework in Frameworks */,
@@ -513,17 +464,11 @@
 		08FB7794FE84155DC02AAC07 /* AudioBookBinder */ = {
 			isa = PBXGroup;
 			children = (
-				9F695F101D87ACFD000C9493 /* AudioBookBinder-InfoPlist.strings */,
-				9FD5D3641CEA5146008B74AF /* QuartzCore.framework */,
-				9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */,
-				9F75A2B61D87808B00FD5697 /* AudioBookBinder-appstore.entitlements */,
-				9F95911E11658523001C2433 /* Resources */,
 				08FB7795FE84155DC02AAC07 /* Source */,
-				C6859EA2029092E104C91782 /* Documentation */,
-				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
+				9F95911E11658523001C2433 /* Resources */,
 				9F4D50362930604C00EC5662 /* third_party */,
+				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
-				9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */,
 				9F4D516C2930708C00EC5662 /* Frameworks */,
 			);
 			name = AudioBookBinder;
@@ -533,50 +478,27 @@
 			isa = PBXGroup;
 			children = (
 				9F3E99E5303B8E79007711A0 /* abbinder.swift */,
-				9F02CE64101FF8D900AE315D /* ABBLog.h */,
-				9F02CE65101FF8D900AE315D /* ABBLog.m */,
-				9F02CE10101EA8B100AE315D /* AudioBinder.h */,
-				9F02CE11101EA8B100AE315D /* AudioBinder.m */,
-				9F1FFD5B185D6F8F005EF748 /* AudioBinderWindowController.h */,
-				9F1FFD5C185D6F8F005EF748 /* AudioBinderWindowController.m */,
-				32A70AAB03705E1F00C91783 /* AudioBookBinder_Prefix.pch */,
-				9F6FA3BD11191AEA0047728F /* AudioBookBinder.m */,
-				9F6FA3E2111BBD640047728F /* AudioBookBinderAppDelegate.h */,
-				9F6FA3E3111BBD640047728F /* AudioBookBinderAppDelegate.m */,
-				9F61BE3611FBBC8D00654B3B /* AudioBookVolume.h */,
-				9F61BE3711FBBC8D00654B3B /* AudioBookVolume.m */,
-				9F6FA4A7111E56090047728F /* AudioFile.h */,
-				9F6FA4A8111E56090047728F /* AudioFile.m */,
-				9F6FA40F111D161A0047728F /* AudioFileList.h */,
-				9F6FA410111D161A0047728F /* AudioFileList.m */,
-				9FA52D9D11C2FFCE003FD879 /* Chapter.h */,
-				9FA52D9E11C2FFCE003FD879 /* Chapter.m */,
-				9FB964F21CD81F9A0028268F /* ConfigNames.h */,
-				9F62872A1194D502000D3A05 /* CoverImageView.h */,
-				9F62872B1194D502000D3A05 /* CoverImageView.m */,
-				9FAB146911619F9F00A2F36A /* ExpandedPathToIconTransformer.h */,
-				9FAB146A11619F9F00A2F36A /* ExpandedPathToIconTransformer.m */,
-				9FAB146B11619F9F00A2F36A /* ExpandedPathToPathTransformer.h */,
-				9FAB146C11619F9F00A2F36A /* ExpandedPathToPathTransformer.m */,
-				9FB4DE0511C05C0E007B3DDE /* MetaEditor.h */,
-				9FB4DE0611C05C0E007B3DDE /* MetaEditor.mm */,
-				9F86C0CD1023D99300E65B00 /* MP4Atom.h */,
-				9F86C0CE1023D99300E65B00 /* MP4Atom.m */,
-				9F86C0D01023DAC000E65B00 /* MP4File.h */,
-				9F86C0D11023DAC000E65B00 /* MP4File.m */,
-				9FFED98E1128C1AD00C3AFE6 /* NSOutlineView_Extension.h */,
-				9FFED98F1128C1AD00C3AFE6 /* NSOutlineView_Extension.m */,
-				9FAB14801161A51400A2F36A /* PrefsController.h */,
-				9FAB14811161A51400A2F36A /* PrefsController.m */,
-				9F6440131CDFE14100DABC17 /* QueueController.h */,
-				9F6440141CDFE14100DABC17 /* QueueController.m */,
-				9F6440151CDFE14100DABC17 /* QueueWindow.xib */,
-				9F1FFD661862A27D005EF748 /* StatsManager.h */,
-				9F1FFD671862A27D005EF748 /* StatsManager.m */,
-				9FD5D3661CEA549E008B74AF /* QueueOverlayView.h */,
-				9FD5D3671CEA549E008B74AF /* QueueOverlayView.m */,
 				9F3E99E7303B8E7C007711A0 /* abbinder-Bridging-Header.h */,
+				9FE7D4473053CFFD0036C5FF /* ABBLog.swift */,
+				9F42911A304D159300AF88E7 /* AudioBinder.swift */,
+				9FE7D45B3053D1180036C5FF /* AudioBinderWindowController.swift */,
+				9F305A4E304CE40300B13DBB /* AudioBookBinder-Bridging-Header.h */,
+				9FE7D4553053D0410036C5FF /* AudioBookBinderAppDelegate.swift */,
+				9F42911B304D159300AF88E7 /* AudioBookVolume.swift */,
+				9F42911C304D159300AF88E7 /* AudioFile.swift */,
+				9FE7D4593053D0A30036C5FF /* AudioFileList.swift */,
+				9F429123304D15C800AF88E7 /* Chapter.swift */,
 				9F9DCD1E303B97AA0020BCB3 /* ConsoleDelegate.swift */,
+				9FE7D4573053D0610036C5FF /* CoverImageView.swift */,
+				9FE7D44B3053D0020036C5FF /* ExpandedPathToIconTransformer.swift */,
+				9FE7D4493053CFFF0036C5FF /* ExpandedPathToPathTransformer.swift */,
+				9FE7D44D3053D0040036C5FF /* main.swift */,
+				9F429126304D18EF00AF88E7 /* MetaEditor.swift */,
+				9F305A48304CE3FE00B13DBB /* MP4Atom.swift */,
+				9F305A49304CE3FE00B13DBB /* MP4File.swift */,
+				9FE7D44F3053D01A0036C5FF /* NSOutlineViewExtension.swift */,
+				9FE7D4533053D0350036C5FF /* PrefsController.swift */,
+				9FE7D4513053D0260036C5FF /* StatsManager.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -843,25 +765,18 @@
 		9F95911E11658523001C2433 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9F776EC613CD6D5D004569F4 /* MiniProgressGradient.png */,
-				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
 				9F1FFD5E185E7955005EF748 /* AudioBinderWindow.xib */,
 				9FFF519E12DC0D7000E3A54F /* audiobook.icns */,
+				9FAD311A173072A70067DF2F /* AudioBookBinder.entitlements */,
+				9F6FA208111918F10047728F /* AudioBookBinder-Info.plist */,
+				9F455944116AF4FB00BA501C /* Credits.rtf */,
+				9F8A00012A00000000AB1234 /* Localizable.xcstrings */,
+				9F6FA3D6111BBBC20047728F /* MainMenu.xib */,
+				9F776EC613CD6D5D004569F4 /* MiniProgressGradient.png */,
 				9F782A2C129F941900763A5B /* Play.png */,
 				9F782A2D129F941900763A5B /* Stop.png */,
-				9F455944116AF4FB00BA501C /* Credits.rtf */,
-				9F8238E81166C01B00F6D1D8 /* sparkle_dsa_pub.pem */,
-				9F78673B11A88F660054ADF0 /* Localizable.strings */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		C6859EA2029092E104C91782 /* Documentation */ = {
-			isa = PBXGroup;
-			children = (
-				C6859EA3029092ED04C91782 /* AudioBookBinder.1 */,
-			);
-			name = Documentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -987,7 +902,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1500;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2710;
 				ORGANIZATIONNAME = AudioBookBinder;
 				TargetAttributes = {
 					8DD76F960486AA7600D96B5E = {
@@ -996,6 +912,9 @@
 					9F4D502F2930600600EC5662 = {
 						CreatedOnToolsVersion = 14.1;
 						ProvisioningStyle = Automatic;
+					};
+					9F6FA205111918F10047728F = {
+						LastSwiftMigration = 2660;
 					};
 				};
 			};
@@ -1006,7 +925,6 @@
 			knownRegions = (
 				en,
 				Base,
-				ru,
 				nb,
 				it,
 				fr,
@@ -1031,7 +949,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FC46A2E22ADB97D003F57C7 /* AudioBinderWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,16 +957,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F6FA3D8111BBBC20047728F /* MainMenu.xib in Resources */,
-				9F8238E91166C01B00F6D1D8 /* sparkle_dsa_pub.pem in Resources */,
 				9F455945116AF4FB00BA501C /* Credits.rtf in Resources */,
-				9F78673C11A88F660054ADF0 /* Localizable.strings in Resources */,
+				9F8A00022A00000000AB1234 /* Localizable.xcstrings in Resources */,
 				9F782A2E129F941900763A5B /* Play.png in Resources */,
-				9F6440171CDFE14100DABC17 /* QueueWindow.xib in Resources */,
 				9F782A2F129F941900763A5B /* Stop.png in Resources */,
 				9FFF519F12DC0D7000E3A54F /* audiobook.icns in Resources */,
 				9F776EC713CD6D5D004569F4 /* MiniProgressGradient.png in Resources */,
 				9F1FFD60185E7955005EF748 /* AudioBinderWindow.xib in Resources */,
-				9F695F0E1D87ACFD000C9493 /* AudioBookBinder-InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,15 +975,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9DCD20303BCA660020BCB3 /* ConsoleDelegate.swift in Sources */,
-				9F02CE12101EA8B100AE315D /* AudioBinder.m in Sources */,
-				9F02CE66101FF8D900AE315D /* ABBLog.m in Sources */,
-				9F86C0CF1023D99300E65B00 /* MP4Atom.m in Sources */,
-				9F86C0D21023DAC000E65B00 /* MP4File.m in Sources */,
-				9FB4DE0811C05C0E007B3DDE /* MetaEditor.mm in Sources */,
+				9F429125304D15C800AF88E7 /* Chapter.swift in Sources */,
+				9F305A4C304CE3FE00B13DBB /* MP4Atom.swift in Sources */,
+				9F305A4D304CE3FE00B13DBB /* MP4File.swift in Sources */,
+				9F429128304D18EF00AF88E7 /* MetaEditor.swift in Sources */,
 				9F3E99E6303B8E79007711A0 /* abbinder.swift in Sources */,
-				9FA52D9211C2F100003FD879 /* AudioFile.m in Sources */,
-				9FA52DA011C2FFCE003FD879 /* Chapter.m in Sources */,
-				9F61BE3A11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
+				9F42911D304D159300AF88E7 /* AudioBookVolume.swift in Sources */,
+				9F42911E304D159300AF88E7 /* AudioFile.swift in Sources */,
+				9F42911F304D159300AF88E7 /* AudioBinder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,26 +1091,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F6FA21611191A020047728F /* AudioBinder.m in Sources */,
-				9F6FA3A711191A5D0047728F /* ABBLog.m in Sources */,
-				9F6FA21711191A020047728F /* MP4Atom.m in Sources */,
-				9F6FA21811191A020047728F /* MP4File.m in Sources */,
-				9F6FA3BE11191AEA0047728F /* AudioBookBinder.m in Sources */,
-				9F6FA3E4111BBD640047728F /* AudioBookBinderAppDelegate.m in Sources */,
-				9F6FA411111D161A0047728F /* AudioFileList.m in Sources */,
-				9F6FA4A9111E56090047728F /* AudioFile.m in Sources */,
-				9FFED9901128C1AD00C3AFE6 /* NSOutlineView_Extension.m in Sources */,
-				9FAB146D11619F9F00A2F36A /* ExpandedPathToIconTransformer.m in Sources */,
-				9FAB146E11619F9F00A2F36A /* ExpandedPathToPathTransformer.m in Sources */,
-				9FAB14821161A51400A2F36A /* PrefsController.m in Sources */,
-				9F62872C1194D502000D3A05 /* CoverImageView.m in Sources */,
-				9FB4DE0711C05C0E007B3DDE /* MetaEditor.mm in Sources */,
-				9FA52D9F11C2FFCE003FD879 /* Chapter.m in Sources */,
-				9FD5D3681CEA549E008B74AF /* QueueOverlayView.m in Sources */,
-				9F61BE3B11FBBC8D00654B3B /* AudioBookVolume.m in Sources */,
-				9F1FFD5D185D6F8F005EF748 /* AudioBinderWindowController.m in Sources */,
-				9F1FFD681862A27D005EF748 /* StatsManager.m in Sources */,
-				9F6440161CDFE14100DABC17 /* QueueController.m in Sources */,
+				9F429127304D18EF00AF88E7 /* MetaEditor.swift in Sources */,
+				9FE7D44A3053CFFF0036C5FF /* ExpandedPathToPathTransformer.swift in Sources */,
+				9FE7D4583053D0610036C5FF /* CoverImageView.swift in Sources */,
+				9F429120304D159300AF88E7 /* AudioBookVolume.swift in Sources */,
+				9F429124304D15C800AF88E7 /* Chapter.swift in Sources */,
+				9F429121304D159300AF88E7 /* AudioFile.swift in Sources */,
+				9F429122304D159300AF88E7 /* AudioBinder.swift in Sources */,
+				9FE7D4483053CFFD0036C5FF /* ABBLog.swift in Sources */,
+				9FE7D45C3053D1180036C5FF /* AudioBinderWindowController.swift in Sources */,
+				9FE7D4503053D01A0036C5FF /* NSOutlineViewExtension.swift in Sources */,
+				9FE7D45A3053D0A30036C5FF /* AudioFileList.swift in Sources */,
+				9F305A4A304CE3FE00B13DBB /* MP4Atom.swift in Sources */,
+				9F305A4B304CE3FE00B13DBB /* MP4File.swift in Sources */,
+				9FE7D44E3053D0040036C5FF /* main.swift in Sources */,
+				9FE7D4563053D0410036C5FF /* AudioBookBinderAppDelegate.swift in Sources */,
+				9FE7D4543053D0350036C5FF /* PrefsController.swift in Sources */,
+				9FE7D44C3053D0020036C5FF /* ExpandedPathToIconTransformer.swift in Sources */,
+				9FE7D4523053D0260036C5FF /* StatsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,7 +1132,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				9F695F0A1D87ACC0000C9493 /* Base */,
-				9F695F171D87ACFE000C9493 /* ru */,
 				9F695F231D87AE19000C9493 /* nb */,
 				9F695F2C1D87AE42000C9493 /* it */,
 				9F695F351D87AE57000C9493 /* fr */,
@@ -1230,43 +1140,16 @@
 			name = AudioBinderWindow.xib;
 			sourceTree = "<group>";
 		};
-		9F695F101D87ACFD000C9493 /* AudioBookBinder-InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9F695F0F1D87ACFD000C9493 /* ru */,
-				9F695F1A1D87AD1F000C9493 /* Base */,
-				9F695F1D1D87AE18000C9493 /* nb */,
-				9F695F261D87AE42000C9493 /* it */,
-				9F695F2F1D87AE56000C9493 /* fr */,
-				9F695F381D87AE76000C9493 /* de */,
-			);
-			name = "AudioBookBinder-InfoPlist.strings";
-			sourceTree = "<group>";
-		};
 		9F6FA3D6111BBBC20047728F /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9F695F091D87ACC0000C9493 /* Base */,
-				9F695F0B1D87ACFC000C9493 /* ru */,
 				9F695F1C1D87AE18000C9493 /* nb */,
 				9F695F251D87AE41000C9493 /* it */,
 				9F695F2E1D87AE56000C9493 /* fr */,
 				9F695F371D87AE75000C9493 /* de */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		9F78673B11A88F660054ADF0 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9F78673911A88F470054ADF0 /* en */,
-				9F695F181D87ACFE000C9493 /* ru */,
-				9F695F241D87AE19000C9493 /* nb */,
-				9F695F2D1D87AE43000C9493 /* it */,
-				9F695F361D87AE57000C9493 /* fr */,
-				9F695F3F1D87AE77000C9493 /* de */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1285,16 +1168,16 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "abbinder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -1310,15 +1193,15 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "abbinder-Bridging-Header.h";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -1367,13 +1250,14 @@
 					third_party/mp4v2/include,
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = AudioBookBinder;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 			};
 			name = Debug;
 		};
@@ -1417,11 +1301,13 @@
 					third_party/mp4v2/include,
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
@@ -1456,7 +1342,7 @@
 					third_party/mp4v2/,
 					third_party/mp4v2/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1492,7 +1378,7 @@
 					third_party/mp4v2/,
 					third_party/mp4v2/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1528,7 +1414,7 @@
 					third_party/mp4v2/,
 					third_party/mp4v2/include,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1542,6 +1428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = AudioBookBinder.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1550,8 +1437,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1560,6 +1449,7 @@
 				INFOPLIST_FILE = "AudioBookBinder-Info.plist";
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "c99 gnu++14";
 				OTHER_CFLAGS = "";
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_CPLUSPLUSFLAGS = "";
@@ -1568,12 +1458,18 @@
 					Foundation,
 					"-framework",
 					AppKit,
+					"-Xlinker",
+					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bluezbox.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AudioBookBinder;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioBookBinder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -1581,6 +1477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = AudioBookBinder.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1590,14 +1487,17 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_MODULE_VERIFIER = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "AudioBookBinder-Info.plist";
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "c99 gnu++14";
 				OTHER_CFLAGS = "";
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_CPLUSPLUSFLAGS = "";
@@ -1606,12 +1506,17 @@
 					Foundation,
 					"-framework",
 					AppKit,
+					"-Xlinker",
+					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bluezbox.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AudioBookBinder;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioBookBinder-Bridging-Header.h";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
+				SWIFT_VERSION = 6.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1658,11 +1563,12 @@
 					third_party/mp4v2/include,
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = AppStore;
@@ -1678,14 +1584,14 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AudioBookBinder_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = abbinder;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "abbinder-Bridging-Header.h";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
 				SWIFT_VERSION = 6.0;
 				VALID_ARCHS = "x86_64 x86_64h arm64 arm64e";
 			};
@@ -1695,6 +1601,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = "AudioBookBinder-appstore.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1704,26 +1611,34 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_MODULE_VERIFIER = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "AudioBookBinder-Info.plist";
 				INSTALL_PATH = /Applications;
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "c99 gnu++14";
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-framework",
 					AppKit,
+					"-Xlinker",
+					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bluezbox.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = AudioBookBinder;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioBookBinder-Bridging-Header.h";
+				SWIFT_SKIP_AUTOLINKING_FRAMEWORKS = CoreAudioTypes;
+				SWIFT_VERSION = 6.0;
 				VALID_ARCHS = "x86_64 x86_64h arm64 arm64e";
 				ZERO_LINK = NO;
 			};

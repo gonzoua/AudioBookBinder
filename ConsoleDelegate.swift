@@ -39,14 +39,14 @@ class ConsoleDelegate: NSObject, AudioBinderDelegate {
         super.init()
     }
 
-    func updateStatus(_ file: AudioFile!, handled handledFrames: UInt64, total totalFrames: UInt64) {
+    func updateStatus(_ file: AudioFile, handled handledFrames: UInt64, total totalFrames: UInt64) {
         guard !quiet && istty else { return }
         let percent = handledFrames * 100 / totalFrames
-        print("\r\(file.filePath!): [\(String(format: "%3llu", percent))%] \(handledFrames)/\(totalFrames)", terminator: "")
+        print("\r\(file.filePath): [\(String(format: "%3llu", percent))%] \(handledFrames)/\(totalFrames)", terminator: "")
         fflush(stdout)
     }
 
-    func conversionStart(_ file: AudioFile!, format asbd: UnsafeMutablePointer<AudioStreamBasicDescription>!, formatDescription description: String!, length frames: UInt64) {
+    func conversionStart(_ file: AudioFile, format asbd: UnsafeMutablePointer<AudioStreamBasicDescription>?, formatDescription description: String?, length frames: UInt64) {
         guard !quiet else { return }
         if verbose, let ptr = asbd {
             let desc = ptr.pointee
@@ -54,20 +54,20 @@ class ConsoleDelegate: NSObject, AudioBinderDelegate {
             let formatStr = withUnsafeBytes(of: &formatID) { bytes in
                 String(bytes: bytes, encoding: .macOSRoman) ?? ""
             }
-            print("Stream info for \(file.filePath!):")
+            print("Stream info for \(file.filePath):")
             print("\tFormatID: \(formatStr), FormatFlags: \(String(format: "%08x", desc.mFormatFlags))")
             print("\tBytesPerPacket: \(desc.mBytesPerPacket), FramesPerPacket: \(desc.mFramesPerPacket), BytesPerFrame: \(desc.mBytesPerFrame)")
             print("\tChannelsPerFrame: \(desc.mChannelsPerFrame), BitsPerChannel: \(desc.mBitsPerChannel)")
-            print("\tFormat description: \(description!)")
+            print("\tFormat description: \(description ?? "")")
             print("\tTotal frames: \(frames)")
         }
-        print("\(file.filePath!): ", terminator: "")
+        print("\(file.filePath): ", terminator: "")
         fflush(stdout)
     }
 
-    func continueFailedConversion(_ file: AudioFile!, reason: String!) -> Bool {
+    func continueFailedConversion(_ file: AudioFile, reason: String?) -> Bool {
         if !quiet {
-            print("failed, \(reason!)", terminator: "")
+            print("failed, \(reason ?? "unknown error")", terminator: "")
             if skipErrors {
                 print(", skipping...", terminator: "")
             }
@@ -78,10 +78,10 @@ class ConsoleDelegate: NSObject, AudioBinderDelegate {
         return skipErrors
     }
 
-    func conversionFinished(_ file: AudioFile!, duration: UInt32) {
+    func conversionFinished(_ file: AudioFile, duration: UInt32) {
         if !quiet {
             if istty {
-                print("\r\(file.filePath!): [100%]                              ")
+                print("\r\(file.filePath): [100%]                              ")
             } else {
                 print("done")
             }
@@ -90,12 +90,12 @@ class ConsoleDelegate: NSObject, AudioBinderDelegate {
         file.valid = true
     }
 
-    func volumeReady(_ volumeName: String!, duration seconds: UInt32) {
+    func volumeReady(_ volumeName: String, duration seconds: UInt32) {
         guard !quiet else { return }
         let h = seconds / 3600
         let m = (seconds % 3600) / 60
         let s = seconds % 60
-        var msg = "Finished: \(volumeName!) ("
+        var msg = "Finished: \(volumeName) ("
         if h > 0 { msg += "\(h)h " }
         msg += "\(m)m \(s)s)"
         print(msg)
@@ -112,6 +112,6 @@ class ConsoleDelegate: NSObject, AudioBinderDelegate {
         print(msg)
     }
 
-    func volumeFailed(_ filename: String!, reason: String!) {
+    func volumeFailed(_ filename: String, reason: String?) {
     }
 }

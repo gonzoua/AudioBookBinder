@@ -4,10 +4,4 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "AudioBinder.h"
-#import "AudioBookVolume.h"
-#import "AudioFile.h"
-#import "Chapter.h"
-#import "MP4File.h"
-#import "MetaEditor.h"
+#include <mp4v2/mp4v2.h>

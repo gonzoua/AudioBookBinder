@@ -29,7 +29,7 @@ import ArgumentParser
 import Foundation
 
 @main
-struct abbinder: ParsableCommand {
+struct abbinder: AsyncParsableCommand {
     static let validRates: [Int32] = [
         8000, 11025, 12000, 16000, 22050,
         24000, 32000, 44100, 48000
@@ -133,8 +133,8 @@ struct abbinder: ParsableCommand {
             .replacingOccurrences(of: "%N", with: "\(chapterNum + 1)")
     }
 
-    nonisolated func run() throws {
-        let binder = AudioBinder()!
+    nonisolated func run() async throws {
+        let binder = AudioBinder()
         var withChapters = false
         var eachFileIsChapter = false
 
@@ -142,7 +142,7 @@ struct abbinder: ParsableCommand {
         var currentChapters = [Chapter]()
         var volumeChapters = [[Chapter]]()
 
-        var inputFiles = [AudioFile]()
+        var inputFiles = [String]()
         var inputFilenames = argFilenames
 
         if let listFile = inputFilenamesListFile {
@@ -234,7 +234,7 @@ struct abbinder: ParsableCommand {
             if let maxDuration = maxVolumeDuration,
                (estTotalDuration + UInt64(file.duration.intValue)) > maxDuration * 1000 {
                 if !inputFiles.isEmpty {
-                    binder.addVolume(currentVolumeName, files: inputFiles)
+                    await binder.addVolume(currentVolumeName, files: inputFiles)
                     inputFiles.removeAll()
                     estTotalDuration = 0
                     totalVolumes += 1
@@ -253,7 +253,7 @@ struct abbinder: ParsableCommand {
                 }
             }
 
-            inputFiles.append(file)
+            inputFiles.append(file.filePath)
             estTotalDuration += UInt64(file.duration.intValue)
 
             if withChapters {
@@ -280,20 +280,19 @@ struct abbinder: ParsableCommand {
         }
 
         // Add last volume to the binder
-        binder.addVolume(currentVolumeName, files: inputFiles)
+        await binder.addVolume(currentVolumeName, files: inputFiles)
         // add chapters for last volume
         volumeChapters.append(currentChapters)
 
-        binder.channels = channels
-        binder.sampleRate = Float(samplerate)
+        // set channels/sample rate first so validBitrates() below reflects them
+        await binder.configure(channels: channels, sampleRate: Float(samplerate), bitrate: 0)
 
         if let bitrate {
             let bitrateBps = UInt32(bitrate) * 1000
-            guard let validBitrates = binder.validBitrates() else { throw ExitCode.failure }
+            guard let validBitrates = await binder.validBitrates() else { throw ExitCode.failure }
             var found = false
             for rate in validBitrates {
-                if let rate = rate as? NSNumber, rate.uint32Value == bitrateBps {
-                    binder.bitrate = bitrateBps
+                if rate.uint32Value == bitrateBps {
                     found = true
                     break
                 }
@@ -304,34 +303,39 @@ struct abbinder: ParsableCommand {
                 var first = true
                 for rate in validBitrates {
                     if !first { errPrint(", ") }
-                    errPrint("\((rate as! NSNumber).uint32Value / 1000)")
+                    errPrint("\(rate.uint32Value / 1000)")
                     first = false
                 }
                 errPrint("\n")
                 throw ExitCode.failure
             }
+
+            await binder.configure(channels: channels, sampleRate: Float(samplerate), bitrate: bitrateBps)
         }
 
         // Setup delegate, it will print progress messages on console
-        let delegate = ConsoleDelegate()
-        delegate.quiet = quiet
-        delegate.verbose = verbose
-        delegate.skipErrors = skipErrors
-        binder.setDelegate(delegate)
+        let delegate = await ConsoleDelegate()
+        await MainActor.run {
+            delegate.quiet = quiet
+            delegate.verbose = verbose
+            delegate.skipErrors = skipErrors
+        }
+        await binder.setDelegate(delegate)
 
-        if !binder.convert() {
+        let converted = await binder.convert()
+        if !converted {
             print("Conversion failed")
             throw ExitCode.failure
         }
 
-        let volumes = binder.volumes!
+        let volumes = await binder.volumes
         let totalTracks = volumes.count
         if !quiet {
             print("Adding metadata, it may take a while...", terminator: "")
             fflush(stdout)
         }
 
-        for (track, v) in zip(1..., volumes.compactMap({ $0 as? AudioBookVolume })) {
+        for (track, v) in zip(1..., volumes.compactMap({ $0 })) {
             let mp4 = MP4File(fileName: v.filename)!
             mp4.artist = bookAuthor
             mp4.title = totalTracks > 1 ? "\(bookTitle) #\(String(format: "%02ld", track))" : bookTitle
@@ -358,8 +362,9 @@ struct abbinder: ParsableCommand {
                 )
                 fflush(stdout)
             }
-            for (v, chapters) in zip(volumes.compactMap({ $0 as? AudioBookVolume }), volumeChapters) {
-                addChapters(v.filename, chapters)
+            for (v, chapters) in zip(volumes.compactMap({ $0 }), volumeChapters) {
+                let editor = MetaEditor()
+                editor.addChapters(chapters, toFile:v.filename)
             }
             if !quiet {
                 print("done")
