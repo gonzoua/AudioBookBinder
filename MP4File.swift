@@ -26,6 +26,7 @@
 //
 
 import Foundation
+import UniformTypeIdentifiers
 
 @objc class MP4File : NSObject {
     @objc var artist: String?
@@ -38,249 +39,96 @@ import Foundation
     @objc var tracksTotal: UInt16 = 0
     @objc var gaplessPlay = false
 
-    private static let bufferSize = 16 * 1024 * 1024
-
-    // iTunes metadata well-known type classes
-    private static let typeImplicit: UInt32 = 0x00
-    private static let typeString:   UInt32 = 0x01
-    private static let typeImage:    UInt32 = 0x0e
-    private static let typeUInt8:    UInt32 = 0x15
-
-    private let fh: FileHandle
+    private let fileName: String
 
     @objc init?(fileName: String) {
-        guard let handle = FileHandle(forUpdatingAtPath: fileName) else { return nil }
-        self.fh = handle
-
-        // Scan top-level atoms to validate file structure
-        var pos: UInt64 = 0
-        let end = fh.seekToEndOfFile()
-        fh.seek(toFileOffset: 0)
-        while pos < end {
-            let buf = fh.readData(ofLength: 8)
-            guard buf.count == 8, let atom = MP4Atom(headerData: buf, offset: pos) else { break }
-            pos += UInt64(atom.length)
-            fh.seek(toFileOffset: pos)
-        }
+        // Make sure mp4v2 can parse the file before handing out an instance
+        guard let handle = MP4Read(fileName) else { return nil }
+        MP4Close(handle, 0)
+        self.fileName = fileName
     }
 
     @objc func update() -> Void {
-        let hdlrData = encodeHDLRAtom()
+        guard let handle = MP4Modify(fileName, 0) else {
+            fatalError("Failed to open \(fileName) for modification")
+        }
+        defer { MP4Close(handle, 0) }
+        guard let tags = MP4TagsAlloc() else {
+            fatalError("Failed to allocate MP4 tags")
+        }
+        defer { MP4TagsFree(tags) }
+        MP4TagsFetch(tags, handle)
 
-        guard var moovAtom = findAtom("moov") else {
-            fatalError("File contains no moov atom")
-        }
-        guard var freeAtom = findAtom("free") else {
-            fatalError("File contains no free atom")
-        }
-        let udtaAtom = findAtom("moov.udta")
-        let metaAtom = findAtom("moov.udta.meta")
-        let ilstAtom = findAtom("moov.udta.meta.ilst")
-
-        let hadUdta = udtaAtom != nil
-        let hadMeta = metaAtom != nil
-        let hadIlst = ilstAtom != nil
-
-        // Build the new iTunes metadata items
-        var newItems = Data()
-        if let v = title {
-            newItems.append(encodeMetaDataAtom("©nam", value: Data(v.utf8), type: Self.typeString))
-        }
-        if let v = album {
-            newItems.append(encodeMetaDataAtom("©alb", value: Data(v.utf8), type: Self.typeString))
-        }
-        if let v = artist {
-            newItems.append(encodeMetaDataAtom("©ART", value: Data(v.utf8), type: Self.typeString))
-        }
-        if let v = narrator {
-            newItems.append(encodeMetaDataAtom("©nrt", value: Data(v.utf8), type: Self.typeString))
-            newItems.append(encodeMetaDataAtom("©wrt", value: Data(v.utf8), type: Self.typeString))
-        }
+        if let v = title { MP4TagsSetName(tags, v) }
+        if let v = album { MP4TagsSetAlbum(tags, v) }
+        if let v = artist { MP4TagsSetArtist(tags, v) }
+        if let v = narrator { MP4TagsSetComposer(tags, v) }
         if track > 0 && tracksTotal > 1 {
-            // trkn payload: [0, track, tracksTotal, 0] as big-endian UInt16s (8 bytes)
-            let words: [UInt16] = [0, track.bigEndian, tracksTotal.bigEndian, 0]
-            let data = words.withUnsafeBufferPointer { Data(buffer: $0) }
-            newItems.append(encodeMetaDataAtom("trkn", value: data, type: Self.typeImplicit))
+            var trackTag = MP4TagTrack(index: track, total: tracksTotal)
+            MP4TagsSetTrack(tags, &trackTag)
         }
         if gaplessPlay {
-            newItems.append(encodeMetaDataAtom("pgap", value: Data([1]), type: Self.typeUInt8))
+            var gapless: UInt8 = 1
+            MP4TagsSetGapless(tags, &gapless)
         }
-        if let v = genre {
-            newItems.append(encodeMetaDataAtom("©gen", value: Data(v.utf8), type: Self.typeString))
-        }
+        if let v = genre { MP4TagsSetGenre(tags, v) }
         if let path = coverFile, let imageData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-            newItems.append(encodeMetaDataAtom("covr", value: imageData, type: Self.typeImage))
+            setArtwork(imageData, type: Self.artworkType(forPath: path), in: tags)
         }
 
-        // Accumulate how many bytes will be inserted in total. Each missing wrapper
-        // atom adds its own 8-byte header (plus the hdlr block for meta).
-        var additionalLength = UInt32(newItems.count)
+        MP4TagsStore(tags, handle)
 
-        let finalIlst: MP4Atom
-        if var atom = ilstAtom {
-            atom.length += additionalLength
-            fixupAtom(atom)
-            finalIlst = atom
-        } else {
-            additionalLength += 8  // ilst header
-            finalIlst = MP4Atom(name: "ilst", length: additionalLength)
+        // MP4Tags has no field for the narrator item, so use the generic iTMF API
+        if let v = narrator {
+            setNarrator(v, in: handle)
         }
-
-        let finalMeta: MP4Atom
-        if var atom = metaAtom {
-            atom.length += additionalLength
-            fixupAtom(atom)
-            finalMeta = atom
-        } else {
-            // meta header (8) + version/flags (4) + hdlr atom
-            additionalLength += UInt32(hdlrData.count) + 12
-            finalMeta = MP4Atom(name: "meta", length: additionalLength)
-        }
-
-        let finalUdta: MP4Atom
-        if var atom = udtaAtom {
-            atom.length += additionalLength
-            fixupAtom(atom)
-            finalUdta = atom
-        } else {
-            additionalLength += 8  // udta header
-            finalUdta = MP4Atom(name: "udta", length: additionalLength)
-        }
-
-        // Build the bytes to write after the moov atom
-        var atomData = Data()
-        if !hadUdta { atomData.append(finalUdta.encode()) }
-        if !hadMeta {
-            atomData.append(finalMeta.encode())
-            var flags: UInt32 = 0
-            withUnsafeBytes(of: &flags) { atomData.append(contentsOf: $0) }
-            atomData.append(hdlrData)
-        }
-        if !hadIlst { atomData.append(finalIlst.encode()) }
-        atomData.append(newItems)
-
-        let insertOffset = moovAtom.offset + UInt64(moovAtom.length)
-
-        if freeAtom.length >= additionalLength {
-            // Shrink the existing free atom to absorb the new bytes
-            freeAtom.length -= additionalLength
-            freeAtom.offset += UInt64(additionalLength)
-            fixupAtom(freeAtom)
-        } else {
-            // Not enough free space: insert room by shifting the rest of the file
-            guard let mdatAtom = findAtom("mdat") else {
-                fatalError("Failed to find mdat atom")
-            }
-            reserveSpace(UInt64(additionalLength), at: insertOffset)
-            if mdatAtom.offset > moovAtom.offset {
-                fixSTCOAtom(by: UInt64(additionalLength))
-            }
-        }
-
-        fh.seek(toFileOffset: insertOffset)
-        fh.write(atomData)
-
-        moovAtom.length += additionalLength
-        fixupAtom(moovAtom)
     }
 
     // MARK: - Private helpers
 
-    private func fixupAtom(_ atom: MP4Atom) {
-        fh.seek(toFileOffset: atom.offset)
-        fh.write(atom.encode())
+    private func setArtwork(_ imageData: Data, type: MP4TagArtworkType, in tags: UnsafePointer<MP4Tags>) {
+        var bytes = [UInt8](imageData)
+        bytes.withUnsafeMutableBytes { buf in
+            var artwork = MP4TagArtwork(data: buf.baseAddress,
+                                        size: UInt32(buf.count),
+                                        type: type)
+            MP4TagsAddArtwork(tags, &artwork)
+        }
     }
 
-    private func findAtom(_ path: String) -> MP4Atom? {
-        var components = path.components(separatedBy: ".")
-        var pos: UInt64 = 0
-        var end = fh.seekToEndOfFile()
-        fh.seek(toFileOffset: 0)
+    private static func artworkType(forPath path: String) -> MP4TagArtworkType {
+        guard let type = UTType(filenameExtension: URL(fileURLWithPath: path).pathExtension) else {
+            return MP4_ART_UNDEFINED
+        }
+        if type.conforms(to: .jpeg) { return MP4_ART_JPEG }
+        if type.conforms(to: .png) { return MP4_ART_PNG }
+        if type.conforms(to: .gif) { return MP4_ART_GIF }
+        if type.conforms(to: .bmp) { return MP4_ART_BMP }
+        return MP4_ART_UNDEFINED
+    }
 
-        while pos < end {
-            let buf = fh.readData(ofLength: 8)
-            guard buf.count == 8, let atom = MP4Atom(headerData: buf, offset: pos) else { break }
+    // Stores the narrator in the ©nrt item, replacing any existing one
+    private func setNarrator(_ value: String, in handle: MP4FileHandle) {
+        guard let code = "©nrt".cString(using: .macOSRoman) else { return }
 
-            if atom.name == components[0] {
-                end = pos + UInt64(atom.length)
-                // meta carries a 4-byte version/flags field before its children
-                pos += atom.name == "meta" ? 12 : 8
-                components.removeFirst()
-                if components.isEmpty { return atom }
-            } else {
-                pos += UInt64(atom.length)
+        if let existing = MP4ItmfGetItemsByCode(handle, code) {
+            for i in 0..<Int(existing.pointee.size) {
+                MP4ItmfRemoveItem(handle, &existing.pointee.elements[i])
             }
-            fh.seek(toFileOffset: pos)
-        }
-        return nil
-    }
-
-    private func encodeMetaDataAtom(_ name: String, value: Data, type: UInt32) -> Data {
-        // Layout: [outer atom header (8)] [data atom header (8)] [type (4)] [zero (4)] [value]
-        let dataAtomSize = UInt32(value.count) + 16
-        let outerSize    = dataAtomSize + 8
-        var result = MP4Atom(name: name, length: outerSize).encode()
-        result.append(MP4Atom(name: "data", length: dataAtomSize).encode())
-        var beType = type.bigEndian
-        withUnsafeBytes(of: &beType) { result.append(contentsOf: $0) }
-        var zero: UInt32 = 0
-        withUnsafeBytes(of: &zero) { result.append(contentsOf: $0) }
-        result.append(value)
-        return result
-    }
-
-    // Without this atom iTunes refuses to accept file metadata
-    private func encodeHDLRAtom() -> Data {
-        // Total: 8 (header) + 4+4+4+4+4+4+2 = 34 bytes
-        var result = MP4Atom(name: "hdlr", length: 34).encode()
-        var zero32: UInt32 = 0
-        var zero16: UInt16 = 0
-        withUnsafeBytes(of: &zero32) { result.append(contentsOf: $0) }
-        withUnsafeBytes(of: &zero32) { result.append(contentsOf: $0) }
-        result.append(contentsOf: "mdir".utf8)
-        result.append(contentsOf: "appl".utf8)
-        withUnsafeBytes(of: &zero32) { result.append(contentsOf: $0) }
-        withUnsafeBytes(of: &zero32) { result.append(contentsOf: $0) }
-        withUnsafeBytes(of: &zero16) { result.append(contentsOf: $0) }
-        return result
-    }
-
-    // Inserts `size` zero bytes at `offset` by shifting everything after it toward the end.
-    private func reserveSpace(_ size: UInt64, at offset: UInt64) {
-        var end = fh.seekToEndOfFile()
-        while end > offset {
-            let chunkSize = min(end - offset, UInt64(Self.bufferSize))
-            fh.seek(toFileOffset: end - chunkSize)
-            let buffer = fh.readData(ofLength: Int(chunkSize))
-            guard !buffer.isEmpty else { break }
-            fh.seek(toFileOffset: end - UInt64(buffer.count) + size)
-            fh.write(buffer)
-            end -= UInt64(buffer.count)
-        }
-    }
-
-    // stco holds a table of absolute file offsets into mdat. After inserting bytes
-    // before mdat we must add `shift` to every entry.
-    // Atom layout: [size(4)] [tag(4)] [version/flags(4)] [nentries(4)] [entry...](4 each)
-    private func fixSTCOAtom(by shift: UInt64) {
-        guard let stco = findAtom("moov.trak.mdia.minf.stbl.stco") else {
-            fatalError("Failed to find moov.trak.mdia.minf.stbl.stco atom")
-        }
-        fh.seek(toFileOffset: stco.offset + 12)  // skip size, tag, version/flags
-        var table = fh.readData(ofLength: Int(stco.length) - 12)
-
-        let entryCount = UInt32(bigEndian: table.withUnsafeBytes { $0.load(as: UInt32.self) })
-        for i in 0..<Int(entryCount) {
-            let byteOffset = 4 + i * 4
-            let entry = UInt32(bigEndian: table.withUnsafeBytes {
-                $0.load(fromByteOffset: byteOffset, as: UInt32.self)
-            })
-            var updated = (entry + UInt32(shift)).bigEndian
-            let replacement = Swift.withUnsafeBytes(of: &updated) { Data($0) }
-            table.replaceSubrange(byteOffset..<(byteOffset + 4), with: replacement)
+            MP4ItmfItemListFree(existing)
         }
 
-        fh.seek(toFileOffset: stco.offset + 12)
-        fh.write(table)
+        guard let item = MP4ItmfItemAlloc(code, 1) else { return }
+        defer { MP4ItmfItemFree(item) }
+
+        // MP4ItmfItemFree releases the value with free(), so hand it a malloc'ed copy
+        let utf8 = Array(value.utf8)
+        let buffer = malloc(max(utf8.count, 1))!.assumingMemoryBound(to: UInt8.self)
+        buffer.update(from: utf8, count: utf8.count)
+
+        item.pointee.dataList.elements[0].typeCode = MP4_ITMF_BT_UTF8
+        item.pointee.dataList.elements[0].value = buffer
+        item.pointee.dataList.elements[0].valueSize = UInt32(utf8.count)
+        MP4ItmfAddItem(handle, item)
     }
 }
