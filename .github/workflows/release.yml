@@ -47,7 +47,38 @@ jobs:
           defaults write $PWD/AudioBookBinder-Info CFBundleShortVersionString $release_version
           defaults write $PWD/AudioBookBinder-Info CFBundleVersion $release_version
           plutil -convert xml1 AudioBookBinder-Info.plist
-          /usr/bin/xcodebuild -configuration Release -alltargets CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO
+
+          STAGING_DIR=dist/
+          rm -rf "$STAGING_DIR"
+          mkdir -p "$STAGING_DIR"
+
+          for SCHEME in AudioBookBinder abbinder; do
+            ARCHIVE_PATH="$RUNNER_TEMP/${SCHEME}.xcarchive"
+
+            /usr/bin/xcodebuild archive \
+              -configuration Release \
+              -scheme "$SCHEME" \
+              -destination "generic/platform=macOS" \
+              -archivePath ${ARCHIVE_PATH} \
+              CODE_SIGNING_ALLOWED=NO \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO
+            if [ -d "$ARCHIVE_PATH/Products/Applications" ]; then
+              for APP in "$ARCHIVE_PATH/Products/Applications"/*.app; do
+                [ -e "$APP" ] || continue
+                echo "Staging app: $(basename "$APP")"
+                ditto "$APP" "$STAGING_DIR/$(basename "$APP")"
+              done
+            fi
+
+            if [ -d "$ARCHIVE_PATH/Products/usr/local/bin" ]; then
+              for BIN in "$ARCHIVE_PATH/Products/usr/local/bin"/*; do
+                [ -e "$BIN" ] || continue
+                echo "Staging binary: $(basename "$BIN")"
+                ditto "$BIN" "$STAGING_DIR/$(basename "$BIN")"
+              done
+            fi
+          done
 
       - name: sign and notarize image
         env:
@@ -56,15 +87,16 @@ jobs:
           ASC_ISSUER: ${{ secrets.ASC_ISSUER }}
         run: |
           IDENTITY=$(security find-identity -v -p codesigning | head -1 | awk '{print $2}')
+          if [ -z "$IDENTITY" ]; then
+            echo "No valid signing identity found in the keychain. Check BUILD_CERTIFICATE_BASE64 / Team ID." >&2
+            exit 1
+          fi
 
-          rm -rf dist
-          mkdir dist
-          cp -r build/Release/abbinder build/Release/AudioBookBinder.app dist/
-          codesign --force --timestamp --options=runtime --sign $IDENTITY dist/AudioBookBinder.app
-          codesign --force --timestamp --options=runtime --sign $IDENTITY dist/abbinder
+          codesign --force --timestamp --options=runtime --sign "$IDENTITY" dist/AudioBookBinder.app
+          codesign --force --timestamp --options=runtime --sign "$IDENTITY" dist/abbinder
 
           hdiutil create -srcFolder dist -volname "Audiobook Binder" -o AudioBookBinder.dmg
-          codesign --force --timestamp --options=runtime --sign $IDENTITY AudioBookBinder.dmg
+          codesign --force --timestamp --options=runtime --sign "$IDENTITY" AudioBookBinder.dmg
 
           echo -n "$ASC_KEY_BASE64" | base64 --decode -o key.p8
           xcrun notarytool submit --wait --timeout 5m --key-id "$ASC_KEY_ID" --key key.p8 --issuer "$ASC_ISSUER" AudiobookBinder.dmg
